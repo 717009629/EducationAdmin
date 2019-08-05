@@ -36,5 +36,11 @@ namespace EducationAdmin.Students
             return Repository.GetAllIncluding(x => x.Salesman)
                .WhereIf(!input.Keyword.IsNullOrWhiteSpace(), x => x.Name.Contains(input.Keyword) );
         }
+
+        public override Task<PagedResultDto<StudentDto>> GetAll(PagedStudentResultRequestDto input)
+        {
+            var r = base.GetAll(input);
+            return r;
+        }
     }
 }

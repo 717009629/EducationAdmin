@@ -51,8 +51,8 @@ import { Component, Vue, Inject, Prop, Watch } from "vue-property-decorator";
 import Util from "@/lib/util";
 import AbpBase from "@/lib/abpbase";
 import PageRequest from "@/store/entities/page-request";
-import CreateStudent from './create-student.vue'
-import EditStudent from './edit-student.vue'
+import CreateStudent from "./create-student.vue";
+import EditStudent from "./edit-student.vue";
 
 class PageStudentRequest extends PageRequest {
   keyword: string = "";
@@ -60,7 +60,7 @@ class PageStudentRequest extends PageRequest {
 }
 
 @Component({
-    components:{CreateStudent,EditStudent}
+  components: { CreateStudent, EditStudent }
 })
 export default class Students extends AbpBase {
   edit() {
@@ -135,7 +135,9 @@ export default class Students extends AbpBase {
     },
     {
       title: this.L("Sex"),
-      key: "sex"
+      render: (h: any, params: any) => {
+        return h("span", params.row.sex ? this.L("Male") :params.row.sex===false? this.L("Female"):'');
+      }
     },
     {
       title: this.L("Parent"),
@@ -186,8 +188,8 @@ export default class Students extends AbpBase {
       key: "origin"
     },
     {
-      title: this.L("Note"),
-      key: "note"
+      title: this.L("Salesman"),
+      key: "salesmanName"
     },
     {
       title: this.L("Actions"),

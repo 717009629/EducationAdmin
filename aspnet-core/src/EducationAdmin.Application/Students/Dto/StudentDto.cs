@@ -51,6 +51,9 @@ namespace EducationAdmin.Students.Dto
 
         public string Note { get; set; }
         public long SalesmanId { get; set; }
-        public User Salesman { get; set; }
+        
+        public string SalesmanName { get; set; }
     }
+
+
 }

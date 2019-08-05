@@ -13,7 +13,10 @@
               <Input v-model="student.name" :maxlength="32" :minlength="2"></Input>
             </FormItem>
             <FormItem :label="L('Sex')" prop="sex">
-              <Input v-model="student.sex"></Input>
+              <RadioGroup v-model="student.sex" type="button">
+                <Radio :label="true">{{L('Male')}}</Radio>
+                <Radio :label="false">{{L('Female')}}</Radio>
+              </RadioGroup>
             </FormItem>
             <FormItem :label="L('Birthday')" prop="birthday">
               <Input v-model="student.birthday"></Input>

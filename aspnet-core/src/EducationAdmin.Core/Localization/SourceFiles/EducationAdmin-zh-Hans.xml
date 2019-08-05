@@ -30,9 +30,8 @@
     <text name="Users" >用户</text>
     <text name="Roles" >角色</text>
     <text name="Tenants" >租户</text>
-    <text name="Students" >学生</text>
     <text name="Logout" >注销</text>
-    <text name="ManageMenu" >菜单</text>
+    <text name="ManageMenu" >设置</text>
     <text name="LabelOptions" >页签操作</text>
     <text name="ClearAll" >关闭所有</text>
     <text name="ClearOthers" >关闭其他</text>
@@ -98,8 +97,11 @@
     <text name="DeleteTenantConfirm">确认删除该租户？</text>
     <text name="EditTenant">编辑租户</text>
 
-
+    <text name="Male">男</text>
+    <text name="Female">女</text>
+    
     <text name="StudentsManage">学生管理</text>
+    <text name="Students" >学生</text>
     <text name="StudentName">姓名</text>
     <text name="Province">省份</text>
     <text name="City">城市</text>
@@ -118,7 +120,9 @@
     <text name="TeachMethod">授课形式</text>
     <text name="Note">备注</text>
     <text name="Origin">来源</text>
+    <text name="Salesman">业务员</text>
     <text name="SalesmanId">业务员</text>
+    <text name="SalesmanName">业务员</text>
 
     <text name="BasicInfo">基本信息</text>
     <text name="ElseInfo">其他信息</text>

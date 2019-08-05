@@ -54,5 +54,7 @@ namespace EducationAdmin.Students
         [ForeignKey(nameof(SalesmanId))]
         public User Salesman { get; set; }
         public int? TenantId { get ; set ; }
+
+        public string SalesmanName { get { return Salesman?.Name; } }
     }
 }
