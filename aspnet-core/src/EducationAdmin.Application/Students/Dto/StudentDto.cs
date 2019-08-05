@@ -7,6 +7,7 @@ using System.Text;
 
 namespace EducationAdmin.Students.Dto
 {
+    [AutoMapTo(typeof(Student))]
     [AutoMapFrom(typeof(Student))]
     public class StudentDto : FullAuditedEntityDto<Guid>
     {

@@ -97,7 +97,35 @@
     <text name="DefaultPasswordIs">默认密码为：{0}</text>
     <text name="DeleteTenantConfirm">确认删除该租户？</text>
     <text name="EditTenant">编辑租户</text>
-    
+
+
+    <text name="StudentsManage">学生管理</text>
+    <text name="StudentName">姓名</text>
+    <text name="Province">省份</text>
+    <text name="City">城市</text>
+    <text name="Address">详细地址</text>
+    <text name="Sex">性别</text>
+    <text name="Parent">家长</text>
+    <text name="Relation">关系</text>
+    <text name="Phone">手机</text>
+    <text name="FatherPhone">父亲手机</text>
+    <text name="MotherPhone">母亲手机</text>
+    <text name="School">就读学校</text>
+    <text name="Birthday">生日</text>
+    <text name="Grade">年级</text>
+    <text name="CourseType">课程小类</text>
+    <text name="StudentType">学生类型</text>
+    <text name="TeachMethod">授课形式</text>
+    <text name="Note">备注</text>
+    <text name="Origin">来源</text>
+    <text name="SalesmanId">业务员</text>
+
+    <text name="BasicInfo">基本信息</text>
+    <text name="ElseInfo">其他信息</text>
+    <text name="Location">地址</text>
+    <text name="Contact">联系方式</text>
+    <text name="CreateNewStudent">添加学生</text>
+    <text name="EditStudent">编辑学生</text>
     
   </texts>
 </localizationDictionary>
