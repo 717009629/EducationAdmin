@@ -3,6 +3,7 @@ using Abp.Zero.EntityFrameworkCore;
 using EducationAdmin.Authorization.Roles;
 using EducationAdmin.Authorization.Users;
 using EducationAdmin.MultiTenancy;
+using EducationAdmin.Students;
 
 namespace EducationAdmin.EntityFrameworkCore
 {
@@ -14,5 +15,7 @@ namespace EducationAdmin.EntityFrameworkCore
             : base(options)
         {
         }
+
+        public DbSet<Student> Students { get; set; }
     }
 }

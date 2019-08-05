@@ -1,12 +1,14 @@
-﻿using Abp.Domain.Entities.Auditing;
+﻿using Abp.Application.Services.Dto;
+using Abp.AutoMapper;
 using EducationAdmin.Authorization.Users;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace EducationAdmin.Student
+namespace EducationAdmin.Students.Dto
 {
-    public class Student : AuditedAggregateRoot<Guid>
+    [AutoMapFrom(typeof(Student))]
+    public class StudentDto : FullAuditedEntityDto<Guid>
     {
         public string Name { get; set; }
 
@@ -32,7 +34,7 @@ namespace EducationAdmin.Student
 
         public string School { get; set; }
 
-        
+
         public DateTime? Birthday { get; set; }
 
 
@@ -47,9 +49,7 @@ namespace EducationAdmin.Student
         public string Origin { get; set; }
 
         public string Note { get; set; }
-
+        public long SalesmanId { get; set; }
         public User Salesman { get; set; }
-        
-
     }
 }
