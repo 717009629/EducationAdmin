@@ -13,13 +13,13 @@
               <Input v-model="student.name" :maxlength="32" :minlength="2"></Input>
             </FormItem>
             <FormItem :label="L('Sex')" prop="sex">
-              <RadioGroup v-model="student.sex" type="button">
-                <Radio :label="true">{{L('Male')}}</Radio>
-                <Radio :label="false">{{L('Female')}}</Radio>
+              <RadioGroup v-model="sex" type="button">
+                <Radio label="male">{{L('Male')}}</Radio>
+                <Radio label="female">{{L('Female')}}</Radio>
               </RadioGroup>
             </FormItem>
             <FormItem :label="L('Birthday')" prop="birthday">
-              <Input v-model="student.birthday"></Input>
+                <DatePicker type="date" placeholder="Select date" v-model="student.birthday"></DatePicker>
             </FormItem>
             <FormItem :label="L('School')" prop="school">
               <Input v-model="student.school"></Input>
@@ -94,6 +94,12 @@ import Student from "@/store/entities/student";
 export default class EditStudent extends AbpBase {
   @Prop({ type: Boolean, default: false }) value: boolean;
   student: Student = new Student();
+  get sex(){
+    return this.student.sex?'male':this.student.sex===false?'female':'';
+  }
+  set sex(val){
+    this.student.sex= val==='male'?true:val==='female'?false:null
+  }
   save() {
     (this.$refs.studentForm as any).validate(async (valid: boolean) => {
       if (valid) {

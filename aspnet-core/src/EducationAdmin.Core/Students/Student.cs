@@ -55,6 +55,6 @@ namespace EducationAdmin.Students
         public User Salesman { get; set; }
         public int? TenantId { get ; set ; }
 
-        public string SalesmanName { get { return Salesman?.Name; } }
+       // public string SalesmanName { get { return Salesman?.Name; } }
     }
 }

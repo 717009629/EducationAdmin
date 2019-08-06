@@ -17,5 +17,7 @@ namespace EducationAdmin.EntityFrameworkCore
         }
 
         public DbSet<Student> Students { get; set; }
+
+        public DbSet<Record> Records { get; set; }
     }
 }

@@ -136,7 +136,14 @@ export default class Students extends AbpBase {
     {
       title: this.L("Sex"),
       render: (h: any, params: any) => {
-        return h("span", params.row.sex ? this.L("Male") :params.row.sex===false? this.L("Female"):'');
+        return h(
+          "span",
+          params.row.sex
+            ? this.L("Male")
+            : params.row.sex === false
+            ? this.L("Female")
+            : ""
+        );
       }
     },
     {
@@ -165,7 +172,10 @@ export default class Students extends AbpBase {
     },
     {
       title: this.L("Birthday"),
-      key: "birthday"
+      key: "birthday",
+      render: (h: any, params: any) => {
+        return h("span", new Date(params.row.birthday).toLocaleDateString());
+      }
     },
     {
       title: this.L("Grade"),
