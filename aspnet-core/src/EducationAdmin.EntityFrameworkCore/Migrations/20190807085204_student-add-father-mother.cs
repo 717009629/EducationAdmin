@@ -2,12 +2,17 @@
 
 namespace EducationAdmin.Migrations
 {
-    public partial class addMayHaveTenant : Migration
+    public partial class studentaddfathermother : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<int>(
-                name: "TenantId",
+            migrationBuilder.AddColumn<string>(
+                name: "Father",
+                table: "Students",
+                nullable: true);
+
+            migrationBuilder.AddColumn<string>(
+                name: "Mother",
                 table: "Students",
                 nullable: true);
         }
@@ -15,7 +20,11 @@ namespace EducationAdmin.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "TenantId",
+                name: "Father",
+                table: "Students");
+
+            migrationBuilder.DropColumn(
+                name: "Mother",
                 table: "Students");
         }
     }

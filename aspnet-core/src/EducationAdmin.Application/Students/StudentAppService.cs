@@ -16,9 +16,9 @@ namespace EducationAdmin.Students
 {
 
     [AbpAuthorize(PermissionNames.Pages_Students)]
-    public class StudentAppService : AsyncCrudAppService<Student, StudentDto, Guid, PagedStudentResultRequestDto, CreateStudentDto, StudentDto>, IStudentAppService
+    public class StudentAppService : AsyncCrudAppService<Student, StudentDto, long, PagedStudentResultRequestDto, CreateStudentDto, StudentDto>, IStudentAppService
     {
-       public StudentAppService(IRepository<Student,Guid > repository) : base(repository) { }
+       public StudentAppService(IRepository<Student,long > repository) : base(repository) { }
 
         public override Task<StudentDto> Create(CreateStudentDto input)
         {
@@ -26,10 +26,7 @@ namespace EducationAdmin.Students
             return base.Create(input);
         }
 
-        public override Task<StudentDto> Update(StudentDto input)
-        {
-            return base.Update(input);
-        }
+
 
         protected override IQueryable<Student> CreateFilteredQuery(PagedStudentResultRequestDto input)
         {
@@ -37,10 +34,5 @@ namespace EducationAdmin.Students
                .WhereIf(!input.Keyword.IsNullOrWhiteSpace(), x => x.Name.Contains(input.Keyword) );
         }
 
-        public override Task<PagedResultDto<StudentDto>> GetAll(PagedStudentResultRequestDto input)
-        {
-            var r = base.GetAll(input);
-            return r;
-        }
     }
 }

@@ -8,17 +8,17 @@ using System.Text;
 
 namespace EducationAdmin.Students
 {
-    public class Record : FullAuditedEntity<Guid>, IMayHaveTenant
+    public class Record : FullAuditedEntity<long>, IMayHaveTenant
     {
         public string Category { get; set; }
 
-        public string Progess { get; set; }
+        public string Progress { get; set; }
 
         public DateTime? Date { get; set; }
 
         public string Content { get; set; }
 
-        public Guid StudentId { get; set; }
+        public long StudentId { get; set; }
 
         [ForeignKey(nameof(StudentId))]
         public Student Student { get; set; }

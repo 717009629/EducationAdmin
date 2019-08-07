@@ -8,7 +8,7 @@ using System.Text;
 
 namespace EducationAdmin.Students
 {
-    public class Student :FullAuditedEntity<Guid>,IMayHaveTenant
+    public class Student :FullAuditedEntity<long>,IMayHaveTenant
     {
         public string Name { get; set; }
 
@@ -27,6 +27,10 @@ namespace EducationAdmin.Students
         public string Relation { get; set; }
 
         public string Phone { get; set; }
+
+        public string Mother { get; set; }
+
+        public string Father { get; set; }
 
         public string FatherPhone { get; set; }
 

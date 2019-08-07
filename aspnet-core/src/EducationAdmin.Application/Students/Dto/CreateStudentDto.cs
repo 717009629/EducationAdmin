@@ -25,6 +25,9 @@ namespace EducationAdmin.Students.Dto
         public string Relation { get; set; }
 
         public string Phone { get; set; }
+        public string Mother { get; set; }
+
+        public string Father { get; set; }
 
         public string FatherPhone { get; set; }
 

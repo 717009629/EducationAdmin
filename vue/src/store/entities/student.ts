@@ -1,6 +1,6 @@
 import Entity from './entity'
 
-export default class Student extends Entity<string>{
+export default class Student extends Entity<number>{
     name?: string
     province?: string
     city?: string
@@ -27,6 +27,5 @@ export default class Student extends Entity<string>{
     lastModifierUserId?: number
     creationTime?: string
     creatorUserId?: number
-    id: string
 
 }

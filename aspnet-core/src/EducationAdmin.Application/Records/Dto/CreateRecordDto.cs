@@ -7,17 +7,19 @@ using System.Text;
 namespace EducationAdmin.Records.Dto
 {
     [AutoMapTo(typeof(Record))]
-    class CreateRecordDto
+    public class CreateRecordDto
     {
         public string Category { get; set; }
 
-        public string Progess { get; set; }
+        public string Progress { get; set; }
 
         public DateTime? Date { get; set; }
 
         public string Content { get; set; }
 
-        public Guid StudentId { get; set; }
+        public long StudentId { get; set; }
+
+        public long SalesmanId { get; set; }
 
 
     }

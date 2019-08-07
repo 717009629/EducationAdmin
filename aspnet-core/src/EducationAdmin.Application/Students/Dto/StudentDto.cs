@@ -9,7 +9,7 @@ namespace EducationAdmin.Students.Dto
 {
     [AutoMapTo(typeof(Student))]
     [AutoMapFrom(typeof(Student))]
-    public class StudentDto : FullAuditedEntityDto<Guid>
+    public class StudentDto : FullAuditedEntityDto<long>
     {
         public string Name { get; set; }
 
@@ -28,6 +28,9 @@ namespace EducationAdmin.Students.Dto
         public string Relation { get; set; }
 
         public string Phone { get; set; }
+        public string Mother { get; set; }
+
+        public string Father { get; set; }
 
         public string FatherPhone { get; set; }
 

@@ -44,6 +44,7 @@
     </Card>
     <create-student v-model="createModalShow" @save-success="getpage"></create-student>
     <edit-student v-model="editModalShow" @save-success="getpage"></edit-student>
+    <student-record v-model="recordModalShow"></student-record>
   </div>
 </template>
 <script lang="ts">
@@ -53,6 +54,7 @@ import AbpBase from "@/lib/abpbase";
 import PageRequest from "@/store/entities/page-request";
 import CreateStudent from "./create-student.vue";
 import EditStudent from "./edit-student.vue";
+import StudentRecord from "./student-record.vue";
 
 class PageStudentRequest extends PageRequest {
   keyword: string = "";
@@ -60,17 +62,14 @@ class PageStudentRequest extends PageRequest {
 }
 
 @Component({
-  components: { CreateStudent, EditStudent }
+  components: { CreateStudent, EditStudent, StudentRecord }
 })
 export default class Students extends AbpBase {
-  edit() {
-    this.editModalShow = true;
-  }
-
   pagerequest: PageStudentRequest = new PageStudentRequest();
 
   createModalShow: boolean = false;
   editModalShow: boolean = false;
+  recordModalShow: boolean = false;
   get list() {
     return this.$store.state.student.list;
   }
@@ -79,6 +78,12 @@ export default class Students extends AbpBase {
   }
   create() {
     this.createModalShow = true;
+  }
+  edit() {
+    this.editModalShow = true;
+  }
+  record() {
+    this.recordModalShow = true;
   }
   isActiveChange(val: string) {
     if (val === "Actived") {
@@ -118,13 +123,20 @@ export default class Students extends AbpBase {
 
   columns = [
     {
+      title: this.L("Index"),
+      key: "id",
+      render:(h:any,params:any)=>{
+        return h('span',("000000"+params.row.id).slice(-6))
+      }
+    },
+    {
       title: this.L("StudentName"),
       key: "name"
     },
-    {
-      title: this.L("Province"),
-      key: "province"
-    },
+    // {
+    //   title: this.L("Province"),
+    //   key: "province"
+    // },
     {
       title: this.L("City"),
       key: "city"
@@ -150,22 +162,22 @@ export default class Students extends AbpBase {
       title: this.L("Parent"),
       key: "parent"
     },
-    {
-      title: this.L("Relation"),
-      key: "relation"
-    },
+    // {
+    //   title: this.L("Relation"),
+    //   key: "relation"
+    // },
     {
       title: this.L("Phone"),
       key: "phone"
     },
-    {
-      title: this.L("FatherPhone"),
-      key: "fatherPhone"
-    },
-    {
-      title: this.L("MotherPhone"),
-      key: "motherPhone"
-    },
+    // {
+    //   title: this.L("FatherPhone"),
+    //   key: "fatherPhone"
+    // },
+    // {
+    //   title: this.L("MotherPhone"),
+    //   key: "motherPhone"
+    // },
     {
       title: this.L("School"),
       key: "school"
@@ -177,22 +189,22 @@ export default class Students extends AbpBase {
         return h("span", new Date(params.row.birthday).toLocaleDateString());
       }
     },
-    {
-      title: this.L("Grade"),
-      key: "grade"
-    },
-    {
-      title: this.L("CourseType"),
-      key: "courseType"
-    },
-    {
-      title: this.L("StudentType"),
-      key: "studentType"
-    },
-    {
-      title: this.L("TeachMethod"),
-      key: "teachMethod"
-    },
+    // {
+    //   title: this.L("Grade"),
+    //   key: "grade"
+    // },
+    // {
+    //   title: this.L("CourseType"),
+    //   key: "courseType"
+    // },
+    // {
+    //   title: this.L("StudentType"),
+    //   key: "studentType"
+    // },
+    // {
+    //   title: this.L("TeachMethod"),
+    //   key: "teachMethod"
+    // },
     {
       title: this.L("Origin"),
       key: "origin"
@@ -230,28 +242,20 @@ export default class Students extends AbpBase {
             "Button",
             {
               props: {
-                type: "error",
+                type: "primary",
                 size: "small"
               },
+              style: {
+                marginRight: "5px"
+              },
               on: {
-                click: async () => {
-                  this.$Modal.confirm({
-                    title: this.L("Tips"),
-                    content: this.L("DeleteStudentConfirm"),
-                    okText: this.L("Yes"),
-                    cancelText: this.L("No"),
-                    onOk: async () => {
-                      await this.$store.dispatch({
-                        type: "student/delete",
-                        data: params.row
-                      });
-                      await this.getpage();
-                    }
-                  });
+                click: () => {
+                  this.$store.commit("student/edit", params.row);
+                  this.record();
                 }
               }
             },
-            this.L("Delete")
+            this.L("Record")
           )
         ]);
       }

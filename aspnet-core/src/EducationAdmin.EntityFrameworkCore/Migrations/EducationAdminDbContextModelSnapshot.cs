@@ -1084,10 +1084,54 @@ namespace EducationAdmin.Migrations
                     b.ToTable("AbpTenants");
                 });
 
+            modelBuilder.Entity("EducationAdmin.Students.Record", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Category");
+
+                    b.Property<string>("Content");
+
+                    b.Property<DateTime>("CreationTime");
+
+                    b.Property<long?>("CreatorUserId");
+
+                    b.Property<DateTime?>("Date");
+
+                    b.Property<long?>("DeleterUserId");
+
+                    b.Property<DateTime?>("DeletionTime");
+
+                    b.Property<bool>("IsDeleted");
+
+                    b.Property<DateTime?>("LastModificationTime");
+
+                    b.Property<long?>("LastModifierUserId");
+
+                    b.Property<string>("Progress");
+
+                    b.Property<long>("SalesmanId");
+
+                    b.Property<long>("StudentId");
+
+                    b.Property<int?>("TenantId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SalesmanId");
+
+                    b.HasIndex("StudentId");
+
+                    b.ToTable("Records");
+                });
+
             modelBuilder.Entity("EducationAdmin.Students.Student", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Address");
 
@@ -1105,6 +1149,8 @@ namespace EducationAdmin.Migrations
 
                     b.Property<DateTime?>("DeletionTime");
 
+                    b.Property<string>("Father");
+
                     b.Property<string>("FatherPhone");
 
                     b.Property<string>("Grade");
@@ -1114,6 +1160,8 @@ namespace EducationAdmin.Migrations
                     b.Property<DateTime?>("LastModificationTime");
 
                     b.Property<long?>("LastModifierUserId");
+
+                    b.Property<string>("Mother");
 
                     b.Property<string>("MotherPhone");
 
@@ -1317,6 +1365,19 @@ namespace EducationAdmin.Migrations
                     b.HasOne("EducationAdmin.Authorization.Users.User", "LastModifierUser")
                         .WithMany()
                         .HasForeignKey("LastModifierUserId");
+                });
+
+            modelBuilder.Entity("EducationAdmin.Students.Record", b =>
+                {
+                    b.HasOne("EducationAdmin.Authorization.Users.User", "Salesman")
+                        .WithMany()
+                        .HasForeignKey("SalesmanId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("EducationAdmin.Students.Student", "Student")
+                        .WithMany()
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("EducationAdmin.Students.Student", b =>
