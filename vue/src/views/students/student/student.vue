@@ -6,7 +6,7 @@
           <Row :gutter="16">
             <Col span="8">
               <FormItem :label="L('Keyword')+':'" style="width:100%">
-                <Input v-model="pagerequest.keyword" :placeholder="L('StudentName')"/>
+                <Input v-model="pagerequest.keyword" :placeholder="L('StudentName')" />
               </FormItem>
             </Col>
           </Row>
@@ -45,6 +45,7 @@
     <create-student v-model="createModalShow" @save-success="getpage"></create-student>
     <edit-student v-model="editModalShow" @save-success="getpage"></edit-student>
     <student-record v-model="recordModalShow"></student-record>
+    <student-order v-model="orderModalShow"></student-order>
   </div>
 </template>
 <script lang="ts">
@@ -55,6 +56,7 @@ import PageRequest from "@/store/entities/page-request";
 import CreateStudent from "./create-student.vue";
 import EditStudent from "./edit-student.vue";
 import StudentRecord from "./student-record.vue";
+import StudentOrder from "./student-order.vue";
 
 class PageStudentRequest extends PageRequest {
   keyword: string = "";
@@ -62,7 +64,7 @@ class PageStudentRequest extends PageRequest {
 }
 
 @Component({
-  components: { CreateStudent, EditStudent, StudentRecord }
+  components: { CreateStudent, EditStudent, StudentRecord, StudentOrder }
 })
 export default class Students extends AbpBase {
   pagerequest: PageStudentRequest = new PageStudentRequest();
@@ -70,6 +72,7 @@ export default class Students extends AbpBase {
   createModalShow: boolean = false;
   editModalShow: boolean = false;
   recordModalShow: boolean = false;
+  orderModalShow: boolean = false;
   get list() {
     return this.$store.state.student.list;
   }
@@ -84,6 +87,9 @@ export default class Students extends AbpBase {
   }
   record() {
     this.recordModalShow = true;
+  }
+  order() {
+    this.orderModalShow = true;
   }
   isActiveChange(val: string) {
     if (val === "Actived") {
@@ -125,8 +131,8 @@ export default class Students extends AbpBase {
     {
       title: this.L("Index"),
       key: "id",
-      render:(h:any,params:any)=>{
-        return h('span',("000000"+params.row.id).slice(-6))
+      render: (h: any, params: any) => {
+        return h("span", ("000000" + params.row.id).slice(-6));
       }
     },
     {
@@ -216,7 +222,7 @@ export default class Students extends AbpBase {
     {
       title: this.L("Actions"),
       key: "Actions",
-      width: 150,
+      width: 250,
       render: (h: any, params: any) => {
         return h("div", [
           h(
@@ -256,6 +262,25 @@ export default class Students extends AbpBase {
               }
             },
             this.L("Record")
+          ),
+          h(
+            "Button",
+            {
+              props: {
+                type: "primary",
+                size: "small"
+              },
+              style: {
+                marginRight: "5px"
+              },
+              on: {
+                click: () => {
+                  this.$store.commit("student/edit", params.row);
+                  this.order();
+                }
+              }
+            },
+            this.L("Order")
           )
         ]);
       }

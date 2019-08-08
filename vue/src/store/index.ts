@@ -9,6 +9,7 @@ import role from './modules/role'
 import tenant from './modules/tenant'
 import student from './modules/student'
 import record from './modules/record'
+import order from './modules/order'
 const store = new Vuex.Store({
     state: {
         //
@@ -27,7 +28,8 @@ const store = new Vuex.Store({
         role,
         tenant,
         student,
-        record
+        record,
+        order
     }
 });
 

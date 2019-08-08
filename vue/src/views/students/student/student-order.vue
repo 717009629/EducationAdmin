@@ -83,7 +83,7 @@ export default class StudentOrder extends AbpBase {
   }
   async getpage() {
     await this.$store.dispatch({
-      type: "order/getOrdersByStudentId",
+      type: "order/getAll",
       data: { id: this.student.id }
     });
   }
