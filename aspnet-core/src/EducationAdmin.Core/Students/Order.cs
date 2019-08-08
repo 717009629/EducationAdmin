@@ -30,5 +30,7 @@ namespace EducationAdmin.Students
         public long SalesmanId { get; set; }
 
         public User Salesman { get; set; }
+
+        public string Note { get; set; }
     }
 }

@@ -84,7 +84,7 @@ export default class StudentOrder extends AbpBase {
   async getpage() {
     await this.$store.dispatch({
       type: "order/getAll",
-      data: { id: this.student.id }
+      data: { studentId: this.student.id }
     });
   }
 
@@ -101,43 +101,40 @@ export default class StudentOrder extends AbpBase {
     }
   }
 
-  // category?: string
-  // progess?: string
-  // date?: string
-  // content?: string
-  // studentId?: string
-  // studentName?: string
-  // salesmanId?: number
-  // salesmanName?: string
-  // tenantId?: number
-  // isDeleted?: boolean
-  // deleterUserId?: number
-  // deletionTime?: string
-  // lastModificationTime?: string
-  // lastModifierUserId?: number
-  // creationTime?: string
-  // creatorUserId?: number
-
   columns = [
-    // {
-    //   title: this.L("StudentName"),
-    //   key: "name"
-    // },
+    {
+      title: this.L("Index"),
+      key: "name",
+      render: (h: any, params: any) => {
+        return h("span", ("000000" + params.row.id).slice(-6));
+      }
+    },
 
-    {
-      title: this.L("OrderContent"),
-      key: "content"
-    },
-    {
-      title: this.L("Progress"),
-      key: "progress"
-    },
     {
       title: this.L("OrderDate"),
-      key: "date",
+      key: "orderDate",
       render: (h: any, params: any) => {
         return h("span", new Date(params.row.date).toLocaleDateString());
       }
+    },
+    {
+      title: this.L("SchoolBegin"),
+      key: "schoolBegin",
+      render: (h: any, params: any) => {
+        return h("span", new Date(params.row.date).toLocaleDateString());
+      }
+    },
+    {
+      title: this.L("FullMomeny"),
+      key: "fullMomeny"
+    },
+    {
+      title: this.L("ClassName"),
+      key: "className"
+    },
+    {
+      title: this.L("State"),
+      key: "state"
     },
     {
       title: this.L("SalesmanName"),

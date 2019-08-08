@@ -14,4 +14,5 @@ export default class Order extends Entity<number>{
     lastModifierUserId? :  number  
     creationTime? :  string  
     creatorUserId? :  number  
+    note? : string
 }

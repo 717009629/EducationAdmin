@@ -9,17 +9,30 @@
       :transfer="false"
     >
       <Form ref="orderForm" label-position="top" :rules="OrderRule" :model="order">
-        <FormItem :label="L('OrderCategory')" prop="name">
-          <Input v-model="order.category"/>
+        <Row :gutter="16">
+          <Col span="12">
+            <FormItem :label="L('OrderDate')" prop="name">
+              <DatePicker type="date" placeholder="Select date" v-model="order.orderDate"></DatePicker>
+            </FormItem>
+          </Col>
+          <Col span="12">
+            <FormItem :label="L('BeginSchool')" prop="name">
+              <DatePicker type="date" placeholder="Select date" v-model="order.beginSchool"></DatePicker>
+            </FormItem>
+          </Col>
+        </Row>
+
+        <FormItem :label="L('FullMoney')" prop="name">
+          <Input v-model="order.fullMoney" />
         </FormItem>
-        <FormItem :label="L('OrderContent')" prop="name">
-          <Input v-model="order.content" type="textarea" :rows="3"/>
+        <FormItem :label="L('OrderState')" prop="name">
+          <Input v-model="order.state" />
         </FormItem>
-        <FormItem :label="L('OrderProgress')" prop="name">
-          <Input v-model="order.progress"/>
+        <FormItem :label="L('ClassName')" prop="name">
+          <Input v-model="order.className" />
         </FormItem>
-        <FormItem :label="L('OrderDate')" prop="name">
-           <DatePicker type="date" placeholder="Select date" v-model="order.date"></DatePicker>
+        <FormItem :label="L('Note')" prop="name">
+          <Input v-model="order.note" type="textarea" :rows="3" />
         </FormItem>
       </Form>
       <div slot="footer">
@@ -43,7 +56,7 @@ export default class CreateOrder extends AbpBase {
   save() {
     (this.$refs.orderForm as any).validate(async (valid: boolean) => {
       if (valid) {
-        this.order.studentId=this.student.id;
+        this.order.studentId = this.student.id;
         await this.$store.dispatch({
           type: "order/create",
           data: this.order

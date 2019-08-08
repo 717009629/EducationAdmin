@@ -19,7 +19,7 @@
               </RadioGroup>
             </FormItem>
             <FormItem :label="L('Birthday')" prop="birthday">
-                <DatePicker type="date" placeholder="Select date" v-model="student.birthday"></DatePicker>
+              <DatePicker type="date" placeholder="Select date" v-model="student.birthday"></DatePicker>
             </FormItem>
             <FormItem :label="L('School')" prop="school">
               <Input v-model="student.school"></Input>
@@ -51,12 +51,31 @@
             <FormItem :label="L('Phone')" prop="phone">
               <Input v-model="student.phone"></Input>
             </FormItem>
-            <FormItem :label="L('FatherPhone')" prop="fatherPhone">
-              <Input v-model="student.fatherPhone"></Input>
-            </FormItem>
-            <FormItem :label="L('MotherPhone')" prop="motherPhone">
-              <Input v-model="student.motherPhone"></Input>
-            </FormItem>
+            <Row :gutter="16">
+              <Col span="8">
+                <FormItem :label="L('FatherName')" prop="father">
+                  <Input v-model="student.father" />
+                </FormItem>
+              </Col>
+              <Col span="16">
+                <FormItem :label="L('FatherPhone')" prop="fatherPhone">
+                  <Input v-model="student.fatherPhone" />
+                </FormItem>
+              </Col>
+            </Row>
+
+            <Row :gutter="16">
+              <Col span="8">
+                <FormItem :label="L('MotherName')" prop="mother">
+                  <Input v-model="student.mother" />
+                </FormItem>
+              </Col>
+              <Col span="16">
+                <FormItem :label="L('MotherPhone')" prop="motherPhone">
+                  <Input v-model="student.motherPhone" />
+                </FormItem>
+              </Col>
+            </Row>
           </TabPane>
 
           <TabPane :label="L('ElseInfo')" name="else">
@@ -94,11 +113,15 @@ import Student from "@/store/entities/student";
 export default class EditStudent extends AbpBase {
   @Prop({ type: Boolean, default: false }) value: boolean;
   student: Student = new Student();
-  get sex(){
-    return this.student.sex?'male':this.student.sex===false?'female':'';
+  get sex() {
+    return this.student.sex
+      ? "male"
+      : this.student.sex === false
+      ? "female"
+      : "";
   }
-  set sex(val){
-    this.student.sex= val==='male'?true:val==='female'?false:null
+  set sex(val) {
+    this.student.sex = val === "male" ? true : val === "female" ? false : null;
   }
   save() {
     (this.$refs.studentForm as any).validate(async (valid: boolean) => {

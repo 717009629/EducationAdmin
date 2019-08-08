@@ -21,5 +21,7 @@ namespace EducationAdmin.Orders.Dto
 
         public long StudentId { get; set; }
 
+        public string Note { get; set; }
+
     }
 }
