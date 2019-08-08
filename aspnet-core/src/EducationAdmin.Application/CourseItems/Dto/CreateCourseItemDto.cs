@@ -7,7 +7,7 @@ using System.Text;
 namespace EducationAdmin.CourseItems.Dto
 {
     [AutoMapTo(typeof(CourseItem))]
-    class CreateCourseItemDto
+    public class CreateCourseItemDto
     {
         public long OrderId { get; set; }
 
