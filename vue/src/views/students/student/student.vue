@@ -44,8 +44,7 @@
     </Card>
     <create-student v-model="createModalShow" @save-success="getpage"></create-student>
     <edit-student v-model="editModalShow" @save-success="getpage"></edit-student>
-    <student-business v-model="recordModalShow"></student-business>
-    <student-order v-model="orderModalShow"></student-order>
+    <student-business v-model="businessModalShow"></student-business>
   </div>
 </template>
 <script lang="ts">
@@ -56,22 +55,20 @@ import PageRequest from "@/store/entities/page-request";
 import CreateStudent from "./create-student.vue";
 import EditStudent from "./edit-student.vue";
 import StudentBusiness from "./student-business.vue";
-import StudentOrder from "./student-order.vue";
 
 class PageStudentRequest extends PageRequest {
   keyword: string = "";
 }
 
 @Component({
-  components: { CreateStudent, EditStudent, StudentBusiness, StudentOrder }
+  components: { CreateStudent, EditStudent, StudentBusiness }
 })
 export default class Students extends AbpBase {
   pagerequest: PageStudentRequest = new PageStudentRequest();
 
   createModalShow: boolean = false;
   editModalShow: boolean = false;
-  recordModalShow: boolean = false;
-  orderModalShow: boolean = false;
+  businessModalShow: boolean = false;
   get list() {
     return this.$store.state.student.list;
   }
@@ -84,11 +81,8 @@ export default class Students extends AbpBase {
   edit() {
     this.editModalShow = true;
   }
-  record() {
-    this.recordModalShow = true;
-  }
-  order() {
-    this.orderModalShow = true;
+  business() {
+    this.businessModalShow = true;
   }
   pageChange(page: number) {
     this.$store.commit("student/setCurrentPage", page);
@@ -247,30 +241,11 @@ export default class Students extends AbpBase {
               on: {
                 click: () => {
                   this.$store.commit("student/edit", params.row);
-                  this.record();
+                  this.business();
                 }
               }
             },
-            this.L("Record")
-          ),
-          h(
-            "Button",
-            {
-              props: {
-                type: "primary",
-                size: "small"
-              },
-              style: {
-                marginRight: "5px"
-              },
-              on: {
-                click: () => {
-                  this.$store.commit("student/edit", params.row);
-                  this.order();
-                }
-              }
-            },
-            this.L("Order")
+            this.L("Business")
           )
         ]);
       }

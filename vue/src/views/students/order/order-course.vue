@@ -6,7 +6,7 @@
       @on-visible-change="visibleChange"
       :mask-closable="false"
       width="1100px"
-      :transfer="false"
+      class="modal-second"
     >
       <div>
         <!-- <Card dis-hover> -->

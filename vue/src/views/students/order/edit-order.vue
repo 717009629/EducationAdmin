@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Modal :title="L('EditOrder')" :value="value" @on-ok="save" @on-visible-change="visibleChange" :mask-closable="false" :transfer="false">
+    <Modal :title="L('EditOrder')" :value="value" @on-ok="save" @on-visible-change="visibleChange" :mask-closable="false" class="modal-second">
       <Form ref="orderForm" label-position="top" :rules="OrderRule" :model="order">
         <Row :gutter="16">
           <Col span="12">

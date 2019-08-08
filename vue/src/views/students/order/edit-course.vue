@@ -6,7 +6,7 @@
       @on-ok="save"
       @on-visible-change="visibleChange"
       :mask-closable="false"
-      :transfer="false"
+     class="modal-thrid"
     >
       <Form ref="courseForm" label-position="top" :rules="CourseRule" :model="course">
         <FormItem :label="L('LargeCategory')" prop="name">

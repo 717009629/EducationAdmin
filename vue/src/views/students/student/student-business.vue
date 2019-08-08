@@ -5,7 +5,7 @@
       :value="value"
       @on-visible-change="visibleChange"
       :mask-closable="false"
-      width="1100px"
+      width="1200px"
     >
       <div>
         <!-- <Card dis-hover> -->
@@ -38,9 +38,11 @@
         <div class="margin-top-10">
           <Tabs type="card" v-model="selecteTab">
             <TabPane :label="L('Record')" name="record">
-              <student-record1 :studentId="student.id"></student-record1>
+              <student-record :studentId="student.id"></student-record>
             </TabPane>
-            <TabPane :label="L('Order')" name="order"></TabPane>
+            <TabPane :label="L('Order')" name="order">
+               <student-order :studentId="student.id"></student-order>
+            </TabPane>
             <TabPane :label="L('Contract')" name="contract"></TabPane>
           </Tabs>
         </div>
@@ -55,9 +57,10 @@ import { Component, Vue, Inject, Prop, Watch } from "vue-property-decorator";
 import Util from "../../../lib/util";
 import AbpBase from "../../../lib/abpbase";
 import Student from "../../../store/entities/student";
-import StudentRecord1 from "./student-record1.vue";
+import StudentRecord from "./student-record.vue";
+import StudentOrder from "./student-order.vue";
 
-@Component({ components: { StudentRecord1 } })
+@Component({ components: { StudentRecord, StudentOrder } })
 export default class StudentBusiness extends AbpBase {
   @Prop({ type: Boolean, default: false }) value: boolean;
   student: Student = new Student();

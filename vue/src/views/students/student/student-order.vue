@@ -1,59 +1,19 @@
 <template>
   <div>
-    <Modal
-      :title="L('OrderList')"
-      :value="value"
-      @on-visible-change="visibleChange"
-      :mask-closable="false"
-      width="1100px"
-    >
-      <div>
-        <!-- <Card dis-hover> -->
-
-        <Form ref="queryForm" :label-width="100" label-position="left" inline>
-          <Row :gutter="16">
-            <Col span="3">
-              <h3>{{L('StudentName')}}:{{student.name}}</h3>
-            </Col>
-            <Col span="5">
-              <h3>{{L('Phone')}}:{{student.phone}}</h3>
-            </Col>
-            <Col span="3">
-              <h3>{{L('Father')}}:{{student.father}}</h3>
-            </Col>
-            <Col span="5">
-              <h3>{{L('FatherPhone')}}:{{student.fatherPhone}}</h3>
-            </Col>
-            <Col span="3">
-              <h3>{{L('Mother')}}:{{student.mother}}</h3>
-            </Col>
-            <Col span="5">
-              <h3>{{L('MotherPhone')}}:{{student.motherPhone}}</h3>
-            </Col>
-          </Row>
-          <hr
-            style="border-width:1px 0 0 0; border-style:solid; border-top-color:#ccc; margin:10px 0"
-          />
-          <Row>
-            <Button @click="create" icon="android-add" type="primary" size="large">{{L('Add')}}</Button>
-          </Row>
-        </Form>
-        <div class="margin-top-10">
-          <Table
-            :loading="loading"
-            :columns="columns"
-            :no-data-text="L('NoDatas')"
-            border
-            :data="list"
-          ></Table>
-        </div>
-        <!-- </Card> -->
-        <create-order v-model="createModalShow" @save-success="getpage"></create-order>
-        <edit-order v-model="editModalShow" @save-success="getpage"></edit-order>
-        <order-course v-model="courseModalShow" ></order-course>
-      </div>
-      <div slot="footer"></div>
-    </Modal>
+    <Form ref="queryForm" :label-width="100" label-position="left" inline>
+      <!-- <hr style="border-width:1px 0 0 0; border-style:solid; border-top-color:#ccc; margin:10px 0" /> -->
+      <Row>
+        <Button @click="create" icon="android-add" type="primary" >{{L('Add')}}</Button>
+      </Row>
+    </Form>
+    <!-- <Card dis-hover> -->
+    <div class="margin-top-10">
+      <Table :loading="loading" :columns="columns" :no-data-text="L('NoDatas')" border :data="list"></Table>
+    </div>
+    <!-- </Card> -->
+    <create-order v-model="createModalShow" @save-success="getpage"></create-order>
+    <edit-order v-model="editModalShow" @save-success="getpage"></edit-order>
+    <order-course v-model="courseModalShow"></order-course>
   </div>
 </template>
 <script lang="ts">
@@ -64,14 +24,14 @@ import Student from "../../../store/entities/student";
 import Order from "../../../store/entities/order";
 import CreateOrder from "../order/create-order.vue";
 import EditOrder from "../order/edit-order.vue";
-import OrderCourse from '../order/order-course.vue'
-@Component({ components: { CreateOrder, EditOrder,OrderCourse } })
+import OrderCourse from "../order/order-course.vue";
+@Component({ components: { CreateOrder, EditOrder, OrderCourse } })
 export default class StudentOrder extends AbpBase {
-  @Prop({ type: Boolean, default: false }) value: boolean;
+  @Prop({ type: Number, default: null }) studentId: null;
   student: Student = new Student();
   createModalShow: boolean = false;
   editModalShow: boolean = false;
-  courseModalShow:boolean=false;
+  courseModalShow: boolean = false;
   get list() {
     return this.$store.state.order.list;
   }
@@ -84,8 +44,8 @@ export default class StudentOrder extends AbpBase {
   edit() {
     this.editModalShow = true;
   }
-  showCourse(){
-    this.courseModalShow=true;
+  showCourse() {
+    this.courseModalShow = true;
   }
   async getpage() {
     await this.$store.dispatch({
@@ -93,18 +53,16 @@ export default class StudentOrder extends AbpBase {
       data: { studentId: this.student.id }
     });
   }
-
-  visibleChange(value: boolean) {
-    if (!value) {
-      this.$emit("input", value);
-    } else {
-      this.student = Util.extend(
-        true,
-        {},
-        this.$store.state.student.editStudent
-      );
-      this.getpage();
+  @Watch("studentId")
+  async watchId(nv, ov) {
+    if (nv) {
+      await this.showPage();
     }
+  }
+
+  async showPage() {
+    this.student = Util.extend(true, {}, this.$store.state.student.editStudent);
+    await this.getpage();
   }
 
   columns = [
