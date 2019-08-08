@@ -1,7 +1,7 @@
 <template>
   <div>
     <Modal
-      :title="L('RecordList')"
+      :title="L('OrderList')"
       :value="value"
       @on-visible-change="visibleChange"
       :mask-closable="false"
@@ -48,8 +48,8 @@
           ></Table>
         </div>
         <!-- </Card> -->
-        <create-record v-model="createModalShow" @save-success="getpage"></create-record>
-        <edit-record v-model="editModalShow" @save-success="getpage"></edit-record>
+        <create-order v-model="createModalShow" @save-success="getpage"></create-order>
+        <edit-order v-model="editModalShow" @save-success="getpage"></edit-order>
       </div>
       <div slot="footer"></div>
     </Modal>
@@ -60,20 +60,20 @@ import { Component, Vue, Inject, Prop, Watch } from "vue-property-decorator";
 import Util from "../../../lib/util";
 import AbpBase from "../../../lib/abpbase";
 import Student from "../../../store/entities/student";
-import Record from "../../../store/entities/record";
-import CreateRecord from "../record/create-record.vue";
-import EditRecord from "../record/edit-record.vue";
-@Component({ components: { CreateRecord, EditRecord } })
-export default class StudentRecord extends AbpBase {
+import Order from "../../../store/entities/order";
+import CreateOrder from "../order/create-order.vue";
+import EditOrder from "../order/edit-order.vue";
+@Component({ components: { CreateOrder, EditOrder } })
+export default class StudentOrder extends AbpBase {
   @Prop({ type: Boolean, default: false }) value: boolean;
   student: Student = new Student();
   createModalShow: boolean = false;
   editModalShow: boolean = false;
   get list() {
-    return this.$store.state.record.list;
+    return this.$store.state.order.list;
   }
   get loading() {
-    return this.$store.state.record.loading;
+    return this.$store.state.order.loading;
   }
   create() {
     this.createModalShow = true;
@@ -83,7 +83,7 @@ export default class StudentRecord extends AbpBase {
   }
   async getpage() {
     await this.$store.dispatch({
-      type: "record/getRecordsByStudentId",
+      type: "order/getOrdersByStudentId",
       data: { id: this.student.id }
     });
   }
@@ -125,7 +125,7 @@ export default class StudentRecord extends AbpBase {
     // },
 
     {
-      title: this.L("RecordContent"),
+      title: this.L("OrderContent"),
       key: "content"
     },
     {
@@ -133,7 +133,7 @@ export default class StudentRecord extends AbpBase {
       key: "progress"
     },
     {
-      title: this.L("RecordDate"),
+      title: this.L("OrderDate"),
       key: "date",
       render: (h: any, params: any) => {
         return h("span", new Date(params.row.date).toLocaleDateString());
@@ -162,7 +162,7 @@ export default class StudentRecord extends AbpBase {
               },
               on: {
                 click: () => {
-                  this.$store.commit("record/edit", params.row);
+                  this.$store.commit("order/edit", params.row);
                   this.edit();
                 }
               }

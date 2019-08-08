@@ -20,9 +20,12 @@ namespace EducationAdmin.EntityFrameworkCore
 
         public DbSet<Record> Records { get; set; }
 
+        public DbSet<Order> Orders { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Record>().HasOne(m => m.Student).WithMany().OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<Order>().HasOne(m => m.Student).WithMany().OnDelete(DeleteBehavior.Restrict);
 
             base.OnModelCreating(modelBuilder);
         }
