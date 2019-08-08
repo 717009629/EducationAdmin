@@ -26,7 +26,7 @@ namespace EducationAdmin.Students
             return base.Create(input);
         }
 
-
+        
 
         protected override IQueryable<Student> CreateFilteredQuery(PagedStudentResultRequestDto input)
         {

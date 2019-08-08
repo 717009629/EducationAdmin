@@ -12,18 +12,19 @@ using System.Threading.Tasks;
 using Abp.Linq.Extensions;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using EducationAdmin.Orders.Dto;
 
 namespace EducationAdmin.Records
 {
     [AbpAuthorize(PermissionNames.Pages_Students)]
-    public class RecordAppService : AsyncCrudAppService<Record, RecordDto, long, PagedResultRequestDto, CreateRecordDto, RecordDto>, IRecordAppService
+    public class RecordAppService : AsyncCrudAppService<Record, RecordDto, long, PagedRecordResultRequestDto, CreateRecordDto, RecordDto>, IRecordAppService
     {
         public RecordAppService(IRepository<Record, long> repository) : base(repository) { }
 
-        public Task<ListResultDto<RecordDto>> GetRecordsByStudentId(long id)
+
+        protected override IQueryable<Record> CreateFilteredQuery(PagedRecordResultRequestDto input)
         {
-            var list = this.Repository.GetAllIncluding(m=>m.Salesman).Where(m => m.StudentId == id);
-            return Task.FromResult(new ListResultDto<RecordDto>(ObjectMapper.Map<List<RecordDto>>(list)));
+          return  Repository.GetAllIncluding(m => m.Salesman).WhereIf(input.StudentId!=null, m => m.StudentId == input.StudentId);
         }
 
         public override Task<RecordDto> Create(CreateRecordDto input)

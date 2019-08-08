@@ -83,7 +83,7 @@ export default class StudentRecord extends AbpBase {
   }
   async getpage() {
     await this.$store.dispatch({
-      type: "record/getRecordsByStudentId",
+      type: "record/getAll",
       data: { id: this.student.id }
     });
   }
