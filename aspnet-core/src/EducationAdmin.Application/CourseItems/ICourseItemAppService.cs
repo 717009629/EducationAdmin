@@ -7,7 +7,7 @@ using System.Text;
 
 namespace EducationAdmin.CourseItems
 {
-    public interface ICourseAppService:IAsyncCrudAppService<CourseItemDto, long, PagedResultRequestDto, CreateCourseItemDto, CourseItemDto>
+    public interface ICourseItemAppService:IAsyncCrudAppService<CourseItemDto, long, PagedResultRequestDto, CreateCourseItemDto, CourseItemDto>
     {
     }
 }

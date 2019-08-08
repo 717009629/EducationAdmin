@@ -44,7 +44,7 @@
     </Card>
     <create-student v-model="createModalShow" @save-success="getpage"></create-student>
     <edit-student v-model="editModalShow" @save-success="getpage"></edit-student>
-    <student-record v-model="recordModalShow"></student-record>
+    <student-business v-model="recordModalShow"></student-business>
     <student-order v-model="orderModalShow"></student-order>
   </div>
 </template>
@@ -55,16 +55,15 @@ import AbpBase from "@/lib/abpbase";
 import PageRequest from "@/store/entities/page-request";
 import CreateStudent from "./create-student.vue";
 import EditStudent from "./edit-student.vue";
-import StudentRecord from "./student-record.vue";
+import StudentBusiness from "./student-business.vue";
 import StudentOrder from "./student-order.vue";
 
 class PageStudentRequest extends PageRequest {
   keyword: string = "";
-  isActive: boolean = null;
 }
 
 @Component({
-  components: { CreateStudent, EditStudent, StudentRecord, StudentOrder }
+  components: { CreateStudent, EditStudent, StudentBusiness, StudentOrder }
 })
 export default class Students extends AbpBase {
   pagerequest: PageStudentRequest = new PageStudentRequest();
@@ -90,15 +89,6 @@ export default class Students extends AbpBase {
   }
   order() {
     this.orderModalShow = true;
-  }
-  isActiveChange(val: string) {
-    if (val === "Actived") {
-      this.pagerequest.isActive = true;
-    } else if (val === "NoActive") {
-      this.pagerequest.isActive = false;
-    } else {
-      this.pagerequest.isActive = null;
-    }
   }
   pageChange(page: number) {
     this.$store.commit("student/setCurrentPage", page);

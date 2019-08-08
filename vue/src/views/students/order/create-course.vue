@@ -1,26 +1,27 @@
 <template>
   <div>
     <Modal
-      :title="L('CreateNewRecord')"
+      :title="L('CreateNewCourse')"
       :value="value"
       @on-ok="save"
       @on-visible-change="visibleChange"
       :mask-closable="false"
-    class="modal-second"
+      :transfer="false"
     >
-      <Form ref="recordForm" label-position="top" :rules="RecordRule" :model="record">
-        <FormItem :label="L('RecordCategory')" prop="name">
-          <Input v-model="record.category"/>
+      <Form ref="courseForm" label-position="top" :rules="CourseRule" :model="course">
+        <FormItem :label="L('LargeCategory')" prop="name">
+          <Input v-model="course.largeCategory" />
         </FormItem>
-        <FormItem :label="L('RecordContent')" prop="name">
-          <Input v-model="record.content" type="textarea" :rows="3"/>
+        <FormItem :label="L('SubCategory')" prop="name">
+          <Input v-model="course.subCategory" />
         </FormItem>
-        <FormItem :label="L('RecordProgress')" prop="name">
-          <Input v-model="record.progress"/>
+        <FormItem :label="L('CourseName')" prop="name">
+          <Input v-model="course.name" />
         </FormItem>
-        <FormItem :label="L('RecordDate')" prop="name">
-           <DatePicker type="date" placeholder="Select date" v-model="record.date"></DatePicker>
+        <FormItem :label="L('Price')" prop="name">
+          <Input v-model="course.price"  />
         </FormItem>
+
       </Form>
       <div slot="footer">
         <Button @click="cancel">{{L('Cancel')}}</Button>
@@ -34,28 +35,27 @@ import { Component, Vue, Inject, Prop, Watch } from "vue-property-decorator";
 import Util from "../../../lib/util";
 import AbpBase from "../../../lib/abpbase";
 import Student from "../../../store/entities/student";
-import Record from "../../../store/entities/record";
+import Course from "../../../store/entities/course";
 @Component
-export default class CreateRecord extends AbpBase {
+export default class CreateCourse extends AbpBase {
   @Prop({ type: Boolean, default: false }) value: boolean;
-  record: Record = new Record();
+  course: Course = new Course();
   student: Student = new Student();
   save() {
-    (this.$refs.recordForm as any).validate(async (valid: boolean) => {
+    (this.$refs.courseForm as any).validate(async (valid: boolean) => {
       if (valid) {
-        this.record.studentId=this.student.id;
         await this.$store.dispatch({
-          type: "record/create",
-          data: this.record
+          type: "course/create",
+          data: this.course
         });
-        (this.$refs.recordForm as any).resetFields();
+        (this.$refs.courseForm as any).resetFields();
         this.$emit("save-success");
         this.$emit("input", false);
       }
     });
   }
   cancel() {
-    (this.$refs.recordForm as any).resetFields();
+    (this.$refs.courseForm as any).resetFields();
     this.$emit("input", false);
   }
   visibleChange(value: boolean) {
@@ -69,11 +69,11 @@ export default class CreateRecord extends AbpBase {
       );
     }
   }
-  RecordRule = {
+  CourseRule = {
     content: [
       {
         required: true,
-        message: this.L("FieldIsRequired", undefined, this.L("RecordContent")),
+        message: this.L("FieldIsRequired", undefined, this.L("CourseContent")),
         trigger: "blur"
       }
     ]

@@ -25,6 +25,8 @@ namespace EducationAdmin.EntityFrameworkCore
 
         public DbSet<Course> Courses { get; set; }
 
+        public DbSet<CourseItem> CourseItems { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Record>().HasOne(m => m.Student).WithMany().OnDelete(DeleteBehavior.Restrict);

@@ -11,6 +11,7 @@ import student from './modules/student'
 import record from './modules/record'
 import order from './modules/order'
 import course from './modules/course'
+import courseItem from './modules/courseItem'
 const store = new Vuex.Store({
     state: {
         //

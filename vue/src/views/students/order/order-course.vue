@@ -1,11 +1,12 @@
 <template>
   <div>
     <Modal
-      :title="L('OrderList')"
+      :title="L('CourseList')"
       :value="value"
       @on-visible-change="visibleChange"
       :mask-closable="false"
       width="1100px"
+      :transfer="false"
     >
       <div>
         <!-- <Card dis-hover> -->
@@ -13,22 +14,22 @@
         <Form ref="queryForm" :label-width="100" label-position="left" inline>
           <Row :gutter="16">
             <Col span="3">
-              <h3>{{L('StudentName')}}:{{student.name}}</h3>
+              <h3>{{L('OrderName')}}:{{order.name}}</h3>
             </Col>
             <Col span="5">
-              <h3>{{L('Phone')}}:{{student.phone}}</h3>
+              <h3>{{L('Phone')}}:{{order.phone}}</h3>
             </Col>
             <Col span="3">
-              <h3>{{L('Father')}}:{{student.father}}</h3>
+              <h3>{{L('Father')}}:{{order.father}}</h3>
             </Col>
             <Col span="5">
-              <h3>{{L('FatherPhone')}}:{{student.fatherPhone}}</h3>
+              <h3>{{L('FatherPhone')}}:{{order.fatherPhone}}</h3>
             </Col>
             <Col span="3">
-              <h3>{{L('Mother')}}:{{student.mother}}</h3>
+              <h3>{{L('Mother')}}:{{order.mother}}</h3>
             </Col>
             <Col span="5">
-              <h3>{{L('MotherPhone')}}:{{student.motherPhone}}</h3>
+              <h3>{{L('MotherPhone')}}:{{order.motherPhone}}</h3>
             </Col>
           </Row>
           <hr
@@ -48,9 +49,8 @@
           ></Table>
         </div>
         <!-- </Card> -->
-        <create-order v-model="createModalShow" @save-success="getpage"></create-order>
-        <edit-order v-model="editModalShow" @save-success="getpage"></edit-order>
-        <order-course v-model="courseModalShow" ></order-course>
+        <create-course v-model="createModalShow" @save-success="getpage"></create-course>
+        <edit-course v-model="editModalShow" @save-success="getpage"></edit-course>
       </div>
       <div slot="footer"></div>
     </Modal>
@@ -60,23 +60,21 @@
 import { Component, Vue, Inject, Prop, Watch } from "vue-property-decorator";
 import Util from "../../../lib/util";
 import AbpBase from "../../../lib/abpbase";
-import Student from "../../../store/entities/student";
 import Order from "../../../store/entities/order";
-import CreateOrder from "../order/create-order.vue";
-import EditOrder from "../order/edit-order.vue";
-import OrderCourse from '../order/order-course.vue'
-@Component({ components: { CreateOrder, EditOrder,OrderCourse } })
-export default class StudentOrder extends AbpBase {
+import Course from "../../../store/entities/course";
+import CreateCourse from "./create-course.vue";
+import EditCourse from "./edit-course.vue";
+@Component({ components: { CreateCourse, EditCourse } })
+export default class OrderCourse extends AbpBase {
   @Prop({ type: Boolean, default: false }) value: boolean;
-  student: Student = new Student();
+  order: Order = new Order();
   createModalShow: boolean = false;
   editModalShow: boolean = false;
-  courseModalShow:boolean=false;
   get list() {
-    return this.$store.state.order.list;
+    return this.$store.state.course.list;
   }
   get loading() {
-    return this.$store.state.order.loading;
+    return this.$store.state.course.loading;
   }
   create() {
     this.createModalShow = true;
@@ -84,13 +82,10 @@ export default class StudentOrder extends AbpBase {
   edit() {
     this.editModalShow = true;
   }
-  showCourse(){
-    this.courseModalShow=true;
-  }
   async getpage() {
     await this.$store.dispatch({
-      type: "order/getAll",
-      data: { studentId: this.student.id }
+      type: "course/getAll",
+      data: { orderId: this.order.id }
     });
   }
 
@@ -98,49 +93,31 @@ export default class StudentOrder extends AbpBase {
     if (!value) {
       this.$emit("input", value);
     } else {
-      this.student = Util.extend(
-        true,
-        {},
-        this.$store.state.student.editStudent
-      );
+      this.order = Util.extend(true, {}, this.$store.state.order.editOrder);
       this.getpage();
     }
   }
 
   columns = [
-    {
-      title: this.L("Index"),
-      key: "name",
-      render: (h: any, params: any) => {
-        return h("span", ("000000" + params.row.id).slice(-6));
-      }
-    },
+    // {
+    //   title: this.L("OrderName"),
+    //   key: "name"
+    // },
 
     {
-      title: this.L("OrderDate"),
-      key: "orderDate",
+      title: this.L("CourseContent"),
+      key: "content"
+    },
+    {
+      title: this.L("Progress"),
+      key: "progress"
+    },
+    {
+      title: this.L("CourseDate"),
+      key: "date",
       render: (h: any, params: any) => {
         return h("span", new Date(params.row.date).toLocaleDateString());
       }
-    },
-    {
-      title: this.L("SchoolBegin"),
-      key: "schoolBegin",
-      render: (h: any, params: any) => {
-        return h("span", new Date(params.row.date).toLocaleDateString());
-      }
-    },
-    {
-      title: this.L("FullMomeny"),
-      key: "fullMomeny"
-    },
-    {
-      title: this.L("ClassName"),
-      key: "className"
-    },
-    {
-      title: this.L("State"),
-      key: "state"
     },
     {
       title: this.L("SalesmanName"),
@@ -165,31 +142,12 @@ export default class StudentOrder extends AbpBase {
               },
               on: {
                 click: () => {
-                  this.$store.commit("order/edit", params.row);
+                  this.$store.commit("course/edit", params.row);
                   this.edit();
                 }
               }
             },
             this.L("Edit")
-          ),
-          h(
-            "Button",
-            {
-              props: {
-                type: "primary",
-                size: "small"
-              },
-              style: {
-                marginRight: "5px"
-              },
-              on: {
-                click: () => {
-                  this.$store.commit("order/edit", params.row);
-                  this.showCourse();
-                }
-              }
-            },
-            this.L("Course")
           )
         ]);
       }

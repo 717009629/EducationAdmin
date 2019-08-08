@@ -10,8 +10,8 @@ using System.Text;
 
 namespace EducationAdmin.CourseItems
 {
-    public class CourseAppService: AsyncCrudAppService<CourseItem, CourseItemDto, long, PagedResultRequestDto, CreateCourseItemDto, CourseItemDto>,ICourseAppService
+    public class CourseItemAppService: AsyncCrudAppService<CourseItem, CourseItemDto, long, PagedResultRequestDto, CreateCourseItemDto, CourseItemDto>,ICourseItemAppService
     {
-        public CourseAppService(IRepository<CourseItem, long> repository) : base(repository) { }
+        public CourseItemAppService(IRepository<CourseItem, long> repository) : base(repository) { }
     }
 }

@@ -23,5 +23,7 @@ namespace EducationAdmin.Orders.Dto
 
         public string Note { get; set; }
 
+        public long SalesmanId { get; set; }
+
     }
 }
