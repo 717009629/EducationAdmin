@@ -1,17 +1,17 @@
-﻿using Abp.Domain.Entities;
+﻿using Abp.Application.Services.Dto;
+using Abp.AutoMapper;
 using Abp.Domain.Entities.Auditing;
-using EducationAdmin.Authorization.Users;
+using EducationAdmin.Students;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace EducationAdmin.Students
+namespace EducationAdmin.Orders.Dto
 {
-    public class Order : FullAuditedEntity<long>, IMayHaveTenant
+    [AutoMapFrom(typeof(Order))]
+    [AutoMapTo(typeof(Order))]
+    public class OrderDto : FullAuditedEntityDto<long>
     {
-
-
-        public int? TenantId { get; set; }
 
         public DateTime? OrderDate { get; set; }
 
@@ -25,10 +25,10 @@ namespace EducationAdmin.Students
 
         public long StudentId { get; set; }
 
-        public Student Student { get; set; }
+        public string StudentName { get; set; }
 
         public long SalesmanId { get; set; }
 
-        public User Salesman { get; set; }
+        public string SalesmanName { get; set; }
     }
 }
