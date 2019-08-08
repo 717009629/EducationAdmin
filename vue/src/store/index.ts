@@ -10,6 +10,7 @@ import tenant from './modules/tenant'
 import student from './modules/student'
 import record from './modules/record'
 import order from './modules/order'
+import course from './modules/course'
 const store = new Vuex.Store({
     state: {
         //
@@ -29,7 +30,8 @@ const store = new Vuex.Store({
         tenant,
         student,
         record,
-        order
+        order,
+        course
     }
 });
 

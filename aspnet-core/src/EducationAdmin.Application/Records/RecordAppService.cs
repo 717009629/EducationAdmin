@@ -16,7 +16,7 @@ using EducationAdmin.Orders.Dto;
 
 namespace EducationAdmin.Records
 {
-    [AbpAuthorize(PermissionNames.Pages_Students)]
+    [AbpAuthorize(PermissionNames.Pages_Record)]
     public class RecordAppService : AsyncCrudAppService<Record, RecordDto, long, PagedRecordResultRequestDto, CreateRecordDto, RecordDto>, IRecordAppService
     {
         public RecordAppService(IRepository<Record, long> repository) : base(repository) { }

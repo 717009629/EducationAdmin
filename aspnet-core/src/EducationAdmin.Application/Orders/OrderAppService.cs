@@ -1,6 +1,8 @@
 ﻿using Abp.Application.Services;
+using Abp.Authorization;
 using Abp.Domain.Repositories;
 using Abp.Linq.Extensions;
+using EducationAdmin.Authorization;
 using EducationAdmin.Orders.Dto;
 using EducationAdmin.Students;
 using System;
@@ -10,6 +12,7 @@ using System.Text;
 
 namespace EducationAdmin.Orders
 {
+    [AbpAuthorize(PermissionNames.Pages_Order)]
     public class OrderAppService : AsyncCrudAppService<Order, OrderDto, long, PagedOrderResultRequestDto, CreateOrderDto, OrderDto>, IOrderAppService
     {
         public OrderAppService (IRepository<Order,long> repository) : base(repository) { }

@@ -66,6 +66,17 @@ export const appRouters: Array<Router> = [{
     children: [
         { path: 'student', permission: 'Pages.Students', meta: { title: 'Students' }, name: 'student', component: () => import('../views/students/student/student.vue') }
     ]
+},
+{
+    path: '/education',
+    name: 'education',
+    permission: '',
+    meta: { title: 'EducationManage' },
+    icon: '&#xe67c;',
+    component: main,
+    children: [
+        { path: 'course', permission: 'Pages.Course', meta: { title: 'Course' }, name: 'course', component: () => import('../views/education/course/course.vue') }
+    ]
 }]
 export const routers = [
     loginRouter,

@@ -4,6 +4,7 @@ using EducationAdmin.Authorization.Roles;
 using EducationAdmin.Authorization.Users;
 using EducationAdmin.MultiTenancy;
 using EducationAdmin.Students;
+using EducationAdmin.Education;
 
 namespace EducationAdmin.EntityFrameworkCore
 {
@@ -21,6 +22,8 @@ namespace EducationAdmin.EntityFrameworkCore
         public DbSet<Record> Records { get; set; }
 
         public DbSet<Order> Orders { get; set; }
+
+        public DbSet<Course> Courses { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
