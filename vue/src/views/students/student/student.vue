@@ -6,7 +6,7 @@
           <Row :gutter="16">
             <Col span="8">
               <FormItem :label="L('Keyword')+':'" style="width:100%">
-                <Input v-model="pagerequest.keyword" :placeholder="L('StudentName')"></Input>
+                <Input v-model="pagerequest.keyword" :placeholder="L('StudentName')"/>
               </FormItem>
             </Col>
           </Row>

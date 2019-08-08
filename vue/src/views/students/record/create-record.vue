@@ -10,13 +10,13 @@
     >
       <Form ref="recordForm" label-position="top" :rules="RecordRule" :model="record">
         <FormItem :label="L('RecordCategory')" prop="name">
-          <Input v-model="record.category"></Input>
+          <Input v-model="record.category"/>
         </FormItem>
         <FormItem :label="L('RecordContent')" prop="name">
-          <Input v-model="record.content" type="textarea" :rows="3"></Input>
+          <Input v-model="record.content" type="textarea" :rows="3"/>
         </FormItem>
         <FormItem :label="L('RecordProgress')" prop="name">
-          <Input v-model="record.progress"></Input>
+          <Input v-model="record.progress"/>
         </FormItem>
         <FormItem :label="L('RecordDate')" prop="name">
            <DatePicker type="date" placeholder="Select date" v-model="record.date"></DatePicker>

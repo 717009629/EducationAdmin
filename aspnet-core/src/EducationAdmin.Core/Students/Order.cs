@@ -1,0 +1,34 @@
+﻿using Abp.Domain.Entities;
+using Abp.Domain.Entities.Auditing;
+using EducationAdmin.Authorization.Users;
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace EducationAdmin.Students
+{
+    class Order : FullAuditedEntity<long>, IMayHaveTenant
+    {
+
+
+        public int? TenantId { get; set; }
+
+        public DateTime? OrderDate { get; set; }
+
+        public DateTime? SchoolBegin { get; set; }
+
+        public decimal FullMoney { get; set; }
+
+        public string State { get; set; }
+
+        public string ClassName { get; set; }
+
+        public long StudentId { get; set; }
+
+        public Student Student { get; set; }
+
+        public long SalesmanId { get; set; }
+
+        public User Salesman { get; set; }
+    }
+}
