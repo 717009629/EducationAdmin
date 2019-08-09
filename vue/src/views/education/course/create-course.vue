@@ -9,11 +9,8 @@
       :transfer="false"
     >
       <Form ref="courseForm" label-position="top" :rules="CourseRule" :model="course">
-        <FormItem :label="L('LargeCategory')" prop="name">
-          <Input v-model="course.largeCategory" />
-        </FormItem>
-        <FormItem :label="L('SubCategory')" prop="name">
-          <Input v-model="course.subCategory" />
+        <FormItem :label="L('Category')" prop="name">
+          <Input v-model="course.category" />
         </FormItem>
         <FormItem :label="L('CourseName')" prop="name">
           <Input v-model="course.name" />

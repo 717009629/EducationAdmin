@@ -127,13 +127,9 @@ export default class Courses extends AbpBase {
         return h("span", ("000000" + params.row.id).slice(-6));
       }
     },
-    {
-      title: this.L("LargeCategory"),
-      key: "largeCategory"
-    },
         {
-      title: this.L("subCategory"),
-      key: "SubCategory"
+      title: this.L("Category"),
+      key: "category"
     },
         {
       title: this.L("CourseName"),

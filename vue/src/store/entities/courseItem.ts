@@ -4,12 +4,15 @@ export default class CourseItem extends Entity<number>{
     orderId? :  number  
     courseId? :  number  
     courseName? :  string  
-    count? :  number  
+    courseCategory? :  string 
+    count :  number  =1
     fullMoney? :  number  
     note? :  string   
     lastModificationTime? :  string  
     lastModifierUserId? :  number  
     creationTime? :  string  
     creatorUserId? :  number  
+
+
 
 }

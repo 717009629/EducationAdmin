@@ -9,8 +9,8 @@
             </FormItem>
           </Col>
           <Col span="12">
-            <FormItem :label="L('BeginSchool')" prop="name">
-              <DatePicker type="date" placeholder="Select date" v-model="order.beginSchool"></DatePicker>
+            <FormItem :label="L('SchoolBegin')" prop="name">
+              <DatePicker type="date" placeholder="Select date" v-model="order.schoolBegin"></DatePicker>
             </FormItem>
           </Col>
         </Row>

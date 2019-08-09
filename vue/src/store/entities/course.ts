@@ -1,8 +1,7 @@
 import Entity from './entity'
 
 export default class Course extends Entity<number>{
-    largeCategory? :  string  
-    subCategory? :  string  
+    category? :  string  
     name? :  string  
     price? :  number  
     lastModificationTime? :  string  

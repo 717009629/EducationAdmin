@@ -29,7 +29,7 @@ ajax.interceptors.response.use((respon)=>{
     }
     setTimeout(()=>{
        vm.$Message.destroy();
-    },1000);
+    },1000000);
     return Promise.reject(error);
 })
 export default ajax;

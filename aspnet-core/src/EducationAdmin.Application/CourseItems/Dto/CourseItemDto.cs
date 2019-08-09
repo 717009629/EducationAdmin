@@ -16,6 +16,8 @@ namespace EducationAdmin.CourseItems.Dto
         public long CourseId { get; set; }
         public string CourseName { get; set; }
 
+        public string CourseCategory { get; set; }
+
         public int Count { get; set; }
 
         public decimal FullMoney { get; set; }

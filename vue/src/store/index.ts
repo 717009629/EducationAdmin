@@ -32,7 +32,8 @@ const store = new Vuex.Store({
         student,
         record,
         order,
-        course
+        course,
+        courseItem
     }
 });
 

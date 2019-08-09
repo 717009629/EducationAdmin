@@ -1,5 +1,5 @@
 <template>
-  <div @click="showPage">
+  <div>
     <!-- <Card dis-hover> -->
 
     <Form ref="queryForm" :label-width="100" label-position="left" inline>

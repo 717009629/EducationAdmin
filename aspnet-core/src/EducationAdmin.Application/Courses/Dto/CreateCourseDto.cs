@@ -9,9 +9,8 @@ namespace EducationAdmin.Courses.Dto
     [AutoMapTo(typeof(Course))]
  public   class CreateCourseDto
     {
-        public string LargeCategory { get; set; }
+        public string Category { get; set; }
 
-        public string SubCategory { get; set; }
 
         public string Name { get; set; }
 

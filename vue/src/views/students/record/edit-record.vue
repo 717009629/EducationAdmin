@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Modal :title="L('EditRecord')" :value="value" @on-ok="save" @on-visible-change="visibleChange" :mask-closable="false" :transfer="false">
+    <Modal :title="L('EditRecord')" :value="value" @on-ok="save" @on-visible-change="visibleChange" :mask-closable="false" class="model-second">
       <Form ref="recordForm" label-position="top" :rules="RecordRule" :model="record">
         <FormItem :label="L('RecordCategory')" prop="name">
           <Input v-model="record.category"/>

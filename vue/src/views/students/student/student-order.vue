@@ -78,14 +78,14 @@ export default class StudentOrder extends AbpBase {
       title: this.L("OrderDate"),
       key: "orderDate",
       render: (h: any, params: any) => {
-        return h("span", new Date(params.row.date).toLocaleDateString());
+        return h("span", new Date(params.row.orderDate).toLocaleDateString());
       }
     },
     {
       title: this.L("SchoolBegin"),
       key: "schoolBegin",
       render: (h: any, params: any) => {
-        return h("span", new Date(params.row.date).toLocaleDateString());
+        return h("span", new Date(params.row.schoolBegin).toLocaleDateString());
       }
     },
     {

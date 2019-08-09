@@ -12,29 +12,6 @@
         <!-- <Card dis-hover> -->
 
         <Form ref="queryForm" :label-width="100" label-position="left" inline>
-          <Row :gutter="16">
-            <Col span="3">
-              <h3>{{L('OrderName')}}:{{order.name}}</h3>
-            </Col>
-            <Col span="5">
-              <h3>{{L('Phone')}}:{{order.phone}}</h3>
-            </Col>
-            <Col span="3">
-              <h3>{{L('Father')}}:{{order.father}}</h3>
-            </Col>
-            <Col span="5">
-              <h3>{{L('FatherPhone')}}:{{order.fatherPhone}}</h3>
-            </Col>
-            <Col span="3">
-              <h3>{{L('Mother')}}:{{order.mother}}</h3>
-            </Col>
-            <Col span="5">
-              <h3>{{L('MotherPhone')}}:{{order.motherPhone}}</h3>
-            </Col>
-          </Row>
-          <hr
-            style="border-width:1px 0 0 0; border-style:solid; border-top-color:#ccc; margin:10px 0"
-          />
           <Row>
             <Button @click="create" icon="android-add" type="primary" size="large">{{L('Add')}}</Button>
           </Row>
@@ -49,8 +26,8 @@
           ></Table>
         </div>
         <!-- </Card> -->
-        <create-course v-model="createModalShow" @save-success="getpage"></create-course>
-        <edit-course v-model="editModalShow" @save-success="getpage"></edit-course>
+        <create-course-item v-model="createModalShow" @save-success="getpage"></create-course-item>
+        <edit-course-item v-model="editModalShow" @save-success="getpage"></edit-course-item>
       </div>
       <div slot="footer"></div>
     </Modal>
@@ -62,19 +39,19 @@ import Util from "../../../lib/util";
 import AbpBase from "../../../lib/abpbase";
 import Order from "../../../store/entities/order";
 import Course from "../../../store/entities/course";
-import CreateCourse from "./create-course.vue";
-import EditCourse from "./edit-course.vue";
-@Component({ components: { CreateCourse, EditCourse } })
+import CreateCourseItem from "./create-course-item.vue";
+import EditCourseItem from "./edit-course-item.vue";
+@Component({ components: { CreateCourseItem, EditCourseItem } })
 export default class OrderCourse extends AbpBase {
   @Prop({ type: Boolean, default: false }) value: boolean;
   order: Order = new Order();
   createModalShow: boolean = false;
   editModalShow: boolean = false;
   get list() {
-    return this.$store.state.course.list;
+    return this.$store.state.courseItem.list;
   }
   get loading() {
-    return this.$store.state.course.loading;
+    return this.$store.state.courseItem.loading;
   }
   create() {
     this.createModalShow = true;
@@ -84,7 +61,7 @@ export default class OrderCourse extends AbpBase {
   }
   async getpage() {
     await this.$store.dispatch({
-      type: "course/getAll",
+      type: "courseItem/getAll",
       data: { orderId: this.order.id }
     });
   }
@@ -103,25 +80,25 @@ export default class OrderCourse extends AbpBase {
     //   title: this.L("OrderName"),
     //   key: "name"
     // },
-
     {
-      title: this.L("CourseContent"),
-      key: "content"
+      title: this.L("CourseCategory"),
+      key: "courseCategory"
     },
     {
-      title: this.L("Progress"),
-      key: "progress"
+      title: this.L("CourseName"),
+      key: "courseName"
     },
     {
-      title: this.L("CourseDate"),
-      key: "date",
-      render: (h: any, params: any) => {
-        return h("span", new Date(params.row.date).toLocaleDateString());
-      }
+      title: this.L("count"),
+      key: "count"
     },
     {
-      title: this.L("SalesmanName"),
-      key: "salesmanName"
+      title: this.L("FullMoney"),
+      key: "fullMoney"
+    },
+    {
+      title: this.L("Note"),
+      key: "note"
     },
 
     {
@@ -142,7 +119,7 @@ export default class OrderCourse extends AbpBase {
               },
               on: {
                 click: () => {
-                  this.$store.commit("course/edit", params.row);
+                  this.$store.commit("courseItem/edit", params.row);
                   this.edit();
                 }
               }
