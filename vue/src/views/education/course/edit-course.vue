@@ -9,14 +9,13 @@
       :transfer="false"
     >
       <Form ref="courseForm" label-position="top" :rules="CourseRule" :model="course">
-
-        <FormItem :label="L('Category')" prop="name">
+        <FormItem :label="L('Category')" prop="category">
           <Input v-model="course.category" />
         </FormItem>
         <FormItem :label="L('CourseName')" prop="name">
           <Input v-model="course.name" />
         </FormItem>
-        <FormItem :label="L('Price')" prop="name">
+        <FormItem :label="L('Price')" prop="price">
           <Input v-model="course.price" />
         </FormItem>
       </Form>
@@ -61,10 +60,25 @@ export default class EditCoursee extends AbpBase {
     }
   }
   CourseRule = {
-    content: [
+    name: [
       {
         required: true,
-        message: this.L("FieldIsRequired", undefined, this.L("CourseContent")),
+        message: this.L("FieldIsRequired", undefined, this.L("CourseName")),
+        trigger: "blur"
+      }
+    ],
+    category: [
+      {
+        required: true,
+        message: this.L("FieldIsRequired", undefined, this.L("CourseCategory")),
+        trigger: "blur"
+      }
+    ],
+    price: [
+      {
+        type:'number',
+        required: true,
+        message: this.L("FieldIsRequired", undefined, this.L("Price")),
         trigger: "blur"
       }
     ]

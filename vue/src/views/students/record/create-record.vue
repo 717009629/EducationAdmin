@@ -9,16 +9,16 @@
     class="modal-second"
     >
       <Form ref="recordForm" label-position="top" :rules="RecordRule" :model="record">
-        <FormItem :label="L('RecordCategory')" prop="name">
+        <FormItem :label="L('RecordCategory')" prop="category">
           <Input v-model="record.category"/>
         </FormItem>
-        <FormItem :label="L('RecordContent')" prop="name">
+        <FormItem :label="L('RecordContent')" prop="content">
           <Input v-model="record.content" type="textarea" :rows="3"/>
         </FormItem>
-        <FormItem :label="L('RecordProgress')" prop="name">
+        <FormItem :label="L('RecordProgress')" prop="progress">
           <Input v-model="record.progress"/>
         </FormItem>
-        <FormItem :label="L('RecordDate')" prop="name">
+        <FormItem :label="L('RecordDate')" prop="date">
            <DatePicker type="date" placeholder="Select date" v-model="record.date"></DatePicker>
         </FormItem>
       </Form>

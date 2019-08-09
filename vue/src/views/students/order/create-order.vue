@@ -11,27 +11,27 @@
       <Form ref="orderForm" label-position="top" :rules="OrderRule" :model="order">
         <Row :gutter="16">
           <Col span="12">
-            <FormItem :label="L('OrderDate')" prop="name">
+            <FormItem :label="L('OrderDate')" prop="orderDate">
               <DatePicker type="date" placeholder="Select date" v-model="order.orderDate"></DatePicker>
             </FormItem>
           </Col>
           <Col span="12">
-            <FormItem :label="L('SchoolBegin')" prop="name">
+            <FormItem :label="L('SchoolBegin')" prop="schoolBegin">
               <DatePicker type="date" placeholder="Select date" v-model="order.schoolBegin"></DatePicker>
             </FormItem>
           </Col>
         </Row>
 
-        <FormItem :label="L('FullMoney')" prop="name">
+        <FormItem :label="L('FullMoney')" prop="fullMoney">
           <Input v-model="order.fullMoney" />
         </FormItem>
-        <FormItem :label="L('OrderState')" prop="name">
+        <FormItem :label="L('OrderState')" prop="state">
           <Input v-model="order.state" />
         </FormItem>
-        <FormItem :label="L('ClassName')" prop="name">
+        <FormItem :label="L('ClassName')" prop="className">
           <Input v-model="order.className" />
         </FormItem>
-        <FormItem :label="L('Note')" prop="name">
+        <FormItem :label="L('Note')" prop="note">
           <Input v-model="order.note" type="textarea" :rows="3" />
         </FormItem>
       </Form>
