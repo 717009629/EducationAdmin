@@ -6,7 +6,6 @@
       @on-ok="save"
       @on-visible-change="visibleChange"
       :mask-closable="false"
-    class="modal-second"
     >
       <Form ref="recordForm" label-position="top" :rules="RecordRule" :model="record">
         <FormItem :label="L('RecordCategory')" prop="category">

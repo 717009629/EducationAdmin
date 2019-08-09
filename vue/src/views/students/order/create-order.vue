@@ -6,7 +6,6 @@
       @on-ok="save"
       @on-visible-change="visibleChange"
       :mask-closable="false"
-      class="modal-second"
     >
       <Form ref="orderForm" label-position="top" :rules="OrderRule" :model="order">
         <Row :gutter="16">

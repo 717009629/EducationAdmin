@@ -37,8 +37,6 @@
     </Card>
     <create-course v-model="createModalShow" @save-success="getpage"></create-course>
     <edit-course v-model="editModalShow" @save-success="getpage"></edit-course>
-    <course-record v-model="recordModalShow"></course-record>
-    <course-order v-model="orderModalShow"></course-order>
   </div>
 </template>
 <script lang="ts">
@@ -51,8 +49,6 @@ import EditCourse from "./edit-course.vue";
 
 
 class PageCourseRequest extends PageRequest {
-  keyword: string = "";
-  isActive: boolean = null;
 }
 
 @Component({
@@ -63,8 +59,6 @@ export default class Courses extends AbpBase {
 
   createModalShow: boolean = false;
   editModalShow: boolean = false;
-  recordModalShow: boolean = false;
-  orderModalShow: boolean = false;
   get list() {
     return this.$store.state.course.list;
   }
@@ -76,21 +70,6 @@ export default class Courses extends AbpBase {
   }
   edit() {
     this.editModalShow = true;
-  }
-  record() {
-    this.recordModalShow = true;
-  }
-  order() {
-    this.orderModalShow = true;
-  }
-  isActiveChange(val: string) {
-    if (val === "Actived") {
-      this.pagerequest.isActive = true;
-    } else if (val === "NoActive") {
-      this.pagerequest.isActive = false;
-    } else {
-      this.pagerequest.isActive = null;
-    }
   }
   pageChange(page: number) {
     this.$store.commit("course/setCurrentPage", page);

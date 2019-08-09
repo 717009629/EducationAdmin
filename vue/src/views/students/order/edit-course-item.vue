@@ -6,7 +6,6 @@
       @on-ok="save"
       @on-visible-change="visibleChange"
       :mask-closable="false"
-      class="modal-thrid"
     >
       <Form ref="courseItemForm" label-position="top" :rules="CourseItemRule" :model="courseItem">
         <FormItem :label="L('Course')" prop="courseId">

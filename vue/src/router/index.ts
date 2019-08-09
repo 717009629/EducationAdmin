@@ -16,7 +16,7 @@ const RouterConfig = {
 export const router = new VueRouter(RouterConfig);
 
 router.beforeEach((to, from, next) => {
-    iView.LoadingBar.start();
+    router.app.$Loading.start();
     Util.title(to.meta.title);
     if (Cookies.get('locking') === '1' && to.name !== 'locking') {
         next({
@@ -54,6 +54,7 @@ router.beforeEach((to, from, next) => {
 });
 router.afterEach((to) => {
     Util.openNewPage(router.app, to.name, to.params, to.query);
-    iView.LoadingBar.finish();
+    //iView.LoadingBar.finish();
+    router.app.$Loading.finish();
     window.scrollTo(0, 0);
 });
