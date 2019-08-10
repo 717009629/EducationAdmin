@@ -2,18 +2,27 @@
   <div>
     <Modal :title="L('EditContract')" :value="value" @on-ok="save" @on-visible-change="visibleChange" :mask-closable="false" >
       <Form ref="contractForm" label-position="top" :rules="ContractRule" :model="contract">
-        <FormItem :label="L('ContractCategory')" prop="category">
-          <Input v-model="contract.category"/>
+        <Row :gutter="16">
+          <Col span="12">
+            <FormItem :label="L('StratDate')" prop="startDate">
+              <DatePicker type="date" placeholder="Select date" v-model="contract.StratDate"></DatePicker>
+            </FormItem>
+          </Col>
+          <Col span="12">
+            <FormItem :label="L('EndDate')" prop="endDate">
+              <DatePicker type="date" placeholder="Select date" v-model="contract.endDate"></DatePicker>
+            </FormItem>
+          </Col>
+        </Row>
+
+        <FormItem :label="L('FullMoney')" prop="fullMony">
+          <InputNumber v-model="contract.fullMony"   style="width:100%"/>
         </FormItem>
-        <FormItem :label="L('ContractContent')" prop="content">
-          <Input v-model="contract.content" type="textarea" :rows="3"/>
+
+        <FormItem :label="L('Note')" prop="note">
+          <Input v-model="contract.note" />
         </FormItem>
-        <FormItem :label="L('ContractProgress')" prop="progress">
-          <Input v-model="contract.progress"/>
-        </FormItem>
-        <FormItem :label="L('ContractDate')" prop="date">
-          <DatePicker type="date" placeholder="Select date" v-model="contract.date"></DatePicker>
-        </FormItem>
+
       </Form>
       <div slot="footer">
         <Button @click="cancel">{{L('Cancel')}}</Button>

@@ -6,32 +6,39 @@
       @on-ok="save"
       @on-visible-change="visibleChange"
       :mask-closable="false"
+      width="1000px"
     >
+      <div>
+        <Table
+          :loading="loading"
+          :columns="columns"
+          :no-data-text="L('NoDatas')"
+          border
+          :data="list"
+        ></Table>
+      </div>
+      <hr style="margin:20px 0" />
       <Form ref="contractForm" label-position="top" :rules="ContractRule" :model="contract">
         <Row :gutter="16">
-          <Col span="12">
-            <FormItem :label="L('OrderDate')" prop="orderDate">
-              <DatePicker type="date" placeholder="Select date" v-model="order.orderDate"></DatePicker>
+          <Col span="8">
+            <FormItem :label="L('StratDate')" prop="startDate">
+              <DatePicker type="date" placeholder="Select date" v-model="contract.StratDate"></DatePicker>
             </FormItem>
           </Col>
-          <Col span="12">
-            <FormItem :label="L('SchoolBegin')" prop="schoolBegin">
-              <DatePicker type="date" placeholder="Select date" v-model="order.schoolBegin"></DatePicker>
+          <Col span="8">
+            <FormItem :label="L('EndDate')" prop="endDate">
+              <DatePicker type="date" placeholder="Select date" v-model="contract.endDate"></DatePicker>
+            </FormItem>
+          </Col>
+          <Col span="8">
+            <FormItem :label="L('FullMoney')" prop="fullMony">
+              <InputNumber v-model="contract.fullMoney" style="width:100%" />
             </FormItem>
           </Col>
         </Row>
 
-        <FormItem :label="L('ContractCategory')" prop="category">
-          <Input v-model="contract.category" />
-        </FormItem>
-        <FormItem :label="L('ContractContent')" prop="content">
-          <Input v-model="contract.content" type="textarea" :rows="3" />
-        </FormItem>
-        <FormItem :label="L('ContractProgress')" prop="progress">
-          <Input v-model="contract.progress" />
-        </FormItem>
-        <FormItem :label="L('ContractDate')" prop="date">
-          <DatePicker type="date" placeholder="Select date" v-model="contract.date"></DatePicker>
+        <FormItem :label="L('Note')" prop="note">
+          <Input v-model="contract.note" />
         </FormItem>
       </Form>
       <div slot="footer">
@@ -47,15 +54,33 @@ import Util from "../../../lib/util";
 import AbpBase from "../../../lib/abpbase";
 import Student from "../../../store/entities/student";
 import Contract from "../../../store/entities/contract";
+import Order from "../../../store/entities/order";
 @Component
 export default class CreateContract extends AbpBase {
   @Prop({ type: Boolean, default: false }) value: boolean;
   contract: Contract = new Contract();
   student: Student = new Student();
+  order: Order = new Order();
+
+  get list() {
+    return this.$store.state.courseItem.list;
+  }
+  get loading() {
+    return this.$store.state.courseItem.loading;
+  }
+
+  async getpage() {
+    await this.$store.dispatch({
+      type: "courseItem/getAll",
+      data: { orderId: this.order.id }
+    });
+  }
+
   save() {
     (this.$refs.contractForm as any).validate(async (valid: boolean) => {
       if (valid) {
         this.contract.studentId = this.student.id;
+        this.contract.orderId = this.order.id;
         await this.$store.dispatch({
           type: "contract/create",
           data: this.contract
@@ -70,7 +95,7 @@ export default class CreateContract extends AbpBase {
     (this.$refs.contractForm as any).resetFields();
     this.$emit("input", false);
   }
-  visibleChange(value: boolean) {
+  async visibleChange(value: boolean) {
     if (!value) {
       this.$emit("input", value);
     } else {
@@ -79,17 +104,53 @@ export default class CreateContract extends AbpBase {
         {},
         this.$store.state.student.editStudent
       );
+      this.order = Util.extend(true, {}, this.$store.state.order.editOrder);
+      await this.getpage();
+      this.contract.fullMoney = this.list.map(m=>m.fullMoney).reduce((number, item) => {
+        return number + item;
+      });
+     
     }
   }
   ContractRule = {
     content: [
       {
         required: true,
-        message: this.L("FieldIsRequired", undefined, this.L("ContractContent")),
+        message: this.L(
+          "FieldIsRequired",
+          undefined,
+          this.L("ContractContent")
+        ),
         trigger: "blur"
       }
     ]
   };
+  columns = [
+    // {
+    //   title: this.L("OrderName"),
+    //   key: "name"
+    // },
+    {
+      title: this.L("CourseCategory"),
+      key: "courseCategory"
+    },
+    {
+      title: this.L("CourseName"),
+      key: "courseName"
+    },
+    {
+      title: this.L("count"),
+      key: "count"
+    },
+    {
+      title: this.L("FullMoney"),
+      key: "fullMoney"
+    },
+    {
+      title: this.L("Note"),
+      key: "note"
+    }
+  ];
 }
 </script>
 

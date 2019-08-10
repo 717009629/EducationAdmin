@@ -18,4 +18,5 @@ export default class Contract extends Entity<Number>{
     lastModifierUserId? :  number  
     creationTime? :  string  
     creatorUserId? :  number  
+    orderId?:number
 }

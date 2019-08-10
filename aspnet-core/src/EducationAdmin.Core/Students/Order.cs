@@ -34,5 +34,7 @@ namespace EducationAdmin.Students
         public string Note { get; set; }
 
         public Contract Contract { get; set; }
+
+        public List<CourseItem> CourseItems { get; set; }
     }
 }
