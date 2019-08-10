@@ -4,14 +4,16 @@ using EducationAdmin.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EducationAdmin.Migrations
 {
     [DbContext(typeof(EducationAdminDbContext))]
-    partial class EducationAdminDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190810052450_add-contract-sutdent")]
+    partial class addcontractsutdent
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1123,7 +1125,7 @@ namespace EducationAdmin.Migrations
 
                     b.Property<string>("AuditedReson");
 
-                    b.Property<long?>("AuditorId");
+                    b.Property<long>("AuditorId");
 
                     b.Property<DateTime>("CreationTime");
 
@@ -1539,7 +1541,8 @@ namespace EducationAdmin.Migrations
                 {
                     b.HasOne("EducationAdmin.Authorization.Users.User", "Auditor")
                         .WithMany()
-                        .HasForeignKey("AuditorId");
+                        .HasForeignKey("AuditorId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("EducationAdmin.Students.Order", "Order")
                         .WithOne("Contract")

@@ -15,6 +15,7 @@ namespace EducationAdmin.EntityFrameworkCore
         public EducationAdminDbContext(DbContextOptions<EducationAdminDbContext> options)
             : base(options)
         {
+            
         }
 
         public DbSet<Student> Students { get; set; }
@@ -27,11 +28,16 @@ namespace EducationAdmin.EntityFrameworkCore
 
         public DbSet<CourseItem> CourseItems { get; set; }
 
+        public DbSet<Contract> Contracts { get; set; }
+ 
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Record>().HasOne(m => m.Student).WithMany().OnDelete(DeleteBehavior.Restrict);
             modelBuilder.Entity<Order>().HasOne(m => m.Student).WithMany().OnDelete(DeleteBehavior.Restrict);
-
+            modelBuilder.Entity<Contract>().HasOne(m => m.Order).WithOne(m=>m.Contract).OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<Contract>().HasOne(m => m.Salesman).WithMany().OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<Contract>().HasOne(m => m.Student).WithMany().OnDelete(DeleteBehavior.Restrict);
             base.OnModelCreating(modelBuilder);
         }
     }

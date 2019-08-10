@@ -4,14 +4,16 @@ using EducationAdmin.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EducationAdmin.Migrations
 {
     [DbContext(typeof(EducationAdminDbContext))]
-    partial class EducationAdminDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190810050832_add-contract")]
+    partial class addcontract
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1123,7 +1125,7 @@ namespace EducationAdmin.Migrations
 
                     b.Property<string>("AuditedReson");
 
-                    b.Property<long?>("AuditorId");
+                    b.Property<long>("AuditorId");
 
                     b.Property<DateTime>("CreationTime");
 
@@ -1151,15 +1153,11 @@ namespace EducationAdmin.Migrations
 
                     b.Property<int>("State");
 
-                    b.Property<long>("StudentId");
-
                     b.HasKey("Id");
 
                     b.HasIndex("AuditorId");
 
                     b.HasIndex("SalesmanId");
-
-                    b.HasIndex("StudentId");
 
                     b.ToTable("Contracts");
                 });
@@ -1539,7 +1537,8 @@ namespace EducationAdmin.Migrations
                 {
                     b.HasOne("EducationAdmin.Authorization.Users.User", "Auditor")
                         .WithMany()
-                        .HasForeignKey("AuditorId");
+                        .HasForeignKey("AuditorId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("EducationAdmin.Students.Order", "Order")
                         .WithOne("Contract")
@@ -1549,11 +1548,6 @@ namespace EducationAdmin.Migrations
                     b.HasOne("EducationAdmin.Authorization.Users.User", "Salesman")
                         .WithMany()
                         .HasForeignKey("SalesmanId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("EducationAdmin.Students.Student", "Student")
-                        .WithMany()
-                        .HasForeignKey("StudentId")
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 

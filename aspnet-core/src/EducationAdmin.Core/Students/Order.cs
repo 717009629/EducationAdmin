@@ -32,5 +32,7 @@ namespace EducationAdmin.Students
         public User Salesman { get; set; }
 
         public string Note { get; set; }
+
+        public Contract Contract { get; set; }
     }
 }
