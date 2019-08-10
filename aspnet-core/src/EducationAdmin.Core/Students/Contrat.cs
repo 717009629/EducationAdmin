@@ -41,10 +41,10 @@ namespace EducationAdmin.Students
     public enum ContractState
     {
         
-        Created=1,
-        WaitAudite=2,
-        Audited=3,
-        Reject=4,
-        Obsolete=5
+        Created=0,
+        WaitAudite=1,
+        Audited=2,
+        Reject=3,
+        Obsolete=4
     }
 }

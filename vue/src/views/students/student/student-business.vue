@@ -43,7 +43,9 @@
             <TabPane :label="L('Order')" name="order">
                <student-order :studentId="student.id"></student-order>
             </TabPane>
-            <TabPane :label="L('Contract')" name="contract"></TabPane>
+            <TabPane :label="L('Contract')" name="contract">
+                <student-contract :studentId="student.id"></student-contract>
+            </TabPane>
           </Tabs>
         </div>
         <!-- </Card> -->
@@ -59,8 +61,9 @@ import AbpBase from "../../../lib/abpbase";
 import Student from "../../../store/entities/student";
 import StudentRecord from "./student-record.vue";
 import StudentOrder from "./student-order.vue";
+import StudentContract from "./student-contract.vue";
 
-@Component({ components: { StudentRecord, StudentOrder } })
+@Component({ components: { StudentRecord, StudentOrder,StudentContract } })
 export default class StudentBusiness extends AbpBase {
   @Prop({ type: Boolean, default: false }) value: boolean;
   student: Student = new Student();

@@ -14,6 +14,7 @@
     <create-order v-model="createModalShow" @save-success="getpage"></create-order>
     <edit-order v-model="editModalShow" @save-success="getpage"></edit-order>
     <order-course v-model="courseModalShow"></order-course>
+    <create-contract v-model="contractModalShow" @save-success="getpage"></create-contract>
   </div>
 </template>
 <script lang="ts">
@@ -25,13 +26,15 @@ import Order from "../../../store/entities/order";
 import CreateOrder from "../order/create-order.vue";
 import EditOrder from "../order/edit-order.vue";
 import OrderCourse from "../order/order-course.vue";
-@Component({ components: { CreateOrder, EditOrder, OrderCourse } })
+import CreateContract from "../contract/create-contract.vue";
+@Component({ components: { CreateOrder, EditOrder, OrderCourse,CreateContract } })
 export default class StudentOrder extends AbpBase {
   @Prop({ type: Number, default: null }) studentId: null;
   student: Student = new Student();
   createModalShow: boolean = false;
   editModalShow: boolean = false;
   courseModalShow: boolean = false;
+  contractModalShow:boolean=false;
   get list() {
     return this.$store.state.order.list;
   }
@@ -47,6 +50,10 @@ export default class StudentOrder extends AbpBase {
   showCourse() {
     this.courseModalShow = true;
   }
+  showContract() {
+    this.contractModalShow = true;
+  }
+
   async getpage() {
     await this.$store.dispatch({
       type: "order/getAll",
@@ -108,7 +115,7 @@ export default class StudentOrder extends AbpBase {
     {
       title: this.L("Actions"),
       key: "Actions",
-      width: 150,
+      width: 220,
       render: (h: any, params: any) => {
         return h("div", [
           h(
@@ -148,6 +155,25 @@ export default class StudentOrder extends AbpBase {
               }
             },
             this.L("Course")
+          ),
+           h(
+            "Button",
+            {
+              props: {
+                type: "primary",
+                size: "small"
+              },
+              style: {
+                marginRight: "5px"
+              },
+              on: {
+                click: () => {
+                  this.$store.commit("order/edit", params.row);
+                  this.showContract();
+                }
+              }
+            },
+            this.L("Contract")
           )
         ]);
       }

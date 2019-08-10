@@ -9,9 +9,9 @@ using System.Text;
 
 namespace EducationAdmin.Contracts
 {
-    public class ContractAppSerive:AsyncCrudAppService<Contract,ContractDto,long,PagedResultRequestDto,CreateContractDto,ContractDto>,IContractAppService
+    public class ContractAppService:AsyncCrudAppService<Contract,ContractDto,long,PagedResultRequestDto,CreateContractDto,ContractDto>,IContractAppService
     {
 
-        public ContractAppSerive( IRepository<Contract,long> repository) : base(repository) { }
+        public ContractAppService( IRepository<Contract,long> repository) : base(repository) { }
     }
 }
