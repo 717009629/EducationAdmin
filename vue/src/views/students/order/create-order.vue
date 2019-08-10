@@ -21,9 +21,9 @@
           </Col>
         </Row>
 
-        <FormItem :label="L('FullMoney')" prop="fullMoney">
+        <!-- <FormItem :label="L('FullMoney')" prop="fullMoney">
           <Input v-model="order.fullMoney" />
-        </FormItem>
+        </FormItem> -->
         <FormItem :label="L('OrderState')" prop="state">
           <Input v-model="order.state" />
         </FormItem>
@@ -82,10 +82,27 @@ export default class CreateOrder extends AbpBase {
     }
   }
   OrderRule = {
-    content: [
+    orderDate: [
       {
+        type:'date',
         required: true,
-        message: this.L("FieldIsRequired", undefined, this.L("OrderContent")),
+        message: this.L("FieldIsRequired", undefined, this.L("OrderDate")),
+        trigger: "blur"
+      }
+    ],
+        schoolBegin: [
+      {
+        type:'date',
+        required: true,
+        message: this.L("FieldIsRequired", undefined, this.L("SchoolBegin")),
+        trigger: "blur"
+      }
+    ],
+        className: [
+      {
+        type:'date',
+        required: true,
+        message: this.L("FieldIsRequired", undefined, this.L("ClassName")),
         trigger: "blur"
       }
     ]

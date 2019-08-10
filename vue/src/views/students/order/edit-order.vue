@@ -1,6 +1,12 @@
 <template>
   <div>
-    <Modal :title="L('EditOrder')" :value="value" @on-ok="save" @on-visible-change="visibleChange" :mask-closable="false" >
+    <Modal
+      :title="L('EditOrder')"
+      :value="value"
+      @on-ok="save"
+      @on-visible-change="visibleChange"
+      :mask-closable="false"
+    >
       <Form ref="orderForm" label-position="top" :rules="OrderRule" :model="order">
         <Row :gutter="16">
           <Col span="12">
@@ -15,9 +21,9 @@
           </Col>
         </Row>
 
-        <FormItem :label="L('FullMoney')" prop="fullMoney">
+        <!-- <FormItem :label="L('FullMoney')" prop="fullMoney">
           <Input v-model="order.fullMoney" />
-        </FormItem>
+        </FormItem>-->
         <FormItem :label="L('OrderState')" prop="state">
           <Input v-model="order.state" />
         </FormItem>
@@ -70,10 +76,27 @@ export default class EditOrdere extends AbpBase {
     }
   }
   OrderRule = {
-    content: [
+    orderDate: [
       {
+        type: "date",
         required: true,
-        message: this.L("FieldIsRequired", undefined, this.L("OrderContent")),
+        message: this.L("FieldIsRequired", undefined, this.L("OrderDate")),
+        trigger: "blur"
+      }
+    ],
+    schoolBegin: [
+      {
+        type: "date",
+        required: true,
+        message: this.L("FieldIsRequired", undefined, this.L("SchoolBegin")),
+        trigger: "blur"
+      }
+    ],
+    className: [
+      {
+        type: "date",
+        required: true,
+        message: this.L("FieldIsRequired", undefined, this.L("ClassName")),
         trigger: "blur"
       }
     ]

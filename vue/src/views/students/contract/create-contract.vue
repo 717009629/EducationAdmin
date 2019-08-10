@@ -122,13 +122,26 @@ export default class CreateContract extends AbpBase {
     }
   }
   ContractRule = {
-    content: [
+    startDate: [
       {
+        type: "date",
         required: true,
         message: this.L(
           "FieldIsRequired",
           undefined,
-          this.L("ContractContent")
+          this.L("StartDate")
+        ),
+        trigger: "blur"
+      }
+    ],
+    endDate: [
+      {
+        type: "date",
+        required: true,
+        message: this.L(
+          "FieldIsRequired",
+          undefined,
+          this.L("EndDate")
         ),
         trigger: "blur"
       }

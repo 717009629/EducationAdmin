@@ -57,10 +57,32 @@ export default class EditRecorde extends AbpBase {
     }
   }
   RecordRule = {
+    category: [
+      {
+        required: true,
+        message: this.L("FieldIsRequired", undefined, this.L("RecordCategory")),
+        trigger: "blur"
+      }
+    ],
     content: [
       {
         required: true,
         message: this.L("FieldIsRequired", undefined, this.L("RecordContent")),
+        trigger: "blur"
+      }
+    ],
+    progress: [
+      {
+        required: true,
+        message: this.L("FieldIsRequired", undefined, this.L("RecordProgress")),
+        trigger: "blur"
+      }
+    ],
+    date: [
+      {
+        type: "date",
+        required: true,
+        message: this.L("FieldIsRequired", undefined, this.L("RecordDate")),
         trigger: "blur"
       }
     ]

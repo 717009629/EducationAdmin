@@ -9,16 +9,16 @@
     >
       <Form ref="recordForm" label-position="top" :rules="RecordRule" :model="record">
         <FormItem :label="L('RecordCategory')" prop="category">
-          <Input v-model="record.category"/>
+          <Input v-model="record.category" />
         </FormItem>
         <FormItem :label="L('RecordContent')" prop="content">
-          <Input v-model="record.content" type="textarea" :rows="3"/>
+          <Input v-model="record.content" type="textarea" :rows="3" />
         </FormItem>
         <FormItem :label="L('RecordProgress')" prop="progress">
-          <Input v-model="record.progress"/>
+          <Input v-model="record.progress" />
         </FormItem>
         <FormItem :label="L('RecordDate')" prop="date">
-           <DatePicker type="date" placeholder="Select date" v-model="record.date"></DatePicker>
+          <DatePicker type="date" placeholder="Select date" v-model="record.date"></DatePicker>
         </FormItem>
       </Form>
       <div slot="footer">
@@ -42,7 +42,7 @@ export default class CreateRecord extends AbpBase {
   save() {
     (this.$refs.recordForm as any).validate(async (valid: boolean) => {
       if (valid) {
-        this.record.studentId=this.student.id;
+        this.record.studentId = this.student.id;
         await this.$store.dispatch({
           type: "record/create",
           data: this.record
@@ -69,10 +69,32 @@ export default class CreateRecord extends AbpBase {
     }
   }
   RecordRule = {
+    category: [
+      {
+        required: true,
+        message: this.L("FieldIsRequired", undefined, this.L("RecordCategory")),
+        trigger: "blur"
+      }
+    ],
     content: [
       {
         required: true,
         message: this.L("FieldIsRequired", undefined, this.L("RecordContent")),
+        trigger: "blur"
+      }
+    ],
+    progress: [
+      {
+        required: true,
+        message: this.L("FieldIsRequired", undefined, this.L("RecordProgress")),
+        trigger: "blur"
+      }
+    ],
+    date: [
+      {
+        type: "date",
+        required: true,
+        message: this.L("FieldIsRequired", undefined, this.L("RecordDate")),
         trigger: "blur"
       }
     ]

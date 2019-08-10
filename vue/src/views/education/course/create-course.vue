@@ -16,7 +16,7 @@
           <Input v-model="course.name" />
         </FormItem>
         <FormItem :label="L('Price')" prop="price">
-          <Input v-model="course.price"  />
+          <InputNumber v-model="course.price" style="width:100%"  />
         </FormItem>
 
       </Form>
