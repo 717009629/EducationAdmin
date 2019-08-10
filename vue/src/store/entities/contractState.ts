@@ -1,4 +1,4 @@
-declare enum ContractState {
+ enum ContractState {
     Created = 0,
     WaitAudite = 1,
     Audited = 2,

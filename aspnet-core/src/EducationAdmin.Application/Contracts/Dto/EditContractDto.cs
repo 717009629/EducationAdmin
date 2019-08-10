@@ -1,4 +1,5 @@
-﻿using Abp.AutoMapper;
+﻿using Abp.Application.Services.Dto;
+using Abp.AutoMapper;
 using EducationAdmin.Students;
 using System;
 using System.Collections.Generic;
@@ -7,9 +8,8 @@ using System.Text;
 namespace EducationAdmin.Contracts.Dto
 {
     [AutoMapTo(typeof(Contract))]
-    public class CreateContractDto
+    public class EditContractDto:EntityDto<long>
     {
-        public long Id { get; set; }
         public DateTime StartDate { get; set; }
 
         public DateTime EndDate { get; set; }
@@ -19,12 +19,5 @@ namespace EducationAdmin.Contracts.Dto
         public ContractState State { get; set; }
 
         public string Note { get; set; }
-
-        public string AuditedReson { get; set; }
-
-        public long StudentId { get; set; }
-
-
-        public long SalesmanId { get; set; }
     }
 }

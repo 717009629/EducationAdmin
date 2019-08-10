@@ -7,7 +7,7 @@ using System.Text;
 
 namespace EducationAdmin.Contracts
 {
-    public interface IContractAppService : IAsyncCrudAppService<ContractDto, long, PagedResultRequestDto, CreateContractDto, ContractDto>
+    public interface IContractAppService : IAsyncCrudAppService<ContractDto, long, PagedContractResultRequestDto, CreateContractDto, EditContractDto>
     {
     }
 }

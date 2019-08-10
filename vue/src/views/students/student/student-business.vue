@@ -41,7 +41,7 @@
               <student-record :studentId="student.id"></student-record>
             </TabPane>
             <TabPane :label="L('Order')" name="order">
-               <student-order :studentId="student.id"></student-order>
+               <student-order :studentId="student.id" @goContract="selecteTab='contract'"></student-order>
             </TabPane>
             <TabPane :label="L('Contract')" name="contract">
                 <student-contract :studentId="student.id"></student-contract>

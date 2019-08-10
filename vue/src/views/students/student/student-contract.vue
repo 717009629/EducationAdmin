@@ -5,7 +5,6 @@
       <Table :loading="loading" :columns="columns" :no-data-text="L('NoDatas')" border :data="list"></Table>
     </div>
     <!-- </Card> -->
-    <create-contract v-model="createModalShow" @save-success="getpage"></create-contract>
     <edit-contract v-model="editModalShow" @save-success="getpage"></edit-contract>
   </div>
 </template>
@@ -15,9 +14,9 @@ import Util from "../../../lib/util";
 import AbpBase from "../../../lib/abpbase";
 import Student from "../../../store/entities/student";
 import Contract from "../../../store/entities/contract";
-import CreateContract from "../contract/create-contract.vue";
 import EditContract from "../contract/edit-contract.vue";
-@Component({ components: { CreateContract, EditContract } })
+import ContractState from "../../../store/entities/contractState";
+@Component({ components: { EditContract } })
 export default class StudentContract extends AbpBase {
   @Prop({ type: Number, default: null }) studentId: null;
   student: Student = new Student();
@@ -63,11 +62,17 @@ export default class StudentContract extends AbpBase {
 
     {
       title: this.L("StartDate"),
-      key: "startDate"
+      key: "startDate",
+      render: (h: any, params: any) => {
+        return h("span", new Date(params.row.startDate).toLocaleDateString());
+      }
     },
     {
       title: this.L("EndDate"),
-      key: "endDate"
+      key: "endDate",
+      render: (h: any, params: any) => {
+        return h("span", new Date(params.row.endDate).toLocaleDateString());
+      }
     },
     {
       title: this.L("FullMoney"),
@@ -75,7 +80,10 @@ export default class StudentContract extends AbpBase {
     },
     {
       title: this.L("ContractState"),
-      key: "state"
+      key: "state",
+      render: (h: any, params: any) => {
+        return h("span", ContractState[params.row.state]);
+      }
     },
     {
       title: this.L("Note"),
@@ -90,13 +98,6 @@ export default class StudentContract extends AbpBase {
       key: "auditorName"
     },
 
-    {
-      title: this.L("ContractDate"),
-      key: "date",
-      render: (h: any, params: any) => {
-        return h("span", new Date(params.row.date).toLocaleDateString());
-      }
-    },
     {
       title: this.L("SalesmanName"),
       key: "salesmanName"

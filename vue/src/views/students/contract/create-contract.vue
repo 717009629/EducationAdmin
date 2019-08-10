@@ -22,7 +22,7 @@
         <Row :gutter="16">
           <Col span="8">
             <FormItem :label="L('StratDate')" prop="startDate">
-              <DatePicker type="date" placeholder="Select date" v-model="contract.StratDate"></DatePicker>
+              <DatePicker type="date" placeholder="Select date" v-model="contract.startDate"></DatePicker>
             </FormItem>
           </Col>
           <Col span="8">
@@ -31,8 +31,8 @@
             </FormItem>
           </Col>
           <Col span="8">
-            <FormItem :label="L('FullMoney')" prop="fullMony">
-              <InputNumber v-model="contract.fullMoney" style="width:100%" />
+            <FormItem :label="L('FullMoney')" prop="fullMoney">
+              <InputNumber v-model="contract.fullMoney" style="width:100%"></InputNumber>
             </FormItem>
           </Col>
         </Row>
@@ -78,7 +78,15 @@ export default class CreateContract extends AbpBase {
 
   save() {
     (this.$refs.contractForm as any).validate(async (valid: boolean) => {
+      console.log(1);
       if (valid) {
+        if (this.list.length === 0) {
+          this.$Modal.error({
+            title:"Error",
+            content: "The Order Must Have At Lease One Course!"
+          });
+          return;
+        }
         this.contract.studentId = this.student.id;
         this.contract.orderId = this.order.id;
         await this.$store.dispatch({
@@ -106,10 +114,11 @@ export default class CreateContract extends AbpBase {
       );
       this.order = Util.extend(true, {}, this.$store.state.order.editOrder);
       await this.getpage();
-      this.contract.fullMoney = this.list.map(m=>m.fullMoney).reduce((number, item) => {
-        return number + item;
-      });
-     
+
+      this.contract.id = this.order.id;
+      this.contract.fullMoney = this.list.reduce((number, item) => {
+        return number + item.fullMoney;
+      }, 0);
     }
   }
   ContractRule = {

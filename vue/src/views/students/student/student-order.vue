@@ -3,7 +3,7 @@
     <Form ref="queryForm" :label-width="100" label-position="left" inline>
       <!-- <hr style="border-width:1px 0 0 0; border-style:solid; border-top-color:#ccc; margin:10px 0" /> -->
       <Row>
-        <Button @click="create" icon="android-add" type="primary" >{{L('Add')}}</Button>
+        <Button @click="create" icon="android-add" type="primary">{{L('Add')}}</Button>
       </Row>
     </Form>
     <!-- <Card dis-hover> -->
@@ -14,7 +14,7 @@
     <create-order v-model="createModalShow" @save-success="getpage"></create-order>
     <edit-order v-model="editModalShow" @save-success="getpage"></edit-order>
     <order-course v-model="courseModalShow"></order-course>
-    <create-contract v-model="contractModalShow" @save-success="getpage"></create-contract>
+    <create-contract v-model="contractModalShow" @save-success="refreshOrderAndContract"></create-contract>
   </div>
 </template>
 <script lang="ts">
@@ -27,14 +27,16 @@ import CreateOrder from "../order/create-order.vue";
 import EditOrder from "../order/edit-order.vue";
 import OrderCourse from "../order/order-course.vue";
 import CreateContract from "../contract/create-contract.vue";
-@Component({ components: { CreateOrder, EditOrder, OrderCourse,CreateContract } })
+@Component({
+  components: { CreateOrder, EditOrder, OrderCourse, CreateContract }
+})
 export default class StudentOrder extends AbpBase {
   @Prop({ type: Number, default: null }) studentId: null;
   student: Student = new Student();
   createModalShow: boolean = false;
   editModalShow: boolean = false;
   courseModalShow: boolean = false;
-  contractModalShow:boolean=false;
+  contractModalShow: boolean = false;
   get list() {
     return this.$store.state.order.list;
   }
@@ -53,7 +55,14 @@ export default class StudentOrder extends AbpBase {
   showContract() {
     this.contractModalShow = true;
   }
-
+  async refreshOrderAndContract() {
+    this.$emit("goContract");
+    await this.$store.dispatch({
+      type: "contract/getAll",
+      data: { studentId: this.student.id }
+    });
+    await this.getpage();
+  }
   async getpage() {
     await this.$store.dispatch({
       type: "order/getAll",
@@ -156,7 +165,7 @@ export default class StudentOrder extends AbpBase {
             },
             this.L("Course")
           ),
-           h(
+          h(
             "Button",
             {
               props: {

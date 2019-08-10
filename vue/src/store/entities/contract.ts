@@ -4,7 +4,7 @@ import ContracState from './contractState'
 export default class Contract extends Entity<Number>{
     startDate? :  string  
     endDate? :  string  
-    fullMoney? :  number  
+    fullMoney :  number  =0
     state? :  ContracState
     note? :  string  
     auditedReson? :  string  

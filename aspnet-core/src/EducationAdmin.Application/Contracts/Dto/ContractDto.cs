@@ -26,7 +26,7 @@ namespace EducationAdmin.Contracts.Dto
         public long StudentId { get; set; }
         public string StudentName { get; set; }
 
-        public long AuditorId { get; set; }
+        public long? AuditorId { get; set; }
         public string AuditorName { get; set; }
 
         public long SalesmanId { get; set; }
