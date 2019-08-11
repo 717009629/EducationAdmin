@@ -10,12 +10,12 @@
 
         public const string Pages_Students = "Pages.Students";
 
-        public const string Pages_Record = "Pages.Record";
+        public const string Pages_Record = "Pages.Records";
 
-        public const string Pages_Order = "Pages.Order";
+        public const string Pages_Order = "Pages.Orders";
 
-        public const string Pages_Contract = "Pages.Contract";
+        public const string Pages_Contract = "Pages.Contracts";
 
-        public const string Pages_Course = "Pages.Course";
+        public const string Pages_Course = "Pages.Courses";
     }
 }

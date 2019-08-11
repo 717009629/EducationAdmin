@@ -1,13 +1,13 @@
 import Entity from './entity'
+import Student from './student'
 
 export default class Record extends Entity<number>{
     category?: string
     progress?: string
     date?: string
     content?: string
-    studentId?: number
-    studentName?: string
-    salesmanId?: number
+    studentId: number
+    salesmanId: number
     salesmanName?: string
     tenantId?: number
     isDeleted?: boolean
@@ -17,4 +17,5 @@ export default class Record extends Entity<number>{
     lastModifierUserId?: number
     creationTime?: string
     creatorUserId?: number
+    student?:Student
 }

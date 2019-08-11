@@ -1,4 +1,5 @@
 import Entity from './entity'
+import Student from './student'
 
 export default class Order extends Entity<number>{
     orderDate? :  string  
@@ -6,9 +7,9 @@ export default class Order extends Entity<number>{
     fullMoney? :  number  
     state? :  string  
     className? :  string  
-    studentId? :  number  
-    studentName? :  string  
-    salesmanId? :  number  
+    studentId :  number  
+    student? :  Student  
+    salesmanId :  number  
     salesmanName? :  string  
     lastModificationTime? :  string  
     lastModifierUserId? :  number  

@@ -64,7 +64,10 @@ export const appRouters: Array<Router> = [{
     icon: '&#xe753;',
     component: main,
     children: [
-        { path: 'student', permission: 'Pages.Students', meta: { title: 'Students' }, name: 'student', component: () => import('../views/students/student/student.vue') }
+        { path: 'student', permission: 'Pages.Students', meta: { title: 'Students' }, name: 'student', component: () => import('../views/students/student/student.vue') },
+        { path: 'record', permission: 'Pages.Records', meta: { title: 'Records' }, name: 'record', component: () => import('../views/students/record/record.vue') },
+        { path: 'order', permission: 'Pages.Orders', meta: { title: 'Orders' }, name: 'order', component: () => import('../views/students/order/order.vue') },
+        { path: 'contract', permission: 'Pages.Contracts', meta: { title: 'Contracts' }, name: 'contract', component: () => import('../views/students/contract/contract.vue') }
     ]
 },
 {
@@ -75,7 +78,7 @@ export const appRouters: Array<Router> = [{
     icon: '&#xe67c;',
     component: main,
     children: [
-        { path: 'course', permission: 'Pages.Course', meta: { title: 'Course' }, name: 'course', component: () => import('../views/education/course/course.vue') }
+        { path: 'course', permission: 'Pages.Courses', meta: { title: 'Courses' }, name: 'course', component: () => import('../views/education/course/course.vue') }
     ]
 }]
 export const routers = [

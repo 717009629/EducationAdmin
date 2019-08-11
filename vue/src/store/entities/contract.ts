@@ -1,5 +1,6 @@
 import Entity from './entity'
 import ContracState from './contractState'
+import Student from './student'
 
 export default class Contract extends Entity<Number>{
     startDate? :  string  
@@ -9,7 +10,7 @@ export default class Contract extends Entity<Number>{
     note? :  string  
     auditedReson? :  string  
     studentId? :  number  
-    studentName? :  string  
+    student? :  Student  
     auditorId? :  number  
     auditorName? :  string  
     salesmanId? :  number  

@@ -2,6 +2,7 @@
 using Abp.AutoMapper;
 using Abp.Domain.Entities.Auditing;
 using EducationAdmin.Students;
+using EducationAdmin.Students.Dto;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -22,7 +23,8 @@ namespace EducationAdmin.Records.Dto
 
         public long StudentId { get; set; }
 
-        public string StudentName { get; set; }
+
+        public StudentDto Student { get; set; }
 
         public long SalesmanId { get; set; }
         public string SalesmanName { get; set; }

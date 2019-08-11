@@ -13,6 +13,7 @@ using Abp.Linq.Extensions;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using EducationAdmin.Orders.Dto;
+using Abp.Extensions;
 
 namespace EducationAdmin.Records
 {
@@ -24,7 +25,9 @@ namespace EducationAdmin.Records
 
         protected override IQueryable<Record> CreateFilteredQuery(PagedRecordResultRequestDto input)
         {
-          return  Repository.GetAllIncluding(m => m.Salesman).WhereIf(input.StudentId!=null, m => m.StudentId == input.StudentId);
+            return Repository.GetAllIncluding(m => m.Salesman, m => m.Student)
+                    .WhereIf(input.StudentId != null, m => m.StudentId == input.StudentId)
+                    .WhereIf(!input.StudentName.IsNullOrWhiteSpace(), x => x.Student.Name.Contains(input.StudentName));
         }
 
         public override Task<RecordDto> Create(CreateRecordDto input)

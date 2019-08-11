@@ -13,9 +13,13 @@ using Abp;
 using Abp.Domain.Entities;
 using System.Linq;
 using Abp.Linq.Extensions;
+using Abp.Extensions;
+using Abp.Authorization;
+using EducationAdmin.Authorization;
 
 namespace EducationAdmin.Contracts
 {
+    [AbpAuthorize(PermissionNames.Pages_Contract)]
     public class ContractAppService : AsyncCrudAppService<Contract, ContractDto, long, PagedContractResultRequestDto, CreateContractDto, EditContractDto>, IContractAppService
     {
         private readonly IRepository<Order, long> OrderRepository;
@@ -39,7 +43,9 @@ namespace EducationAdmin.Contracts
 
         protected override IQueryable<Contract> CreateFilteredQuery(PagedContractResultRequestDto input)
         {
-            return Repository.GetAllIncluding(m => m.Auditor, m => m.Salesman).WhereIf(input.StudentId != null, m => m.StudentId == input.StudentId);
+            return Repository.GetAllIncluding(m => m.Salesman, m => m.Student)
+                    .WhereIf(input.StudentId != null, m => m.StudentId == input.StudentId)
+                    .WhereIf(!input.StudentName.IsNullOrWhiteSpace(), x => x.Student.Name.Contains(input.StudentName));
         }
     }
 }

@@ -55,11 +55,13 @@ export default class StudentContract extends AbpBase {
   }
 
   columns = [
-    // {
-    //   title: this.L("StudentName"),
-    //   key: "name"
-    // },
-
+    {
+      title: this.L("Index"),
+      key: "id",
+      render: (h: any, params: any) => {
+        return h("span", ("000000" + params.row.id).slice(-6));
+      }
+    },
     {
       title: this.L("StartDate"),
       key: "startDate",

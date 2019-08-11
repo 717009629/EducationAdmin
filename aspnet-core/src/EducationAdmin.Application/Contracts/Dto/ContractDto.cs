@@ -1,6 +1,7 @@
 ﻿using Abp.Application.Services.Dto;
 using Abp.AutoMapper;
 using EducationAdmin.Students;
+using EducationAdmin.Students.Dto;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -24,7 +25,7 @@ namespace EducationAdmin.Contracts.Dto
         public string AuditedReson { get; set; }
 
         public long StudentId { get; set; }
-        public string StudentName { get; set; }
+        public StudentDto Student { get; set; }
 
         public long? AuditorId { get; set; }
         public string AuditorName { get; set; }
