@@ -17,5 +17,6 @@
         public const string Pages_Contract = "Pages.Contracts";
 
         public const string Pages_Course = "Pages.Courses";
+
     }
 }

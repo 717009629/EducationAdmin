@@ -1,6 +1,8 @@
-﻿using Abp.Authorization;
+﻿using Abp.Application.Features;
+using Abp.Authorization;
 using Abp.Localization;
 using Abp.MultiTenancy;
+using System.Collections.Generic;
 
 namespace EducationAdmin.Authorization
 {
@@ -8,15 +10,25 @@ namespace EducationAdmin.Authorization
     {
         public override void SetPermissions(IPermissionDefinitionContext context)
         {
-            context.CreatePermission(PermissionNames.Pages_Users, L("Users"));
-            context.CreatePermission(PermissionNames.Pages_Roles, L("Roles"));
-            context.CreatePermission(PermissionNames.Pages_Tenants, L("Tenants"), multiTenancySides: MultiTenancySides.Host);
-            context.CreatePermission(PermissionNames.Pages_Students, L("Students"));
-            context.CreatePermission(PermissionNames.Pages_Record, L("Record"));
-            context.CreatePermission(PermissionNames.Pages_Order, L("Order"));
-            context.CreatePermission(PermissionNames.Pages_Contract, L("Contract"));
-            context.CreatePermission(PermissionNames.Pages_Course, L("Course"));
-            
+            SetPermission(context,PermissionNames.Pages_Users, "Users");
+            SetPermission(context,PermissionNames.Pages_Roles, "Roles");
+            SetPermission(context,PermissionNames.Pages_Tenants, "Tenants", multiTenancySides: MultiTenancySides.Host);
+            SetPermission(context,PermissionNames.Pages_Students, "Students");
+            SetPermission(context,PermissionNames.Pages_Record, "Record");
+            SetPermission(context,PermissionNames.Pages_Order, "Order");
+            SetPermission(context,PermissionNames.Pages_Contract, "Contract");
+            SetPermission(context,PermissionNames.Pages_Course, "Course");
+        }
+
+
+        public Permission SetPermission(IPermissionDefinitionContext context, string name, string dispalyName, ILocalizableString description = null, MultiTenancySides multiTenancySides = MultiTenancySides.Tenant | MultiTenancySides.Host, IFeatureDependency featureDependency = null, Dictionary<string, object> properties = null)
+        {
+            var permission = context.CreatePermission(name, L(dispalyName), description, multiTenancySides, featureDependency, properties);
+            permission.CreateChildPermission(name + ".Create", L("Create" ), description, multiTenancySides, featureDependency, properties);
+            permission.CreateChildPermission(name + ".Edit", L("Edit" ), description, multiTenancySides, featureDependency, properties);
+            permission.CreateChildPermission(name + ".Delete", L("Delete"), description, multiTenancySides, featureDependency, properties);
+            return permission;
+
         }
 
         private static ILocalizableString L(string name)
