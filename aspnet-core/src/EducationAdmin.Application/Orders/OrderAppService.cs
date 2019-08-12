@@ -17,7 +17,12 @@ namespace EducationAdmin.Orders
     [AbpAuthorize(PermissionNames.Pages_Order)]
     public class OrderAppService : AsyncCrudAppService<Order, OrderDto, long, PagedOrderResultRequestDto, CreateOrderDto, OrderDto>, IOrderAppService
     {
-        public OrderAppService(IRepository<Order, long> repository) : base(repository) { }
+        public OrderAppService(IRepository<Order, long> repository) : base(repository)
+        {
+            DeletePermissionName = PermissionNames.Pages_Order + ".Delete";
+            CreatePermissionName = PermissionNames.Pages_Order + ".Create";
+            UpdatePermissionName = PermissionNames.Pages_Order + ".Edit";
+        }
 
 
         protected override IQueryable<Order> CreateFilteredQuery(PagedOrderResultRequestDto input)

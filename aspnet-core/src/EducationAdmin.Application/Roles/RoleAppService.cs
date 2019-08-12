@@ -28,6 +28,9 @@ namespace EducationAdmin.Roles
         {
             _roleManager = roleManager;
             _userManager = userManager;
+            DeletePermissionName = PermissionNames.Pages_Roles + ".Delete";
+            CreatePermissionName = PermissionNames.Pages_Roles + ".Create";
+            UpdatePermissionName = PermissionNames.Pages_Roles + ".Edit";
         }
 
         public override async Task<RoleDto> Create(CreateRoleDto input)

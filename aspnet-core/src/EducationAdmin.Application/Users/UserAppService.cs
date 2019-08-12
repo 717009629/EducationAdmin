@@ -50,6 +50,9 @@ namespace EducationAdmin.Users
             _passwordHasher = passwordHasher;
             _abpSession = abpSession;
             _logInManager = logInManager;
+            DeletePermissionName = PermissionNames.Pages_Users + ".Delete";
+            CreatePermissionName= PermissionNames.Pages_Users + ".Create";
+            UpdatePermissionName= PermissionNames.Pages_Users + ".Edit";
         }
 
         public override async Task<UserDto> Create(CreateUserDto input)

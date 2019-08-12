@@ -18,7 +18,11 @@ namespace EducationAdmin.Students
     [AbpAuthorize(PermissionNames.Pages_Students)]
     public class StudentAppService : AsyncCrudAppService<Student, StudentDto, long, PagedStudentResultRequestDto, CreateStudentDto, StudentDto>, IStudentAppService
     {
-       public StudentAppService(IRepository<Student,long > repository) : base(repository) { }
+       public StudentAppService(IRepository<Student,long > repository) : base(repository) {
+            DeletePermissionName = PermissionNames.Pages_Students + ".Delete";
+            CreatePermissionName = PermissionNames.Pages_Students + ".Create";
+            UpdatePermissionName = PermissionNames.Pages_Students + ".Edit";
+        }
 
         public override Task<StudentDto> Create(CreateStudentDto input)
         {

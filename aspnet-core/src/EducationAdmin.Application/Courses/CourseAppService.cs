@@ -8,6 +8,7 @@ using EducationAdmin.Education;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 
 namespace EducationAdmin.Courses
@@ -15,6 +16,14 @@ namespace EducationAdmin.Courses
     [AbpAuthorize(PermissionNames.Pages_Course)]
     public class CourseAppService:AsyncCrudAppService<Course,CourseDto,long,PagedResultRequestDto,CreateCourseDto,CourseDto>,ICourseAppService
     {
-        public CourseAppService(IRepository<Course,long> repository) : base(repository) { }
+        
+        public CourseAppService(IRepository<Course,long> repository) : base(repository)
+        {
+            DeletePermissionName = PermissionNames.Pages_Course + ".Delete";
+            CreatePermissionName = PermissionNames.Pages_Course + ".Create";
+            UpdatePermissionName = PermissionNames.Pages_Course + ".Edit";
+        }
+
     }
+
 }

@@ -20,7 +20,11 @@ namespace EducationAdmin.Records
     [AbpAuthorize(PermissionNames.Pages_Record)]
     public class RecordAppService : AsyncCrudAppService<Record, RecordDto, long, PagedRecordResultRequestDto, CreateRecordDto, RecordDto>, IRecordAppService
     {
-        public RecordAppService(IRepository<Record, long> repository) : base(repository) { }
+        public RecordAppService(IRepository<Record, long> repository) : base(repository) {
+            DeletePermissionName = PermissionNames.Pages_Record + ".Delete";
+            CreatePermissionName = PermissionNames.Pages_Record + ".Create";
+            UpdatePermissionName = PermissionNames.Pages_Record + ".Edit";
+        }
 
 
         protected override IQueryable<Record> CreateFilteredQuery(PagedRecordResultRequestDto input)

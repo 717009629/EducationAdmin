@@ -26,6 +26,9 @@ namespace EducationAdmin.Contracts
         public ContractAppService(IRepository<Contract, long> repository, IRepository<Order, long> orderRepository) : base(repository)
         {
             this.OrderRepository = orderRepository;
+            DeletePermissionName = PermissionNames.Pages_Contract + ".Delete";
+            CreatePermissionName = PermissionNames.Pages_Contract + ".Create";
+            UpdatePermissionName = PermissionNames.Pages_Contract + ".Edit";
         }
 
         public override async Task<ContractDto> Create(CreateContractDto input)

@@ -41,6 +41,10 @@ namespace EducationAdmin.MultiTenancy
             _userManager = userManager;
             _roleManager = roleManager;
             _abpZeroDbMigrator = abpZeroDbMigrator;
+
+            DeletePermissionName = PermissionNames.Pages_Tenants + ".Delete";
+            CreatePermissionName = PermissionNames.Pages_Tenants + ".Create";
+            UpdatePermissionName = PermissionNames.Pages_Tenants + ".Edit";
         }
 
         public override async Task<TenantDto> Create(CreateTenantDto input)
