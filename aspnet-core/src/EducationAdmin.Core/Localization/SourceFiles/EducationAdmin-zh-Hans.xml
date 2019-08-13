@@ -21,7 +21,7 @@
     <text name="LeaveEmptyToSwitchToHost" value="留空以切换到Host"/>
     <text name="LogIn" value="登录" />
     <text name="LoginFailed" value="登录失败!" />
-    <text name="AppName" >EducationAdmin</text>
+    <text name="AppName" >Education Admin</text>
     <text name="UserNamePlaceholder" >请输入账户</text>
     <text name="PasswordPlaceholder" >请输入密码</text>
     <text name="CopyRight" >© 2018 EducationAdmin</text>
@@ -183,6 +183,12 @@
     <text name="CourseList">课程订单</text>
     <text name="Father">父亲</text>
     <text name="Mother">母亲</text>
+    
+    <text name="Reason For Action">操作原因</text>
+    <text name="Audite">审核</text>
+    <text name="Reject">拒绝</text>
+    <text name="Pass">通过</text>
+    <text name="Obsolete">作废</text>
 
   </texts>
 </localizationDictionary>

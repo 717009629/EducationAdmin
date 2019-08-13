@@ -2,7 +2,7 @@ import Entity from './entity'
 import ContracState from './contractState'
 import Student from './student'
 
-export default class Contract extends Entity<Number>{
+export default class Contract extends Entity<number>{
     startDate? :  string  
     endDate? :  string  
     fullMoney :  number  =0

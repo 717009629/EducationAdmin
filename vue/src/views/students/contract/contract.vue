@@ -11,15 +11,14 @@
             </Col>
             <Col span="8">
             <Button icon="ios-search" type="primary" size="large" @click="getpage" class="toolbar-btn" v-if="hasPermission('Pages.Contracts.Create')">{{L('Find')}}</Button>
-
             </Col>
           </Row>
         </Form>
         <div class="margin-top-10">
           <Table :loading="loading" :columns="columns" :no-data-text="L('NoDatas')" border :data="list">
             <template slot-scope="{ row }" slot="action" v-if="hasPermission('Pages.Contracts.Edit')||hasPermission('Pages.Contracts.Audite')">
-              <Button v-if="hasPermission('Pages.Contracts.Edit')" type="primary" size="small" @click="edit(row)" style="margin-right:5px">{{L('Edit')}}</Button>
-              <Button v-if="hasPermission('Pages.Contracts.Audite')" type="primary" size="small" style="margin-right:5px">{{L('Audite')}}</Button>
+              <Button v-if="canEdit(row)" type="primary" size="small" @click="edit(row)" style="margin-right:5px">{{L('Edit')}}</Button>
+              <Button v-if="canAudite(row)" type="primary" size="small" @click="audite(row)" style="margin-right:5px">{{L('Audite')}}</Button>
             </template>
           </Table>
           <Page show-sizer class-name="fengpage" :total="totalCount" class="margin-top-10" @on-change="pageChange" @on-page-size-change="pagesizeChange" :page-size="pageSize" :current="currentPage">
@@ -28,6 +27,7 @@
       </div>
     </Card>
     <edit-contract v-model="editModalShow" @save-success="getpage"></edit-contract>
+    <audite-contract v-model="auditeModalShow" @save-success="getpage"></audite-contract>
   </div>
 </template>
 <script lang="ts">
@@ -36,32 +36,51 @@ import Util from "@/lib/util";
 import AbpBase from "@/lib/abpbase";
 import PageRequest from "@/store/entities/page-request";
 import EditContract from "./edit-contract.vue";
+import AuditeContract from "./audite-contract.vue";
 import ContractState from "../../../store/entities/contractState";
+import Contract from "../../../store/entities/contract";
 
 class PageContractRequest extends PageRequest {
   studentName: string = "";
 }
 
 @Component({
-  components: { EditContract }
+  components: { EditContract, AuditeContract }
 })
 export default class Contracts extends AbpBase {
   pagerequest: PageContractRequest = new PageContractRequest();
 
-  createModalShow: boolean = false;
   editModalShow: boolean = false;
+  auditeModalShow: boolean = false;
+  canEdit(contract: Contract) {
+    return (
+      this.hasPermission("Pages.Contracts.Edit") &&
+      (contract.state === ContractState.Created ||
+        contract.state === ContractState.WaitAudite ||
+        contract.state === ContractState.Reject)
+    );
+  }
+  canAudite(contract: Contract) {
+    return (
+      this.hasPermission("Pages.Contracts.Audite") &&
+      (contract.state === ContractState.Created ||
+        contract.state === ContractState.WaitAudite)
+    );
+  }
+
   get list() {
     return this.$store.state.contract.list;
   }
   get loading() {
     return this.$store.state.contract.loading;
   }
-  create() {
-    this.createModalShow = true;
-  }
   edit(row) {
     this.$store.commit("contract/edit", row);
     this.editModalShow = true;
+  }
+  audite(row) {
+    this.$store.commit("contract/edit", row);
+    this.auditeModalShow = true;
   }
 
   pageChange(page: number) {
