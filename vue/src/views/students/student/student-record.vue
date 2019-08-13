@@ -2,18 +2,54 @@
   <div>
     <!-- <Card dis-hover> -->
 
-    <Form ref="queryForm" :label-width="100" label-position="left" inline>
+    <Form
+      ref="queryForm"
+      :label-width="100"
+      label-position="left"
+      inline
+    >
       <!-- <hr style="border-width:1px 0 0 0; border-style:solid; border-top-color:#ccc; margin:10px 0" /> -->
       <Row>
-        <Button @click="create" icon="android-add" type="primary" >{{L('Add')}}</Button>
+        <Button
+          @click="create"
+          icon="android-add"
+          type="primary"
+          v-if="hasPermission('Pages.Records.Create')"
+        >{{L('Add')}}</Button>
       </Row>
     </Form>
     <div class="margin-top-10">
-      <Table :loading="loading" :columns="columns" :no-data-text="L('NoDatas')" border :data="list"></Table>
+      <Table
+        :loading="loading"
+        :columns="columns"
+        :no-data-text="L('NoDatas')"
+        border
+        :data="list"
+      >
+        <template
+          slot-scope="{ row }"
+          slot="action"
+          v-if="hasPermission('Pages.Records.Edit')"
+        >
+          <Button
+            v-if="hasPermission('Pages.Records.Edit')"
+            type="primary"
+            size="small"
+            @click="edit(row)"
+            style="margin-right:5px"
+          >{{L('Edit')}}</Button>
+        </template>
+      </Table>
     </div>
     <!-- </Card> -->
-    <create-record v-model="createModalShow" @save-success="getpage"></create-record>
-    <edit-record v-model="editModalShow" @save-success="getpage"></edit-record>
+    <create-record
+      v-model="createModalShow"
+      @save-success="getpage"
+    ></create-record>
+    <edit-record
+      v-model="editModalShow"
+      @save-success="getpage"
+    ></edit-record>
   </div>
 </template>
 <script lang="ts">
@@ -40,14 +76,15 @@ export default class StudentRecord extends AbpBase {
   create() {
     this.createModalShow = true;
   }
-  edit() {
+  edit(row) {
+    this.$store.commit("record/edit", row);
     this.editModalShow = true;
   }
 
   @Watch("studentId")
   async watchId(nv, ov) {
-    if(nv){
-      await this.showPage()
+    if (nv) {
+      await this.showPage();
     }
   }
   async getpage() {
@@ -67,7 +104,6 @@ export default class StudentRecord extends AbpBase {
     //   title: this.L("StudentName"),
     //   key: "name"
     // },
-
     {
       title: this.L("RecordContent"),
       key: "content"
@@ -87,34 +123,11 @@ export default class StudentRecord extends AbpBase {
       title: this.L("SalesmanName"),
       key: "salesmanName"
     },
-
     {
       title: this.L("Actions"),
       key: "Actions",
       width: 150,
-      render: (h: any, params: any) => {
-        return h("div", [
-          h(
-            "Button",
-            {
-              props: {
-                type: "primary",
-                size: "small"
-              },
-              style: {
-                marginRight: "5px"
-              },
-              on: {
-                click: () => {
-                  this.$store.commit("record/edit", params.row);
-                  this.edit();
-                }
-              }
-            },
-            this.L("Edit")
-          )
-        ]);
-      }
+      slot: "action"
     }
   ];
 }

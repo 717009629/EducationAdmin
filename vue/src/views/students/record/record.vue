@@ -11,6 +11,7 @@
             </Col>
             <Col span="8">
               <Button
+              v-if="hasPermission('Pages.Records.Create')"
                 icon="ios-search"
                 type="primary"
                 size="large"
@@ -27,7 +28,17 @@
             :no-data-text="L('NoDatas')"
             border
             :data="list"
-          ></Table>
+          >
+            <template slot-scope="{ row }" slot="action" v-if="hasPermission('Pages.Records.Edit')">
+              <Button
+                v-if="hasPermission('Pages.Records.Edit')"
+                type="primary"
+                size="small"
+                @click="edit(row)"
+                style="margin-right:5px"
+              >{{L('Edit')}}</Button>
+            </template>
+          </Table>
           <Page
             show-sizer
             class-name="fengpage"
@@ -72,7 +83,8 @@ export default class Records extends AbpBase {
   create() {
     this.createModalShow = true;
   }
-  edit() {
+  edit(row) {
+    this.$store.commit("record/edit", row);
     this.editModalShow = true;
   }
 
@@ -104,7 +116,7 @@ export default class Records extends AbpBase {
   }
 
   columns = [
-{
+    {
       title: this.L("Index"),
       key: "id",
       render: (h: any, params: any) => {
@@ -148,29 +160,7 @@ export default class Records extends AbpBase {
       title: this.L("Actions"),
       key: "Actions",
       width: 150,
-      render: (h: any, params: any) => {
-        return h("div", [
-          h(
-            "Button",
-            {
-              props: {
-                type: "primary",
-                size: "small"
-              },
-              style: {
-                marginRight: "5px"
-              },
-              on: {
-                click: () => {
-                  this.$store.commit("record/edit", params.row);
-                  this.edit();
-                }
-              }
-            },
-            this.L("Edit")
-          )
-        ]);
-      }
+      slot: "action"
     }
   ];
   async created() {

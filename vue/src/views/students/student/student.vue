@@ -5,62 +5,26 @@
         <Form ref="queryForm" :label-width="100" label-position="left" inline>
           <Row :gutter="16">
             <Col span="8">
-              <FormItem :label="L('Keyword')+':'" style="width:100%">
-                <Input v-model="pagerequest.keyword" :placeholder="L('StudentName')" />
-              </FormItem>
+            <FormItem :label="L('Keyword')+':'" style="width:100%">
+              <Input v-model="pagerequest.keyword" :placeholder="L('StudentName')" />
+            </FormItem>
             </Col>
           </Row>
           <Row>
             <Button @click="create" icon="android-add" type="primary" size="large">{{L('Add')}}</Button>
-            <Button
-              icon="ios-search"
-              type="primary"
-              size="large"
-              @click="getpage"
-              class="toolbar-btn"
-            >{{L('Find')}}</Button>
+            <Button icon="ios-search" type="primary" size="large" @click="getpage" class="toolbar-btn">{{L('Find')}}</Button>
           </Row>
         </Form>
         <div class="margin-top-10">
-          <Table
-            :loading="loading"
-            :columns="columns"
-            :no-data-text="L('NoDatas')"
-            border
-            :data="list"
-          >
-            <template
-              slot-scope="{ row }"
-              slot="action"
-              v-if="hasPermission('Pages.Students.Edit')||hasPermission('Pages.Records')||hasPermission('Pages.Orders')||hasPermission('Pages.Contracts')"
-            >
-              <Button
-                v-if="hasPermission('Pages.Students.Edit')"
-                type="primary"
-                size="small"
-                @click="edit(row)"
-                style="margin-right:5px"
-              >{{L('Edit')}}</Button>
-
-              <Button
-                v-if="hasPermission('Pages.Records')||hasPermission('Pages.Orders')||hasPermission('Pages.Contracts')"
-                type="primary"
-                size="small"
-                @click="business(row)"
-                style="margin-right:5px"
-              >{{L('Bussiness')}}</Button>
+          <Table :loading="loading" :columns="columns" :no-data-text="L('NoDatas')" border :data="list">
+            <template slot-scope="{ row }" slot="action" v-if="hasPermission('Pages.Students.Edit')||hasPermission('Pages.Records')||hasPermission('Pages.Orders')||hasPermission('Pages.Contracts')">
+              <Button v-if="hasPermission('Pages.Students.Edit')" type="primary" size="small" @click="edit(row)" style="margin-right:5px">{{L('Edit')}}</Button>
+              <Button v-if="hasPermission('Pages.Records')||hasPermission('Pages.Orders')||hasPermission('Pages.Contracts')" type="primary" size="small" @click="business(row)"
+                      style="margin-right:5px">{{L('Bussiness')}}</Button>
             </template>
           </Table>
-          <Page
-            show-sizer
-            class-name="fengpage"
-            :total="totalCount"
-            class="margin-top-10"
-            @on-change="pageChange"
-            @on-page-size-change="pagesizeChange"
-            :page-size="pageSize"
-            :current="currentPage"
-          ></Page>
+          <Page show-sizer class-name="fengpage" :total="totalCount" class="margin-top-10" @on-change="pageChange" @on-page-size-change="pagesizeChange" :page-size="pageSize" :current="currentPage">
+          </Page>
         </div>
       </div>
     </Card>
@@ -71,9 +35,9 @@
 </template>
 <script lang="ts">
 import { Component, Vue, Inject, Prop, Watch } from "vue-property-decorator";
-import Util from "@/lib/util";
-import AbpBase from "@/lib/abpbase";
-import PageRequest from "@/store/entities/page-request";
+import Util from "../../../lib/util";
+import AbpBase from "../../../lib/abpbase";
+import PageRequest from "../../../store/entities/page-request";
 import CreateStudent from "./create-student.vue";
 import EditStudent from "./edit-student.vue";
 import StudentBusiness from "./student-business.vue";

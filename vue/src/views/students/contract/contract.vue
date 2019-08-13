@@ -5,39 +5,23 @@
         <Form ref="queryForm" :label-width="100" label-position="left" inline>
           <Row :gutter="16">
             <Col span="8">
-              <FormItem :label="L('Keyword')+':'" style="width:100%">
-                <Input v-model="pagerequest.studentName" :placeholder="L('StudentName')" />
-              </FormItem>
+            <FormItem :label="L('Keyword')+':'" style="width:100%">
+              <Input v-model="pagerequest.studentName" :placeholder="L('StudentName')" />
+            </FormItem>
             </Col>
             <Col span="8">
-              <Button
-                icon="ios-search"
-                type="primary"
-                size="large"
-                @click="getpage"
-                class="toolbar-btn"
-              >{{L('Find')}}</Button>
+            <Button icon="ios-search" type="primary" size="large" @click="getpage" class="toolbar-btn" v-if="hasPermission('Pages.Contracts.Create')">{{L('Find')}}</Button>
             </Col>
           </Row>
         </Form>
         <div class="margin-top-10">
-          <Table
-            :loading="loading"
-            :columns="columns"
-            :no-data-text="L('NoDatas')"
-            border
-            :data="list"
-          ></Table>
-          <Page
-            show-sizer
-            class-name="fengpage"
-            :total="totalCount"
-            class="margin-top-10"
-            @on-change="pageChange"
-            @on-page-size-change="pagesizeChange"
-            :page-size="pageSize"
-            :current="currentPage"
-          ></Page>
+          <Table :loading="loading" :columns="columns" :no-data-text="L('NoDatas')" border :data="list">
+            <template slot-scope="{ row }" slot="action" v-if="hasPermission('Pages.Contracts.Edit')">
+              <Button v-if="hasPermission('Pages.Contracts.Edit')" type="primary" size="small" @click="edit(row)" style="margin-right:5px">{{L('Edit')}}</Button>
+            </template>
+          </Table>
+          <Page show-sizer class-name="fengpage" :total="totalCount" class="margin-top-10" @on-change="pageChange" @on-page-size-change="pagesizeChange" :page-size="pageSize" :current="currentPage">
+          </Page>
         </div>
       </div>
     </Card>
@@ -73,7 +57,8 @@ export default class Contracts extends AbpBase {
   create() {
     this.createModalShow = true;
   }
-  edit() {
+  edit(row) {
+    this.$store.commit("contract/edit", row);
     this.editModalShow = true;
   }
 
@@ -173,29 +158,7 @@ export default class Contracts extends AbpBase {
       title: this.L("Actions"),
       key: "Actions",
       width: 150,
-      render: (h: any, params: any) => {
-        return h("div", [
-          h(
-            "Button",
-            {
-              props: {
-                type: "primary",
-                size: "small"
-              },
-              style: {
-                marginRight: "5px"
-              },
-              on: {
-                click: () => {
-                  this.$store.commit("contract/edit", params.row);
-                  this.edit();
-                }
-              }
-            },
-            this.L("Edit")
-          )
-        ]);
-      }
+      slot: "action"
     }
   ];
   async created() {

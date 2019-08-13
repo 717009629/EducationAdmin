@@ -4,50 +4,18 @@
       <div class="page-body">
         <Form ref="queryForm" :label-width="100" label-position="left" inline>
           <Row>
-            <Button
-              v-if="hasPermission('Pages.Courses.Create')"
-              @click="create"
-              icon="android-add"
-              type="primary"
-              size="large"
-            >{{L('Add')}}</Button>
-            <Button
-              icon="ios-search"
-              type="primary"
-              size="large"
-              @click="getpage"
-              class="toolbar-btn"
-            >{{L('Refresh')}}</Button>
+            <Button v-if="hasPermission('Pages.Courses.Create')" @click="create" icon="android-add" type="primary" size="large">{{L('Add')}}</Button>
+            <Button icon="ios-search" type="primary" size="large" @click="getpage" class="toolbar-btn">{{L('Refresh')}}</Button>
           </Row>
         </Form>
         <div class="margin-top-10">
-          <Table
-            :loading="loading"
-            :columns="columns"
-            :no-data-text="L('NoDatas')"
-            border
-            :data="list"
-          >
-            <template slot-scope="{ row }" slot="action"  v-if="hasPermission('Pages.Courses.Edit')" >
-              <Button
-              v-if="hasPermission('Pages.Courses.Edit')"
-                type="primary"
-                size="small"
-                @click="edit(row)"
-                style="margin-right:5px"
-              >{{L('Edit')}}</Button>
+          <Table :loading="loading" :columns="columns" :no-data-text="L('NoDatas')" border :data="list">
+            <template slot-scope="{ row }" slot="action" v-if="hasPermission('Pages.Courses.Edit')">
+              <Button v-if="hasPermission('Pages.Courses.Edit')" type="primary" size="small" @click="edit(row)" style="margin-right:5px">{{L('Edit')}}</Button>
             </template>
           </Table>
-          <Page
-            show-sizer
-            class-name="fengpage"
-            :total="totalCount"
-            class="margin-top-10"
-            @on-change="pageChange"
-            @on-page-size-change="pagesizeChange"
-            :page-size="pageSize"
-            :current="currentPage"
-          ></Page>
+          <Page show-sizer class-name="fengpage" :total="totalCount" class="margin-top-10" @on-change="pageChange" @on-page-size-change="pagesizeChange" :page-size="pageSize" :current="currentPage">
+          </Page>
         </div>
       </div>
     </Card>
