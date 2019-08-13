@@ -28,7 +28,29 @@
             :no-data-text="L('NoDatas')"
             border
             :data="list"
-          ></Table>
+          >
+            <template
+              slot-scope="{ row }"
+              slot="action"
+              v-if="hasPermission('Pages.Students.Edit')||hasPermission('Pages.Records')||hasPermission('Pages.Orders')||hasPermission('Pages.Contracts')"
+            >
+              <Button
+                v-if="hasPermission('Pages.Students.Edit')"
+                type="primary"
+                size="small"
+                @click="edit(row)"
+                style="margin-right:5px"
+              >{{L('Edit')}}</Button>
+
+              <Button
+                v-if="hasPermission('Pages.Records')||hasPermission('Pages.Orders')||hasPermission('Pages.Contracts')"
+                type="primary"
+                size="small"
+                @click="business(row)"
+                style="margin-right:5px"
+              >{{L('Bussiness')}}</Button>
+            </template>
+          </Table>
           <Page
             show-sizer
             class-name="fengpage"
@@ -78,10 +100,12 @@ export default class Students extends AbpBase {
   create() {
     this.createModalShow = true;
   }
-  edit() {
+  edit(row) {
+    this.$store.commit("student/edit", row);
     this.editModalShow = true;
   }
-  business() {
+  business(row) {
+    this.$store.commit("student/edit", row);
     this.businessModalShow = true;
   }
   pageChange(page: number) {
@@ -179,22 +203,6 @@ export default class Students extends AbpBase {
         return h("span", new Date(params.row.birthday).toLocaleDateString());
       }
     },
-    // {
-    //   title: this.L("Grade"),
-    //   key: "grade"
-    // },
-    // {
-    //   title: this.L("CourseType"),
-    //   key: "courseType"
-    // },
-    // {
-    //   title: this.L("StudentType"),
-    //   key: "studentType"
-    // },
-    // {
-    //   title: this.L("TeachMethod"),
-    //   key: "teachMethod"
-    // },
     {
       title: this.L("Origin"),
       key: "origin"
@@ -207,48 +215,7 @@ export default class Students extends AbpBase {
       title: this.L("Actions"),
       key: "Actions",
       width: 250,
-      render: (h: any, params: any) => {
-        return h("div", [
-          h(
-            "Button",
-            {
-              props: {
-                type: "primary",
-                size: "small"
-              },
-              style: {
-                marginRight: "5px"
-              },
-              on: {
-                click: () => {
-                  this.$store.commit("student/edit", params.row);
-                  this.edit();
-                }
-              }
-            },
-            this.L("Edit")
-          ),
-          h(
-            "Button",
-            {
-              props: {
-                type: "primary",
-                size: "small"
-              },
-              style: {
-                marginRight: "5px"
-              },
-              on: {
-                click: () => {
-                  this.$store.commit("student/edit", params.row);
-                  this.business();
-                }
-              }
-            },
-            this.L("Business")
-          )
-        ]);
-      }
+      slot: "action"
     }
   ];
   async created() {

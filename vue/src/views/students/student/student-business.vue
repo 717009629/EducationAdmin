@@ -37,13 +37,13 @@
         </Form>
         <div class="margin-top-10">
           <Tabs type="card" v-model="selecteTab">
-            <TabPane :label="L('Record')" name="record">
+            <TabPane :label="L('Record')" name="record" v-if="hasPermission('Pages.Records')">
               <student-record :studentId="student.id"></student-record>
             </TabPane>
-            <TabPane :label="L('Order')" name="order">
+            <TabPane :label="L('Order')" name="order"  v-if="hasPermission('Pages.Records')">
                <student-order :studentId="student.id" @goContract="selecteTab='contract'"></student-order>
             </TabPane>
-            <TabPane :label="L('Contract')" name="contract">
+            <TabPane :label="L('Contract')" name="contract"  v-if="hasPermission('Pages.Records')">
                 <student-contract :studentId="student.id"></student-contract>
             </TabPane>
           </Tabs>
