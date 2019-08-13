@@ -6,24 +6,24 @@
 
         <Form ref="queryForm" :label-width="100" label-position="left" inline>
           <Row :gutter="16">
-            <Col span="3">
+            <i-col span="3">
             <h3>{{L('StudentName')}}:{{student.name}}</h3>
-            </Col>
-            <Col span="5">
+            </i-col>
+            <i-col span="5">
             <h3>{{L('Phone')}}:{{student.phone}}</h3>
-            </Col>
-            <Col span="3">
+            </i-col>
+            <i-col span="3">
             <h3>{{L('Father')}}:{{student.father}}</h3>
-            </Col>
-            <Col span="5">
+            </i-col>
+            <i-col span="5">
             <h3>{{L('FatherPhone')}}:{{student.fatherPhone}}</h3>
-            </Col>
-            <Col span="3">
+            </i-col>
+            <i-col span="3">
             <h3>{{L('Mother')}}:{{student.mother}}</h3>
-            </Col>
-            <Col span="5">
+            </i-col>
+            <i-col span="5">
             <h3>{{L('MotherPhone')}}:{{student.motherPhone}}</h3>
-            </Col>
+            </i-col>
           </Row>
           <!-- <hr
             style="border-width:1px 0 0 0; border-style:solid; border-top-color:#ccc; margin:10px 0"

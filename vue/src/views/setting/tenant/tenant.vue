@@ -4,12 +4,12 @@
       <div class="page-body">
         <Form ref="queryForm" :label-width="100" label-position="left" inline>
           <Row :gutter="16">
-            <Col span="8">
+            <i-col span="8">
             <FormItem :label="L('Keyword')+':'" style="width:100%">
-              <Input v-model="pagerequest.keyword" :placeholder="L('TenancyName')+'/'+L('Name')"></Input>
+              <Input v-model="pagerequest.keyword" :placeholder="L('TenancyName')+'/'+L('Name')"/>
             </FormItem>
-            </Col>
-            <Col span="8">
+            </i-col>
+            <i-col span="8">
             <FormItem :label="L('IsActive')+':'" style="width:100%">
               <!--Select should not set :value="'All'" it may not trigger on-change when first select 'NoActive'(or 'Actived') then select 'All'-->
               <Select :placeholder="L('Select')" @on-change="isActiveChange">
@@ -18,7 +18,7 @@
                 <Option value="NoActive">{{L('NoActive')}}</Option>
               </Select>
             </FormItem>
-            </Col>
+            </i-col>
           </Row>
           <Row>
             <Button @click="create" icon="android-add" type="primary" size="large" v-if="hasPermission('Pages.Tenants.Create')">{{L('Add')}}</Button>

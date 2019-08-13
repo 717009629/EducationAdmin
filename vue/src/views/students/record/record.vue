@@ -4,12 +4,12 @@
       <div class="page-body">
         <Form ref="queryForm" :label-width="100" label-position="left" inline>
           <Row :gutter="16">
-            <Col span="8">
+            <i-col span="8">
               <FormItem :label="L('Keyword')+':'" style="width:100%">
                 <Input v-model="pagerequest.studentName" :placeholder="L('StudentName')" />
               </FormItem>
-            </Col>
-            <Col span="8">
+            </i-col>
+            <i-col span="8">
               <Button
               v-if="hasPermission('Pages.Records.Create')"
                 icon="ios-search"
@@ -18,7 +18,7 @@
                 @click="getpage"
                 class="toolbar-btn"
               >{{L('Find')}}</Button>
-            </Col>
+            </i-col>
           </Row>
         </Form>
         <div class="margin-top-10">

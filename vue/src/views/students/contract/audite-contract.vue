@@ -7,21 +7,21 @@
       <hr style="margin:20px 0" />
       <Form ref="contractForm" label-position="top" :model="contract">
         <Row :gutter="16">
-          <Col span="8">
+          <i-col span="8">
           <FormItem :label="L('StartDate')" prop="startDate">
             <DatePicker type="date" placeholder="Select date" disabled v-model="contract.startDate"></DatePicker>
           </FormItem>
-          </Col>
-          <Col span="8">
+          </i-col>
+          <i-col span="8">
           <FormItem :label="L('EndDate')" prop="endDate">
             <DatePicker type="date" placeholder="Select date" disabled v-model="contract.endDate"></DatePicker>
           </FormItem>
-          </Col>
-          <Col span="8">
+          </i-col>
+          <i-col span="8">
           <FormItem :label="L('FullMoney')" prop="fullMoney">
-            <InputNumber v-model="contract.fullMoney" disabled style="width:100%"></InputNumber>
+            <InputNumber v-model="contract.fullMoney" disabled style="width:100%"/>
           </FormItem>
-          </Col>
+          </i-col>
         </Row>
 
         <FormItem :label="L('Note')" prop="note">

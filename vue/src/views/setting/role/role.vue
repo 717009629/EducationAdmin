@@ -4,11 +4,11 @@
       <div class="page-body">
         <Form ref="queryForm" :label-width="90" label-position="left" inline>
           <Row :gutter="16">
-            <Col span="8">
+            <i-col span="8">
             <FormItem :label="L('Keyword')+':'" style="width:100%">
-              <Input v-model="pagerequest.keyword" :placeholder="L('RoleName')+'/'+L('DisplayName')+'/'+L('Description')"></Input>
+              <Input v-model="pagerequest.keyword" :placeholder="L('RoleName')+'/'+L('DisplayName')+'/'+L('Description')"/>
             </FormItem>
-            </Col>
+            </i-col>
           </Row>
           <Row>
             <Button @click="create" icon="android-add" type="primary" size="large" v-if="hasPermission('Pages.Roles.Create')">{{L('Add')}}</Button>
