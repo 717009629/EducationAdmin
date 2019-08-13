@@ -26,7 +26,7 @@
         <FormItem :label="L('Count')" prop="count">
           <InputNumber v-model="courseItem.count" style="width:100%" :min="1" />
         </FormItem>
-        <FormItem :label="L('FullMomey')" prop="fullMoney">
+        <FormItem :label="L('FullMoney')" prop="fullMoney">
           <Input :value="fullMoney" disabled />
         </FormItem>
 

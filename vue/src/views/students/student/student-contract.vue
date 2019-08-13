@@ -3,8 +3,9 @@
     <!-- <Card dis-hover> -->
     <div class="margin-top-10">
       <Table :loading="loading" :columns="columns" :no-data-text="L('NoDatas')" border :data="list">
-        <template slot-scope="{ row }" slot="action" v-if="hasPermission('Pages.Contracts.Edit')">
+        <template slot-scope="{ row }" slot="action" v-if="hasPermission('Pages.Contracts.Edit')||hasPermission('Pages.Contracts.Audite')">
           <Button v-if="hasPermission('Pages.Contracts.Edit')" type="primary" size="small" @click="edit(row)" style="margin-right:5px">{{L('Edit')}}</Button>
+          <Button v-if="hasPermission('Pages.Contracts.Audite')" type="primary" size="small" style="margin-right:5px">{{L('Audite')}}</Button>
         </template>
       </Table>
     </div>

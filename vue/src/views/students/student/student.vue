@@ -20,7 +20,7 @@
             <template slot-scope="{ row }" slot="action" v-if="hasPermission('Pages.Students.Edit')||hasPermission('Pages.Records')||hasPermission('Pages.Orders')||hasPermission('Pages.Contracts')">
               <Button v-if="hasPermission('Pages.Students.Edit')" type="primary" size="small" @click="edit(row)" style="margin-right:5px">{{L('Edit')}}</Button>
               <Button v-if="hasPermission('Pages.Records')||hasPermission('Pages.Orders')||hasPermission('Pages.Contracts')" type="primary" size="small" @click="business(row)"
-                      style="margin-right:5px">{{L('Bussiness')}}</Button>
+                      style="margin-right:5px">{{L('Business')}}</Button>
             </template>
           </Table>
           <Page show-sizer class-name="fengpage" :total="totalCount" class="margin-top-10" @on-change="pageChange" @on-page-size-change="pagesizeChange" :page-size="pageSize" :current="currentPage">

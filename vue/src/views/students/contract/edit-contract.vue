@@ -21,7 +21,7 @@
       <Form ref="contractForm" label-position="top" :rules="ContractRule" :model="contract">
         <Row :gutter="16">
           <Col span="8">
-            <FormItem :label="L('StratDate')" prop="startDate">
+            <FormItem :label="L('StartDate')" prop="startDate">
               <DatePicker type="date" placeholder="Select date" v-model="contract.startDate"></DatePicker>
             </FormItem>
           </Col>
@@ -143,7 +143,7 @@ export default class EditContracte extends AbpBase {
       key: "courseName"
     },
     {
-      title: this.L("count"),
+      title: this.L("Count"),
       key: "count"
     },
     {

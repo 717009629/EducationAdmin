@@ -1,39 +1,26 @@
 <template>
   <div>
-    <Modal
-      :title="L('CreateNewContract')"
-      :value="value"
-      @on-ok="save"
-      @on-visible-change="visibleChange"
-      :mask-closable="false"
-      width="1000px"
-    >
+    <Modal :title="L('CreateNewContract')" :value="value" @on-ok="save" @on-visible-change="visibleChange" :mask-closable="false" width="1000px">
       <div>
-        <Table
-          :loading="loading"
-          :columns="columns"
-          :no-data-text="L('NoDatas')"
-          border
-          :data="list"
-        ></Table>
+        <Table :loading="loading" :columns="columns" :no-data-text="L('NoDatas')" border :data="list"></Table>
       </div>
       <hr style="margin:20px 0" />
       <Form ref="contractForm" label-position="top" :rules="ContractRule" :model="contract">
         <Row :gutter="16">
           <Col span="8">
-            <FormItem :label="L('StratDate')" prop="startDate">
-              <DatePicker type="date" placeholder="Select date" v-model="contract.startDate"></DatePicker>
-            </FormItem>
+          <FormItem :label="L('StartDate')" prop="startDate">
+            <DatePicker type="date" placeholder="Select date" v-model="contract.startDate"></DatePicker>
+          </FormItem>
           </Col>
           <Col span="8">
-            <FormItem :label="L('EndDate')" prop="endDate">
-              <DatePicker type="date" placeholder="Select date" v-model="contract.endDate"></DatePicker>
-            </FormItem>
+          <FormItem :label="L('EndDate')" prop="endDate">
+            <DatePicker type="date" placeholder="Select date" v-model="contract.endDate"></DatePicker>
+          </FormItem>
           </Col>
           <Col span="8">
-            <FormItem :label="L('FullMoney')" prop="fullMoney">
-              <InputNumber v-model="contract.fullMoney" style="width:100%"></InputNumber>
-            </FormItem>
+          <FormItem :label="L('FullMoney')" prop="fullMoney">
+            <InputNumber v-model="contract.fullMoney" style="width:100%"></InputNumber>
+          </FormItem>
           </Col>
         </Row>
 
@@ -82,7 +69,7 @@ export default class CreateContract extends AbpBase {
       if (valid) {
         if (this.list.length === 0) {
           this.$Modal.error({
-            title:"Error",
+            title: "Error",
             content: "The Order Must Have At Lease One Course!"
           });
           return;
@@ -126,11 +113,7 @@ export default class CreateContract extends AbpBase {
       {
         type: "date",
         required: true,
-        message: this.L(
-          "FieldIsRequired",
-          undefined,
-          this.L("StartDate")
-        ),
+        message: this.L("FieldIsRequired", undefined, this.L("StartDate")),
         trigger: "blur"
       }
     ],
@@ -138,11 +121,7 @@ export default class CreateContract extends AbpBase {
       {
         type: "date",
         required: true,
-        message: this.L(
-          "FieldIsRequired",
-          undefined,
-          this.L("EndDate")
-        ),
+        message: this.L("FieldIsRequired", undefined, this.L("EndDate")),
         trigger: "blur"
       }
     ]
@@ -161,7 +140,7 @@ export default class CreateContract extends AbpBase {
       key: "courseName"
     },
     {
-      title: this.L("count"),
+      title: this.L("Count"),
       key: "count"
     },
     {

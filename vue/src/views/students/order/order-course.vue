@@ -88,7 +88,7 @@ export default class OrderCourse extends AbpBase {
       key: "courseName"
     },
     {
-      title: this.L("count"),
+      title: this.L("Count"),
       key: "count"
     },
     {

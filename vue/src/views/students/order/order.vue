@@ -21,7 +21,7 @@
 
               <Button v-if="hasPermission('Pages.Orders.Edit')" type="primary" size="small" @click="showCourse(row)" style="margin-right:5px">{{L('Course')}}</Button>
 
-              <Button v-if="hasPermission('Pages.Orders.Edit')" type="primary" size="small" @click="showContract(row)" style="margin-right:5px">{{L('Contract')}}</Button>
+              <Button v-if="hasPermission('Pages.Orders.Edit')" type="primary" size="small" @click="showContract(row)" style="margin-right:5px">{{L('ConvertContract')}}</Button>
             </template>
           </Table>
           <Page show-sizer class-name="fengpage" :total="totalCount" class="margin-top-10" @on-change="pageChange" @on-page-size-change="pagesizeChange" :page-size="pageSize" :current="currentPage">
@@ -139,8 +139,8 @@ export default class Orders extends AbpBase {
       }
     },
     {
-      title: this.L("FullMomeny"),
-      key: "fullMomeny"
+      title: this.L("FullMoney"),
+      key: "fullMomey"
     },
     {
       title: this.L("ClassName"),

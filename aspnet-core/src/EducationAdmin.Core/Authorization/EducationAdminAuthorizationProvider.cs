@@ -10,22 +10,23 @@ namespace EducationAdmin.Authorization
     {
         public override void SetPermissions(IPermissionDefinitionContext context)
         {
-            SetPermission(context,PermissionNames.Pages_Users, "Users");
-            SetPermission(context,PermissionNames.Pages_Roles, "Roles");
-            SetPermission(context,PermissionNames.Pages_Tenants, "Tenants", multiTenancySides: MultiTenancySides.Host);
-            SetPermission(context,PermissionNames.Pages_Students, "Students");
-            SetPermission(context,PermissionNames.Pages_Record, "Record");
-            SetPermission(context,PermissionNames.Pages_Order, "Order");
-            SetPermission(context,PermissionNames.Pages_Contract, "Contract");
-            SetPermission(context,PermissionNames.Pages_Course, "Course");
+            SetPermission(context, PermissionNames.Pages_Users, "Users");
+            SetPermission(context, PermissionNames.Pages_Roles, "Roles");
+            SetPermission(context, PermissionNames.Pages_Tenants, "Tenants", multiTenancySides: MultiTenancySides.Host);
+            SetPermission(context, PermissionNames.Pages_Students, "Students");
+            SetPermission(context, PermissionNames.Pages_Record, "Record");
+            SetPermission(context, PermissionNames.Pages_Order, "Order");
+            var contract = SetPermission(context, PermissionNames.Pages_Contract, "Contract");
+            contract.CreateChildPermission(PermissionNames.Pages_Contract + ".Audite", L("Audite"));
+            SetPermission(context, PermissionNames.Pages_Course, "Course");
         }
 
 
         public Permission SetPermission(IPermissionDefinitionContext context, string name, string dispalyName, ILocalizableString description = null, MultiTenancySides multiTenancySides = MultiTenancySides.Tenant | MultiTenancySides.Host, IFeatureDependency featureDependency = null, Dictionary<string, object> properties = null)
         {
             var permission = context.CreatePermission(name, L(dispalyName), description, multiTenancySides, featureDependency, properties);
-            permission.CreateChildPermission(name + ".Create", L("Create" ), description, multiTenancySides, featureDependency, properties);
-            permission.CreateChildPermission(name + ".Edit", L("Edit" ), description, multiTenancySides, featureDependency, properties);
+            permission.CreateChildPermission(name + ".Create", L("Create"), description, multiTenancySides, featureDependency, properties);
+            permission.CreateChildPermission(name + ".Edit", L("Edit"), description, multiTenancySides, featureDependency, properties);
             permission.CreateChildPermission(name + ".Delete", L("Delete"), description, multiTenancySides, featureDependency, properties);
             return permission;
 

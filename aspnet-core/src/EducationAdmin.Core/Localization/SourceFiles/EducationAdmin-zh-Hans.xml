@@ -130,7 +130,60 @@
     <text name="Contact">联系方式</text>
     <text name="CreateNewStudent">添加学生</text>
     <text name="EditStudent">编辑学生</text>
+    <text name="Courses">课程</text>
+    <text name="Course">课程</text>
+    <text name="Order">订单</text>
+    <text name="Orders">订单</text>
+    <text name="Record">跟单</text>
+    <text name="Records">跟单</text>
+    <text name="Contract">合同</text>
+    <text name="Contracts">合同</text>
+    <text name="EducationManage">教学管理</text>
+    <text name="Refresh">刷新</text>
+    <text name="Index">编号</text>
+    <text name="StudentIndex">学生编号</text>
+    <text name="RecordContent">跟单内容</text>
+    <text name="Progress">进度</text>
+    <text name="RecordDate">跟单日期</text>
+    <text name="OrderDate">订单日期</text>
+    <text name="SchoolBegin">入学日期</text>
+    <text name="FullMoney">总金额</text>
+    <text name="ClassName">课程名称</text>
+    <text name="State">状态</text>
+    <text name="StartDate">开始日期</text>
+    <text name="EndDate">结束日期</text>
+    <text name="ContractState">合同状态</text>
+    <text name="AuditorName">审核人</text>
+    <text name="Category">类型</text>
+    <text name="CourseName">课程名称</text>
+    <text name="Price">单价</text>
+    <text name="ConvertContract">转合同</text>
+
+    <text name="EditCourse">编辑课程</text>
+    <text name="CreateNewCourse">创建新课程</text>
+    <text name="EditRecord">编辑跟单</text>
+    <text name="CreateNewRecord">添加跟单记录</text>
+    <text name="EditOrder">编辑订单</text>
+    <text name="CreateNewOrder">创建新订单</text>
+    <text name="EditContract">编辑合同</text>
+    <text name="CreateNewContract">创建新合同</text>
+    <text name="Business">业务</text>
+    <text name="FieldIsRequired">此项必填</text>
+    <text name="FatherName">母亲名字</text>
+    <text name="MotherName">父亲名字</text>
+    <text name="RecordCategory">跟单类型</text>
+    <text name="RecordProgress">跟单进度</text>
+    <text name="CourseCategory">课程类型</text>
+    <text name="Count">数量</text>
+    <text name="OrderState">订单状态</text>
     
+    
+    <text name="EditCourseItem">编辑课程订单</text>
+    <text name="CreateNewCourseItem">创建新课程订单</text>
+    <text name="CourseList">课程订单</text>
+    <text name="Father">父亲</text>
+    <text name="Mother">母亲</text>
+
   </texts>
 </localizationDictionary>
 

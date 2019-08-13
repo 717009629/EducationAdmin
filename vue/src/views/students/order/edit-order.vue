@@ -1,23 +1,17 @@
 <template>
   <div>
-    <Modal
-      :title="L('EditOrder')"
-      :value="value"
-      @on-ok="save"
-      @on-visible-change="visibleChange"
-      :mask-closable="false"
-    >
+    <Modal :title="L('EditOrder')" :value="value" @on-ok="save" @on-visible-change="visibleChange" :mask-closable="false">
       <Form ref="orderForm" label-position="top" :rules="OrderRule" :model="order">
         <Row :gutter="16">
           <Col span="12">
-            <FormItem :label="L('OrderDate')" prop="orderDate">
-              <DatePicker type="date" placeholder="Select date" v-model="order.orderDate"></DatePicker>
-            </FormItem>
+          <FormItem :label="L('OrderDate')" prop="orderDate">
+            <DatePicker type="date" placeholder="Select date" v-model="order.orderDate"></DatePicker>
+          </FormItem>
           </Col>
           <Col span="12">
-            <FormItem :label="L('SchoolBegin')" prop="schoolBegin">
-              <DatePicker type="date" placeholder="Select date" v-model="order.schoolBegin"></DatePicker>
-            </FormItem>
+          <FormItem :label="L('SchoolBegin')" prop="schoolBegin">
+            <DatePicker type="date" placeholder="Select date" v-model="order.schoolBegin"></DatePicker>
+          </FormItem>
           </Col>
         </Row>
 
