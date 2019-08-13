@@ -10,22 +10,22 @@
                 <Tabs value="detail">
                     <TabPane :label="L('UserDetails')" name="detail">
                         <FormItem :label="L('UserName')" prop="userName">
-                            <Input v-model="user.userName" :maxlength="32" :minlength="2"></Input>
+                            <Input v-model="user.userName" :maxlength="32" :minlength="2"/>
                         </FormItem>
                         <FormItem :label="L('Name')" prop="name">
-                            <Input v-model="user.name" :maxlength="32"></Input>
+                            <Input v-model="user.name" :maxlength="32"/>
                         </FormItem>
                         <FormItem :label="L('Surname')" prop="surname">
-                            <Input v-model="user.surname" :maxlength="1024"></Input>
+                            <Input v-model="user.surname" :maxlength="1024"/>
                         </FormItem>
                         <FormItem :label="L('EmailAddress')" prop="emailAddress">
-                            <Input v-model="user.emailAddress" type="email" :maxlength="32"></Input>
+                            <Input v-model="user.emailAddress" type="email" :maxlength="32"/>
                         </FormItem>
                         <FormItem :label="L('Password')" prop="password">
-                            <Input v-model="user.password" type="password" :maxlength="32"></Input>
+                            <Input v-model="user.password" type="password" :maxlength="32"/>
                         </FormItem>
                         <FormItem :label="L('ConfirmPassword')" prop="confirmPassword">
-                            <Input v-model="user.confirmPassword" type="password" :maxlength="32"></Input>
+                            <Input v-model="user.confirmPassword" type="password" :maxlength="32"/>
                         </FormItem>
                         <FormItem>
                             <Checkbox v-model="user.isActive">{{L('IsActive')}}</Checkbox>

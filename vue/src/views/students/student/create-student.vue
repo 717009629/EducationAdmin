@@ -52,29 +52,29 @@
               <Input v-model="student.phone" />
             </FormItem>
             <Row :gutter="16">
-              <Col span="8">
+              <i-col span="8">
                 <FormItem :label="L('FatherName')" prop="father">
                   <Input v-model="student.father" />
                 </FormItem>
-              </Col>
-              <Col span="16">
+              </i-col>
+              <i-col span="16">
                 <FormItem :label="L('FatherPhone')" prop="fatherPhone">
                   <Input v-model="student.fatherPhone" />
                 </FormItem>
-              </Col>
+              </i-col>
             </Row>
 
             <Row :gutter="16">
-              <Col span="8">
+              <i-col span="8">
                 <FormItem :label="L('MotherName')" prop="mother">
                   <Input v-model="student.mother" />
                 </FormItem>
-              </Col>
-              <Col span="16">
+              </i-col>
+              <i-col span="16">
                 <FormItem :label="L('MotherPhone')" prop="motherPhone">
                   <Input v-model="student.motherPhone" />
                 </FormItem>
-              </Col>
+              </i-col>
             </Row>
           </TabPane>
 

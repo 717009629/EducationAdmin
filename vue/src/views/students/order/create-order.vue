@@ -9,16 +9,16 @@
     >
       <Form ref="orderForm" label-position="top" :rules="OrderRule" :model="order">
         <Row :gutter="16">
-          <Col span="12">
+          <i-col span="12">
             <FormItem :label="L('OrderDate')" prop="orderDate">
               <DatePicker type="date" placeholder="Select date" v-model="order.orderDate"></DatePicker>
             </FormItem>
-          </Col>
-          <Col span="12">
+          </i-col>
+          <i-col span="12">
             <FormItem :label="L('SchoolBegin')" prop="schoolBegin">
               <DatePicker type="date" placeholder="Select date" v-model="order.schoolBegin"></DatePicker>
             </FormItem>
-          </Col>
+          </i-col>
         </Row>
 
         <!-- <FormItem :label="L('FullMoney')" prop="fullMoney">

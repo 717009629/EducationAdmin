@@ -10,7 +10,7 @@
         <Tabs value="detail">
           <TabPane :label="L('BasicInfo')" name="detail">
             <FormItem :label="L('StudentName')" prop="name">
-              <Input v-model="student.name" :maxlength="32" :minlength="2"></Input>
+              <Input v-model="student.name" :maxlength="32" :minlength="2"/>
             </FormItem>
             <FormItem :label="L('Sex')" prop="sex">
               <RadioGroup v-model="sex" type="button">
@@ -22,77 +22,77 @@
               <DatePicker type="date" placeholder="Select date" v-model="student.birthday"></DatePicker>
             </FormItem>
             <FormItem :label="L('School')" prop="school">
-              <Input v-model="student.school"></Input>
+              <Input v-model="student.school"/>
             </FormItem>
             <FormItem :label="L('Grade')" prop="grade">
-              <Input v-model="student.grade"></Input>
+              <Input v-model="student.grade"/>
             </FormItem>
           </TabPane>
 
           <TabPane :label="L('Location')" name="address">
             <FormItem :label="L('Province')" prop="province">
-              <Input v-model="student.province"></Input>
+              <Input v-model="student.province"/>
             </FormItem>
             <FormItem :label="L('City')" prop="city">
-              <Input v-model="student.city"></Input>
+              <Input v-model="student.city"/>
             </FormItem>
             <FormItem :label="L('Address')" prop="address">
-              <Input v-model="student.address"></Input>
+              <Input v-model="student.address"/>
             </FormItem>
           </TabPane>
 
           <TabPane :label="L('Contact')" name="contact">
             <FormItem :label="L('Parent')" prop="parent">
-              <Input v-model="student.parent"></Input>
+              <Input v-model="student.parent"/>
             </FormItem>
             <FormItem :label="L('Relation')" prop="relation">
-              <Input v-model="student.relation"></Input>
+              <Input v-model="student.relation"/>
             </FormItem>
             <FormItem :label="L('Phone')" prop="phone">
-              <Input v-model="student.phone"></Input>
+              <Input v-model="student.phone"/>
             </FormItem>
             <Row :gutter="16">
-              <Col span="8">
+              <i-col span="8">
                 <FormItem :label="L('FatherName')" prop="father">
                   <Input v-model="student.father" />
                 </FormItem>
-              </Col>
-              <Col span="16">
+              </i-col>
+              <i-col span="16">
                 <FormItem :label="L('FatherPhone')" prop="fatherPhone">
                   <Input v-model="student.fatherPhone" />
                 </FormItem>
-              </Col>
+              </i-col>
             </Row>
 
             <Row :gutter="16">
-              <Col span="8">
+              <i-col span="8">
                 <FormItem :label="L('MotherName')" prop="mother">
                   <Input v-model="student.mother" />
                 </FormItem>
-              </Col>
-              <Col span="16">
+              </i-col>
+              <i-col span="16">
                 <FormItem :label="L('MotherPhone')" prop="motherPhone">
                   <Input v-model="student.motherPhone" />
                 </FormItem>
-              </Col>
+              </i-col>
             </Row>
           </TabPane>
 
           <TabPane :label="L('ElseInfo')" name="else">
             <FormItem :label="L('CourseType')" prop="courseType">
-              <Input v-model="student.courseType"></Input>
+              <Input v-model="student.courseType"/>
             </FormItem>
             <FormItem :label="L('StudentType')" prop="studentType">
-              <Input v-model="student.studentType"></Input>
+              <Input v-model="student.studentType"/>
             </FormItem>
             <FormItem :label="L('TeachMethod')" prop="teachMethod">
-              <Input v-model="student.teachMethod"></Input>
+              <Input v-model="student.teachMethod"/>
             </FormItem>
             <FormItem :label="L('Origin')" prop="origin">
-              <Input v-model="student.origin"></Input>
+              <Input v-model="student.origin"/>
             </FormItem>
             <FormItem :label="L('Note')" prop="note">
-              <Input v-model="student.note"></Input>
+              <Input v-model="student.note"/>
             </FormItem>
           </TabPane>
         </Tabs>

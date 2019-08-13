@@ -8,10 +8,10 @@
         >
             <Form ref="tenantForm"  label-position="top" :rules="tenantRule" :model="tenant">
                 <FormItem :label="L('TenancyName')" prop="tenancyName">
-                    <Input v-model="tenant.tenancyName" :maxlength="32" :minlength="2"></Input>
+                    <Input v-model="tenant.tenancyName" :maxlength="32" :minlength="2"/>
                 </FormItem>
                 <FormItem :label="L('Name')" prop="name">
-                    <Input v-model="tenant.name" :maxlength="32" :minlength="2"></Input>
+                    <Input v-model="tenant.name" :maxlength="32" :minlength="2"/>
                 </FormItem>
                 <FormItem>
                     <Checkbox v-model="tenant.isActive">{{L('IsActive')}}</Checkbox>
