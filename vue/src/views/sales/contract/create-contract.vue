@@ -2,25 +2,65 @@
   <div>
     <Modal :title="L('CreateNewContract')" :value="value" @on-ok="save" @on-visible-change="visibleChange" :mask-closable="false" width="1000px">
       <div>
-        <Table :loading="loading" :columns="columns" :no-data-text="L('NoDatas')" border :data="list"></Table>
+        <Form ref="orderForm" label-position="top" :model="order">
+          <Row :gutter="16">
+            <i-col span=8>
+              <FormItem :label="L('CourseCategory')" prop="courseId">
+                <Input :value="order.course?order.course.category:''" disabled />
+              </FormItem>
+            </i-col>
+            <i-col span=8>
+              <FormItem :label="L('CourseBame')" prop="courseId">
+                <Input :value="order.course?order.course.name:''" disabled />
+              </FormItem>
+            </i-col>
+            <i-col span=8>
+              <FormItem :label="L('Price')" prop="courseId">
+                <Input :value="order.course?order.course.price:''" disabled />
+              </FormItem>
+            </i-col>
+
+          </Row>
+
+          <Row :gutter="16">
+            <i-col span="8">
+              <FormItem :label="L('OrderDate')" prop="orderDate">
+                <DatePicker type="date" placeholder="Select date" v-model="order.orderDate" disabled></DatePicker>
+              </FormItem>
+            </i-col>
+            <i-col span="8">
+              <FormItem :label="L('SchoolBegin')" prop="schoolBegin">
+                <DatePicker type="date" placeholder="Select date" v-model="order.schoolBegin" disabled></DatePicker>
+              </FormItem>
+            </i-col>
+            <i-col span='8'>
+              <FormItem :label="L('OrderState')" prop="state">
+                <Input v-model="order.state" disabled />
+              </FormItem>
+            </i-col>
+          </Row>
+          <FormItem :label="L('Note')" prop="note">
+            <Input v-model="order.note" disabled />
+          </FormItem>
+        </Form>
       </div>
       <hr style="margin:20px 0" />
       <Form ref="contractForm" label-position="top" :rules="ContractRule" :model="contract">
         <Row :gutter="16">
           <i-col span="8">
-          <FormItem :label="L('StartDate')" prop="startDate">
-            <DatePicker type="date" placeholder="Select date" v-model="contract.startDate"></DatePicker>
-          </FormItem>
+            <FormItem :label="L('StartDate')" prop="startDate">
+              <DatePicker type="date" placeholder="Select date" v-model="contract.startDate"></DatePicker>
+            </FormItem>
           </i-col>
           <i-col span="8">
-          <FormItem :label="L('EndDate')" prop="endDate">
-            <DatePicker type="date" placeholder="Select date" v-model="contract.endDate"></DatePicker>
-          </FormItem>
+            <FormItem :label="L('EndDate')" prop="endDate">
+              <DatePicker type="date" placeholder="Select date" v-model="contract.endDate"></DatePicker>
+            </FormItem>
           </i-col>
           <i-col span="8">
-          <FormItem :label="L('FullMoney')" prop="fullMoney">
-            <InputNumber v-model="contract.fullMoney" style="width:100%"></InputNumber>
-          </FormItem>
+            <FormItem :label="L('FullMoney')" prop="fullMoney">
+              <InputNumber v-model="contract.fullMoney" style="width:100%"></InputNumber>
+            </FormItem>
           </i-col>
         </Row>
 
@@ -56,7 +96,6 @@ export default class CreateContract extends AbpBase {
     return this.$store.state.courseItem.loading;
   }
 
-
   save() {
     (this.$refs.contractForm as any).validate(async (valid: boolean) => {
       console.log(1);
@@ -87,12 +126,8 @@ export default class CreateContract extends AbpBase {
         this.$store.state.student.editStudent
       );
       this.order = Util.extend(true, {}, this.$store.state.order.editOrder);
-      await this.getpage();
 
       this.contract.id = this.order.id;
-      this.contract.fullMoney = this.list.reduce((number, item) => {
-        return number + item.fullMoney;
-      }, 0);
     }
   }
   ContractRule = {
@@ -113,32 +148,6 @@ export default class CreateContract extends AbpBase {
       }
     ]
   };
-  columns = [
-    // {
-    //   title: this.L("OrderName"),
-    //   key: "name"
-    // },
-    {
-      title: this.L("CourseCategory"),
-      key: "courseCategory"
-    },
-    {
-      title: this.L("CourseName"),
-      key: "courseName"
-    },
-    {
-      title: this.L("Count"),
-      key: "count"
-    },
-    {
-      title: this.L("FullMoney"),
-      key: "fullMoney"
-    },
-    {
-      title: this.L("Note"),
-      key: "note"
-    }
-  ];
 }
 </script>
 

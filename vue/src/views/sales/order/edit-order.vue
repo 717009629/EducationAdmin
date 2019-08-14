@@ -1,7 +1,8 @@
 <template>
   <div>
     <Modal :title="L('EditOrder')" :value="value" @on-ok="save" @on-visible-change="visibleChange" :mask-closable="false">
-       <FormItem :label="L('Course')" prop="courseId">
+      <Form ref="orderForm" label-position="top" :rules="OrderRule" :model="order">
+        <FormItem :label="L('Course')" prop="courseId">
           <Select v-model="order.courseId" filterable>
             <Option v-for="item in courseList" :value="item.id" :key="item.id" :label="item.category+'：'+item.name+'：'+item.price+'元'">
               <span>{{item.category}}</span>
@@ -12,7 +13,6 @@
           </Select>
         </FormItem>
 
-      <Form ref="orderForm" label-position="top" :rules="OrderRule" :model="order">
         <Row :gutter="16">
           <i-col span="12">
             <FormItem :label="L('OrderDate')" prop="orderDate">

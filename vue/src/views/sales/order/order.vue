@@ -5,12 +5,12 @@
         <Form ref="queryForm" :label-width="100" label-position="left" inline>
           <Row :gutter="16">
             <i-col span="8">
-            <FormItem :label="L('Keyword')+':'" style="width:100%">
-              <Input v-model="pagerequest.studentName" :placeholder="L('StudentName')" />
-            </FormItem>
+              <FormItem :label="L('Keyword')+':'" style="width:100%">
+                <Input v-model="pagerequest.studentName" :placeholder="L('StudentName')" />
+              </FormItem>
             </i-col>
             <i-col span="8">
-            <Button icon="ios-search" type="primary" size="large" @click="getpage" class="toolbar-btn" v-if="hasPermission('Pages.Orders.Create')">{{L('Find')}}</Button>
+              <Button icon="ios-search" type="primary" size="large" @click="getpage" class="toolbar-btn" v-if="hasPermission('Pages.Orders.Create')">{{L('Find')}}</Button>
             </i-col>
           </Row>
         </Form>
@@ -18,8 +18,6 @@
           <Table :loading="loading" :columns="columns" :no-data-text="L('NoDatas')" border :data="list">
             <template slot-scope="{ row }" slot="action" v-if="hasPermission('Pages.Orders.Edit')">
               <Button v-if="hasPermission('Pages.Orders.Edit')" type="primary" size="small" @click="edit(row)" style="margin-right:5px">{{L('Edit')}}</Button>
-
-             
 
               <Button v-if="hasPermission('Pages.Orders.Edit')" type="primary" size="small" @click="showContract(row)" style="margin-right:5px">{{L('ConvertContract')}}</Button>
             </template>
@@ -132,12 +130,18 @@ export default class Orders extends AbpBase {
       }
     },
     {
-      title: this.L("FullMoney"),
-      key: "fullMomey"
+      title: this.L("CourseName"),
+      key: "courseName",
+      render: (h, params) => {
+        return h("span", params.row.course.name);
+      }
     },
     {
-      title: this.L("ClassName"),
-      key: "className"
+      title: this.L("CoursePrice"),
+      key: "coursePrice",
+      render: (h, params) => {
+        return h("span", params.row.course.price);
+      }
     },
     {
       title: this.L("State"),
@@ -152,7 +156,7 @@ export default class Orders extends AbpBase {
       title: this.L("Actions"),
       key: "Actions",
       width: 220,
-      slot:'action'
+      slot: "action"
     }
   ];
   async created() {

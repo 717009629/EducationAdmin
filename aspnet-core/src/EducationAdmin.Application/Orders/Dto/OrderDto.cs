@@ -23,7 +23,6 @@ namespace EducationAdmin.Orders.Dto
 
         public string State { get; set; }
 
-        public string ClassName { get; set; }
 
         public long StudentId { get; set; }
 

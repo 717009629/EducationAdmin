@@ -12,7 +12,6 @@
         <template slot-scope="{ row }" slot="action" v-if="hasPermission('Pages.Orders.Edit')">
           <Button v-if="hasPermission('Pages.Orders.Edit')" type="primary" size="small" @click="edit(row)" style="margin-right:5px">{{L('Edit')}}</Button>
 
-
           <Button v-if="hasPermission('Pages.Orders.Edit')" type="primary" size="small" @click="showContract(row)" style="margin-right:5px">{{L('ConvertContract')}}</Button>
         </template>
       </Table>
@@ -108,13 +107,20 @@ export default class StudentOrder extends AbpBase {
         return h("span", new Date(params.row.schoolBegin).toLocaleDateString());
       }
     },
+
     {
-      title: this.L("FullMoney"),
-      key: "fullMomey"
+      title: this.L("CourseName"),
+      key: "courseName",
+      render: (h, params) => {
+        return h("span", params.row.course.name);
+      }
     },
     {
-      title: this.L("ClassName"),
-      key: "className"
+      title: this.L("CoursePrice"),
+      key: "coursePrice",
+      render: (h, params) => {
+        return h("span", params.row.course.price);
+      }
     },
     {
       title: this.L("State"),

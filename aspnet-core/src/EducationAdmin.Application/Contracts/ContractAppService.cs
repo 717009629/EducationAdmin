@@ -43,7 +43,7 @@ namespace EducationAdmin.Contracts
 
         protected override IQueryable<Contract> CreateFilteredQuery(PagedContractResultRequestDto input)
         {
-            return Repository.GetAllIncluding(m => m.Salesman, m => m.Student)
+            return Repository.GetAllIncluding(m => m.Salesman, m => m.Student, m => m.Order, m => m.Order.Course)
                     .WhereIf(input.StudentId != null, m => m.StudentId == input.StudentId)
                     .WhereIf(!input.StudentName.IsNullOrWhiteSpace(), x => x.Student.Name.Contains(input.StudentName));
         }

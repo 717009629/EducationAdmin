@@ -1,5 +1,6 @@
 ﻿using Abp.Application.Services.Dto;
 using Abp.AutoMapper;
+using EducationAdmin.Orders.Dto;
 using EducationAdmin.Sales;
 using EducationAdmin.Sales.Dto;
 using System;
@@ -33,5 +34,7 @@ namespace EducationAdmin.Contracts.Dto
         public long SalesmanId { get; set; }
 
         public string SalesmanName { get; set; }
+
+        public OrderDto Order { get; set; }
     }
 }

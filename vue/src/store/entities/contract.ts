@@ -1,7 +1,7 @@
 import Entity from './entity'
 import ContracState from './contractState'
 import Student from './student'
-
+import Order from './order'
 export default class Contract extends Entity<number>{
     startDate? :  string  
     endDate? :  string  
@@ -20,4 +20,5 @@ export default class Contract extends Entity<number>{
     creationTime? :  string  
     creatorUserId? :  number  
     orderId?:number
+    order?:Order
 }
