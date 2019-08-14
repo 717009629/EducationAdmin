@@ -1117,7 +1117,7 @@ namespace EducationAdmin.Migrations
                     b.ToTable("AbpTenants");
                 });
 
-            modelBuilder.Entity("EducationAdmin.Students.Contract", b =>
+            modelBuilder.Entity("EducationAdmin.Sales.Contract", b =>
                 {
                     b.Property<long>("Id");
 
@@ -1153,6 +1153,8 @@ namespace EducationAdmin.Migrations
 
                     b.Property<long>("StudentId");
 
+                    b.Property<int>("TenantId");
+
                     b.HasKey("Id");
 
                     b.HasIndex("AuditorId");
@@ -1164,7 +1166,7 @@ namespace EducationAdmin.Migrations
                     b.ToTable("Contracts");
                 });
 
-            modelBuilder.Entity("EducationAdmin.Students.CourseItem", b =>
+            modelBuilder.Entity("EducationAdmin.Sales.CourseItem", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -1194,7 +1196,7 @@ namespace EducationAdmin.Migrations
 
                     b.Property<long>("OrderId");
 
-                    b.Property<int?>("TenantId");
+                    b.Property<int>("TenantId");
 
                     b.HasKey("Id");
 
@@ -1205,7 +1207,7 @@ namespace EducationAdmin.Migrations
                     b.ToTable("CourseItems");
                 });
 
-            modelBuilder.Entity("EducationAdmin.Students.Order", b =>
+            modelBuilder.Entity("EducationAdmin.Sales.Order", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -1241,7 +1243,7 @@ namespace EducationAdmin.Migrations
 
                     b.Property<long>("StudentId");
 
-                    b.Property<int?>("TenantId");
+                    b.Property<int>("TenantId");
 
                     b.HasKey("Id");
 
@@ -1252,7 +1254,7 @@ namespace EducationAdmin.Migrations
                     b.ToTable("Orders");
                 });
 
-            modelBuilder.Entity("EducationAdmin.Students.Record", b =>
+            modelBuilder.Entity("EducationAdmin.Sales.Record", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -1284,7 +1286,7 @@ namespace EducationAdmin.Migrations
 
                     b.Property<long>("StudentId");
 
-                    b.Property<int?>("TenantId");
+                    b.Property<int>("TenantId");
 
                     b.HasKey("Id");
 
@@ -1357,7 +1359,7 @@ namespace EducationAdmin.Migrations
 
                     b.Property<string>("TeachMethod");
 
-                    b.Property<int?>("TenantId");
+                    b.Property<int>("TenantId");
 
                     b.HasKey("Id");
 
@@ -1535,15 +1537,15 @@ namespace EducationAdmin.Migrations
                         .HasForeignKey("LastModifierUserId");
                 });
 
-            modelBuilder.Entity("EducationAdmin.Students.Contract", b =>
+            modelBuilder.Entity("EducationAdmin.Sales.Contract", b =>
                 {
                     b.HasOne("EducationAdmin.Authorization.Users.User", "Auditor")
                         .WithMany()
                         .HasForeignKey("AuditorId");
 
-                    b.HasOne("EducationAdmin.Students.Order", "Order")
+                    b.HasOne("EducationAdmin.Sales.Order", "Order")
                         .WithOne("Contract")
-                        .HasForeignKey("EducationAdmin.Students.Contract", "Id")
+                        .HasForeignKey("EducationAdmin.Sales.Contract", "Id")
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("EducationAdmin.Authorization.Users.User", "Salesman")
@@ -1557,20 +1559,20 @@ namespace EducationAdmin.Migrations
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 
-            modelBuilder.Entity("EducationAdmin.Students.CourseItem", b =>
+            modelBuilder.Entity("EducationAdmin.Sales.CourseItem", b =>
                 {
                     b.HasOne("EducationAdmin.Education.Course", "Course")
                         .WithMany()
                         .HasForeignKey("CourseId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("EducationAdmin.Students.Order", "Order")
-                        .WithMany()
+                    b.HasOne("EducationAdmin.Sales.Order", "Order")
+                        .WithMany("CourseItems")
                         .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("EducationAdmin.Students.Order", b =>
+            modelBuilder.Entity("EducationAdmin.Sales.Order", b =>
                 {
                     b.HasOne("EducationAdmin.Authorization.Users.User", "Salesman")
                         .WithMany()
@@ -1583,7 +1585,7 @@ namespace EducationAdmin.Migrations
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 
-            modelBuilder.Entity("EducationAdmin.Students.Record", b =>
+            modelBuilder.Entity("EducationAdmin.Sales.Record", b =>
                 {
                     b.HasOne("EducationAdmin.Authorization.Users.User", "Salesman")
                         .WithMany()

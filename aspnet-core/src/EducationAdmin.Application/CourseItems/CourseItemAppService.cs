@@ -4,7 +4,7 @@ using Abp.Domain.Repositories;
 using Abp.Linq.Extensions;
 using EducationAdmin.CourseItems.Dto;
 using EducationAdmin.Education;
-using EducationAdmin.Students;
+using EducationAdmin.Sales;
 using System;
 using System.Collections.Generic;
 using System.Linq;

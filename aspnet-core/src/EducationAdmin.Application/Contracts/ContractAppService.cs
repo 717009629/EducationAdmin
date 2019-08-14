@@ -2,7 +2,7 @@
 using Abp.Application.Services.Dto;
 using Abp.Domain.Repositories;
 using EducationAdmin.Contracts.Dto;
-using EducationAdmin.Students;
+using EducationAdmin.Sales;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -16,6 +16,7 @@ using Abp.Linq.Extensions;
 using Abp.Extensions;
 using Abp.Authorization;
 using EducationAdmin.Authorization;
+using EducationAdmin.MultiTenancy;
 
 namespace EducationAdmin.Contracts
 {

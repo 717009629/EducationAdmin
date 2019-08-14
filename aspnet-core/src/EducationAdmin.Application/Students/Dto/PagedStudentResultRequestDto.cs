@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace EducationAdmin.Students.Dto
+namespace EducationAdmin.Sales.Dto
 {
     public class PagedStudentResultRequestDto : PagedResultRequestDto
     {

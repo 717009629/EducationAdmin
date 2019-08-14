@@ -1,5 +1,7 @@
-﻿using Abp.Domain.Entities.Auditing;
+﻿using Abp.Domain.Entities;
+using Abp.Domain.Entities.Auditing;
 using EducationAdmin.Authorization.Users;
+using EducationAdmin.Students;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System;
 using System.Collections.Generic;
@@ -7,9 +9,9 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
-namespace EducationAdmin.Students
+namespace EducationAdmin.Sales
 {
-    public class Contract:FullAuditedEntity<long>
+    public class Contract : FullAuditedEntity<long>, IMustHaveTenant
     {
         public DateTime StartDate { get; set; }
 
@@ -37,14 +39,15 @@ namespace EducationAdmin.Students
 
         [ForeignKey(nameof(Id))]
         public Order Order { get; set; }
+        public int TenantId { get; set; }
     }
     public enum ContractState
     {
-        
-        Created=0,
-        WaitAudite=1,
-        Audited=2,
-        Reject=3,
-        Obsolete=4
+
+        Created = 0,
+        WaitAudite = 1,
+        Audited = 2,
+        Reject = 3,
+        Obsolete = 4
     }
 }

@@ -1,5 +1,5 @@
 ﻿using Abp.AutoMapper;
-using EducationAdmin.Students;
+using EducationAdmin.Sales;
 using System;
 using System.Collections.Generic;
 using System.Text;

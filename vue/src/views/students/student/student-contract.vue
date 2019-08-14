@@ -19,7 +19,7 @@ import Util from "../../../lib/util";
 import AbpBase from "../../../lib/abpbase";
 import Student from "../../../store/entities/student";
 import Contract from "../../../store/entities/contract";
-import EditContract from "../contract/edit-contract.vue";
+import EditContract from "../../sales/contract/edit-contract.vue";
 import ContractState from "../../../store/entities/contractState";
 @Component({ components: { EditContract } })
 export default class StudentContract extends AbpBase {

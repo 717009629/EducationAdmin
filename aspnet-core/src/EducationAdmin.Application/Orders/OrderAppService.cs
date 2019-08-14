@@ -5,7 +5,7 @@ using Abp.Extensions;
 using Abp.Linq.Extensions;
 using EducationAdmin.Authorization;
 using EducationAdmin.Orders.Dto;
-using EducationAdmin.Students;
+using EducationAdmin.Sales;
 using System;
 using System.Collections.Generic;
 using System.Linq;

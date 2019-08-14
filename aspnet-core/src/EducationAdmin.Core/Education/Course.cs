@@ -6,7 +6,7 @@ using System.Text;
 
 namespace EducationAdmin.Education
 {
-    public class Course : FullAuditedEntity<long>, IMayHaveTenant
+    public class Course : FullAuditedEntity<long>, IMustHaveTenant
     {
 
 
@@ -15,7 +15,7 @@ namespace EducationAdmin.Education
         public string Name { get; set; }
         
         public decimal Price { get; set; }
-        public int? TenantId { get; set; }
+        public int TenantId { get; set; }
 
         
     }

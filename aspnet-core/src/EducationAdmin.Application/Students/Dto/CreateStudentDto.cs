@@ -1,9 +1,11 @@
 ﻿using Abp.AutoMapper;
+using Abp.Domain.Entities.Auditing;
+using EducationAdmin.Students;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace EducationAdmin.Students.Dto
+namespace EducationAdmin.Sales.Dto
 {
     [AutoMapTo(typeof(Student))]
     public class CreateStudentDto
@@ -51,5 +53,7 @@ namespace EducationAdmin.Students.Dto
 
         public string Note { get; set; }
         public long SalesmanId { get; set; }
+
+        public int? TenantId { get; set; }
     }
 }

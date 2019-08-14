@@ -31,10 +31,10 @@ import Util from "../../../lib/util";
 import AbpBase from "../../../lib/abpbase";
 import Student from "../../../store/entities/student";
 import Order from "../../../store/entities/order";
-import CreateOrder from "../order/create-order.vue";
-import EditOrder from "../order/edit-order.vue";
-import OrderCourse from "../order/order-course.vue";
-import CreateContract from "../contract/create-contract.vue";
+import CreateOrder from "../../sales/order/create-order.vue";
+import EditOrder from "../../sales/order/edit-order.vue";
+import OrderCourse from "../../sales/order/order-course.vue";
+import CreateContract from "../../sales/contract/create-contract.vue";
 @Component({
   components: { CreateOrder, EditOrder, OrderCourse, CreateContract }
 })

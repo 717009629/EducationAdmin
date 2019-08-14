@@ -92,6 +92,8 @@ namespace EducationAdmin.Web.Host.Startup
 
             app.UseCors(_defaultCorsPolicyName); // Enable CORS!
 
+            app.UseDefaultFiles();
+
             app.UseStaticFiles();
 
             app.UseAuthentication();

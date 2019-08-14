@@ -1,11 +1,12 @@
 ﻿using Abp.Application.Services.Dto;
 using Abp.AutoMapper;
 using EducationAdmin.Authorization.Users;
+using EducationAdmin.Students;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace EducationAdmin.Students.Dto
+namespace EducationAdmin.Sales.Dto
 {
     [AutoMapTo(typeof(Student))]
     [AutoMapFrom(typeof(Student))]

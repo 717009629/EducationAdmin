@@ -5,9 +5,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace EducationAdmin.Students
+namespace EducationAdmin.Sales
 {
-    public class CourseItem : FullAuditedEntity<long>, IMayHaveTenant
+    public class CourseItem : FullAuditedEntity<long>, IMustHaveTenant
     {
 
         public long OrderId { get; set; }
@@ -22,6 +22,6 @@ namespace EducationAdmin.Students
 
         public string Note { get; set; }
 
-        public int? TenantId { get; set; }
+        public int TenantId { get; set; }
     }
 }

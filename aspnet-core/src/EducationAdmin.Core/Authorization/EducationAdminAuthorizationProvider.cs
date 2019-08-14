@@ -13,12 +13,12 @@ namespace EducationAdmin.Authorization
             SetPermission(context, PermissionNames.Pages_Users, "Users");
             SetPermission(context, PermissionNames.Pages_Roles, "Roles");
             SetPermission(context, PermissionNames.Pages_Tenants, "Tenants", multiTenancySides: MultiTenancySides.Host);
-            SetPermission(context, PermissionNames.Pages_Students, "Students");
-            SetPermission(context, PermissionNames.Pages_Record, "Record");
-            SetPermission(context, PermissionNames.Pages_Order, "Order");
-            var contract = SetPermission(context, PermissionNames.Pages_Contract, "Contract");
-            contract.CreateChildPermission(PermissionNames.Pages_Contract + ".Audite", L("Audite"));
-            SetPermission(context, PermissionNames.Pages_Course, "Course");
+            SetPermission(context, PermissionNames.Pages_Students, "Students", multiTenancySides: MultiTenancySides.Tenant);
+            SetPermission(context, PermissionNames.Pages_Record, "Record", multiTenancySides: MultiTenancySides.Tenant);
+            SetPermission(context, PermissionNames.Pages_Order, "Order", multiTenancySides: MultiTenancySides.Tenant);
+            var contract = SetPermission(context, PermissionNames.Pages_Contract, "Contract", multiTenancySides: MultiTenancySides.Tenant);
+            contract.CreateChildPermission(PermissionNames.Pages_Contract + ".Audite", L("Audite"), multiTenancySides: MultiTenancySides.Tenant);
+            SetPermission(context, PermissionNames.Pages_Course, "Course", multiTenancySides: MultiTenancySides.Tenant);
         }
 
 

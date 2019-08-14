@@ -4,7 +4,7 @@ using Abp.Authorization;
 using Abp.Domain.Repositories;
 using EducationAdmin.Authorization;
 using EducationAdmin.Records.Dto;
-using EducationAdmin.Students;
+using EducationAdmin.Sales;
 using System;
 using System.Collections.Generic;
 using System.Text;

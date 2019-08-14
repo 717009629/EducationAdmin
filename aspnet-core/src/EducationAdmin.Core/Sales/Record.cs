@@ -1,14 +1,15 @@
 ﻿using Abp.Domain.Entities;
 using Abp.Domain.Entities.Auditing;
 using EducationAdmin.Authorization.Users;
+using EducationAdmin.Students;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
-namespace EducationAdmin.Students
+namespace EducationAdmin.Sales
 {
-    public class Record : FullAuditedEntity<long>, IMayHaveTenant
+    public class Record : FullAuditedEntity<long>, IMustHaveTenant
     {
         public string Category { get; set; }
 
@@ -26,7 +27,7 @@ namespace EducationAdmin.Students
         public long SalesmanId { get; set; }
         [ForeignKey(nameof(SalesmanId))]
         public User Salesman { get; set; }
-        public int? TenantId { get; set; }
+        public int TenantId { get; set; }
 
     }
 }

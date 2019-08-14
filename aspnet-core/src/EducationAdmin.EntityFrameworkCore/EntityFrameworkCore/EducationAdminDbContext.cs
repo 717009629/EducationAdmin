@@ -3,8 +3,9 @@ using Abp.Zero.EntityFrameworkCore;
 using EducationAdmin.Authorization.Roles;
 using EducationAdmin.Authorization.Users;
 using EducationAdmin.MultiTenancy;
-using EducationAdmin.Students;
+using EducationAdmin.Sales;
 using EducationAdmin.Education;
+using EducationAdmin.Students;
 
 namespace EducationAdmin.EntityFrameworkCore
 {

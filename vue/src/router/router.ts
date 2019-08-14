@@ -65,9 +65,20 @@ export const appRouters: Array<Router> = [{
     component: main,
     children: [
         { path: 'student', permission: 'Pages.Students', meta: { title: 'Students' }, name: 'student', component: () => import('../views/students/student/student.vue') },
-        { path: 'record', permission: 'Pages.Records', meta: { title: 'Records' }, name: 'record', component: () => import('../views/students/record/record.vue') },
-        { path: 'order', permission: 'Pages.Orders', meta: { title: 'Orders' }, name: 'order', component: () => import('../views/students/order/order.vue') },
-        { path: 'contract', permission: 'Pages.Contracts', meta: { title: 'Contracts' }, name: 'contract', component: () => import('../views/students/contract/contract.vue') }
+       
+    ]
+},
+{
+    path: '/sales',
+    name: 'sales',
+    permission: '',
+    meta: { title: 'SalesManage' },
+    icon: '&#xe6ed;',
+    component: main,
+    children: [
+        { path: 'record', permission: 'Pages.Records', meta: { title: 'Records' }, name: 'record', component: () => import('../views/sales/record/record.vue') },
+        { path: 'order', permission: 'Pages.Orders', meta: { title: 'Orders' }, name: 'order', component: () => import('../views/sales/order/order.vue') },
+        { path: 'contract', permission: 'Pages.Contracts', meta: { title: 'Contracts' }, name: 'contract', component: () => import('../views/sales/contract/contract.vue') }
     ]
 },
 {

@@ -58,8 +58,8 @@ import Util from "../../../lib/util";
 import AbpBase from "../../../lib/abpbase";
 import Student from "../../../store/entities/student";
 import Record from "../../../store/entities/record";
-import CreateRecord from "../record/create-record.vue";
-import EditRecord from "../record/edit-record.vue";
+import CreateRecord from "../../sales/record/create-record.vue";
+import EditRecord from "../../sales/record/edit-record.vue";
 @Component({ components: { CreateRecord, EditRecord } })
 export default class StudentRecord extends AbpBase {
   @Prop({ type: Number, default: null }) studentId: null;

@@ -5,14 +5,15 @@ using Abp.Linq.Extensions;
 using Abp.Domain.Repositories;
 using Abp.Extensions;
 using EducationAdmin.Authorization;
-using EducationAdmin.Students.Dto;
+using EducationAdmin.Sales.Dto;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using EducationAdmin.Students;
 
-namespace EducationAdmin.Students
+namespace EducationAdmin.Sales
 {
 
     [AbpAuthorize(PermissionNames.Pages_Students)]
@@ -24,7 +25,7 @@ namespace EducationAdmin.Students
             UpdatePermissionName = PermissionNames.Pages_Students + ".Edit";
         }
 
-        public override Task<StudentDto> Create(CreateStudentDto input)
+        public override  Task<StudentDto> Create(CreateStudentDto input)
         {
             input.SalesmanId = this.AbpSession.UserId.Value;
             return base.Create(input);

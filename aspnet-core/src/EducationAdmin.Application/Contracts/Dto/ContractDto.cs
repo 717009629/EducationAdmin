@@ -1,7 +1,7 @@
 ﻿using Abp.Application.Services.Dto;
 using Abp.AutoMapper;
-using EducationAdmin.Students;
-using EducationAdmin.Students.Dto;
+using EducationAdmin.Sales;
+using EducationAdmin.Sales.Dto;
 using System;
 using System.Collections.Generic;
 using System.Text;

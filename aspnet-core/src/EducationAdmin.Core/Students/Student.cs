@@ -8,7 +8,7 @@ using System.Text;
 
 namespace EducationAdmin.Students
 {
-    public class Student :FullAuditedEntity<long>,IMayHaveTenant
+    public class Student :FullAuditedEntity<long>,IMustHaveTenant
     {
         public string Name { get; set; }
 
@@ -57,7 +57,7 @@ namespace EducationAdmin.Students
 
         [ForeignKey(nameof(SalesmanId))]
         public User Salesman { get; set; }
-        public int? TenantId { get ; set ; }
+        public int TenantId { get ; set ; }
 
        // public string SalesmanName { get { return Salesman?.Name; } }
     }

@@ -1,10 +1,10 @@
 ﻿using Abp.Application.Services;
-using EducationAdmin.Students.Dto;
+using EducationAdmin.Sales.Dto;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace EducationAdmin.Students
+namespace EducationAdmin.Sales
 {
     public interface IStudentAppService : IAsyncCrudAppService<StudentDto, long, PagedStudentResultRequestDto, CreateStudentDto,StudentDto>
     {

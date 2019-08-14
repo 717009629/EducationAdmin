@@ -2,6 +2,7 @@
 using Abp.Domain.Repositories;
 using Abp.EntityFrameworkCore;
 using Abp.EntityFrameworkCore.Repositories;
+using AutoMapper;
 
 namespace EducationAdmin.EntityFrameworkCore.Repositories
 {

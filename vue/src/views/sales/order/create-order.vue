@@ -100,7 +100,6 @@ export default class CreateOrder extends AbpBase {
     ],
         className: [
       {
-        type:'date',
         required: true,
         message: this.L("FieldIsRequired", undefined, this.L("ClassName")),
         trigger: "blur"

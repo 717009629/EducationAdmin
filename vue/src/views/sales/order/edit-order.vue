@@ -72,7 +72,6 @@ export default class EditOrdere extends AbpBase {
   OrderRule = {
     orderDate: [
       {
-        type: "date",
         required: true,
         message: this.L("FieldIsRequired", undefined, this.L("OrderDate")),
         trigger: "blur"

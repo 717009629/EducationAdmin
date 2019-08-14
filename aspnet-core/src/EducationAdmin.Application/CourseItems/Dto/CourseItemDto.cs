@@ -1,6 +1,6 @@
 ﻿using Abp.Application.Services.Dto;
 using Abp.AutoMapper;
-using EducationAdmin.Students;
+using EducationAdmin.Sales;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -23,5 +23,7 @@ namespace EducationAdmin.CourseItems.Dto
         public decimal FullMoney { get; set; }
 
         public string Note { get; set; }
+
+
     }
 }
