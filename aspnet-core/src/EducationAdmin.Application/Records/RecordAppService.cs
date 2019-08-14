@@ -20,7 +20,11 @@ namespace EducationAdmin.Records
     [AbpAuthorize(PermissionNames.Pages_Record)]
     public class RecordAppService : AsyncCrudAppService<Record, RecordDto, long, PagedRecordResultRequestDto, CreateRecordDto, RecordDto>, IRecordAppService
     {
-        public RecordAppService(IRepository<Record, long> repository) : base(repository) {
+        private readonly IRepository<Customer, long> CustomerRepository;
+        public RecordAppService(IRepository<Record, long> repository, IRepository<Customer, long> customerRepository) : base(repository)
+        {
+            CustomerRepository = customerRepository;
+
             DeletePermissionName = PermissionNames.Pages_Record + ".Delete";
             CreatePermissionName = PermissionNames.Pages_Record + ".Create";
             UpdatePermissionName = PermissionNames.Pages_Record + ".Edit";
@@ -29,15 +33,17 @@ namespace EducationAdmin.Records
 
         protected override IQueryable<Record> CreateFilteredQuery(PagedRecordResultRequestDto input)
         {
-            return Repository.GetAllIncluding(m => m.Salesman, m => m.Student)
-                    .WhereIf(input.StudentId != null, m => m.StudentId == input.StudentId)
-                    .WhereIf(!input.StudentName.IsNullOrWhiteSpace(), x => x.Student.Name.Contains(input.StudentName));
+            return Repository.GetAllIncluding(m => m.Salesman, m => m.Customer)
+                    .WhereIf(input.CustomerId != null, m => m.CustomerId == input.CustomerId)
+                    .WhereIf(!input.StudentName.IsNullOrWhiteSpace(), x => x.Customer.StudentName.Contains(input.StudentName));
         }
 
-        public override Task<RecordDto> Create(CreateRecordDto input)
+        public override async Task<RecordDto> Create(CreateRecordDto input)
         {
             input.SalesmanId = this.AbpSession.UserId.Value;
-            return base.Create(input);
+            var customer = await CustomerRepository.FirstOrDefaultAsync(input.CustomerId);
+            customer.State = input.State;
+            return await base.Create(input);
         }
     }
 }

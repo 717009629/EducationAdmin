@@ -407,11 +407,40 @@ namespace EducationAdmin.Migrations
                     Category = table.Column<string>(nullable: true),
                     Name = table.Column<string>(nullable: true),
                     Price = table.Column<decimal>(nullable: false),
-                    TenantId = table.Column<int>(nullable: true)
+                    TenantId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Courses", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Customer",
+                columns: table => new
+                {
+                    Id = table.Column<long>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    CreationTime = table.Column<DateTime>(nullable: false),
+                    CreatorUserId = table.Column<long>(nullable: true),
+                    LastModificationTime = table.Column<DateTime>(nullable: true),
+                    LastModifierUserId = table.Column<long>(nullable: true),
+                    IsDeleted = table.Column<bool>(nullable: false),
+                    DeleterUserId = table.Column<long>(nullable: true),
+                    DeletionTime = table.Column<DateTime>(nullable: true),
+                    StudentName = table.Column<string>(nullable: true),
+                    Mother = table.Column<string>(nullable: true),
+                    Father = table.Column<string>(nullable: true),
+                    FatherPhone = table.Column<string>(nullable: true),
+                    MotherPhone = table.Column<string>(nullable: true),
+                    OtherGuardian = table.Column<string>(nullable: true),
+                    OhrerGuadianPhone = table.Column<string>(nullable: true),
+                    Note = table.Column<string>(nullable: true),
+                    State = table.Column<int>(nullable: false),
+                    TenantId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Customer", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -723,6 +752,43 @@ namespace EducationAdmin.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Records",
+                columns: table => new
+                {
+                    Id = table.Column<long>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    CreationTime = table.Column<DateTime>(nullable: false),
+                    CreatorUserId = table.Column<long>(nullable: true),
+                    LastModificationTime = table.Column<DateTime>(nullable: true),
+                    LastModifierUserId = table.Column<long>(nullable: true),
+                    IsDeleted = table.Column<bool>(nullable: false),
+                    DeleterUserId = table.Column<long>(nullable: true),
+                    DeletionTime = table.Column<DateTime>(nullable: true),
+                    State = table.Column<int>(nullable: false),
+                    Date = table.Column<DateTime>(nullable: true),
+                    Content = table.Column<string>(nullable: true),
+                    CustomerId = table.Column<long>(nullable: false),
+                    SalesmanId = table.Column<long>(nullable: false),
+                    TenantId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Records", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Records_Customer_CustomerId",
+                        column: x => x.CustomerId,
+                        principalTable: "Customer",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Records_AbpUsers_SalesmanId",
+                        column: x => x.SalesmanId,
+                        principalTable: "AbpUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AbpEntityPropertyChanges",
                 columns: table => new
                 {
@@ -836,44 +902,6 @@ namespace EducationAdmin.Migrations
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Orders_Students_StudentId",
-                        column: x => x.StudentId,
-                        principalTable: "Students",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Records",
-                columns: table => new
-                {
-                    Id = table.Column<long>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    CreationTime = table.Column<DateTime>(nullable: false),
-                    CreatorUserId = table.Column<long>(nullable: true),
-                    LastModificationTime = table.Column<DateTime>(nullable: true),
-                    LastModifierUserId = table.Column<long>(nullable: true),
-                    IsDeleted = table.Column<bool>(nullable: false),
-                    DeleterUserId = table.Column<long>(nullable: true),
-                    DeletionTime = table.Column<DateTime>(nullable: true),
-                    Category = table.Column<string>(nullable: true),
-                    Progress = table.Column<string>(nullable: true),
-                    Date = table.Column<DateTime>(nullable: true),
-                    Content = table.Column<string>(nullable: true),
-                    StudentId = table.Column<long>(nullable: false),
-                    SalesmanId = table.Column<long>(nullable: false),
-                    TenantId = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Records", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Records_AbpUsers_SalesmanId",
-                        column: x => x.SalesmanId,
-                        principalTable: "AbpUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Records_Students_StudentId",
                         column: x => x.StudentId,
                         principalTable: "Students",
                         principalColumn: "Id",
@@ -1316,14 +1344,14 @@ namespace EducationAdmin.Migrations
                 column: "StudentId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Records_CustomerId",
+                table: "Records",
+                column: "CustomerId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Records_SalesmanId",
                 table: "Records",
                 column: "SalesmanId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Records_StudentId",
-                table: "Records",
-                column: "StudentId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Students_SalesmanId",
@@ -1425,6 +1453,9 @@ namespace EducationAdmin.Migrations
 
             migrationBuilder.DropTable(
                 name: "Orders");
+
+            migrationBuilder.DropTable(
+                name: "Customer");
 
             migrationBuilder.DropTable(
                 name: "AbpEntityChangeSets");

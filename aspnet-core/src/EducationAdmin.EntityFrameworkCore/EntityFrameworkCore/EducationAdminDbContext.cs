@@ -30,11 +30,13 @@ namespace EducationAdmin.EntityFrameworkCore
         public DbSet<CourseItem> CourseItems { get; set; }
 
         public DbSet<Contract> Contracts { get; set; }
+
+        public DbSet<Customer> Customer { get; set; }
  
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Record>().HasOne(m => m.Student).WithMany().OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<Record>().HasOne(m => m.Customer).WithMany().OnDelete(DeleteBehavior.Restrict);
             modelBuilder.Entity<Order>().HasOne(m => m.Student).WithMany().OnDelete(DeleteBehavior.Restrict);
             modelBuilder.Entity<Contract>().HasOne(m => m.Order).WithOne(m=>m.Contract).OnDelete(DeleteBehavior.Restrict);
             modelBuilder.Entity<Contract>().HasOne(m => m.Salesman).WithMany().OnDelete(DeleteBehavior.Restrict);

@@ -61,6 +61,7 @@ import Util from "@/lib/util";
 import AbpBase from "@/lib/abpbase";
 import PageRequest from "@/store/entities/page-request";
 import EditRecord from "./edit-record.vue";
+import CustomerState from '../../../store/entities/customerState'
 
 class PageRecordRequest extends PageRequest {
   studentName: string = "";
@@ -125,24 +126,27 @@ export default class Records extends AbpBase {
     },
 
     {
-      title: this.L("StudentIndex"),
-      key: "sutdentId",
+      title: this.L("CustomerIndex"),
+      key: "CusotmerId",
       render: (h: any, params: any) => {
-        return h("span", ("000000" + params.row.student.id).slice(-6));
+        return h("span", ("000000" + params.row.customer.id).slice(-6));
       }
     },
     {
       title: this.L("StudentName"),
       key: "studentName",
-      render: (h, params) => h("span", params.row.student.name)
+      render: (h, params) => h("span", params.row.customer.studentName)
     },
-    {
+     {
       title: this.L("RecordContent"),
       key: "content"
     },
     {
-      title: this.L("Progress"),
-      key: "progress"
+      title: this.L("State"),
+      key: "state",
+      render:(h,params)=>{
+        return h('span',this.L(CustomerState[params.row.state]))
+      }
     },
     {
       title: this.L("RecordDate"),
@@ -155,7 +159,6 @@ export default class Records extends AbpBase {
       title: this.L("SalesmanName"),
       key: "salesmanName"
     },
-
     {
       title: this.L("Actions"),
       key: "Actions",

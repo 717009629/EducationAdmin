@@ -3,11 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace EducationAdmin.Records.Dto
+namespace EducationAdmin.Customers.Dto
 {
-    public class PagedRecordResultRequestDto : PagedResultRequestDto
+    public class PagedCustomerResultRequestDto:PagedResultRequestDto
     {
-        public int? CustomerId { get; set; }
         public string StudentName { get; set; }
         public string SalesmanName { get; set; }
     }

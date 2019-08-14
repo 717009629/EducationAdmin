@@ -1,21 +1,19 @@
 import Entity from './entity'
-import Student from './student'
+import Customer from './customer'
+import CustomerState from './customerState';
+
 
 export default class Record extends Entity<number>{
-    category?: string
-    progress?: string
+    state?:CustomerState
     date?: string
     content?: string
-    studentId: number
+    customerId: number
     salesmanId: number
     salesmanName?: string
     tenantId?: number
-    isDeleted?: boolean
-    deleterUserId?: number
-    deletionTime?: string
     lastModificationTime?: string
     lastModifierUserId?: number
     creationTime?: string
     creatorUserId?: number
-    student?:Student
+    student?:Customer
 }

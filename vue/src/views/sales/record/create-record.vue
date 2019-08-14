@@ -1,21 +1,15 @@
 <template>
   <div>
-    <Modal
-      :title="L('CreateNewRecord')"
-      :value="value"
-      @on-ok="save"
-      @on-visible-change="visibleChange"
-      :mask-closable="false"
-    >
+    <Modal :title="L('CreateNewRecord')" :value="value" @on-ok="save" @on-visible-change="visibleChange" :mask-closable="false">
       <Form ref="recordForm" label-position="top" :rules="RecordRule" :model="record">
-        <FormItem :label="L('RecordCategory')" prop="category">
-          <Input v-model="record.category" />
-        </FormItem>
+
         <FormItem :label="L('RecordContent')" prop="content">
           <Input v-model="record.content" type="textarea" :rows="3" />
         </FormItem>
-        <FormItem :label="L('RecordProgress')" prop="progress">
-          <Input v-model="record.progress" />
+        <FormItem :label="L('Progress')" prop="state">
+          <Select v-model="record.state">
+            <Option v-for="n in 3" :key="n" :value="n">{{L(CustomerState[n] )}}</Option>
+          </Select>
         </FormItem>
         <FormItem :label="L('RecordDate')" prop="date">
           <DatePicker type="date" placeholder="Select date" v-model="record.date"></DatePicker>
@@ -32,17 +26,20 @@
 import { Component, Vue, Inject, Prop, Watch } from "vue-property-decorator";
 import Util from "../../../lib/util";
 import AbpBase from "../../../lib/abpbase";
-import Student from "../../../store/entities/student";
+import Customer from "../../../store/entities/customer";
+import CustomerState from "../../../store/entities/customerState";
 import Record from "../../../store/entities/record";
 @Component
 export default class CreateRecord extends AbpBase {
   @Prop({ type: Boolean, default: false }) value: boolean;
   record: Record = new Record();
-  student: Student = new Student();
+  customer: Customer = new Customer();
+  CustomerState=CustomerState;
+ 
   save() {
     (this.$refs.recordForm as any).validate(async (valid: boolean) => {
       if (valid) {
-        this.record.studentId = this.student.id;
+        this.record.customerId = this.customer.id;
         await this.$store.dispatch({
           type: "record/create",
           data: this.record
@@ -61,21 +58,15 @@ export default class CreateRecord extends AbpBase {
     if (!value) {
       this.$emit("input", value);
     } else {
-      this.student = Util.extend(
+      this.customer = Util.extend(
         true,
         {},
-        this.$store.state.student.editStudent
+        this.$store.state.customer.editCustomer
       );
     }
   }
   RecordRule = {
-    category: [
-      {
-        required: true,
-        message: this.L("FieldIsRequired", undefined, this.L("RecordCategory")),
-        trigger: "blur"
-      }
-    ],
+
     content: [
       {
         required: true,
@@ -83,7 +74,7 @@ export default class CreateRecord extends AbpBase {
         trigger: "blur"
       }
     ],
-    progress: [
+    state: [
       {
         required: true,
         message: this.L("FieldIsRequired", undefined, this.L("RecordProgress")),

@@ -11,18 +11,17 @@ namespace EducationAdmin.Sales
 {
     public class Record : FullAuditedEntity<long>, IMustHaveTenant
     {
-        public string Category { get; set; }
 
-        public string Progress { get; set; }
+        public CustomerState State { get; set; }
 
         public DateTime? Date { get; set; }
 
         public string Content { get; set; }
 
-        public long StudentId { get; set; }
+        public long CustomerId { get; set; }
 
-        [ForeignKey(nameof(StudentId))]
-        public Student Student { get; set; }
+        [ForeignKey(nameof(CustomerId))]
+        public Customer Customer { get; set; }
 
         public long SalesmanId { get; set; }
         [ForeignKey(nameof(SalesmanId))]

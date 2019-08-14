@@ -18,6 +18,8 @@
 
         public const string Pages_Course = "Pages.Courses";
 
+        public const string Pages_Customer = "Pages.Customers";
+
 
     }
 }

@@ -13,6 +13,7 @@ import order from './modules/order'
 import course from './modules/course'
 import courseItem from './modules/courseItem'
 import contract from './modules/contract'
+import customer from './modules/customer'
 const store = new Vuex.Store({
     state: {
         //
@@ -35,7 +36,8 @@ const store = new Vuex.Store({
         order,
         course,
         courseItem,
-        contract
+        contract,
+        customer
     }
 });
 

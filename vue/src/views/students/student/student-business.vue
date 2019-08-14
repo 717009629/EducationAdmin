@@ -31,9 +31,6 @@
         </Form>
         <div class="margin-top-10">
           <Tabs type="card" v-model="selecteTab">
-            <TabPane :label="L('Record')" name="record" v-if="hasPermission('Pages.Records')">
-              <student-record :studentId="student.id"></student-record>
-            </TabPane>
             <TabPane :label="L('Order')" name="order" v-if="hasPermission('Pages.Records')">
               <student-order :studentId="student.id" @goContract="selecteTab='contract'"></student-order>
             </TabPane>
@@ -53,15 +50,14 @@ import { Component, Vue, Inject, Prop, Watch } from "vue-property-decorator";
 import Util from "../../../lib/util";
 import AbpBase from "../../../lib/abpbase";
 import Student from "../../../store/entities/student";
-import StudentRecord from "./student-record.vue";
 import StudentOrder from "./student-order.vue";
 import StudentContract from "./student-contract.vue";
 
-@Component({ components: { StudentRecord, StudentOrder, StudentContract } })
+@Component({ components: { StudentOrder, StudentContract } })
 export default class StudentBusiness extends AbpBase {
   @Prop({ type: Boolean, default: false }) value: boolean;
   student: Student = new Student();
-  selecteTab: String = "record";
+  selecteTab: String = "order";
 
   visibleChange(value: boolean) {
     if (!value) {

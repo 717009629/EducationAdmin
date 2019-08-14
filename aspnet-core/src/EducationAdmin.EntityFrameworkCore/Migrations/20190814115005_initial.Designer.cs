@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EducationAdmin.Migrations
 {
     [DbContext(typeof(EducationAdminDbContext))]
-    [Migration("20190814075141_initial")]
+    [Migration("20190814115005_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -1062,7 +1062,7 @@ namespace EducationAdmin.Migrations
 
                     b.Property<decimal>("Price");
 
-                    b.Property<int?>("TenantId");
+                    b.Property<int>("TenantId");
 
                     b.HasKey("Id");
 
@@ -1209,6 +1209,51 @@ namespace EducationAdmin.Migrations
                     b.ToTable("CourseItems");
                 });
 
+            modelBuilder.Entity("EducationAdmin.Sales.Customer", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("CreationTime");
+
+                    b.Property<long?>("CreatorUserId");
+
+                    b.Property<long?>("DeleterUserId");
+
+                    b.Property<DateTime?>("DeletionTime");
+
+                    b.Property<string>("Father");
+
+                    b.Property<string>("FatherPhone");
+
+                    b.Property<bool>("IsDeleted");
+
+                    b.Property<DateTime?>("LastModificationTime");
+
+                    b.Property<long?>("LastModifierUserId");
+
+                    b.Property<string>("Mother");
+
+                    b.Property<string>("MotherPhone");
+
+                    b.Property<string>("Note");
+
+                    b.Property<string>("OhrerGuadianPhone");
+
+                    b.Property<string>("OtherGuardian");
+
+                    b.Property<int>("State");
+
+                    b.Property<string>("StudentName");
+
+                    b.Property<int>("TenantId");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Customer");
+                });
+
             modelBuilder.Entity("EducationAdmin.Sales.Order", b =>
                 {
                     b.Property<long>("Id")
@@ -1262,13 +1307,13 @@ namespace EducationAdmin.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Category");
-
                     b.Property<string>("Content");
 
                     b.Property<DateTime>("CreationTime");
 
                     b.Property<long?>("CreatorUserId");
+
+                    b.Property<long>("CustomerId");
 
                     b.Property<DateTime?>("Date");
 
@@ -1282,19 +1327,17 @@ namespace EducationAdmin.Migrations
 
                     b.Property<long?>("LastModifierUserId");
 
-                    b.Property<string>("Progress");
-
                     b.Property<long>("SalesmanId");
 
-                    b.Property<long>("StudentId");
+                    b.Property<int>("State");
 
                     b.Property<int>("TenantId");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("SalesmanId");
+                    b.HasIndex("CustomerId");
 
-                    b.HasIndex("StudentId");
+                    b.HasIndex("SalesmanId");
 
                     b.ToTable("Records");
                 });
@@ -1589,15 +1632,15 @@ namespace EducationAdmin.Migrations
 
             modelBuilder.Entity("EducationAdmin.Sales.Record", b =>
                 {
+                    b.HasOne("EducationAdmin.Sales.Customer", "Customer")
+                        .WithMany()
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.HasOne("EducationAdmin.Authorization.Users.User", "Salesman")
                         .WithMany()
                         .HasForeignKey("SalesmanId")
                         .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("EducationAdmin.Students.Student", "Student")
-                        .WithMany()
-                        .HasForeignKey("StudentId")
-                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("EducationAdmin.Students.Student", b =>
