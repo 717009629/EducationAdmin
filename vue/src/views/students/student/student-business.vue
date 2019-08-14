@@ -63,7 +63,7 @@ export default class StudentBusiness extends AbpBase {
     if (!value) {
       this.$emit("input", value);
     } else {
-      this.selecteTab = "record";
+      this.selecteTab = "order";
       this.student = Util.extend(
         true,
         {},

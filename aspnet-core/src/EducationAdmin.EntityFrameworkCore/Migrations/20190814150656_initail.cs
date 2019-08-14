@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace EducationAdmin.Migrations
 {
-    public partial class initial : Migration
+    public partial class initail : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -433,7 +433,7 @@ namespace EducationAdmin.Migrations
                     FatherPhone = table.Column<string>(nullable: true),
                     MotherPhone = table.Column<string>(nullable: true),
                     OtherGuardian = table.Column<string>(nullable: true),
-                    OhrerGuadianPhone = table.Column<string>(nullable: true),
+                    OtherGuadianPhone = table.Column<string>(nullable: true),
                     Note = table.Column<string>(nullable: true),
                     State = table.Column<int>(nullable: false),
                     TenantId = table.Column<int>(nullable: false)
@@ -889,11 +889,18 @@ namespace EducationAdmin.Migrations
                     ClassName = table.Column<string>(nullable: true),
                     StudentId = table.Column<long>(nullable: false),
                     SalesmanId = table.Column<long>(nullable: false),
-                    Note = table.Column<string>(nullable: true)
+                    Note = table.Column<string>(nullable: true),
+                    CourseId = table.Column<long>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Orders", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Orders_Courses_CourseId",
+                        column: x => x.CourseId,
+                        principalTable: "Courses",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Orders_AbpUsers_SalesmanId",
                         column: x => x.SalesmanId,
@@ -958,43 +965,6 @@ namespace EducationAdmin.Migrations
                         principalTable: "Students",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "CourseItems",
-                columns: table => new
-                {
-                    Id = table.Column<long>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    CreationTime = table.Column<DateTime>(nullable: false),
-                    CreatorUserId = table.Column<long>(nullable: true),
-                    LastModificationTime = table.Column<DateTime>(nullable: true),
-                    LastModifierUserId = table.Column<long>(nullable: true),
-                    IsDeleted = table.Column<bool>(nullable: false),
-                    DeleterUserId = table.Column<long>(nullable: true),
-                    DeletionTime = table.Column<DateTime>(nullable: true),
-                    OrderId = table.Column<long>(nullable: false),
-                    CourseId = table.Column<long>(nullable: false),
-                    Count = table.Column<int>(nullable: false),
-                    FullMoney = table.Column<decimal>(nullable: false),
-                    Note = table.Column<string>(nullable: true),
-                    TenantId = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_CourseItems", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_CourseItems_Courses_CourseId",
-                        column: x => x.CourseId,
-                        principalTable: "Courses",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_CourseItems_Orders_OrderId",
-                        column: x => x.OrderId,
-                        principalTable: "Orders",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -1324,14 +1294,9 @@ namespace EducationAdmin.Migrations
                 column: "StudentId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CourseItems_CourseId",
-                table: "CourseItems",
+                name: "IX_Orders_CourseId",
+                table: "Orders",
                 column: "CourseId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_CourseItems_OrderId",
-                table: "CourseItems",
-                column: "OrderId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Orders_SalesmanId",
@@ -1434,9 +1399,6 @@ namespace EducationAdmin.Migrations
                 name: "Contracts");
 
             migrationBuilder.DropTable(
-                name: "CourseItems");
-
-            migrationBuilder.DropTable(
                 name: "Records");
 
             migrationBuilder.DropTable(
@@ -1449,9 +1411,6 @@ namespace EducationAdmin.Migrations
                 name: "AbpEditions");
 
             migrationBuilder.DropTable(
-                name: "Courses");
-
-            migrationBuilder.DropTable(
                 name: "Orders");
 
             migrationBuilder.DropTable(
@@ -1459,6 +1418,9 @@ namespace EducationAdmin.Migrations
 
             migrationBuilder.DropTable(
                 name: "AbpEntityChangeSets");
+
+            migrationBuilder.DropTable(
+                name: "Courses");
 
             migrationBuilder.DropTable(
                 name: "Students");

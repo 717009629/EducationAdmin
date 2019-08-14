@@ -12,7 +12,6 @@
         <template slot-scope="{ row }" slot="action" v-if="hasPermission('Pages.Orders.Edit')">
           <Button v-if="hasPermission('Pages.Orders.Edit')" type="primary" size="small" @click="edit(row)" style="margin-right:5px">{{L('Edit')}}</Button>
 
-          <Button v-if="hasPermission('Pages.Orders.Edit')" type="primary" size="small" @click="showCourse(row)" style="margin-right:5px">{{L('Course')}}</Button>
 
           <Button v-if="hasPermission('Pages.Orders.Edit')" type="primary" size="small" @click="showContract(row)" style="margin-right:5px">{{L('ConvertContract')}}</Button>
         </template>
@@ -21,7 +20,6 @@
     <!-- </Card> -->
     <create-order v-model="createModalShow" @save-success="getpage"></create-order>
     <edit-order v-model="editModalShow" @save-success="getpage"></edit-order>
-    <order-course v-model="courseModalShow"></order-course>
     <create-contract v-model="contractModalShow" @save-success="refreshOrderAndContract"></create-contract>
   </div>
 </template>
@@ -33,17 +31,15 @@ import Student from "../../../store/entities/student";
 import Order from "../../../store/entities/order";
 import CreateOrder from "../../sales/order/create-order.vue";
 import EditOrder from "../../sales/order/edit-order.vue";
-import OrderCourse from "../../sales/order/order-course.vue";
 import CreateContract from "../../sales/contract/create-contract.vue";
 @Component({
-  components: { CreateOrder, EditOrder, OrderCourse, CreateContract }
+  components: { CreateOrder, EditOrder, CreateContract }
 })
 export default class StudentOrder extends AbpBase {
   @Prop({ type: Number, default: null }) studentId: null;
   student: Student = new Student();
   createModalShow: boolean = false;
   editModalShow: boolean = false;
-  courseModalShow: boolean = false;
   contractModalShow: boolean = false;
   get list() {
     return this.$store.state.order.list;
@@ -58,10 +54,7 @@ export default class StudentOrder extends AbpBase {
     this.$store.commit("order/edit", row);
     this.editModalShow = true;
   }
-  showCourse(row) {
-    this.$store.commit("order/edit", row);
-    this.courseModalShow = true;
-  }
+
   showContract(row) {
     this.$store.commit("order/edit", row);
     this.contractModalShow = true;

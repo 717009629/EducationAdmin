@@ -19,7 +19,7 @@
             <template slot-scope="{ row }" slot="action" v-if="hasPermission('Pages.Orders.Edit')">
               <Button v-if="hasPermission('Pages.Orders.Edit')" type="primary" size="small" @click="edit(row)" style="margin-right:5px">{{L('Edit')}}</Button>
 
-              <Button v-if="hasPermission('Pages.Orders.Edit')" type="primary" size="small" @click="showCourse(row)" style="margin-right:5px">{{L('Course')}}</Button>
+             
 
               <Button v-if="hasPermission('Pages.Orders.Edit')" type="primary" size="small" @click="showContract(row)" style="margin-right:5px">{{L('ConvertContract')}}</Button>
             </template>
@@ -30,7 +30,6 @@
       </div>
     </Card>
     <edit-order v-model="editModalShow" @save-success="getpage"></edit-order>
-    <order-course v-model="courseModalShow"></order-course>
     <create-contract v-model="contractModalShow"></create-contract>
   </div>
 </template>
@@ -40,7 +39,6 @@ import Util from "@/lib/util";
 import AbpBase from "@/lib/abpbase";
 import PageRequest from "@/store/entities/page-request";
 import EditOrder from "./edit-order.vue";
-import OrderCourse from "./order-course.vue";
 import CreateContract from "../contract/create-contract.vue";
 
 class PageOrderRequest extends PageRequest {
@@ -48,13 +46,12 @@ class PageOrderRequest extends PageRequest {
 }
 
 @Component({
-  components: { EditOrder, OrderCourse, CreateContract }
+  components: { EditOrder, CreateContract }
 })
 export default class Orders extends AbpBase {
   pagerequest: PageOrderRequest = new PageOrderRequest();
 
   editModalShow: boolean = false;
-  courseModalShow: boolean = false;
   contractModalShow: boolean = false;
   get list() {
     return this.$store.state.order.list;
@@ -65,10 +62,6 @@ export default class Orders extends AbpBase {
   edit(row) {
     this.$store.commit("order/edit", row);
     this.editModalShow = true;
-  }
-  showCourse(row) {
-    this.$store.commit("order/edit", row);
-    this.courseModalShow = true;
   }
   showContract(row) {
     this.$store.commit("order/edit", row);

@@ -1,17 +1,28 @@
 <template>
   <div>
     <Modal :title="L('EditOrder')" :value="value" @on-ok="save" @on-visible-change="visibleChange" :mask-closable="false">
+       <FormItem :label="L('Course')" prop="courseId">
+          <Select v-model="order.courseId" filterable>
+            <Option v-for="item in courseList" :value="item.id" :key="item.id" :label="item.category+'：'+item.name+'：'+item.price+'元'">
+              <span>{{item.category}}</span>
+              <span>：</span>
+              <span>{{item.name}}</span>
+              <span style="float:right;">{{item.price}}元</span>
+            </Option>
+          </Select>
+        </FormItem>
+
       <Form ref="orderForm" label-position="top" :rules="OrderRule" :model="order">
         <Row :gutter="16">
           <i-col span="12">
-          <FormItem :label="L('OrderDate')" prop="orderDate">
-            <DatePicker type="date" placeholder="Select date" v-model="order.orderDate"></DatePicker>
-          </FormItem>
+            <FormItem :label="L('OrderDate')" prop="orderDate">
+              <DatePicker type="date" placeholder="Select date" v-model="order.orderDate"></DatePicker>
+            </FormItem>
           </i-col>
           <i-col span="12">
-          <FormItem :label="L('SchoolBegin')" prop="schoolBegin">
-            <DatePicker type="date" placeholder="Select date" v-model="order.schoolBegin"></DatePicker>
-          </FormItem>
+            <FormItem :label="L('SchoolBegin')" prop="schoolBegin">
+              <DatePicker type="date" placeholder="Select date" v-model="order.schoolBegin"></DatePicker>
+            </FormItem>
           </i-col>
         </Row>
 
@@ -45,6 +56,9 @@ import Order from "../../../store/entities/order";
 export default class EditOrdere extends AbpBase {
   @Prop({ type: Boolean, default: false }) value: boolean;
   order: Order = new Order();
+  get courseList() {
+    return this.$store.state.course.list;
+  }
   save() {
     (this.$refs.orderForm as any).validate(async (valid: boolean) => {
       if (valid) {
@@ -62,11 +76,18 @@ export default class EditOrdere extends AbpBase {
     (this.$refs.orderForm as any).resetFields();
     this.$emit("input", false);
   }
+
+  async getAllCourse() {
+    await this.$store.dispatch({
+      type: "course/getAll"
+    });
+  }
   visibleChange(value: boolean) {
     if (!value) {
       this.$emit("input", value);
     } else {
       this.order = Util.extend(true, {}, this.$store.state.order.editOrder);
+      this.getAllCourse();
     }
   }
   OrderRule = {

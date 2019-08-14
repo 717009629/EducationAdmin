@@ -21,6 +21,8 @@ namespace EducationAdmin.Orders.Dto
 
         public long StudentId { get; set; }
 
+        public long CourseId { get; set; }
+
         public string Note { get; set; }
 
         public long SalesmanId { get; set; }

@@ -1166,47 +1166,6 @@ namespace EducationAdmin.Migrations
                     b.ToTable("Contracts");
                 });
 
-            modelBuilder.Entity("EducationAdmin.Sales.CourseItem", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("Count");
-
-                    b.Property<long>("CourseId");
-
-                    b.Property<DateTime>("CreationTime");
-
-                    b.Property<long?>("CreatorUserId");
-
-                    b.Property<long?>("DeleterUserId");
-
-                    b.Property<DateTime?>("DeletionTime");
-
-                    b.Property<decimal>("FullMoney");
-
-                    b.Property<bool>("IsDeleted");
-
-                    b.Property<DateTime?>("LastModificationTime");
-
-                    b.Property<long?>("LastModifierUserId");
-
-                    b.Property<string>("Note");
-
-                    b.Property<long>("OrderId");
-
-                    b.Property<int>("TenantId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CourseId");
-
-                    b.HasIndex("OrderId");
-
-                    b.ToTable("CourseItems");
-                });
-
             modelBuilder.Entity("EducationAdmin.Sales.Customer", b =>
                 {
                     b.Property<long>("Id")
@@ -1260,6 +1219,8 @@ namespace EducationAdmin.Migrations
 
                     b.Property<string>("ClassName");
 
+                    b.Property<long?>("CourseId");
+
                     b.Property<DateTime>("CreationTime");
 
                     b.Property<long?>("CreatorUserId");
@@ -1291,6 +1252,8 @@ namespace EducationAdmin.Migrations
                     b.Property<int>("TenantId");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CourseId");
 
                     b.HasIndex("SalesmanId");
 
@@ -1602,21 +1565,12 @@ namespace EducationAdmin.Migrations
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 
-            modelBuilder.Entity("EducationAdmin.Sales.CourseItem", b =>
+            modelBuilder.Entity("EducationAdmin.Sales.Order", b =>
                 {
                     b.HasOne("EducationAdmin.Education.Course", "Course")
                         .WithMany()
-                        .HasForeignKey("CourseId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("CourseId");
 
-                    b.HasOne("EducationAdmin.Sales.Order", "Order")
-                        .WithMany("CourseItems")
-                        .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("EducationAdmin.Sales.Order", b =>
-                {
                     b.HasOne("EducationAdmin.Authorization.Users.User", "Salesman")
                         .WithMany()
                         .HasForeignKey("SalesmanId")

@@ -34,11 +34,7 @@ namespace EducationAdmin.Contracts
 
         public override async Task<ContractDto> Create(CreateContractDto input)
         {
-            var order = await OrderRepository.GetAllIncluding(m => m.CourseItems).SingleAsync(m => m.Id == input.Id);
-            if (order.CourseItems.Count == 0)
-            {
-                throw new AbpException("The Order Must Have At Lease One Course!");
-            }
+            var order = await OrderRepository.GetAllIncluding(m => m.Course).SingleAsync(m => m.Id == input.Id);
             input.StudentId = order.StudentId;
             input.State = ContractState.Created;
             input.SalesmanId = this.AbpSession.UserId.Value;

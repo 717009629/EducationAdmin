@@ -27,7 +27,7 @@ namespace EducationAdmin.EntityFrameworkCore
 
         public DbSet<Course> Courses { get; set; }
 
-        public DbSet<CourseItem> CourseItems { get; set; }
+      //  public DbSet<CourseItem> CourseItems { get; set; }
 
         public DbSet<Contract> Contracts { get; set; }
 

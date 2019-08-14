@@ -56,24 +56,11 @@ export default class CreateContract extends AbpBase {
     return this.$store.state.courseItem.loading;
   }
 
-  async getpage() {
-    await this.$store.dispatch({
-      type: "courseItem/getAll",
-      data: { orderId: this.order.id }
-    });
-  }
 
   save() {
     (this.$refs.contractForm as any).validate(async (valid: boolean) => {
       console.log(1);
       if (valid) {
-        if (this.list.length === 0) {
-          this.$Modal.error({
-            title: "Error",
-            content: "The Order Must Have At Lease One Course!"
-          });
-          return;
-        }
         this.contract.studentId = this.student.id;
         this.contract.orderId = this.order.id;
         await this.$store.dispatch({

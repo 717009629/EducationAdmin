@@ -1,13 +1,19 @@
 <template>
   <div>
-    <Modal
-      :title="L('CreateNewOrder')"
-      :value="value"
-      @on-ok="save"
-      @on-visible-change="visibleChange"
-      :mask-closable="false"
-    >
+    <Modal :title="L('CreateNewOrder')" :value="value" @on-ok="save" @on-visible-change="visibleChange" :mask-closable="false">
       <Form ref="orderForm" label-position="top" :rules="OrderRule" :model="order">
+
+        <FormItem :label="L('Course')" prop="courseId">
+          <Select v-model="order.courseId" filterable>
+            <Option v-for="item in courseList" :value="item.id" :key="item.id" :label="item.category+'：'+item.name+'：'+item.price+'元'">
+              <span>{{item.category}}</span>
+              <span>：</span>
+              <span>{{item.name}}</span>
+              <span style="float:right;">{{item.price}}元</span>
+            </Option>
+          </Select>
+        </FormItem>
+
         <Row :gutter="16">
           <i-col span="12">
             <FormItem :label="L('OrderDate')" prop="orderDate">
@@ -52,6 +58,10 @@ export default class CreateOrder extends AbpBase {
   @Prop({ type: Boolean, default: false }) value: boolean;
   order: Order = new Order();
   student: Student = new Student();
+  get courseList() {
+    return this.$store.state.course.list;
+  }
+
   save() {
     (this.$refs.orderForm as any).validate(async (valid: boolean) => {
       if (valid) {
@@ -66,10 +76,18 @@ export default class CreateOrder extends AbpBase {
       }
     });
   }
+
   cancel() {
     (this.$refs.orderForm as any).resetFields();
     this.$emit("input", false);
   }
+
+  async getAllCourse() {
+    await this.$store.dispatch({
+      type: "course/getAll"
+    });
+  }
+
   visibleChange(value: boolean) {
     if (!value) {
       this.$emit("input", value);
@@ -79,26 +97,27 @@ export default class CreateOrder extends AbpBase {
         {},
         this.$store.state.student.editStudent
       );
+      this.getAllCourse()
     }
   }
   OrderRule = {
     orderDate: [
       {
-        type:'date',
+        type: "date",
         required: true,
         message: this.L("FieldIsRequired", undefined, this.L("OrderDate")),
         trigger: "blur"
       }
     ],
-        schoolBegin: [
+    schoolBegin: [
       {
-        type:'date',
+        type: "date",
         required: true,
         message: this.L("FieldIsRequired", undefined, this.L("SchoolBegin")),
         trigger: "blur"
       }
     ],
-        className: [
+    className: [
       {
         required: true,
         message: this.L("FieldIsRequired", undefined, this.L("ClassName")),

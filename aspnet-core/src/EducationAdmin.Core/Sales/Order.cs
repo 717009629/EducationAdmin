@@ -1,6 +1,7 @@
 ﻿using Abp.Domain.Entities;
 using Abp.Domain.Entities.Auditing;
 using EducationAdmin.Authorization.Users;
+using EducationAdmin.Education;
 using EducationAdmin.Students;
 using System;
 using System.Collections.Generic;
@@ -28,6 +29,9 @@ namespace EducationAdmin.Sales
 
         public Student Student { get; set; }
 
+        public long CourseId { get; set; }
+        public Course Course { get; set; }
+
         public long SalesmanId { get; set; }
 
         public User Salesman { get; set; }
@@ -36,6 +40,8 @@ namespace EducationAdmin.Sales
 
         public Contract Contract { get; set; }
 
-        public List<CourseItem> CourseItems { get; set; }
+
+
+   //     public List<CourseItem> CourseItems { get; set; }
     }
 }

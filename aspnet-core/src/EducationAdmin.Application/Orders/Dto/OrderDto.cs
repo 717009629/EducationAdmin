@@ -1,6 +1,7 @@
 ﻿using Abp.Application.Services.Dto;
 using Abp.AutoMapper;
 using Abp.Domain.Entities.Auditing;
+using EducationAdmin.Courses.Dto;
 using EducationAdmin.Sales;
 using EducationAdmin.Sales.Dto;
 using System;
@@ -27,6 +28,9 @@ namespace EducationAdmin.Orders.Dto
         public long StudentId { get; set; }
 
         public StudentDto Student { get; set; }
+
+        public long CourseId { get; set; }
+        public CourseDto Course { get; set; }
 
         public long SalesmanId { get; set; }
 
