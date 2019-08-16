@@ -6,7 +6,7 @@ import Contract from '../entities/contract'
 import Ajax from '../../lib/ajax'
 import PageResult from '@/store/entities/page-result';
 import ListMutations from './list-mutations'
-
+import Audite from '../entities/audite'
 interface ContractState extends ListState<Contract>{
     editContract:Contract
 }
@@ -43,7 +43,10 @@ class ContractModule extends ListModule<ContractState,any,Contract>{
         async get(context:ActionContext<ContractState,any>,payload:any){
             let reponse=await Ajax.get('/api/services/app/Contract/Get?Id='+payload.id);
             return reponse.data.result as Contract;
-        }
+        },
+        async audite(context:ActionContext<ContractState,any>,payload:any){
+            await Ajax.post('/api/services/app/Contract/Audite',payload.data);
+        },
     };
     mutations={
         setCurrentPage(state:ContractState,page:number){

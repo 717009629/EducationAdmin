@@ -4,13 +4,14 @@
     <div class="margin-top-10">
       <Table :loading="loading" :columns="columns" :no-data-text="L('NoDatas')" border :data="list">
         <template slot-scope="{ row }" slot="action" v-if="hasPermission('Pages.Contracts.Edit')||hasPermission('Pages.Contracts.Audite')">
-          <Button v-if="hasPermission('Pages.Contracts.Edit')" type="primary" size="small" @click="edit(row)" style="margin-right:5px">{{L('Edit')}}</Button>
-          <Button v-if="hasPermission('Pages.Contracts.Audite')" type="primary" size="small" style="margin-right:5px">{{L('Audite')}}</Button>
+          <Button v-if="canEdit(row)" type="primary" size="small" @click="edit(row)" style="margin-right:5px">{{L('Edit')}}</Button>
+          <Button v-if="canAudite(row)" type="primary" size="small" @click="audite(row)" style="margin-right:5px">{{L('Audite')}}</Button>
         </template>
       </Table>
     </div>
     <!-- </Card> -->
     <edit-contract v-model="editModalShow" @save-success="getpage"></edit-contract>
+    <audite-contract v-model="auditeModalShow" @save-success="getpage"></audite-contract>
   </div>
 </template>
 <script lang="ts">
@@ -21,12 +22,29 @@ import Student from "../../../store/entities/student";
 import Contract from "../../../store/entities/contract";
 import EditContract from "../../sales/contract/edit-contract.vue";
 import ContractState from "../../../store/entities/contractState";
-@Component({ components: { EditContract } })
+import AuditeContract from "../../sales/contract/audite-contract.vue";
+@Component({ components: { EditContract, AuditeContract } })
 export default class StudentContract extends AbpBase {
   @Prop({ type: Number, default: null }) studentId: null;
   student: Student = new Student();
-  createModalShow: boolean = false;
   editModalShow: boolean = false;
+  auditeModalShow: boolean = false;
+
+  canEdit(contract: Contract) {
+    return (
+      this.hasPermission("Pages.Contracts.Edit") &&
+      (contract.state === ContractState.Created ||
+        contract.state === ContractState.WaitAudite ||
+        contract.state === ContractState.Reject)
+    );
+  }
+  canAudite(contract: Contract) {
+    return (
+      this.hasPermission("Pages.Contracts.Audite") &&
+      (contract.state === ContractState.Created ||
+        contract.state === ContractState.WaitAudite)
+    );
+  }
 
   get list() {
     return this.$store.state.contract.list;
@@ -34,12 +52,13 @@ export default class StudentContract extends AbpBase {
   get loading() {
     return this.$store.state.contract.loading;
   }
-  create() {
-    this.createModalShow = true;
-  }
   edit(row) {
     this.$store.commit("contract/edit", row);
     this.editModalShow = true;
+  }
+  audite(row) {
+    this.$store.commit("contract/edit", row);
+    this.auditeModalShow = true;
   }
 
   @Watch("studentId")
@@ -94,8 +113,14 @@ export default class StudentContract extends AbpBase {
       }
     },
     {
+      title: this.L("AuditedReason"),
+      key: "auditedReason",
+      tooltip: true
+    },
+    {
       title: this.L("Note"),
-      key: "note"
+      key: "note",
+      tooltip: true
     },
     {
       title: this.L("SalesmanName"),

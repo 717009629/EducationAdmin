@@ -5,7 +5,6 @@ using EducationAdmin.Contracts.Dto;
 using EducationAdmin.Courses.Dto;
 using EducationAdmin.Sales;
 using EducationAdmin.Sales.Dto;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -13,8 +12,7 @@ using System.Text;
 namespace EducationAdmin.Orders.Dto
 {
     [AutoMapFrom(typeof(Order))]
-    [AutoMapTo(typeof(Order))]
-    public class OrderDto : FullAuditedEntityDto<long>
+    public class ContractOrderDto : FullAuditedEntityDto<long>
     {
 
         public DateTime? OrderDate { get; set; }
@@ -28,16 +26,13 @@ namespace EducationAdmin.Orders.Dto
 
         public long StudentId { get; set; }
 
-        public StudentDto Student { get; set; }
 
         public long CourseId { get; set; }
         public CourseDto Course { get; set; }
 
-        public OrderContractDto Contract { get; set; }
 
         public long SalesmanId { get; set; }
 
-        public string SalesmanName { get; set; }
 
         public string Note { get; set; }
     }

@@ -5,12 +5,12 @@
         <Form ref="queryForm" :label-width="100" label-position="left" inline>
           <Row :gutter="16">
             <i-col span="8">
-            <FormItem :label="L('Keyword')+':'" style="width:100%">
-              <Input v-model="pagerequest.studentName" :placeholder="L('StudentName')" />
-            </FormItem>
+              <FormItem :label="L('Keyword')+':'" style="width:100%">
+                <Input v-model="pagerequest.studentName" :placeholder="L('StudentName')" />
+              </FormItem>
             </i-col>
             <i-col span="8">
-            <Button icon="ios-search" type="primary" size="large" @click="getpage" class="toolbar-btn" v-if="hasPermission('Pages.Contracts.Create')">{{L('Find')}}</Button>
+              <Button icon="ios-search" type="primary" size="large" @click="getpage" class="toolbar-btn" v-if="hasPermission('Pages.Contracts.Create')">{{L('Find')}}</Button>
             </i-col>
           </Row>
         </Form>
@@ -156,6 +156,16 @@ export default class Contracts extends AbpBase {
       render: (h: any, params: any) => {
         return h("span", ContractState[params.row.state]);
       }
+    },
+    {
+      title: this.L("AuditedReason"),
+      key: "auditedReason",
+      tooltip: true
+    },
+    {
+      title: this.L("Note"),
+      key: "note",
+      tooltip: true
     },
     {
       title: this.L("Note"),

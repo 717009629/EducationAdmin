@@ -19,7 +19,7 @@
             <template slot-scope="{ row }" slot="action" v-if="hasPermission('Pages.Orders.Edit')">
               <Button v-if="hasPermission('Pages.Orders.Edit')" type="primary" size="small" @click="edit(row)" style="margin-right:5px">{{L('Edit')}}</Button>
 
-              <Button v-if="hasPermission('Pages.Orders.Edit')" type="primary" size="small" @click="showContract(row)" style="margin-right:5px">{{L('ConvertContract')}}</Button>
+              <Button v-if="hasPermission('Pages.Orders.Edit')&&!row.contract" type="primary" size="small" @click="showContract(row)" style="margin-right:5px">{{L('ConvertContract')}}</Button>
             </template>
           </Table>
           <Page show-sizer class-name="fengpage" :total="totalCount" class="margin-top-10" @on-change="pageChange" @on-page-size-change="pagesizeChange" :page-size="pageSize" :current="currentPage">
@@ -146,6 +146,11 @@ export default class Orders extends AbpBase {
     {
       title: this.L("State"),
       key: "state"
+    },
+    {
+      title: this.L("Note"),
+      key: "note",
+      tooltip: true
     },
     {
       title: this.L("SalesmanName"),

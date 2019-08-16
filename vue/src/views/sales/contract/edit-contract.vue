@@ -44,6 +44,10 @@
       </div>
       <hr style="margin:20px 0" />
       <Form ref="contractForm" label-position="top" :rules="ContractRule" :model="contract">
+        <FormItem v-if="contract.auditedReason" :label="L('AuditedReason')" prop="auditedReason">
+          <Input v-model="contract.auditedReason" disabled/>
+        </FormItem>
+
         <Row :gutter="16">
           <i-col span="8">
             <FormItem :label="L('StartDate')" prop="startDate">
@@ -119,7 +123,7 @@ export default class EditContracte extends AbpBase {
         {},
         this.$store.state.contract.editContract
       );
-      this.order=this.contract.order;
+      this.order = this.contract.order;
     }
   }
   ContractRule = {
@@ -140,32 +144,6 @@ export default class EditContracte extends AbpBase {
       }
     ]
   };
-  columns = [
-    // {
-    //   title: this.L("OrderName"),
-    //   key: "name"
-    // },
-    {
-      title: this.L("CourseCategory"),
-      key: "courseCategory"
-    },
-    {
-      title: this.L("CourseName"),
-      key: "courseName"
-    },
-    {
-      title: this.L("Count"),
-      key: "count"
-    },
-    {
-      title: this.L("FullMoney"),
-      key: "fullMoney"
-    },
-    {
-      title: this.L("Note"),
-      key: "note"
-    }
-  ];
 }
 </script>
 

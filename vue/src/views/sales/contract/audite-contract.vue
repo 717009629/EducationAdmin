@@ -2,7 +2,45 @@
   <div>
     <Modal :title="L('EditContract')" :value="value"  @on-visible-change="visibleChange" :mask-closable="false" width="1000px">
       <div>
-        <Table :loading="loading" :columns="columns" :no-data-text="L('NoDatas')" border :data="list"></Table>
+         <Form ref="orderForm" label-position="top" :model="order">
+          <Row :gutter="16">
+            <i-col span=8>
+              <FormItem :label="L('CourseCategory')" prop="courseId">
+                <Input :value="order.course?order.course.category:''" disabled />
+              </FormItem>
+            </i-col>
+            <i-col span=8>
+              <FormItem :label="L('CourseBame')" prop="courseId">
+                <Input :value="order.course?order.course.name:''" disabled />
+              </FormItem>
+            </i-col>
+            <i-col span=8>
+              <FormItem :label="L('Price')" prop="courseId">
+                <Input :value="order.course?order.course.price:''" disabled />
+              </FormItem>
+            </i-col>
+          </Row>
+          <Row :gutter="16">
+            <i-col span="8">
+              <FormItem :label="L('OrderDate')" prop="orderDate">
+                <DatePicker type="date" placeholder="Select date" v-model="order.orderDate" disabled></DatePicker>
+              </FormItem>
+            </i-col>
+            <i-col span="8">
+              <FormItem :label="L('SchoolBegin')" prop="schoolBegin">
+                <DatePicker type="date" placeholder="Select date" v-model="order.schoolBegin" disabled></DatePicker>
+              </FormItem>
+            </i-col>
+            <i-col span='8'>
+              <FormItem :label="L('OrderState')" prop="state">
+                <Input v-model="order.state" disabled />
+              </FormItem>
+            </i-col>
+          </Row>
+          <FormItem :label="L('Note')" prop="note">
+            <Input v-model="order.note" disabled />
+          </FormItem>
+        </Form>
       </div>
       <hr style="margin:20px 0" />
       <Form ref="contractForm" label-position="top" :model="contract">
@@ -54,12 +92,14 @@ import Student from "../../../store/entities/student";
 import Contract from "../../../store/entities/contract";
 import Audite from '../../../store/entities/audite'
 import ContractState from '../../../store/entities/contractState'
+import Order from '../../../store/entities/order'
 
 @Component
 export default class AuditeContracte extends AbpBase {
   @Prop({ type: Boolean, default: false }) value: boolean;
   contract: Contract = new Contract();
   audite:Audite=new Audite();
+  order:Order=new Order();
 
   get list() {
     return this.$store.state.courseItem.list;
@@ -68,12 +108,6 @@ export default class AuditeContracte extends AbpBase {
     return this.$store.state.courseItem.loading;
   }
 
-  async getpage() {
-    await this.$store.dispatch({
-      type: "courseItem/getAll",
-      data: { orderId: this.contract.id }
-    });
-  }
 
   pass() {
     (this.$refs.auditeForm as any).validate(async (valid: boolean) => {
@@ -136,7 +170,7 @@ export default class AuditeContracte extends AbpBase {
         {},
         this.$store.state.contract.editContract
       );
-      await this.getpage();
+      this.order=this.contract.order;
     }
   }
   AuditeRule = {
@@ -149,32 +183,6 @@ export default class AuditeContracte extends AbpBase {
     ],
     
   };
-  columns = [
-    // {
-    //   title: this.L("OrderName"),
-    //   key: "name"
-    // },
-    {
-      title: this.L("CourseCategory"),
-      key: "courseCategory"
-    },
-    {
-      title: this.L("CourseName"),
-      key: "courseName"
-    },
-    {
-      title: this.L("Count"),
-      key: "count"
-    },
-    {
-      title: this.L("FullMoney"),
-      key: "fullMoney"
-    },
-    {
-      title: this.L("Note"),
-      key: "note"
-    }
-  ];
 }
 </script>
 

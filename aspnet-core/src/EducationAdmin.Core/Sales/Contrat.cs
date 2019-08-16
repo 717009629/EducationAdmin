@@ -23,7 +23,7 @@ namespace EducationAdmin.Sales
 
         public string Note { get; set; }
 
-        public string AuditedReson { get; set; }
+        public string AuditedReason { get; set; }
 
         public long StudentId { get; set; }
 

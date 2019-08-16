@@ -17,6 +17,8 @@ using Abp.Extensions;
 using Abp.Authorization;
 using EducationAdmin.Authorization;
 using EducationAdmin.MultiTenancy;
+using Microsoft.Extensions.Configuration;
+using Abp.AutoMapper;
 
 namespace EducationAdmin.Contracts
 {
@@ -39,6 +41,27 @@ namespace EducationAdmin.Contracts
             input.State = ContractState.Created;
             input.SalesmanId = this.AbpSession.UserId.Value;
             return await base.Create(input);
+        }
+
+        public async Task<ContractDto> Audite(AuditeDto input)
+        {
+            if(input.ContractState== ContractState.Created||input.ContractState== ContractState.WaitAudite)
+            {
+                throw new AbpException();
+            }
+            CheckPermission(PermissionNames.Pages_Contract + ".Audite");
+            var contract = await Repository.FirstOrDefaultAsync(m => m.Id == input.ContractId);
+            contract.State = input.ContractState;
+            contract.AuditedReason = input.Reason;
+            var r =await Repository.UpdateAsync(contract);
+            return ObjectMapper.Map<ContractDto>(r);
+        }
+
+
+        public override Task<ContractDto> Update(EditContractDto input)
+        {
+            input.State = ContractState.WaitAudite;
+            return base.Update(input);
         }
 
         protected override IQueryable<Contract> CreateFilteredQuery(PagedContractResultRequestDto input)

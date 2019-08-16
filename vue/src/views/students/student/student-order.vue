@@ -127,6 +127,11 @@ export default class StudentOrder extends AbpBase {
       key: "state"
     },
     {
+      title: this.L("Note"),
+      key: "note",
+      tooltip: true
+    },
+    {
       title: this.L("SalesmanName"),
       key: "salesmanName"
     },
