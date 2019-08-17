@@ -8,6 +8,12 @@
     <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="Migrations\20190817142809_lesson.cs" />
+    <Compile Remove="Migrations\20190817142809_lesson.Designer.cs" />
+    <Compile Remove="Migrations\20190817143214_lesson.cs" />
+    <Compile Remove="Migrations\20190817143214_lesson.Designer.cs" />
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.4" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.2.4">
       <PrivateAssets>all</PrivateAssets>

@@ -43,6 +43,9 @@ namespace EducationAdmin.EntityFrameworkCore
             modelBuilder.Entity<Contract>().HasOne(m => m.Order).WithOne(m=>m.Contract).OnDelete(DeleteBehavior.Restrict);
             modelBuilder.Entity<Contract>().HasOne(m => m.Salesman).WithMany().OnDelete(DeleteBehavior.Restrict);
             modelBuilder.Entity<Contract>().HasOne(m => m.Student).WithMany().OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<Lesson>().HasOne(m => m.Student).WithMany().OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<Lesson>().HasOne(m => m.Teacher).WithMany().OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<Lesson>().HasOne(m => m.Order).WithMany().OnDelete(DeleteBehavior.Restrict);
             base.OnModelCreating(modelBuilder);
         }
     }

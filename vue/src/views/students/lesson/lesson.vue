@@ -116,29 +116,45 @@ export default class Lessons extends AbpBase {
   }
 
   columns = [
-    {
-      title: this.L("Index"),
-      key: "id",
-      render: (h: any, params: any) => {
-        return h("span", ("000000" + params.row.id).slice(-6));
-      }
-    },
+    // {
+    //   title: this.L("Index"),
+    //   key: "id",
+    //   render: (h: any, params: any) => {
+    //     return h("span", ("000000" + params.row.id).slice(-6));
+    //   }
+    // },
 
      {
-      title: this.L("LessonContent"),
-      key: "content"
+      title: this.L("Course"),
+      key: "Course"
     },
-
     {
-      title: this.L("LessonDate"),
-      key: "date",
+      title: this.L("StudentName"),
+      key: "studentName",
       render: (h: any, params: any) => {
-        return h("span", new Date(params.row.date).toLocaleDateString());
+        return h("span", params.row.student.name);
       }
     },
     {
-      title: this.L("SalesmanName"),
-      key: "salesmanName"
+      title: this.L("LessonDate"),
+      key: "lessonDate",
+      render: (h: any, params: any) => {
+        return h("span", new Date(params.row.lessonDate).toLocaleDateString());
+      }
+    },
+    {
+      title: this.L("Teacher"),
+      key: "teacher",
+      render: (h: any, params: any) => {
+        return h("span", params.row.teacher.name);
+      }
+    },
+        {
+      title: this.L("IsFinish"),
+      key: "isFinish",
+      render: (h: any, params: any) => {
+        return h("span", params.row.isFinish?this.L('Fininshed'):this.L('Unfinished'));
+      }
     },
     {
       title: this.L("Actions"),
