@@ -34,6 +34,8 @@ namespace EducationAdmin.EntityFrameworkCore
         public DbSet<Customer> Customer { get; set; }
  
 
+        public DbSet<Lesson> Lessons { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Record>().HasOne(m => m.Customer).WithMany().OnDelete(DeleteBehavior.Restrict);
