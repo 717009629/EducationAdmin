@@ -5,11 +5,6 @@
         <FormItem :label="L('LessonContent')" prop="content">
           <Input v-model="lesson.content" type="textarea" :rows="3" />
         </FormItem>
-        <FormItem :label="L('Progress')" prop="state">
-          <Select v-model="lesson.state">
-            <Option v-for="n in 3" :key="n" :value="n">{{L(CustomerState[n] )}}</Option>
-          </Select>
-        </FormItem>
         <FormItem :label="L('LessonDate')" prop="date">
           <DatePicker type="date" placeholder="Select date" v-model="lesson.date"></DatePicker>
         </FormItem>
@@ -27,12 +22,10 @@ import Util from "../../../lib/util";
 import AbpBase from "../../../lib/abpbase";
 import Student from "../../../store/entities/student";
 import Lesson from "../../../store/entities/lesson";
-import CustomerState from "../../../store/entities/customerState";
 @Component
 export default class EditLessone extends AbpBase {
   @Prop({ type: Boolean, default: false }) value: boolean;
   lesson: Lesson = new Lesson();
-  CustomerState=CustomerState;
   save() {
     (this.$refs.lessonForm as any).validate(async (valid: boolean) => {
       if (valid) {

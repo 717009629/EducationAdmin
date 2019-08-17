@@ -8,7 +8,7 @@
         </FormItem>
         <FormItem :label="L('Progress')" prop="state">
           <Select v-model="lesson.state">
-            <Option v-for="n in 3" :key="n" :value="n">{{L(CustomerState[n] )}}</Option>
+            <Option v-for="n in 3" :key="n" :value="n">{{L(StudentState[n] )}}</Option>
           </Select>
         </FormItem>
         <FormItem :label="L('LessonDate')" prop="date">
@@ -26,20 +26,18 @@
 import { Component, Vue, Inject, Prop, Watch } from "vue-property-decorator";
 import Util from "../../../lib/util";
 import AbpBase from "../../../lib/abpbase";
-import Customer from "../../../store/entities/customer";
-import CustomerState from "../../../store/entities/customerState";
+import Student from "../../../store/entities/student";
 import Lesson from "../../../store/entities/lesson";
 @Component
 export default class CreateLesson extends AbpBase {
   @Prop({ type: Boolean, default: false }) value: boolean;
   lesson: Lesson = new Lesson();
-  customer: Customer = new Customer();
-  CustomerState=CustomerState;
- 
+  student: Student = new Student();
+
   save() {
     (this.$refs.lessonForm as any).validate(async (valid: boolean) => {
       if (valid) {
-        this.lesson.customerId = this.customer.id;
+        this.lesson.studentId = this.student.id;
         await this.$store.dispatch({
           type: "lesson/create",
           data: this.lesson
@@ -58,10 +56,10 @@ export default class CreateLesson extends AbpBase {
     if (!value) {
       this.$emit("input", value);
     } else {
-      this.customer = Util.extend(
+      this.student = Util.extend(
         true,
         {},
-        this.$store.state.customer.editCustomer
+        this.$store.state.student.editStudent
       );
     }
   }
