@@ -20,6 +20,7 @@ namespace EducationAdmin.Authorization
             contract.CreateChildPermission(PermissionNames.Pages_Contract + ".Audite", L("Audite"), multiTenancySides: MultiTenancySides.Tenant);
             SetPermission(context, PermissionNames.Pages_Course, "Course", multiTenancySides: MultiTenancySides.Tenant);
             SetPermission(context, PermissionNames.Pages_Customer, "Customer", multiTenancySides: MultiTenancySides.Tenant);
+            SetPermission(context, PermissionNames.Pages_Lesson, "Lesson", multiTenancySides: MultiTenancySides.Tenant);
         }
 
 

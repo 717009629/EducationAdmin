@@ -20,6 +20,8 @@
 
         public const string Pages_Customer = "Pages.Customers";
 
+        public const string Pages_Lesson = "Pages.Lesson";
+
 
     }
 }
