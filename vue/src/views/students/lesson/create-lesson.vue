@@ -6,11 +6,6 @@
         <FormItem :label="L('LessonContent')" prop="content">
           <Input v-model="lesson.content" type="textarea" :rows="3" />
         </FormItem>
-        <FormItem :label="L('Progress')" prop="state">
-          <Select v-model="lesson.state">
-            <Option v-for="n in 3" :key="n" :value="n">{{L(StudentState[n] )}}</Option>
-          </Select>
-        </FormItem>
         <FormItem :label="L('LessonDate')" prop="date">
           <DatePicker type="date" placeholder="Select date" v-model="lesson.date"></DatePicker>
         </FormItem>

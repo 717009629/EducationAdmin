@@ -5,9 +5,9 @@
         <Form ref="queryForm" :label-width="100" label-position="left" inline>
           <Row :gutter="16">
             <i-col span="8">
-            <FormItem :label="L('Keyword')+':'" style="width:100%">
-              <Input v-model="pagerequest.keyword" :placeholder="L('StudentName')" />
-            </FormItem>
+              <FormItem :label="L('Keyword')+':'" style="width:100%">
+                <Input v-model="pagerequest.keyword" :placeholder="L('StudentName')" />
+              </FormItem>
             </i-col>
           </Row>
           <Row>
@@ -19,8 +19,8 @@
           <Table :loading="loading" :columns="columns" :no-data-text="L('NoDatas')" border :data="list">
             <template slot-scope="{ row }" slot="action" v-if="hasPermission('Pages.Students.Edit')||hasPermission('Pages.Records')||hasPermission('Pages.Orders')||hasPermission('Pages.Contracts')">
               <Button v-if="hasPermission('Pages.Students.Edit')" type="primary" size="small" @click="edit(row)" style="margin-right:5px">{{L('Edit')}}</Button>
-              <Button v-if="hasPermission('Pages.Records')||hasPermission('Pages.Orders')||hasPermission('Pages.Contracts')" type="primary" size="small" @click="business(row)"
-                      style="margin-right:5px">{{L('Business')}}</Button>
+              <Button v-if="hasPermission('Pages.Orders')||hasPermission('Pages.Contracts')" type="primary" size="small" @click="business(row)" style="margin-right:5px">{{L('Business')}}</Button>
+              <Button v-if="hasPermission('Pages.Lessons')" type="primary" size="small" @click="lesson(row)" style="margin-right:5px">{{L('Lessons')}}</Button>
             </template>
           </Table>
           <Page show-sizer class-name="fengpage" :total="totalCount" class="margin-top-10" @on-change="pageChange" @on-page-size-change="pagesizeChange" :page-size="pageSize" :current="currentPage">
@@ -31,6 +31,7 @@
     <create-student v-model="createModalShow" @save-success="getpage"></create-student>
     <edit-student v-model="editModalShow" @save-success="getpage"></edit-student>
     <student-business v-model="businessModalShow"></student-business>
+    <student-lesson v-model="lessonModalShow"></student-lesson>
   </div>
 </template>
 <script lang="ts">
@@ -41,13 +42,14 @@ import PageRequest from "../../../store/entities/page-request";
 import CreateStudent from "./create-student.vue";
 import EditStudent from "./edit-student.vue";
 import StudentBusiness from "./student-business.vue";
+import StudentLesson from "./student-lesson.vue";
 
 class PageStudentRequest extends PageRequest {
   keyword: string = "";
 }
 
 @Component({
-  components: { CreateStudent, EditStudent, StudentBusiness }
+  components: { CreateStudent, EditStudent, StudentBusiness, StudentLesson }
 })
 export default class Students extends AbpBase {
   pagerequest: PageStudentRequest = new PageStudentRequest();
@@ -55,6 +57,8 @@ export default class Students extends AbpBase {
   createModalShow: boolean = false;
   editModalShow: boolean = false;
   businessModalShow: boolean = false;
+  lessonModalShow: boolean = false;
+  
   get list() {
     return this.$store.state.student.list;
   }
@@ -71,6 +75,10 @@ export default class Students extends AbpBase {
   business(row) {
     this.$store.commit("student/edit", row);
     this.businessModalShow = true;
+  }
+  lesson(row) {
+    this.$store.commit("student/edit", row);
+    this.lessonModalShow = true;
   }
   pageChange(page: number) {
     this.$store.commit("student/setCurrentPage", page);
