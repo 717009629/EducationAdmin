@@ -1,13 +1,18 @@
 <template>
   <div>
-    <Modal :title="L('Lessone')" :value="value" @on-visible-change="visibleChange" :mask-closable="false" width="1200px">
+    <Modal :value="value" @on-visible-change="visibleChange" :mask-closable="false" width="1100px">
+      <div slot="header">
+        <span style="line-height:20px; font-size:14px;color:#17233d;font-weight:bold;margin-right:20px">{{L('Lessone')}}</span>
+        <span style="line-height:20px; font-size:14px;color:#17233d;font-weight:bold;margin-right:20px">{{student.name}}</span>
+        <Button @click="calenderShow=!calenderShow" size='small'>{{calenderShow?"列表":"日历"}}</Button>
+      </div>
       <div>
-        <!-- <Card dis-hover> -->
-        <div>
-          <!-- <Card dis-hover> -->
+        <FullCalendar v-if="calenderShow" defaultView="dayGridMonth" :plugins="calendarPlugins" locale="zh-cn" :events='events' @dateClick='dateClick' :displayEventTime='false'></FullCalendar>
 
+        <!-- <Card dis-hover> -->
+        <div v-if="!calenderShow">
           <Form ref="queryForm" :label-width="100" label-position="left" inline>
-            <!-- <hr style="border-width:1px 0 0 0; border-style:solid; border-top-color:#ccc; margin:10px 0" /> -->
+
             <Row>
               <Button @click="create" icon="android-add" type="primary" v-if="hasPermission('Pages.Lessons.Create')">{{L('Add')}}</Button>
             </Row>
@@ -19,13 +24,12 @@
               </template>
             </Table>
           </div>
-          <!-- </Card> -->
-          <create-lesson v-model="createModalShow" @save-success="getpage"></create-lesson>
-          <edit-lesson v-model="editModalShow" @save-success="getpage"></edit-lesson>
+
         </div>
-        <!-- </Card> -->
       </div>
       <div slot="footer"></div>
+      <create-lesson v-model="createModalShow" @save-success="getpage" :date='currentDate'></create-lesson>
+      <edit-lesson v-model="editModalShow" @save-success="getpage"></edit-lesson>
     </Modal>
   </div>
 </template>
@@ -36,13 +40,32 @@ import AbpBase from "../../../lib/abpbase";
 import Student from "../../../store/entities/student";
 import CreateLesson from "../lesson/create-lesson.vue";
 import EditLesson from "../lesson/edit-lesson.vue";
+import FullCalendar from "@fullcalendar/vue";
+import dayGridPlugin from "@fullcalendar/daygrid";
+import interactionPlugin from "@fullcalendar/interaction";
+import { dateToLocalArray } from "@fullcalendar/core/datelib/marker";
 
-@Component({ components: { CreateLesson, EditLesson } })
+@Component({ components: { CreateLesson, EditLesson, FullCalendar } })
 export default class StudentBusiness extends AbpBase {
   @Prop({ type: Boolean, default: false }) value: boolean;
   student: Student = new Student();
   createModalShow: boolean = false;
   editModalShow: boolean = false;
+  calenderShow: boolean = false;
+  currentDate: string = "";
+
+  get events() {
+    var list = this.$store.state.lesson.list.map(m => {
+      return { 
+        start: new Date( new Date( m.lessonDate).toLocaleDateString()) , 
+      title: m.course + " " + m.teacher.name,
+      color: new Date( new Date( m.lessonDate).toLocaleDateString())<new Date()?"#aaa":"#0f0" }
+    });
+    console.log(list);
+    return list;
+  }
+
+  calendarPlugins: any = [dayGridPlugin, interactionPlugin];
 
   get list() {
     return this.$store.state.lesson.list;
@@ -57,6 +80,11 @@ export default class StudentBusiness extends AbpBase {
     this.$store.commit("lesson/edit", row);
     this.editModalShow = true;
   }
+  dateClick(arg) {
+    console.log(arg);
+    this.currentDate = arg.dateStr;
+    this.createModalShow = true;
+  }
 
   async getpage() {
     await this.$store.dispatch({
@@ -67,6 +95,7 @@ export default class StudentBusiness extends AbpBase {
   visibleChange(value: boolean) {
     if (!value) {
       this.$emit("input", value);
+      this.calenderShow = false;
     } else {
       this.student = Util.extend(
         true,
@@ -74,6 +103,7 @@ export default class StudentBusiness extends AbpBase {
         this.$store.state.student.editStudent
       );
       this.getpage();
+      this.calenderShow = true;
     }
   }
   columns = [
@@ -87,7 +117,7 @@ export default class StudentBusiness extends AbpBase {
 
     {
       title: this.L("Course"),
-      key: "Course"
+      key: "course"
     },
     {
       title: this.L("StudentName"),
@@ -129,4 +159,7 @@ export default class StudentBusiness extends AbpBase {
   ];
 }
 </script>
-
+<style lang='less'>
+@import "~@fullcalendar/core/main.css";
+@import "~@fullcalendar/daygrid/main.css";
+</style>

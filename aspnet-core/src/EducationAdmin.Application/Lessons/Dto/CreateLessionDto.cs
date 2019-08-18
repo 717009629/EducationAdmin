@@ -1,12 +1,16 @@
-﻿using System;
+﻿using Abp.AutoMapper;
+using EducationAdmin.Students;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace EducationAdmin.Lessons.Dto
 {
+    [AutoMapTo(typeof(Lesson))]
     public class CreateLessionDto
     {
-        public DateTime LessionDate { get; set; }
+
+        public DateTime LessonDate { get; set; }
 
 
         public long StudentId { get; set; }

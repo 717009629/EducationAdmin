@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace EducationAdmin.Lessons
 {
@@ -28,8 +29,19 @@ namespace EducationAdmin.Lessons
             return Repository.GetAllIncluding(m => m.Student, m => m.Teacher)
                   .WhereIf(input.StudentId != null, m => m.StudentId == input.StudentId)
                   .WhereIf(input.TeacherId != null, m => m.TeacherId == input.TeacherId)
-                  .WhereIf(input.StartDate != null, m => m.LessionDate >= input.StartDate)
-                  .WhereIf(input.EndDate != null, m => m.LessionDate <= input.EndDate);
+                  .WhereIf(input.StartDate != null, m => m.LessonDate >= input.StartDate)
+                  .WhereIf(input.EndDate != null, m => m.LessonDate <= input.EndDate);
+        }
+        public override Task<LessonsDto> Create(CreateLessionDto input)
+        {
+            input.LessonDate = input.LessonDate.ToLocalTime();
+            return base.Create(input);
+        }
+
+        public override Task<LessonsDto> Update(LessonsDto input)
+        {
+            input.LessonDate = input.LessonDate.ToLocalTime();
+            return base.Update(input);
         }
     }
 }

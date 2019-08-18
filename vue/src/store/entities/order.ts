@@ -12,7 +12,6 @@ export default class Order extends Entity<number>{
     studentId :  number  
     student? :  Student  
     salesmanId :  number  
-    salesmanName? :  string  
     lastModificationTime? :  string  
     lastModifierUserId? :  number  
     creationTime? :  string  

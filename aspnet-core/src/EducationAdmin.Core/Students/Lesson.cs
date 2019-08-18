@@ -12,7 +12,7 @@ namespace EducationAdmin.Students
     {
         public int TenantId { get; set; }
 
-        public DateTime LessionDate { get; set; }
+        public DateTime LessonDate { get; set; }
 
 
         public long StudentId { get; set; }

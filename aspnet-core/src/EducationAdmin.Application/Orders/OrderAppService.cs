@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 namespace EducationAdmin.Orders
 {
     [AbpAuthorize(PermissionNames.Pages_Order)]
-    public class OrderAppService : AsyncCrudAppService<Order, OrderDto, long, PagedOrderResultRequestDto, CreateOrderDto, OrderDto>, IOrderAppService
+    public class OrderAppService : AsyncCrudAppService<Order, OrderDto, long, PagedOrderResultRequestDto, CreateOrderDto, EditOrderDto>, IOrderAppService
     {
         public OrderAppService(IRepository<Order, long> repository) : base(repository)
         {
@@ -34,8 +34,17 @@ namespace EducationAdmin.Orders
 
         public override Task<OrderDto> Create(CreateOrderDto input)
         {
+            input.SchoolBegin = input.SchoolBegin?.ToLocalTime();
+            input.OrderDate = input.OrderDate?.ToLocalTime();
             input.SalesmanId = this.AbpSession.UserId.Value;
             return base.Create(input);
+        }
+
+        public override Task<OrderDto> Update(EditOrderDto input)
+        {
+            input.SchoolBegin = input.SchoolBegin?.ToLocalTime();
+            input.OrderDate = input.OrderDate?.ToLocalTime();
+            return base.Update(input);
         }
     }
 }

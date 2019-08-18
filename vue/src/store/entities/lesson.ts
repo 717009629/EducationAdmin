@@ -4,7 +4,7 @@ import Student from './student';
 import Order from './order';
 
 export default class Lesson extends Entity<number>{
-    lessionDate: string
+    lessonDate: string
     studentId: number
     student?: Student
     orderId: number

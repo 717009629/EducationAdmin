@@ -7,7 +7,7 @@ using System.Text;
 
 namespace EducationAdmin.Orders
 {
-    public interface IOrderAppService : IAsyncCrudAppService<OrderDto, long, PagedOrderResultRequestDto, CreateOrderDto, OrderDto>
+    public interface IOrderAppService : IAsyncCrudAppService<OrderDto, long, PagedOrderResultRequestDto, CreateOrderDto, EditOrderDto>
     {
     }
 }

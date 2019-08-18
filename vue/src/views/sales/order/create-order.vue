@@ -33,9 +33,6 @@
         <FormItem :label="L('OrderState')" prop="state">
           <Input v-model="order.state" />
         </FormItem>
-        <FormItem :label="L('ClassName')" prop="className">
-          <Input v-model="order.className" />
-        </FormItem>
         <FormItem :label="L('Note')" prop="note">
           <Input v-model="order.note" type="textarea" :rows="3" />
         </FormItem>
@@ -114,13 +111,6 @@ export default class CreateOrder extends AbpBase {
         type: "date",
         required: true,
         message: this.L("FieldIsRequired", undefined, this.L("SchoolBegin")),
-        trigger: "blur"
-      }
-    ],
-    className: [
-      {
-        required: true,
-        message: this.L("FieldIsRequired", undefined, this.L("ClassName")),
         trigger: "blur"
       }
     ]
