@@ -8,7 +8,7 @@
       </div>
       <div>
         <FullCalendar v-if="calenderShow" defaultView="dayGridMonth" :plugins="calendarPlugins" :locale="locale" :events='events' @dateClick='dateClick' @eventClick='eventClick'
-                      :displayEventTime='false' :buttonText="{today:L('Today')}"></FullCalendar>
+                      :displayEventTime='true' :buttonText="{today:L('Today')}"></FullCalendar>
 
         <!-- <Card dis-hover> -->
         <div v-if="!calenderShow">
@@ -53,7 +53,7 @@ export default class StudentBusiness extends AbpBase {
   createModalShow: boolean = false;
   editModalShow: boolean = false;
   calenderShow: boolean = false;
-  currentDate: string = "";
+  currentDate: Date = null;
   get locale(){
     return abp.localization.currentLanguage.name
   }
@@ -61,7 +61,7 @@ export default class StudentBusiness extends AbpBase {
     var list = this.$store.state.lesson.list.map(m => {
       return {
         id: m.id,
-        start: new Date(new Date(m.lessonDate).toLocaleDateString()),
+        start: m.lessonDate,
         title: m.course + " " + m.teacher.name,
         color:
           new Date(new Date(m.lessonDate).toLocaleDateString()) < new Date()
@@ -89,7 +89,7 @@ export default class StudentBusiness extends AbpBase {
     this.editModalShow = true;
   }
   dateClick(arg) {
-    this.currentDate = arg.dateStr;
+    this.currentDate = arg.date;
     this.createModalShow = true;
   }
   eventClick(arg) {

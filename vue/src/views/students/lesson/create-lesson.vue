@@ -2,9 +2,13 @@
   <div>
     <Modal :title="L('CreateNewLesson')" :value="value" @on-ok="save" @on-visible-change="visibleChange" :mask-closable="false">
       <Form ref="lessonForm" label-position="top" :rules="LessonRule" :model="lesson">
-        <FormItem :label="L('LessonDate')" >
+        <FormItem :label="L('LessonDate')">
           <DatePicker type="date" placeholder="Select date" readonly :value="lesson.lessonDate"></DatePicker>
         </FormItem>
+
+        <!-- <FormItem :label="L('LessonTime')">
+          <TimePicker  format="HH:mm" placeholder="Select time" :steps="[1, 5]"  :value="lesson.lessonDate"></TimePicker>
+        </FormItem> -->
 
         <FormItem :label="L('Order')" prop="orderId">
           <Select v-model="lesson.orderId" filterable>
@@ -45,7 +49,7 @@ import User from "../../../store/entities/user";
 @Component
 export default class CreateLesson extends AbpBase {
   @Prop({ type: Boolean, default: false }) value: boolean;
-  @Prop({ type: String, default: "" }) date: string;
+  @Prop({ type: Date }) date: Date;
   lesson: Lesson = new Lesson();
   student: Student = new Student();
 
@@ -84,7 +88,7 @@ export default class CreateLesson extends AbpBase {
         {},
         this.$store.state.student.editStudent
       );
-      this.lesson.studentId=this.student.id;
+      this.lesson.studentId = this.student.id;
       this.lesson.lessonDate = this.date;
       await this.$store.dispatch({
         type: "user/getAll"
@@ -93,6 +97,9 @@ export default class CreateLesson extends AbpBase {
         type: "order/getAll",
         data: { studentId: this.student.id }
       });
+      console.log(this.date.toISOString());
+      console.log(this.date);
+      console.log(this.lesson.lessonDate);
     }
   }
   LessonRule = {
@@ -105,7 +112,7 @@ export default class CreateLesson extends AbpBase {
     ],
     orderId: [
       {
-        type:'number',
+        type: "number",
         required: true,
         message: this.L("FieldIsRequired", undefined, this.L("Order")),
         trigger: "blur"
@@ -113,7 +120,7 @@ export default class CreateLesson extends AbpBase {
     ],
     teacherId: [
       {
-        type:'number',
+        type: "number",
         required: true,
         message: this.L("FieldIsRequired", undefined, this.L("Teacher")),
         trigger: "blur"
