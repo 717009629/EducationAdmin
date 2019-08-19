@@ -2,11 +2,29 @@
   <div>
     <Modal :title="L('EditLesson')" :value="value" @on-ok="save" @on-visible-change="visibleChange" :mask-closable="false">
       <Form ref="lessonForm" label-position="top" :rules="LessonRule" :model="lesson">
-        <FormItem :label="L('LessonContent')" prop="content">
-          <Input v-model="lesson.content" type="textarea" :rows="3" />
+        <FormItem :label="L('LessonDate')">
+          <DatePicker type="date" placeholder="Select date" readonly :value="lesson.lessonDate"></DatePicker>
         </FormItem>
-        <FormItem :label="L('LessonDate')" prop="date">
-          <DatePicker type="date" placeholder="Select date" v-model="lesson.date"></DatePicker>
+
+        <FormItem :label="L('Order')" prop="orderId">
+          <Select v-model="lesson.orderId" filterable>
+            <Option v-for="item in orders" :value="item.id" :key="item.id" :label="item.id+'  ' +item.course.name">
+              <span>{{item.id}}</span>
+              <span style="margin-left:10px">{{item.course.name}}</span>
+            </Option>
+          </Select>
+        </FormItem>
+
+        <FormItem :label="L('Teacher')" prop="teacherId">
+          <Select v-model="lesson.teacherId" filterable>
+            <Option v-for="item in teachers" :value="item.id" :key="item.id" :label="item.id+'  ' +item.name">
+              <span>{{item.id}}</span>
+              <span style="margin-left:10px">{{item.name}}</span>
+            </Option>
+          </Select>
+        </FormItem>
+        <FormItem :label="L('Course')" prop="course">
+          <Input v-model="lesson.course" />
         </FormItem>
       </Form>
       <div slot="footer">
@@ -26,6 +44,15 @@ import Lesson from "../../../store/entities/lesson";
 export default class EditLessone extends AbpBase {
   @Prop({ type: Boolean, default: false }) value: boolean;
   lesson: Lesson = new Lesson();
+
+  get orders() {
+    return this.$store.state.order.list;
+  }
+
+  get teachers() {
+    return this.$store.state.user.list;
+  }
+
   save() {
     (this.$refs.lessonForm as any).validate(async (valid: boolean) => {
       if (valid) {
@@ -43,34 +70,41 @@ export default class EditLessone extends AbpBase {
     (this.$refs.lessonForm as any).resetFields();
     this.$emit("input", false);
   }
-  visibleChange(value: boolean) {
+  async visibleChange(value: boolean) {
     if (!value) {
       this.$emit("input", value);
     } else {
       this.lesson = Util.extend(true, {}, this.$store.state.lesson.editLesson);
+      await this.$store.dispatch({
+        type: "user/getAll"
+      });
+      await this.$store.dispatch({
+        type: "order/getAll",
+        data: { studentId: this.lesson.studentId }
+      });
     }
   }
   LessonRule = {
-
-    content: [
+    course: [
       {
         required: true,
-        message: this.L("FieldIsRequired", undefined, this.L("LessonContent")),
+        message: this.L("FieldIsRequired", undefined, this.L("Course")),
         trigger: "blur"
       }
     ],
-    state: [
+    orderId: [
       {
+        type: "number",
         required: true,
-        message: this.L("FieldIsRequired", undefined, this.L("LessonProgress")),
+        message: this.L("FieldIsRequired", undefined, this.L("Order")),
         trigger: "blur"
       }
     ],
-    date: [
+    teacherId: [
       {
-        type: "date",
+        type: "number",
         required: true,
-        message: this.L("FieldIsRequired", undefined, this.L("LessonDate")),
+        message: this.L("FieldIsRequired", undefined, this.L("Teacher")),
         trigger: "blur"
       }
     ]

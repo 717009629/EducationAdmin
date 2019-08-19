@@ -2,12 +2,13 @@
   <div>
     <Modal :value="value" @on-visible-change="visibleChange" :mask-closable="false" width="1100px">
       <div slot="header">
-        <span style="line-height:20px; font-size:14px;color:#17233d;font-weight:bold;margin-right:20px">{{L('Lessone')}}</span>
+        <span style="line-height:20px; font-size:14px;color:#17233d;font-weight:bold;margin-right:20px">{{L('Lesson')}}</span>
         <span style="line-height:20px; font-size:14px;color:#17233d;font-weight:bold;margin-right:20px">{{student.name}}</span>
-        <Button @click="calenderShow=!calenderShow" size='small'>{{calenderShow?"列表":"日历"}}</Button>
+        <Button @click="calenderShow=!calenderShow" size='small'>{{calenderShow? L("List"):L("Calendar")}}</Button>
       </div>
       <div>
-        <FullCalendar v-if="calenderShow" defaultView="dayGridMonth" :plugins="calendarPlugins" locale="zh-cn" :events='events' @dateClick='dateClick' :displayEventTime='false'></FullCalendar>
+        <FullCalendar v-if="calenderShow" defaultView="dayGridMonth" :plugins="calendarPlugins" :locale="locale" :events='events' @dateClick='dateClick' @eventClick='eventClick'
+                      :displayEventTime='false' :buttonText="{today:L('Today')}"></FullCalendar>
 
         <!-- <Card dis-hover> -->
         <div v-if="!calenderShow">
@@ -53,15 +54,22 @@ export default class StudentBusiness extends AbpBase {
   editModalShow: boolean = false;
   calenderShow: boolean = false;
   currentDate: string = "";
-
+  get locale(){
+    return abp.localization.currentLanguage.name
+  }
   get events() {
     var list = this.$store.state.lesson.list.map(m => {
-      return { 
-        start: new Date( new Date( m.lessonDate).toLocaleDateString()) , 
-      title: m.course + " " + m.teacher.name,
-      color: new Date( new Date( m.lessonDate).toLocaleDateString())<new Date()?"#aaa":"#0f0" }
+      return {
+        id: m.id,
+        start: new Date(new Date(m.lessonDate).toLocaleDateString()),
+        title: m.course + " " + m.teacher.name,
+        color:
+          new Date(new Date(m.lessonDate).toLocaleDateString()) < new Date()
+            ? "#aaa"
+            : "#0f0",
+        lesson: m
+      };
     });
-    console.log(list);
     return list;
   }
 
@@ -81,9 +89,12 @@ export default class StudentBusiness extends AbpBase {
     this.editModalShow = true;
   }
   dateClick(arg) {
-    console.log(arg);
     this.currentDate = arg.dateStr;
     this.createModalShow = true;
+  }
+  eventClick(arg) {
+    this.$store.commit("lesson/edit", arg.event.extendedProps.lesson);
+    this.editModalShow = true;
   }
 
   async getpage() {

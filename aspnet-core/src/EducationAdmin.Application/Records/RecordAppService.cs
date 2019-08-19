@@ -41,7 +41,6 @@ namespace EducationAdmin.Records
         public override async Task<RecordDto> Create(CreateRecordDto input)
         {
             input.SalesmanId = this.AbpSession.UserId.Value;
-            input.Date = input.Date?.ToLocalTime();
             var customer = await CustomerRepository.FirstOrDefaultAsync(input.CustomerId);
             customer.State = input.State;
             
@@ -50,7 +49,6 @@ namespace EducationAdmin.Records
 
         public override Task<RecordDto> Update(RecordDto input)
         {
-            input.Date = input.Date?.ToLocalTime();
             return base.Update(input);
         }
     }

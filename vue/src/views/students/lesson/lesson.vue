@@ -116,17 +116,24 @@ export default class Lessons extends AbpBase {
   }
 
   columns = [
-    // {
-    //   title: this.L("Index"),
-    //   key: "id",
-    //   render: (h: any, params: any) => {
-    //     return h("span", ("000000" + params.row.id).slice(-6));
-    //   }
-    // },
+    {
+      title: this.L("Index"),
+      key: "id",
+      render: (h: any, params: any) => {
+        return h("span", ("000000" + params.row.id).slice(-6));
+      }
+    },
 
      {
       title: this.L("Course"),
-      key: "Course"
+      key: "course"
+    },
+        {
+      title: this.L("StudentIndex"),
+      key: "studentId",
+      render: (h: any, params: any) => {
+        return h("span", ("000000" + params.row.studentId).slice(-6));
+      }
     },
     {
       title: this.L("StudentName"),
