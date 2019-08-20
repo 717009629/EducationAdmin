@@ -190,6 +190,23 @@
     <text name="Pass">通过</text>
     <text name="Obsolete">作废</text>
 
+
+    <text name="Customers">客户</text>
+    <text name="Customer">客户</text>
+    <text name="SalesManage">销售管理</text>
+    <text name="OtherGuadian">其他监护人</text>
+    <text name="OtherGuadianPhone">其他监护人手机</text>
+    <text name="CreateNewCustomer">添加客户</text>
+    <text name="EditCustomer">编辑客户</text>
+    <text name="Lessons">课程表</text>
+    <text name="Lesson">课程表</text>
+    <text name="CreateNewLesson">添加课程</text>
+    <text name="EditLesson">编辑课程</text>
+    <text name="LessonDate">上课日期</text>
+    <text name="Teacher">老师</text>
+    <text name="Teachers">老师</text>
+    
+
   </texts>
 </localizationDictionary>
 

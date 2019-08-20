@@ -50,7 +50,7 @@ export default class EditLessone extends AbpBase {
   }
 
   get teachers() {
-    return this.$store.state.user.list;
+    return this.$store.state.teacher.list;
   }
 
   save() {
@@ -76,7 +76,7 @@ export default class EditLessone extends AbpBase {
     } else {
       this.lesson = Util.extend(true, {}, this.$store.state.lesson.editLesson);
       await this.$store.dispatch({
-        type: "user/getAll"
+        type: "teacher/getAll"
       });
       await this.$store.dispatch({
         type: "order/getAll",

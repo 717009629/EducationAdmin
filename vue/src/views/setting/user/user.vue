@@ -5,24 +5,24 @@
         <Form ref="queryForm" :label-width="80" label-position="left" inline>
           <Row :gutter="16">
             <i-col span="6">
-            <FormItem :label="L('Keyword')+':'" style="width:100%">
-              <Input v-model="pagerequest.keyword" :placeholder="L('UserName')+'/'+L('Name')"/>
-            </FormItem>
+              <FormItem :label="L('Keyword')+':'" style="width:100%">
+                <Input v-model="pagerequest.keyword" :placeholder="L('UserName')+'/'+L('Name')" />
+              </FormItem>
             </i-col>
             <i-col span="6">
-            <FormItem :label="L('IsActive')+':'" style="width:100%">
-              <!--Select should not set :value="'All'" it may not trigger on-change when first select 'NoActive'(or 'Actived') then select 'All'-->
-              <Select :placeholder="L('Select')" @on-change="isActiveChange">
-                <Option value="All">{{L('All')}}</Option>
-                <Option value="Actived">{{L('Actived')}}</Option>
-                <Option value="NoActive">{{L('NoActive')}}</Option>
-              </Select>
-            </FormItem>
+              <FormItem :label="L('IsActive')+':'" style="width:100%">
+                <!--Select should not set :value="'All'" it may not trigger on-change when first select 'NoActive'(or 'Actived') then select 'All'-->
+                <Select :placeholder="L('Select')" @on-change="isActiveChange">
+                  <Option value="All">{{L('All')}}</Option>
+                  <Option value="Actived">{{L('Actived')}}</Option>
+                  <Option value="NoActive">{{L('NoActive')}}</Option>
+                </Select>
+              </FormItem>
             </i-col>
             <i-col span="6">
-            <FormItem :label="L('CreationTime')+':'" style="width:100%">
-              <DatePicker v-model="creationTime" type="datetimerange" format="yyyy-MM-dd" style="width:100%" placement="bottom-end" :placeholder="L('SelectDate')"></DatePicker>
-            </FormItem>
+              <FormItem :label="L('CreationTime')+':'" style="width:100%">
+                <DatePicker v-model="creationTime" type="datetimerange" format="yyyy-MM-dd" style="width:100%" placement="bottom-end" :placeholder="L('SelectDate')"></DatePicker>
+              </FormItem>
             </i-col>
           </Row>
           <Row>
@@ -151,6 +151,36 @@ export default class Users extends AbpBase {
     {
       title: this.L("Name"),
       key: "name"
+    },
+    {
+      title: this.L("Sex"),
+      render: (h: any, params: any) => {
+        return h(
+          "span",
+          params.row.sex
+            ? this.L("Male")
+            : params.row.sex === false
+            ? this.L("Female")
+            : ""
+        );
+      }
+    },
+    {
+      title: this.L("UserType"),
+      key: "type",
+      render: (h, params) => {
+        let t = params.row.type;
+        return h(
+          "span",
+          t === 0
+            ? this.L("Business")
+            : t === 1
+            ? this.L("Teacher")
+            : t === 2
+            ? this.L("Admin")
+            : ""
+        );
+      }
     },
     {
       title: this.L("IsActive"),

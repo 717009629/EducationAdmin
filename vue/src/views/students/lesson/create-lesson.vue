@@ -58,7 +58,7 @@ export default class CreateLesson extends AbpBase {
   }
 
   get teachers() {
-    return this.$store.state.user.list;
+    return this.$store.state.teacher.list;
   }
 
   save() {
@@ -91,7 +91,7 @@ export default class CreateLesson extends AbpBase {
       this.lesson.studentId = this.student.id;
       this.lesson.lessonDate = this.date;
       await this.$store.dispatch({
-        type: "user/getAll"
+        type: "teacher/getAll"
       });
       await this.$store.dispatch({
         type: "order/getAll",

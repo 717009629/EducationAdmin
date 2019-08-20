@@ -1,12 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using Abp.Authorization.Users;
 using Abp.Extensions;
+using Newtonsoft.Json;
 
 namespace EducationAdmin.Authorization.Users
 {
     public class User : AbpUser<User>
     {
+        
+
+        [NotMapped]
+        public override string Surname { get; set; }
+        public DateTime? Birthday { get; set; }
+
+        public bool? Sex { get; set; }
+
+        public UserType? Type { get; set; }
+
+        public string Phone { get; set; }
+
         public const string DefaultPassword = "123qwe";
 
         public static string CreateRandomPassword()
@@ -30,5 +44,15 @@ namespace EducationAdmin.Authorization.Users
 
             return user;
         }
+
+
+    }
+
+    public enum UserType
+    {
+        Business = 0,
+        Teacher = 1,
+        Admin = 2,
+
     }
 }

@@ -1,11 +1,6 @@
 <template>
   <div>
-    <Modal
-      :title="L('CreateNewStudent')"
-      :value="value"
-      @on-ok="save"
-      @on-visible-change="visibleChange"
-    >
+    <Modal :title="L('CreateNewStudent')" :value="value" @on-ok="save" @on-visible-change="visibleChange">
       <Form ref="studentForm" label-position="top" :rules="studentRule" :model="student">
         <Tabs value="detail">
           <TabPane :label="L('BasicInfo')" name="detail">
@@ -40,7 +35,6 @@
               <Input v-model="student.address" />
             </FormItem>
           </TabPane>
-
           <TabPane :label="L('Contact')" name="contact">
             <FormItem :label="L('Parent')" prop="parent">
               <Input v-model="student.parent" />

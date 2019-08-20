@@ -21,6 +21,7 @@
         public const string Pages_Customer = "Pages.Customers";
 
         public const string Pages_Lesson = "Pages.Lessons";
+        public const string Pages_Teacher = "Pages.Teachers";
 
 
     }

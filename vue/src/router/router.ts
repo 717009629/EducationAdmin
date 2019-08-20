@@ -91,7 +91,8 @@ export const appRouters: Array<Router> = [{
     icon: '&#xe67c;',
     component: main,
     children: [
-        { path: 'course', permission: 'Pages.Courses', meta: { title: 'Courses' }, name: 'course', component: () => import('../views/education/course/course.vue') }
+        { path: 'course', permission: 'Pages.Courses', meta: { title: 'Courses' }, name: 'course', component: () => import('../views/education/course/course.vue') },
+        { path: 'teacher', permission: 'Pages.Teachers', meta: { title: 'Teachers' }, name: 'teacher', component: () => import('../views/education/teacher/teacher.vue') }
     ]
 }]
 export const routers = [

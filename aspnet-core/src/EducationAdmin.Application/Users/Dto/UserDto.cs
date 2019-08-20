@@ -18,14 +18,24 @@ namespace EducationAdmin.Users.Dto
         [StringLength(AbpUserBase.MaxNameLength)]
         public string Name { get; set; }
 
-        [Required]
-        [StringLength(AbpUserBase.MaxSurnameLength)]
-        public string Surname { get; set; }
+        //[Required]
+        //[StringLength(AbpUserBase.MaxSurnameLength)]
+        //public string Surname { get; set; }
 
-        [Required]
+       // [Required]
         [EmailAddress]
         [StringLength(AbpUserBase.MaxEmailAddressLength)]
         public string EmailAddress { get; set; }
+
+
+        public DateTime? Birthday { get; set; }
+
+        public bool? Sex { get; set; }
+
+        public UserType? Type { get; set; }
+
+        public string Phone { get; set; }
+
 
         public bool IsActive { get; set; }
 
