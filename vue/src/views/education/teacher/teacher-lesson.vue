@@ -8,7 +8,7 @@
       </div>
       <div>
         <FullCalendar v-if="calenderShow" defaultView="dayGridMonth" :plugins="calendarPlugins" :locale="locale" :events='events' 
-                      :displayEventTime='true' :buttonText="{today:L('Today')}"></FullCalendar>
+                      :displayEventTime='false' :buttonText="{today:L('Today')}"></FullCalendar>
 
         <!-- <Card dis-hover> -->
         <div v-if="!calenderShow">

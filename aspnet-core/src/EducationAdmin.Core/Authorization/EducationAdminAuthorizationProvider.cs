@@ -22,7 +22,7 @@ namespace EducationAdmin.Authorization
             SetPermission(context, PermissionNames.Pages_Customer, "Customer", multiTenancySides: MultiTenancySides.Tenant);
             SetPermission(context, PermissionNames.Pages_Lesson, "Lesson", multiTenancySides: MultiTenancySides.Tenant);
 
-            context.CreatePermission(PermissionNames.Pages_Teacher, L("Teahcer"), multiTenancySides: MultiTenancySides.Tenant);
+            context.CreatePermission(PermissionNames.Pages_Teacher, L("Teacher"), multiTenancySides: MultiTenancySides.Tenant);
         }
 
 
