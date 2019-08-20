@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 namespace EducationAdmin.Lessons
 {
     [AbpAuthorize(PermissionNames.Pages_Lesson)]
-    public class LessonAppService : AsyncCrudAppService<Lesson, LessonsDto, long, PagedLessonResultRequestDto, CreateLessionDto, LessonsDto>, ILessonAppService
+    public class LessonAppService : AsyncCrudAppService<Lesson, LessonsDto, long, PagedLessonResultRequestDto, CreateLessionDto, EditLessionDto>, ILessonAppService
     {
         public LessonAppService(IRepository<Lesson, long> repository) : base(repository)
         {
@@ -32,16 +32,6 @@ namespace EducationAdmin.Lessons
                   .WhereIf(input.StartDate != null, m => m.LessonDate >= input.StartDate)
                   .WhereIf(input.EndDate != null, m => m.LessonDate <= input.EndDate);
         }
-        public override Task<LessonsDto> Create(CreateLessionDto input)
-        {
-            input.LessonDate = input.LessonDate.ToLocalTime();
-            return base.Create(input);
-        }
 
-        public override Task<LessonsDto> Update(LessonsDto input)
-        {
-            input.LessonDate = input.LessonDate.ToLocalTime();
-            return base.Update(input);
-        }
     }
 }

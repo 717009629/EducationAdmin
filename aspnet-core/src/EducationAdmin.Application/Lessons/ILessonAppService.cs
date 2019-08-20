@@ -6,7 +6,7 @@ using System.Text;
 
 namespace EducationAdmin.Lessons
 {
-    public interface ILessonAppService:IAsyncCrudAppService<LessonsDto,long,PagedLessonResultRequestDto, CreateLessionDto, LessonsDto>
+    public interface ILessonAppService:IAsyncCrudAppService<LessonsDto,long,PagedLessonResultRequestDto, CreateLessionDto, EditLessionDto>
     {
     }
 }
