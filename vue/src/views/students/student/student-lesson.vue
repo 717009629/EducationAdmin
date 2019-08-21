@@ -54,15 +54,15 @@ export default class StudentBusiness extends AbpBase {
   editModalShow: boolean = false;
   calenderShow: boolean = false;
   currentDate: Date = null;
-  get locale(){
-    return abp.localization.currentLanguage.name
+  get locale() {
+    return abp.localization.currentLanguage.name;
   }
   get events() {
     var list = this.$store.state.lesson.list.map(m => {
       return {
         id: m.id,
-        start: m.lessonDate,
-        title: m.course + " " + m.teacher.name,
+        start: new Date(m.lessonDate).setHours(m.lessonIndex + 8),
+        title: `#${m.lessonIndex}--${m.course}--${m.teacher.name}`,
         color:
           new Date(new Date(m.lessonDate).toLocaleDateString()) < new Date()
             ? "#aaa"
@@ -143,6 +143,10 @@ export default class StudentBusiness extends AbpBase {
       render: (h: any, params: any) => {
         return h("span", new Date(params.row.lessonDate).toLocaleDateString());
       }
+    },
+    {
+      title: this.L("LessonIndex"),
+      key: "lessonIndex"
     },
     {
       title: this.L("Teacher"),

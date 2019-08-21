@@ -9,6 +9,12 @@
         <!-- <FormItem :label="L('LessonTime')">
           <TimePicker  format="HH:mm" placeholder="Select time" :steps="[1, 5]"  :value="lesson.lessonDate"></TimePicker>
         </FormItem> -->
+        <FormItem :label="L('LessonIndex')" prop="lessonIndex">
+          <Select v-model="lesson.lessonIndex" filterable>
+            <Option v-for="n in 8" :value="n" :key="n" :label="n">
+            </Option>
+          </Select>
+        </FormItem>
 
         <FormItem :label="L('Order')" prop="orderId">
           <Select v-model="lesson.orderId" filterable>
@@ -97,9 +103,6 @@ export default class CreateLesson extends AbpBase {
         type: "order/getAll",
         data: { studentId: this.student.id }
       });
-      console.log(this.date.toISOString());
-      console.log(this.date);
-      console.log(this.lesson.lessonDate);
     }
   }
   LessonRule = {
@@ -107,6 +110,14 @@ export default class CreateLesson extends AbpBase {
       {
         required: true,
         message: this.L("FieldIsRequired", undefined, this.L("Course")),
+        trigger: "blur"
+      }
+    ],
+    lessonIndex: [
+      {
+        type: "number",
+        required: true,
+        message: this.L("FieldIsRequired", undefined, this.L("LessonIndex")),
         trigger: "blur"
       }
     ],

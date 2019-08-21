@@ -5,7 +5,12 @@
         <FormItem :label="L('LessonDate')">
           <DatePicker type="date" placeholder="Select date" readonly :value="lesson.lessonDate"></DatePicker>
         </FormItem>
-
+        <FormItem :label="L('LessonIndex')" prop="lessonIndex">
+          <Select v-model="lesson.lessonIndex" filterable>
+            <Option v-for="n in 8" :value="n" :key="n" :label="n">
+            </Option>
+          </Select>
+        </FormItem>
         <FormItem :label="L('Order')" prop="orderId">
           <Select v-model="lesson.orderId" filterable>
             <Option v-for="item in orders" :value="item.id" :key="item.id" :label="item.id+'  ' +item.course.name">

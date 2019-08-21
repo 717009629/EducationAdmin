@@ -19,6 +19,7 @@ namespace EducationAdmin.Students
 
         public Student Student { get; set; }
 
+        public int LessonIndex { get; set; }
 
         public long OrderId { get; set; }
         public Order Order { get; set; }

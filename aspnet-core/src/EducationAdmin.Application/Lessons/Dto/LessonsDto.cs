@@ -12,7 +12,7 @@ namespace EducationAdmin.Lessons.Dto
 {
     [AutoMapTo(typeof(Lesson))]
     [AutoMapFrom(typeof(Lesson))]
-    public class LessonsDto:FullAuditedEntityDto<long>
+    public class LessonsDto : FullAuditedEntityDto<long>
     {
         public DateTime LessonDate { get; set; }
 
@@ -21,6 +21,7 @@ namespace EducationAdmin.Lessons.Dto
 
         public StudentDto Student { get; set; }
 
+        public int LessonIndex { get; set; }
 
         public long OrderId { get; set; }
         public OrderDto Order { get; set; }

@@ -51,8 +51,8 @@ export default class StudentBusiness extends AbpBase {
     var list = this.$store.state.lesson.list.map(m => {
       return {
         id: m.id,
-        start: m.lessonDate,
-        title: m.course + " " + m.student.name,
+        start: new Date( m.lessonDate).setHours(m.lessonIndex+8),
+        title:`#${m.lessonIndex}--${m.course}--${m.student.name}` ,
         color:
           new Date(new Date(m.lessonDate).toLocaleDateString()) < new Date()
             ? "#aaa"

@@ -9,6 +9,7 @@ export default class Lesson extends Entity<number>{
     student?: Student
     orderId: number
     order?: Order
+    lessonIndex:number
     isFinish: boolean
     teacherId: number
     teacher?: User

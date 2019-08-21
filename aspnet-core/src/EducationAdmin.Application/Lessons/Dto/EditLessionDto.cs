@@ -19,6 +19,7 @@ namespace EducationAdmin.Lessons.Dto
 
 
         public long OrderId { get; set; }
+        public int LessonIndex { get; set; }
 
         public bool IsFinish { get; set; }
 

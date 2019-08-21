@@ -168,10 +168,6 @@ export default class Contracts extends AbpBase {
       tooltip: true
     },
     {
-      title: this.L("Note"),
-      key: "note"
-    },
-    {
       title: this.L("SalesmanName"),
       key: "salesmanName"
     },

@@ -149,6 +149,18 @@ export default class Lessons extends AbpBase {
         return h("span", new Date(params.row.lessonDate).toLocaleDateString());
       }
     },
+        {
+      title: this.L("LessonIndex"),
+      key: "lessonIndex"
+    },
+    {
+      title: this.L("LessonDate"),
+      key: "lessonDate",
+      render: (h: any, params: any) => {
+        return h("span", new Date(params.row.lessonDate).toLocaleDateString());
+      }
+    },
+
     {
       title: this.L("Teacher"),
       key: "teacher",
