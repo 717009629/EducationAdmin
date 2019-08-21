@@ -2,6 +2,7 @@
 using Abp.Authorization;
 using Abp.Domain.Repositories;
 using Abp.Linq.Extensions;
+using Abp.UI;
 using EducationAdmin.Authorization;
 using EducationAdmin.Lessons.Dto;
 using EducationAdmin.Students;
@@ -29,8 +30,32 @@ namespace EducationAdmin.Lessons
             return Repository.GetAllIncluding(m => m.Student, m => m.Teacher)
                   .WhereIf(input.StudentId != null, m => m.StudentId == input.StudentId)
                   .WhereIf(input.TeacherId != null, m => m.TeacherId == input.TeacherId)
-                  .WhereIf(input.StartDate != null, m => m.LessonDate >= input.StartDate)
-                  .WhereIf(input.EndDate != null, m => m.LessonDate <= input.EndDate);
+                  .WhereIf(input.Start != null, m => m.LessonDate >= input.Start)
+                  .WhereIf(input.End != null, m => m.LessonDate < input.End);
+        }
+
+
+        public override async Task<LessonsDto> Create(CreateLessionDto input)
+        {
+            input.LessonDate = input.LessonDate.Date;
+            var count =await Repository.CountAsync(m => m.StudentId == input.StudentId && m.LessonIndex == input.LessonIndex && m.LessonDate.Date == input.LessonDate);
+            if (count > 0)
+            {
+                throw new UserFriendlyException("The Student has  been assigned a course in the same time,please select another lesson index. ");
+            }
+            return await base.Create(input);
+        }
+
+        public override async Task<LessonsDto> Update(EditLessionDto input)
+        {
+            input.LessonDate = input.LessonDate.Date;
+            var count= await Repository.CountAsync(m => m.StudentId == input.StudentId && m.LessonIndex == input.LessonIndex && m.LessonDate.Date == input.LessonDate&&m.Id==input.Id);
+            if (count > 0)
+            {
+                throw new UserFriendlyException("The Student has  been assigned a course in the same time,please select another lesson index. ");
+            }
+
+            return await base.Update(input);
         }
 
     }

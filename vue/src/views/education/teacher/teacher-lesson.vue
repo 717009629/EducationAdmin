@@ -7,9 +7,8 @@
         <Button @click="calenderShow=!calenderShow" size='small'>{{calenderShow? L("List"):L("Calendar")}}</Button>
       </div>
       <div>
-        <FullCalendar v-if="calenderShow" defaultView="dayGridMonth" :plugins="calendarPlugins" :locale="locale" :events='events' 
-                      :displayEventTime='false' :buttonText="{today:L('Today')}"></FullCalendar>
-
+        <FullCalendar v-if="calenderShow" defaultView="dayGridMonth" :plugins="calendarPlugins" :locale="locale" :events='events' :displayEventTime='false' :buttonText="{today:L('Today')}">
+        </FullCalendar>
         <!-- <Card dis-hover> -->
         <div v-if="!calenderShow">
           <Form ref="queryForm" :label-width="100" label-position="left" inline>
@@ -17,8 +16,10 @@
           </Form>
           <div class="margin-top-10">
             <Table :loading="loading" :columns="columns" :no-data-text="L('NoDatas')" border :data="list">
-              
+
             </Table>
+            <Page show-sizer class-name="fengpage" :total="totalCount" class="margin-top-10" @on-change="pageChange" @on-page-size-change="pagesizeChange" :page-size="pageSize" :current="currentPage">
+            </Page>
           </div>
 
         </div>
@@ -37,22 +38,29 @@ import FullCalendar from "@fullcalendar/vue";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import { dateToLocalArray } from "@fullcalendar/core/datelib/marker";
-
-@Component({ components: {  FullCalendar } })
+import PageRequest from "../../../store/entities/page-request";
+class PageTeacherRequest extends PageRequest {
+  teacherId?: number;
+  start?: Date;
+  end?: Date;
+}
+@Component({ components: { FullCalendar } })
 export default class StudentBusiness extends AbpBase {
   @Prop({ type: Boolean, default: false }) value: boolean;
   teacher: Teacher = new Teacher();
   calenderShow: boolean = false;
   currentDate: Date = null;
-  get locale(){
-    return abp.localization.currentLanguage.name
+  pagerequest: PageTeacherRequest = new PageTeacherRequest();
+  get locale() {
+    return abp.localization.currentLanguage.name;
   }
-  get events() {
+  async events(arg, callback) {
+    await this.getpage(500, arg.start, arg.end);
     var list = this.$store.state.lesson.list.map(m => {
       return {
         id: m.id,
-        start: new Date( m.lessonDate).setHours(m.lessonIndex+8),
-        title:`#${m.lessonIndex}--${m.course}--${m.student.name}` ,
+        start: new Date(m.lessonDate).setHours(m.lessonIndex + 8),
+        title: `#${m.lessonIndex}--${m.course}--${m.student.name}`,
         color:
           new Date(new Date(m.lessonDate).toLocaleDateString()) < new Date()
             ? "#aaa"
@@ -60,7 +68,7 @@ export default class StudentBusiness extends AbpBase {
         lesson: m
       };
     });
-    return list;
+    callback(list);
   }
 
   calendarPlugins: any = [dayGridPlugin, interactionPlugin];
@@ -72,14 +80,32 @@ export default class StudentBusiness extends AbpBase {
     return this.$store.state.lesson.loading;
   }
 
+  async getpage(count = null, start = null, end = null) {
+    this.pagerequest.teacherId = this.teacher.id;
+    this.pagerequest.start = start;
+    this.pagerequest.end = end;
+    if (count === null) {
+      this.pagerequest.maxResultCount = this.pageSize;
+      this.pagerequest.skipCount = (this.currentPage - 1) * this.pageSize;
+    } else {
+      this.pagerequest.maxResultCount = count;
+    }
 
-
-  async getpage() {
     await this.$store.dispatch({
       type: "lesson/getAll",
-      data: { teacherId: this.teacher.id }
+      data: this.pagerequest
     });
   }
+
+  pageChange(page: number) {
+    this.$store.commit("lesson/setCurrentPage", page);
+    this.getpage();
+  }
+  pagesizeChange(pagesize: number) {
+    this.$store.commit("lesson/setPageSize", pagesize);
+    this.getpage();
+  }
+
   visibleChange(value: boolean) {
     if (!value) {
       this.$emit("input", value);
@@ -93,6 +119,15 @@ export default class StudentBusiness extends AbpBase {
       this.getpage();
       this.calenderShow = true;
     }
+  }
+  get pageSize() {
+    return this.$store.state.lesson.pageSize;
+  }
+  get totalCount() {
+    return this.$store.state.lesson.totalCount;
+  }
+  get currentPage() {
+    return this.$store.state.lesson.currentPage;
   }
   columns = [
     // {

@@ -4,11 +4,11 @@
       <div slot="header">
         <span style="line-height:20px; font-size:14px;color:#17233d;font-weight:bold;margin-right:20px">{{L('Lesson')}}</span>
         <span style="line-height:20px; font-size:14px;color:#17233d;font-weight:bold;margin-right:20px">{{student.name}}</span>
-        <Button @click="calenderShow=!calenderShow" size='small'>{{calenderShow? L("List"):L("Calendar")}}</Button>
+        <Button @click="changeView" size='small'>{{calenderShow? L("List"):L("Calendar")}}</Button>
       </div>
       <div>
-        <FullCalendar v-if="calenderShow" defaultView="dayGridMonth" :plugins="calendarPlugins" :locale="locale" :events='events' @dateClick='dateClick' @eventClick='eventClick'
-                      :displayEventTime='false' :buttonText="{today:L('Today')}"></FullCalendar>
+        <FullCalendar v-if="calenderShow" defaultView="dayGridMonth" :plugins="calendarPlugins" :locale="locale" :events='events' @events="handleEvent" @dateClick='dateClick' @eventClick='eventClick'
+                      :showNonCurrentDates='true' :displayEventTime='false' :buttonText="{today:L('Today')}"></FullCalendar>
 
         <!-- <Card dis-hover> -->
         <div v-if="!calenderShow">
@@ -24,6 +24,8 @@
                 <Button v-if="hasPermission('Pages.Lessons.Edit')" type="primary" size="small" @click="edit(row)" style="margin-right:5px">{{L('Edit')}}</Button>
               </template>
             </Table>
+            <Page show-sizer class-name="fengpage" :total="totalCount" class="margin-top-10" @on-change="pageChange" @on-page-size-change="pagesizeChange" :page-size="pageSize" :current="currentPage">
+            </Page>
           </div>
 
         </div>
@@ -45,6 +47,12 @@ import FullCalendar from "@fullcalendar/vue";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import { dateToLocalArray } from "@fullcalendar/core/datelib/marker";
+import PageRequest from "../../../store/entities/page-request";
+class PageStudentRequest extends PageRequest {
+  studentId?: number;
+  start?: Date;
+  end?: Date;
+}
 
 @Component({ components: { CreateLesson, EditLesson, FullCalendar } })
 export default class StudentBusiness extends AbpBase {
@@ -54,10 +62,21 @@ export default class StudentBusiness extends AbpBase {
   editModalShow: boolean = false;
   calenderShow: boolean = false;
   currentDate: Date = null;
+  pagerequest: PageStudentRequest = new PageStudentRequest();
+
   get locale() {
     return abp.localization.currentLanguage.name;
   }
-  get events() {
+  async changeView() {
+    if (this.calenderShow) {
+      await this.getpage();
+    }
+
+    this.calenderShow = !this.calenderShow;
+  }
+
+  async events(arg, callback) {
+    await this.getpage(500, arg.start, arg.end);
     var list = this.$store.state.lesson.list.map(m => {
       return {
         id: m.id,
@@ -70,6 +89,7 @@ export default class StudentBusiness extends AbpBase {
         lesson: m
       };
     });
+    callback(list);
     return list;
   }
 
@@ -88,6 +108,14 @@ export default class StudentBusiness extends AbpBase {
     this.$store.commit("lesson/edit", row);
     this.editModalShow = true;
   }
+  pageChange(page: number) {
+    this.$store.commit("lesson/setCurrentPage", page);
+    this.getpage();
+  }
+  pagesizeChange(pagesize: number) {
+    this.$store.commit("lesson/setPageSize", pagesize);
+    this.getpage();
+  }
   dateClick(arg) {
     this.currentDate = arg.date;
     this.createModalShow = true;
@@ -97,12 +125,32 @@ export default class StudentBusiness extends AbpBase {
     this.editModalShow = true;
   }
 
-  async getpage() {
+  async getpage(count = null, start = null, end = null) {
+    this.pagerequest.studentId = this.student.id;
+    this.pagerequest.start = start;
+    this.pagerequest.end = end;
+    if (count === null) {
+      this.pagerequest.maxResultCount = this.pageSize;
+      this.pagerequest.skipCount = (this.currentPage - 1) * this.pageSize;
+    } else {
+      this.pagerequest.maxResultCount = count;
+    }
+
     await this.$store.dispatch({
       type: "lesson/getAll",
-      data: { studentId: this.student.id }
+      data: this.pagerequest
     });
   }
+  get pageSize() {
+    return this.$store.state.lesson.pageSize;
+  }
+  get totalCount() {
+    return this.$store.state.lesson.totalCount;
+  }
+  get currentPage() {
+    return this.$store.state.lesson.currentPage;
+  }
+
   visibleChange(value: boolean) {
     if (!value) {
       this.$emit("input", value);

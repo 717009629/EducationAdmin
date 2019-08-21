@@ -33,7 +33,6 @@ namespace EducationAdmin.Authorization
             permission.CreateChildPermission(name + ".Edit", L("Edit"), description, multiTenancySides, featureDependency, properties);
             permission.CreateChildPermission(name + ".Delete", L("Delete"), description, multiTenancySides, featureDependency, properties);
             return permission;
-
         }
 
         private static ILocalizableString L(string name)
