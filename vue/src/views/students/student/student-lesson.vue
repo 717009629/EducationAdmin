@@ -7,8 +7,8 @@
         <Button @click="changeView" size='small'>{{calenderShow? L("List"):L("Calendar")}}</Button>
       </div>
       <div>
-        <FullCalendar v-if="calenderShow" defaultView="dayGridMonth" :plugins="calendarPlugins" :locale="locale" :events='events' @events="handleEvent" @dateClick='dateClick' @eventClick='eventClick'
-                      :showNonCurrentDates='true' :displayEventTime='false' :buttonText="{today:L('Today')}"></FullCalendar>
+        <FullCalendar ref="calendar" v-if="calenderShow" defaultView="dayGridMonth" :plugins="calendarPlugins" :locale="locale" :events='events' @events='alert(1)' @dateClick='dateClick'
+                      @eventClick='eventClick' :showNonCurrentDates='true' :displayEventTime='false' :buttonText="{today:L('Today')}"></FullCalendar>
 
         <!-- <Card dis-hover> -->
         <div v-if="!calenderShow">
@@ -31,8 +31,8 @@
         </div>
       </div>
       <div slot="footer"></div>
-      <create-lesson v-model="createModalShow" @save-success="getpage" :date='currentDate'></create-lesson>
-      <edit-lesson v-model="editModalShow" @save-success="getpage"></edit-lesson>
+      <create-lesson v-model="createModalShow" @save-success="getCalendarPage" :date='currentDate'></create-lesson>
+      <edit-lesson v-model="editModalShow" @save-success="getCalendarPage"></edit-lesson>
     </Modal>
   </div>
 </template>
@@ -63,6 +63,8 @@ export default class StudentBusiness extends AbpBase {
   calenderShow: boolean = false;
   currentDate: Date = null;
   pagerequest: PageStudentRequest = new PageStudentRequest();
+  start: Date;
+  end: Date;
 
   get locale() {
     return abp.localization.currentLanguage.name;
@@ -74,9 +76,15 @@ export default class StudentBusiness extends AbpBase {
 
     this.calenderShow = !this.calenderShow;
   }
-
+  getCalendarPage() {
+    (this.$refs.calendar as any) .getApi().refetchEvents()
+    
+  }
   async events(arg, callback) {
+    this.start = arg.start;
+    this.end = arg.end;
     await this.getpage(500, arg.start, arg.end);
+
     var list = this.$store.state.lesson.list.map(m => {
       return {
         id: m.id,

@@ -33,8 +33,6 @@ namespace EducationAdmin.Lessons
                   .WhereIf(input.Start != null, m => m.LessonDate >= input.Start)
                   .WhereIf(input.End != null, m => m.LessonDate < input.End);
         }
-
-
         public override async Task<LessonsDto> Create(CreateLessionDto input)
         {
             input.LessonDate = input.LessonDate.Date;

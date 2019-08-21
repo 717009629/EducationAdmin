@@ -6,8 +6,8 @@
           <DatePicker type="date" placeholder="Select date" readonly :value="lesson.lessonDate"></DatePicker>
         </FormItem>
         <FormItem :label="L('LessonIndex')" prop="lessonIndex">
-          <Select v-model="lesson.lessonIndex" filterable>
-            <Option v-for="n in 8" :value="n" :key="n" :label="n">
+          <Select v-model="lesson.lessonIndex" >
+            <Option v-for="n in lessonIndexs" :value="n" :key="n" :label="n" >
             </Option>
           </Select>
         </FormItem>
@@ -49,6 +49,7 @@ import Lesson from "../../../store/entities/lesson";
 export default class EditLessone extends AbpBase {
   @Prop({ type: Boolean, default: false }) value: boolean;
   lesson: Lesson = new Lesson();
+  //lessonIndexs=[];
 
   get orders() {
     return this.$store.state.order.list;
@@ -56,6 +57,23 @@ export default class EditLessone extends AbpBase {
 
   get teachers() {
     return this.$store.state.teacher.list;
+  }
+  get lessonIndexs() {
+    let list = [];
+    let lessons = this.$store.state.lesson.list;
+    let array = lessons
+      .filter(
+        m =>
+          this.lesson.lessonDate &&
+          new Date(m.lessonDate).toDateString() ===
+            new Date(this.lesson.lessonDate).toDateString()
+      )
+      .map(m => m.lessonIndex);
+    for (let n = 1; n <= 8; n++) {
+      if (n === this.lesson.lessonIndex || array.indexOf(n) < 0) list.push(n);
+    }
+    return list;
+    //this.lessonIndexs= list;
   }
 
   save() {
@@ -77,9 +95,11 @@ export default class EditLessone extends AbpBase {
   }
   async visibleChange(value: boolean) {
     if (!value) {
+      this.lesson = new Lesson();
       this.$emit("input", value);
     } else {
       this.lesson = Util.extend(true, {}, this.$store.state.lesson.editLesson);
+      //this.setLessonIndexs();
       await this.$store.dispatch({
         type: "teacher/getAll"
       });
@@ -94,6 +114,14 @@ export default class EditLessone extends AbpBase {
       {
         required: true,
         message: this.L("FieldIsRequired", undefined, this.L("Course")),
+        trigger: "blur"
+      }
+    ],
+    lessonIndex: [
+      {
+        type: "number",
+        required: true,
+        message: this.L("FieldIsRequired", undefined, this.L("LessonIndex")),
         trigger: "blur"
       }
     ],

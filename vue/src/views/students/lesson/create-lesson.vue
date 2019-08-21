@@ -10,8 +10,8 @@
           <TimePicker  format="HH:mm" placeholder="Select time" :steps="[1, 5]"  :value="lesson.lessonDate"></TimePicker>
         </FormItem> -->
         <FormItem :label="L('LessonIndex')" prop="lessonIndex">
-          <Select v-model="lesson.lessonIndex" filterable>
-            <Option v-for="n in 8" :value="n" :key="n" :label="n">
+          <Select v-model="lesson.lessonIndex" >
+            <Option v-for="n in lessonIndexs" :value="n" :key="n" :label="n">
             </Option>
           </Select>
         </FormItem>
@@ -65,6 +65,22 @@ export default class CreateLesson extends AbpBase {
 
   get teachers() {
     return this.$store.state.teacher.list;
+  }
+  get lessonIndexs() {
+    let list = [];
+    let lessons = this.$store.state.lesson.list;
+    for (var n = 1; n <= 8; n++) {
+      let count = lessons.filter(
+        m =>
+          this.date &&
+          new Date(m.lessonDate).toDateString() === this.date.toDateString() &&
+          m.lessonIndex === n
+      ).length;
+      if (count < 1) {
+        list.push(n);
+      }
+    }
+    return list;
   }
 
   save() {
