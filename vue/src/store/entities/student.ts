@@ -1,4 +1,5 @@
 import Entity from './entity'
+import User from './user'
 
 export default class Student extends Entity<number>{
     name?: string
@@ -20,7 +21,8 @@ export default class Student extends Entity<number>{
     teachMethod?: string
     origin?: string
     note?: string
-    salesmanId?: number
+    teacherId?: number
+    teacher?:User
     isDeleted?: boolean
     deleterUserId?: number
     deletionTime?: string

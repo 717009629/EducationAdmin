@@ -209,6 +209,14 @@
             <FormItem :label="L('Origin')" prop="origin">
               <Input v-model="student.origin" />
             </FormItem> -->
+            <FormItem :label="L('Teacher')" prop="teacherId">
+              <Select v-model="student.teacherId" filterable>
+                <Option v-for="item in teachers" :value="item.id" :key="item.id" :label="item.id+'  ' +item.name">
+                  <span>{{item.id}}</span>
+                  <span style="margin-left:10px">{{item.name}}</span>
+                </Option>
+              </Select>
+            </FormItem>
             <FormItem :label="L('Note')" prop="note">
               <Input v-model="student.note" type=textarea :rows='10' />
             </FormItem>
@@ -273,9 +281,13 @@ export default class CreateStudent extends AbpBase {
     (this.$refs.studentForm as any).resetFields();
     this.$emit("input", false);
   }
-  visibleChange(value: boolean) {
+  async visibleChange(value: boolean) {
     if (!value) {
       this.$emit("input", value);
+    } else {
+      await this.$store.dispatch({
+        type: "teacher/getAll"
+      });
     }
   }
   studentRule = {
