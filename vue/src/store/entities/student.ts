@@ -4,6 +4,7 @@ export default class Student extends Entity<number>{
     name?: string
     province?: string
     city?: string
+    district?:string
     address?: string
     sex?: boolean
     parent?: string
@@ -27,5 +28,19 @@ export default class Student extends Entity<number>{
     lastModifierUserId?: number
     creationTime?: string
     creatorUserId?: number
+    schoolBegin?: Date
+    chinese?: number
+    math?: number
+    english?: number
+    biology?: number
+    history?: number
+    geography?: number
+    physics?: number
+    chemistry?: number
+    political?: number
+    examination?:number
+    privateLesson?: string
+    classRank?: number
+    gradeRank?: number
 
 }

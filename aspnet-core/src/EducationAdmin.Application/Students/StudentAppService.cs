@@ -27,7 +27,6 @@ namespace EducationAdmin.Sales
 
         public override  Task<StudentDto> Create(CreateStudentDto input)
         {
-            input.SalesmanId = this.AbpSession.UserId.Value;
             return base.Create(input);
         }
 
@@ -35,7 +34,7 @@ namespace EducationAdmin.Sales
 
         protected override IQueryable<Student> CreateFilteredQuery(PagedStudentResultRequestDto input)
         {
-            return Repository.GetAllIncluding(x => x.Salesman)
+            return Repository.GetAllIncluding(x => x.Teacher)
                .WhereIf(!input.Keyword.IsNullOrWhiteSpace(), x => x.Name.Contains(input.Keyword) );
         }
 

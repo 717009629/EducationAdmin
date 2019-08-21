@@ -2,6 +2,7 @@
 using Abp.AutoMapper;
 using EducationAdmin.Authorization.Users;
 using EducationAdmin.Students;
+using EducationAdmin.Users.Dto;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -54,9 +55,35 @@ namespace EducationAdmin.Sales.Dto
         public string Origin { get; set; }
 
         public string Note { get; set; }
-        public long SalesmanId { get; set; }
-        
-        public string SalesmanName { get; set; }
+        public long TeacherId { get; set; }
+
+        public UserDto Teacher { get; set; }
+
+        public DateTime? SchoolBegin { get; set; }
+        public double? Chinese { get; set; }
+
+        public double? Math { get; set; }
+
+        public double? English { get; set; }
+
+        public double? Biology { get; set; }
+
+        public double? History { get; set; }
+
+        public double? Geography { get; set; }
+
+        public double? Physics { get; set; }
+
+        public double? Chemistry { get; set; }
+
+        public double? Political { get; set; }
+        public double? Examination { get; set; }
+
+        public string PrivateLesson { get; set; }
+
+        public int? ClassRank { get; set; }
+
+        public int? GradeRank { get; set; }
     }
 
 

@@ -1,13 +1,13 @@
 <template>
   <div>
-    <Modal :value="value" @on-visible-change="visibleChange" :mask-closable="false" width="1100px">
+    <Modal :value="value" @on-visible-change="visibleChange" :mask-closable="false" width="1200px">
       <div slot="header">
         <span style="line-height:20px; font-size:14px;color:#17233d;font-weight:bold;margin-right:20px">{{L('Lesson')}}</span>
         <span style="line-height:20px; font-size:14px;color:#17233d;font-weight:bold;margin-right:20px">{{student.name}}</span>
         <Button @click="changeView" size='small'>{{calenderShow? L("List"):L("Calendar")}}</Button>
       </div>
       <div>
-        <FullCalendar ref="calendar" v-if="calenderShow" defaultView="dayGridMonth" :plugins="calendarPlugins" :locale="locale" :events='events' @events='alert(1)' @dateClick='dateClick'
+        <FullCalendar ref="calendar" v-if="calenderShow" defaultView="dayGridMonth" :plugins="calendarPlugins" :locale="locale" :events='events' :eventLimit='5' @dateClick='dateClick'
                       @eventClick='eventClick' :showNonCurrentDates='true' :displayEventTime='false' :buttonText="{today:L('Today')}"></FullCalendar>
 
         <!-- <Card dis-hover> -->
