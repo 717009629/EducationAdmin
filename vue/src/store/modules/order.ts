@@ -9,6 +9,7 @@ import ListMutations from './list-mutations'
 
 interface OrderState extends ListState<Order>{
     editOrder:Order
+    freeList: Array<Order>
 }
 class OrderMutations extends ListMutations<Order>{
 
@@ -19,6 +20,7 @@ class OrderModule extends ListModule<OrderState,any,Order>{
         currentPage:1,
         pageSize:10,
         list: new Array<Order>(),
+        freeList:new Array<Order>(),
         loading:false,
         editOrder:new Order()
     }
@@ -31,6 +33,15 @@ class OrderModule extends ListModule<OrderState,any,Order>{
             context.state.totalCount=page.totalCount;
             context.state.list=page.items;
         },
+        async getAllFree(context:ActionContext<OrderState,any>,payload:any){
+            context.state.loading=true;
+            let reponse=await Ajax.get('/api/services/app/Order/GetAll',{params:payload.data});
+            context.state.loading=false;
+            let page=reponse.data.result as PageResult<Order>;
+            context.state.totalCount=page.totalCount;
+            context.state.freeList=page.items;
+        },
+
         async create(context:ActionContext<OrderState,any>,payload:any){
             await Ajax.post('/api/services/app/Order/Create',payload.data);
         },

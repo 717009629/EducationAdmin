@@ -13,5 +13,7 @@ namespace EducationAdmin.Orders.Dto
         public string SalesmanName { get; set; }
 
         public long? ClassId { get; set; }
+
+        public long? CourseId { get; set; }
     }
 }

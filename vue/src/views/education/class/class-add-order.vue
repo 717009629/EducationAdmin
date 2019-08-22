@@ -1,23 +1,13 @@
 <template>
   <div>
     <Modal :title="L('Student')" :value="value" @on-visible-change="visibleChange" :mask-closable="false" :transfer="false" :width='1000'>
-      <Form ref="queryForm" :label-width="100" label-position="left" inline>
-        <!-- <hr style="border-width:1px 0 0 0; border-style:solid; border-top-color:#ccc; margin:10px 0" /> -->
-        <Row>
-          <Button @click="addOrder" icon="android-add" type="primary" v-if="hasPermission('Pages.Orders.Create')">{{L('Add')}}</Button>
-        </Row>
-      </Form>
       <!-- <Card dis-hover> -->
       <div class="margin-top-10">
-        <Table :loading="loading" :columns="columns" :no-data-text="L('NoDatas')" border :data="list">
-          <template slot-scope="{ row }" slot="action" v-if="hasPermission('Pages.Orders.Edit')">
-            <Button v-if="hasPermission('Pages.Orders.Edit')" type="primary" size="small" @click="edit(row)" style="margin-right:5px">{{L('Edit')}}</Button>
-          </template>
+        <Table :loading="loading" :columns="columns" :no-data-text="L('NoDatas')" border :data="list" @on-selection-change='selectionChange'>
+
         </Table>
       </div>
-      <div slot="footer"></div>
-      <class-add-order v-model="addOrderModalShow" @save-success="getpage"></class-add-order>
-      <edit-order v-model="editModalShow" @save-success="getpage"></edit-order>
+
     </Modal>
 
     <!-- </Card> -->
@@ -30,35 +20,32 @@ import Util from "../../../lib/util";
 import AbpBase from "../../../lib/abpbase";
 import Class from "../../../store/entities/class";
 import Order from "../../../store/entities/order";
-import ClassAddOrder from "./class-add-order.vue";
-import EditOrder from "../../sales/order/edit-order.vue";
 @Component({
-  components: { ClassAddOrder, EditOrder }
+  components: {}
 })
 export default class ClassOrder extends AbpBase {
   @Prop({ type: Boolean, default: false }) value: boolean;
   clas: Class = new Class();
-  addOrderModalShow: boolean = false;
+  createModalShow: boolean = false;
   editModalShow: boolean = false;
   contractModalShow: boolean = false;
+  selectionList=[];
   get list() {
-    return this.$store.state.order.list;
+    return this.$store.state.order.freeList;
   }
   get loading() {
     return this.$store.state.order.loading;
   }
-  addOrder() {
-    this.addOrderModalShow = true;
-  }
-  edit(row) {
-    this.$store.commit("order/edit", row);
-    this.editModalShow = true;
+
+  selectionChange(selection){
+    this.selectionList=selection;
+    console.log(this.selectionList);
   }
 
   async getpage() {
     await this.$store.dispatch({
-      type: "order/getAll",
-      data: { classId: this.clas.id }
+      type: "order/getAllFree",
+      data: { courseId: this.clas.courseId }
     });
   }
 
@@ -72,6 +59,11 @@ export default class ClassOrder extends AbpBase {
   }
 
   columns = [
+    {
+      type: "selection",
+      width: 60,
+      align: "center"
+    },
     {
       title: this.L("OrderIndex"),
       key: "name",
@@ -99,12 +91,6 @@ export default class ClassOrder extends AbpBase {
       render: (h: any, params: any) => {
         return h("span", params.row.student.phone);
       }
-    },
-    {
-      title: this.L("Actions"),
-      key: "Actions",
-      width: 220,
-      slot: "action"
     }
   ];
 }

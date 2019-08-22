@@ -30,6 +30,7 @@ namespace EducationAdmin.Orders
             return Repository.GetAllIncluding(m => m.Salesman, m => m.Student, m => m.Course, m => m.Contract)
                     .WhereIf(input.StudentId != null, m => m.StudentId == input.StudentId)
                     .WhereIf(input.ClassId != null, m => m.ClassId == input.ClassId)
+                    .WhereIf(input.CourseId != null, m => m.CourseId == input.CourseId&&m.ClassId==null)
                     .WhereIf(!input.StudentName.IsNullOrWhiteSpace(), x => x.Student.Name.Contains(input.StudentName));
         }
 
