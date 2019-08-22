@@ -13,8 +13,11 @@ namespace EducationAdmin.Education
         public string Category { get; set; }
 
         public string Name { get; set; }
+
+        public ClassType ClassType { get; set; }
         
         public decimal Price { get; set; }
+
         public int TenantId { get; set; }
 
         

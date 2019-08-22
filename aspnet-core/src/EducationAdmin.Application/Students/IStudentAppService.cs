@@ -6,7 +6,7 @@ using System.Text;
 
 namespace EducationAdmin.Sales
 {
-    public interface IStudentAppService : IAsyncCrudAppService<StudentDto, long, PagedStudentResultRequestDto, CreateStudentDto,StudentDto>
+    public interface IStudentAppService : IAsyncCrudAppService<StudentDto, long, PagedStudentResultRequestDto, CreateStudentDto,EditStudentDto>
     {
     }
 }

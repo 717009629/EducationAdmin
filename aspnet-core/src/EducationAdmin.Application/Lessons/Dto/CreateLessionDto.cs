@@ -1,4 +1,5 @@
 ﻿using Abp.AutoMapper;
+using EducationAdmin.Education;
 using EducationAdmin.Students;
 using System;
 using System.Collections.Generic;
@@ -13,10 +14,8 @@ namespace EducationAdmin.Lessons.Dto
         public DateTime LessonDate { get; set; }
 
 
-        public long StudentId { get; set; }
+        public long ClassId { get; set; }
 
-
-        public long OrderId { get; set; }
         public int LessonIndex { get; set; }
 
         public bool IsFinish { get; set; }

@@ -2,11 +2,12 @@
 using Abp.Domain.Entities.Auditing;
 using EducationAdmin.Authorization.Users;
 using EducationAdmin.Sales;
+using EducationAdmin.Students;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace EducationAdmin.Students
+namespace EducationAdmin.Education
 {
     public class Lesson : FullAuditedEntity<long>, IMustHaveTenant
     {
@@ -15,14 +16,11 @@ namespace EducationAdmin.Students
         public DateTime LessonDate { get; set; }
 
 
-        public long StudentId { get; set; }
+        public long ClassId { get; set; }
 
-        public Student Student { get; set; }
+        public Class Class { get; set; }
 
         public int LessonIndex { get; set; }
-
-        public long OrderId { get; set; }
-        public Order Order { get; set; }
 
         public bool IsFinish { get; set; }
 

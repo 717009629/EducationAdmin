@@ -10,14 +10,14 @@ using System.Text;
 
 namespace EducationAdmin.Customers
 {
-    [AbpAuthorize(PermissionNames.Pages_Customer)]
+    [AbpAuthorize(PermissionNames.Pages_Customers)]
     public class CustomerAppService:AsyncCrudAppService<Customer,CustomerDto,long,PagedCustomerResultRequestDto,CreateCustomerDto,CustomerDto>,ICustomerAppService
     {
         public CustomerAppService(IRepository<Customer,long> repository) : base(repository)
         {
-            DeletePermissionName = PermissionNames.Pages_Customer + ".Delete";
-            CreatePermissionName = PermissionNames.Pages_Customer + ".Create";
-            UpdatePermissionName = PermissionNames.Pages_Customer + ".Edit";
+            DeletePermissionName = PermissionNames.Pages_Customers + ".Delete";
+            CreatePermissionName = PermissionNames.Pages_Customers + ".Create";
+            UpdatePermissionName = PermissionNames.Pages_Customers + ".Edit";
         }
     }
 }

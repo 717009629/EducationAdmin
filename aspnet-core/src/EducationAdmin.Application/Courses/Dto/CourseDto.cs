@@ -17,5 +17,7 @@ namespace EducationAdmin.Courses.Dto
         public string Name { get; set; }
 
         public decimal Price { get; set; }
+
+        public ClassType ClassType { get; set; }
     }
 }

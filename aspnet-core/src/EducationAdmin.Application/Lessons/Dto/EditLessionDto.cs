@@ -1,6 +1,7 @@
 ﻿using Abp.Application.Services.Dto;
 using Abp.AutoMapper;
 using Abp.Domain.Entities.Auditing;
+using EducationAdmin.Education;
 using EducationAdmin.Students;
 using System;
 using System.Collections.Generic;
@@ -15,10 +16,9 @@ namespace EducationAdmin.Lessons.Dto
         public DateTime LessonDate { get; set; }
 
 
-        public long StudentId { get; set; }
+        public long ClassId { get; set; }
 
 
-        public long OrderId { get; set; }
         public int LessonIndex { get; set; }
 
         public bool IsFinish { get; set; }

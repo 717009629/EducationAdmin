@@ -1,19 +1,19 @@
 <template>
   <div>
-    <Modal
-      :title="L('EditCourse')"
-      :value="value"
-      @on-ok="save"
-      @on-visible-change="visibleChange"
-      :mask-closable="false"
-      :transfer="false"
-    >
+    <Modal :title="L('EditCourse')" :value="value" @on-ok="save" @on-visible-change="visibleChange" :mask-closable="false" :transfer="false">
       <Form ref="courseForm" label-position="top" :rules="CourseRule" :model="course">
+        <FormItem :label="L('ClassType')" prop="classType">
+          <Select v-model="course.classType" :transfor='false'>
+            <Option :value="0" :label="L('OneToMany')"></Option>
+            <Option :value="2" :label="L('OneToOne')"></Option>
+          </Select>
+        </FormItem>
+
         <FormItem :label="L('Category')" prop="category">
           <Input v-model="course.category" />
         </FormItem>
         <FormItem :label="L('CourseName')" prop="name">
-          <InputNumber v-model="course.name"  style="width:100%"/>
+          <Input v-model="course.name" style="width:100%" />
         </FormItem>
         <FormItem :label="L('Price')" prop="price">
           <Input v-model="course.price" />
@@ -67,6 +67,14 @@ export default class EditCoursee extends AbpBase {
         trigger: "blur"
       }
     ],
+    classType: [
+      {
+        type: "number",
+        required: true,
+        message: this.L("FieldIsRequired", undefined, this.L("ClassType")),
+        trigger: "blur"
+      }
+    ],
     category: [
       {
         required: true,
@@ -76,7 +84,7 @@ export default class EditCoursee extends AbpBase {
     ],
     price: [
       {
-        type:'number',
+        type: "number",
         required: true,
         message: this.L("FieldIsRequired", undefined, this.L("Price")),
         trigger: "blur"

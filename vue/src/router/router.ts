@@ -64,8 +64,8 @@ export const appRouters: Array<Router> = [{
     icon: '&#xe753;',
     component: main,
     children: [
-        { path: 'student', permission: 'Pages.Students', meta: { title: 'Students' }, name: 'student', component: () => import('../views/students/student/student.vue') },
-        { path: 'lesson', permission: 'Pages.Lessons', meta: { title: 'Lessons' }, name: 'lesson', component: () => import('../views/students/lesson/lesson.vue') },
+        { path: 'student', permission: 'Pages.Students', meta: { title: 'Students' }, name: 'student', component: () => import('../views/students/student/student.vue') }
+        
        
     ]
 },
@@ -92,7 +92,9 @@ export const appRouters: Array<Router> = [{
     component: main,
     children: [
         { path: 'course', permission: 'Pages.Courses', meta: { title: 'Courses' }, name: 'course', component: () => import('../views/education/course/course.vue') },
-        { path: 'teacher', permission: 'Pages.Teachers', meta: { title: 'Teachers' }, name: 'teacher', component: () => import('../views/education/teacher/teacher.vue') }
+        { path: 'teacher', permission: 'Pages.Teachers', meta: { title: 'Teachers' }, name: 'teacher', component: () => import('../views/education/teacher/teacher.vue') },
+        { path: 'lesson', permission: 'Pages.Lessons', meta: { title: 'Lessons' }, name: 'lesson', component: () => import('../views/education/lesson/lesson.vue') },
+        { path: 'class', permission: 'Pages.Classes', meta: { title: 'Classes' }, name: 'class', component: () => import('../views/education/class/class.vue') },
     ]
 }]
 export const routers = [

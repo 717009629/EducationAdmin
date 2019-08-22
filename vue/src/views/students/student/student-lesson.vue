@@ -41,8 +41,8 @@ import { Component, Vue, Inject, Prop, Watch } from "vue-property-decorator";
 import Util from "../../../lib/util";
 import AbpBase from "../../../lib/abpbase";
 import Student from "../../../store/entities/student";
-import CreateLesson from "../lesson/create-lesson.vue";
-import EditLesson from "../lesson/edit-lesson.vue";
+// import CreateLesson from "../lesson/create-lesson.vue";
+// import EditLesson from "../lesson/edit-lesson.vue";
 import FullCalendar from "@fullcalendar/vue";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
@@ -54,7 +54,7 @@ class PageStudentRequest extends PageRequest {
   end?: Date;
 }
 
-@Component({ components: { CreateLesson, EditLesson, FullCalendar } })
+@Component({ components: { FullCalendar } })
 export default class StudentBusiness extends AbpBase {
   @Prop({ type: Boolean, default: false }) value: boolean;
   student: Student = new Student();

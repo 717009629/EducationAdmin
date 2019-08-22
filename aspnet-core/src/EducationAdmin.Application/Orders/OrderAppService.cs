@@ -14,14 +14,14 @@ using System.Threading.Tasks;
 
 namespace EducationAdmin.Orders
 {
-    [AbpAuthorize(PermissionNames.Pages_Order)]
+    [AbpAuthorize(PermissionNames.Pages_Orders)]
     public class OrderAppService : AsyncCrudAppService<Order, OrderDto, long, PagedOrderResultRequestDto, CreateOrderDto, EditOrderDto>, IOrderAppService
     {
         public OrderAppService(IRepository<Order, long> repository) : base(repository)
         {
-            DeletePermissionName = PermissionNames.Pages_Order + ".Delete";
-            CreatePermissionName = PermissionNames.Pages_Order + ".Create";
-            UpdatePermissionName = PermissionNames.Pages_Order + ".Edit";
+            DeletePermissionName = PermissionNames.Pages_Orders + ".Delete";
+            CreatePermissionName = PermissionNames.Pages_Orders + ".Create";
+            UpdatePermissionName = PermissionNames.Pages_Orders + ".Edit";
         }
 
 

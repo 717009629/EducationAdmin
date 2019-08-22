@@ -22,16 +22,16 @@ using Abp.AutoMapper;
 
 namespace EducationAdmin.Contracts
 {
-    [AbpAuthorize(PermissionNames.Pages_Contract)]
+    [AbpAuthorize(PermissionNames.Pages_Contracts)]
     public class ContractAppService : AsyncCrudAppService<Contract, ContractDto, long, PagedContractResultRequestDto, CreateContractDto, EditContractDto>, IContractAppService
     {
         private readonly IRepository<Order, long> OrderRepository;
         public ContractAppService(IRepository<Contract, long> repository, IRepository<Order, long> orderRepository) : base(repository)
         {
             this.OrderRepository = orderRepository;
-            DeletePermissionName = PermissionNames.Pages_Contract + ".Delete";
-            CreatePermissionName = PermissionNames.Pages_Contract + ".Create";
-            UpdatePermissionName = PermissionNames.Pages_Contract + ".Edit";
+            DeletePermissionName = PermissionNames.Pages_Contracts + ".Delete";
+            CreatePermissionName = PermissionNames.Pages_Contracts + ".Create";
+            UpdatePermissionName = PermissionNames.Pages_Contracts + ".Edit";
         }
 
         public override async Task<ContractDto> Create(CreateContractDto input)
@@ -49,7 +49,7 @@ namespace EducationAdmin.Contracts
             {
                 throw new AbpException();
             }
-            CheckPermission(PermissionNames.Pages_Contract + ".Audite");
+            CheckPermission(PermissionNames.Pages_Contracts + ".Audite");
             var contract = await Repository.FirstOrDefaultAsync(m => m.Id == input.ContractId);
             contract.State = input.ContractState;
             contract.AuditedReason = input.Reason;

@@ -1,14 +1,14 @@
 <template>
   <div>
-    <Modal
-      :title="L('CreateNewCourse')"
-      :value="value"
-      @on-ok="save"
-      @on-visible-change="visibleChange"
-      :mask-closable="false"
-      :transfer="false"
-    >
+    <Modal :title="L('CreateNewCourse')" :value="value" @on-ok="save" @on-visible-change="visibleChange" :mask-closable="false" :transfer="false">
       <Form ref="courseForm" label-position="top" :rules="CourseRule" :model="course">
+        <FormItem :label="L('ClassType')" prop="classType">
+          <Select v-model="course.classType" :transfor='false'>
+            <Option :value="0" :label="L('OneToMany')"></Option>
+            <Option :value="2" :label="L('OneToOne')"></Option>
+          </Select>
+        </FormItem>
+
         <FormItem :label="L('Category')" prop="category">
           <Input v-model="course.category" />
         </FormItem>
@@ -16,7 +16,7 @@
           <Input v-model="course.name" />
         </FormItem>
         <FormItem :label="L('Price')" prop="price">
-          <InputNumber v-model="course.price" style="width:100%"  />
+          <InputNumber v-model="course.price" style="width:100%" />
         </FormItem>
 
       </Form>
@@ -37,7 +37,6 @@ import Course from "../../../store/entities/course";
 export default class CreateCourse extends AbpBase {
   @Prop({ type: Boolean, default: false }) value: boolean;
   course: Course = new Course();
-  student: Student = new Student();
   save() {
     (this.$refs.courseForm as any).validate(async (valid: boolean) => {
       if (valid) {
@@ -59,11 +58,6 @@ export default class CreateCourse extends AbpBase {
     if (!value) {
       this.$emit("input", value);
     } else {
-      this.student = Util.extend(
-        true,
-        {},
-        this.$store.state.student.editStudent
-      );
     }
   }
   CourseRule = {
@@ -81,9 +75,17 @@ export default class CreateCourse extends AbpBase {
         trigger: "blur"
       }
     ],
+    classType: [
+      {
+        type: "number",
+        required: true,
+        message: this.L("FieldIsRequired", undefined, this.L("ClassType")),
+        trigger: "blur"
+      }
+    ],
     price: [
       {
-        type:'number',
+        type: "number",
         required: true,
         message: this.L("FieldIsRequired", undefined, this.L("Price")),
         trigger: "blur"

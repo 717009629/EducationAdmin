@@ -40,6 +40,10 @@ namespace EducationAdmin.Sales
 
         public Contract Contract { get; set; }
 
+        public long? ClassId { get; set; }
+
+        public Class Class { get; set; }
+
 
 
    //     public List<CourseItem> CourseItems { get; set; }

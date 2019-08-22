@@ -130,8 +130,8 @@
     <text name="Contact">联系方式</text>
     <text name="CreateNewStudent">添加学生</text>
     <text name="EditStudent">编辑学生</text>
-    <text name="Courses">课程</text>
-    <text name="Course">课程</text>
+    <text name="Courses">课程套餐</text>
+    <text name="Course">课程套餐</text>
     <text name="Order">订单</text>
     <text name="Orders">订单</text>
     <text name="Record">跟单</text>

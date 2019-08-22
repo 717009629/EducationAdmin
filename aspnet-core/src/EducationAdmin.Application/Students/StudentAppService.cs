@@ -17,7 +17,7 @@ namespace EducationAdmin.Sales
 {
 
     [AbpAuthorize(PermissionNames.Pages_Students)]
-    public class StudentAppService : AsyncCrudAppService<Student, StudentDto, long, PagedStudentResultRequestDto, CreateStudentDto, StudentDto>, IStudentAppService
+    public class StudentAppService : AsyncCrudAppService<Student, StudentDto, long, PagedStudentResultRequestDto, CreateStudentDto, EditStudentDto>, IStudentAppService
     {
        public StudentAppService(IRepository<Student,long > repository) : base(repository) {
             DeletePermissionName = PermissionNames.Pages_Students + ".Delete";

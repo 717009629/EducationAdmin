@@ -38,21 +38,21 @@
               <i-col span=8>
                 <FormItem :label="L('Province')" prop="province">
                   <Select v-model="student.province">
-                    <Option v-for="p in provinces" :key="p.name" :value="p.name" :label="p.name"></Option>
+                    <Option v-for="p in provinces" :key="p.name" :value="p.name" :label="p.name" :transfer="true"></Option>
                   </Select>
                 </FormItem>
               </i-col>
               <i-col span=8>
                 <FormItem :label="L('City')" prop="city">
                   <Select v-model="student.city">
-                    <Option v-for="c in cities" :key="c.name" :value="c.name" :label="c.name"></Option>
+                    <Option v-for="c in cities" :key="c.name" :value="c.name" :label="c.name" :transfer="true"></Option>
                   </Select>
                 </FormItem>
               </i-col>
               <i-col span=8>
                 <FormItem :label="L('District')" prop="district">
                   <Select v-model="student.district">
-                    <Option v-for="d in districts" :key="d.name" :value="d.name" :label="d.name"></Option>
+                    <Option v-for="d in districts" :key="d.name" :value="d.name" :label="d.name" :transfer="true"></Option>
                   </Select>
                 </FormItem>
               </i-col>
@@ -251,19 +251,7 @@ export default class CreateStudent extends AbpBase {
     if (list.length === 0) return [];
     return list[0].child;
   }
-  get sex() {
-    return this.student.sex
-      ? "male"
-      : this.student.sex === false
-      ? "female"
-      : "";
-  }
-  set sex(val) {
-    this.student.sex = val === "male" ? true : val === "female" ? false : null;
-  }
-  get teachers() {
-    return this.$store.state.teacher.list;
-  }
+
   save() {
     (this.$refs.studentForm as any).validate(async (valid: boolean) => {
       if (valid) {

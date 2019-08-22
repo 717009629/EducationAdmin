@@ -1,5 +1,7 @@
 ﻿using Abp.Application.Services.Dto;
 using Abp.AutoMapper;
+using EducationAdmin.Classes.Dto;
+using EducationAdmin.Education;
 using EducationAdmin.Orders.Dto;
 using EducationAdmin.Sales.Dto;
 using EducationAdmin.Students;
@@ -12,19 +14,17 @@ namespace EducationAdmin.Lessons.Dto
 {
     [AutoMapTo(typeof(Lesson))]
     [AutoMapFrom(typeof(Lesson))]
-    public class LessonsDto : FullAuditedEntityDto<long>
+    public class LessonDto : FullAuditedEntityDto<long>
     {
         public DateTime LessonDate { get; set; }
 
 
-        public long StudentId { get; set; }
+        public long ClassId { get; set; }
 
-        public StudentDto Student { get; set; }
+        public ClassDto Class { get; set; }
 
         public int LessonIndex { get; set; }
 
-        public long OrderId { get; set; }
-        public OrderDto Order { get; set; }
 
         public bool IsFinish { get; set; }
 

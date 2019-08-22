@@ -18,7 +18,7 @@
 
         <FormItem :label="L('Order')" prop="orderId">
           <Select v-model="lesson.orderId" filterable>
-            <Option v-for="item in orders" :value="item.id" :key="item.id" :label="item.id+'  ' +item.course.name">
+            <Option v-for="item in orders" :value="item.id" :key="item.id" :label="''+ item.id+'  ' +item.course.name">
               <span>{{item.id}}</span>
               <span style="margin-left:10px">{{item.course.name}}</span>
             </Option>
@@ -27,7 +27,7 @@
 
         <FormItem :label="L('Teacher')" prop="teacherId">
           <Select v-model="lesson.teacherId" filterable>
-            <Option v-for="item in teachers" :value="item.id" :key="item.id" :label="item.id+'  ' +item.name">
+            <Option v-for="item in teachers" :value="item.id" :key="item.id" :label="''+ item.id+'  ' +item.name">
               <span>{{item.id}}</span>
               <span style="margin-left:10px">{{item.name}}</span>
             </Option>

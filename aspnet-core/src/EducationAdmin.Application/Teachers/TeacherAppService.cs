@@ -17,7 +17,7 @@ using Abp.Authorization;
 
 namespace EducationAdmin.Teachers
 {
-    [AbpAuthorize(PermissionNames.Pages_Teacher)]
+    [AbpAuthorize(PermissionNames.Pages_Teachers)]
     public class TeacherAppService : ApplicationService, ITeacherAppService
     {
         private readonly IRepository<User, long> Repository;

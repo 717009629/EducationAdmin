@@ -14,15 +14,16 @@ namespace EducationAdmin.Authorization
             SetPermission(context, PermissionNames.Pages_Roles, "Roles");
             SetPermission(context, PermissionNames.Pages_Tenants, "Tenants", multiTenancySides: MultiTenancySides.Host);
             SetPermission(context, PermissionNames.Pages_Students, "Students", multiTenancySides: MultiTenancySides.Tenant);
-            SetPermission(context, PermissionNames.Pages_Record, "Record", multiTenancySides: MultiTenancySides.Tenant);
-            SetPermission(context, PermissionNames.Pages_Order, "Order", multiTenancySides: MultiTenancySides.Tenant);
-            var contract = SetPermission(context, PermissionNames.Pages_Contract, "Contract", multiTenancySides: MultiTenancySides.Tenant);
-            contract.CreateChildPermission(PermissionNames.Pages_Contract + ".Audite", L("Audite"), multiTenancySides: MultiTenancySides.Tenant);
-            SetPermission(context, PermissionNames.Pages_Course, "Course", multiTenancySides: MultiTenancySides.Tenant);
-            SetPermission(context, PermissionNames.Pages_Customer, "Customer", multiTenancySides: MultiTenancySides.Tenant);
-            SetPermission(context, PermissionNames.Pages_Lesson, "Lesson", multiTenancySides: MultiTenancySides.Tenant);
+            SetPermission(context, PermissionNames.Pages_Records, "Records", multiTenancySides: MultiTenancySides.Tenant);
+            SetPermission(context, PermissionNames.Pages_Orders, "Orders", multiTenancySides: MultiTenancySides.Tenant);
+            var contract = SetPermission(context, PermissionNames.Pages_Contracts, "Contracts", multiTenancySides: MultiTenancySides.Tenant);
+            contract.CreateChildPermission(PermissionNames.Pages_Contracts + ".Audite", L("Audite"), multiTenancySides: MultiTenancySides.Tenant);
+            SetPermission(context, PermissionNames.Pages_Courses, "Courses", multiTenancySides: MultiTenancySides.Tenant);
+            SetPermission(context, PermissionNames.Pages_Customers, "Customers", multiTenancySides: MultiTenancySides.Tenant);
+            SetPermission(context, PermissionNames.Pages_Lessons, "Lessons", multiTenancySides: MultiTenancySides.Tenant);
+            SetPermission(context, PermissionNames.Pages_Classes, "Classes", multiTenancySides: MultiTenancySides.Tenant);
 
-            context.CreatePermission(PermissionNames.Pages_Teacher, L("Teacher"), multiTenancySides: MultiTenancySides.Tenant);
+            context.CreatePermission(PermissionNames.Pages_Teachers, L("Teachers"), multiTenancySides: MultiTenancySides.Tenant);
         }
 
 

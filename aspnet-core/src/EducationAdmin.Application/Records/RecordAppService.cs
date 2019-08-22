@@ -17,7 +17,7 @@ using Abp.Extensions;
 
 namespace EducationAdmin.Records
 {
-    [AbpAuthorize(PermissionNames.Pages_Record)]
+    [AbpAuthorize(PermissionNames.Pages_Records)]
     public class RecordAppService : AsyncCrudAppService<Record, RecordDto, long, PagedRecordResultRequestDto, CreateRecordDto, RecordDto>, IRecordAppService
     {
         private readonly IRepository<Customer, long> CustomerRepository;
@@ -25,9 +25,9 @@ namespace EducationAdmin.Records
         {
             CustomerRepository = customerRepository;
 
-            DeletePermissionName = PermissionNames.Pages_Record + ".Delete";
-            CreatePermissionName = PermissionNames.Pages_Record + ".Create";
-            UpdatePermissionName = PermissionNames.Pages_Record + ".Edit";
+            DeletePermissionName = PermissionNames.Pages_Records + ".Delete";
+            CreatePermissionName = PermissionNames.Pages_Records + ".Create";
+            UpdatePermissionName = PermissionNames.Pages_Records + ".Edit";
         }
 
 
