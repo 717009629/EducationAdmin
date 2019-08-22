@@ -17,9 +17,9 @@ namespace EducationAdmin.Classes.Dto
     {
         public string Name { get; set; }
 
-        public List<OrderDto> Orders { get; set; }
+        //public List<OrderDto> Orders { get; set; }
 
-        public List<LessonDto> Lessons { get; set; }
+        //public List<LessonDto> Lessons { get; set; }
 
         public long CourseId { get; set; }
 

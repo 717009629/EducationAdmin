@@ -14,5 +14,7 @@ namespace EducationAdmin.Lessons.Dto
         public long? StudentId { get; set; }
 
         public long ? TeacherId { get; set; }
+
+        public long? ClassId { get; set; }
     }
 }

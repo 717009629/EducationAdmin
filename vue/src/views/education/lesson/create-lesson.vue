@@ -16,14 +16,6 @@
           </Select>
         </FormItem>
 
-        <FormItem :label="L('Order')" prop="orderId">
-          <Select v-model="lesson.orderId" filterable>
-            <Option v-for="item in orders" :value="item.id" :key="item.id" :label="''+ item.id+'  ' +item.course.name">
-              <span>{{item.id}}</span>
-              <span style="margin-left:10px">{{item.course.name}}</span>
-            </Option>
-          </Select>
-        </FormItem>
 
         <FormItem :label="L('Teacher')" prop="teacherId">
           <Select v-model="lesson.teacherId" filterable>
@@ -33,7 +25,7 @@
             </Option>
           </Select>
         </FormItem>
-        <FormItem :label="L('Course')" prop="course">
+        <FormItem :label="L('CourseItem')" prop="course">
           <Input v-model="lesson.course" />
         </FormItem>
       </Form>
@@ -48,7 +40,7 @@
 import { Component, Vue, Inject, Prop, Watch } from "vue-property-decorator";
 import Util from "../../../lib/util";
 import AbpBase from "../../../lib/abpbase";
-import Student from "../../../store/entities/student";
+import Class from "../../../store/entities/class";
 import Lesson from "../../../store/entities/lesson";
 import Order from "../../../store/entities/order";
 import User from "../../../store/entities/user";
@@ -57,7 +49,7 @@ export default class CreateLesson extends AbpBase {
   @Prop({ type: Boolean, default: false }) value: boolean;
   @Prop({ type: Date }) date: Date;
   lesson: Lesson = new Lesson();
-  student: Student = new Student();
+  clas: Class = new Class();
 
   get orders() {
     return this.$store.state.order.list;
@@ -86,7 +78,7 @@ export default class CreateLesson extends AbpBase {
   save() {
     (this.$refs.lessonForm as any).validate(async (valid: boolean) => {
       if (valid) {
-        this.lesson.studentId = this.student.id;
+        this.lesson.classId = this.clas.id;
         await this.$store.dispatch({
           type: "lesson/create",
           data: this.lesson
@@ -105,19 +97,19 @@ export default class CreateLesson extends AbpBase {
     if (!value) {
       this.$emit("input", value);
     } else {
-      this.student = Util.extend(
+      this.clas = Util.extend(
         true,
         {},
-        this.$store.state.student.editStudent
+        this.$store.state.class.editClass
       );
-      this.lesson.studentId = this.student.id;
+      this.lesson.classId = this.clas.id;
       this.lesson.lessonDate = this.date;
       await this.$store.dispatch({
         type: "teacher/getAll"
       });
       await this.$store.dispatch({
         type: "order/getAll",
-        data: { studentId: this.student.id }
+        data: { classId: this.clas.id }
       });
     }
   }

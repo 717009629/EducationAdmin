@@ -6,7 +6,7 @@
           <Row :gutter="16">
             <i-col span="8">
               <FormItem :label="L('Keyword')+':'" style="width:100%">
-                <Input v-model="pagerequest.studentName" :placeholder="L('StudentName')" />
+                <Input v-model="pagerequest.className" :placeholder="L('ClassName')" />
               </FormItem>
             </i-col>
             <i-col span="8">
@@ -63,7 +63,7 @@ import PageRequest from "@/store/entities/page-request";
 import EditLesson from "./edit-lesson.vue";
 
 class PageLessonRequest extends PageRequest {
-  studentName: string = "";
+  className: string = "";
 }
 
 @Component({
@@ -129,17 +129,17 @@ export default class Lessons extends AbpBase {
       key: "course"
     },
         {
-      title: this.L("StudentIndex"),
-      key: "studentId",
+      title: this.L("ClassIndex"),
+      key: "classId",
       render: (h: any, params: any) => {
-        return h("span", ("000000" + params.row.studentId).slice(-6));
+        return h("span", ("000000" + params.row.classId).slice(-6));
       }
     },
     {
-      title: this.L("StudentName"),
-      key: "studentName",
+      title: this.L("ClassName"),
+      key: "className",
       render: (h: any, params: any) => {
-        return h("span", params.row.student.name);
+        return h("span", params.row.class.name);
       }
     },
     {

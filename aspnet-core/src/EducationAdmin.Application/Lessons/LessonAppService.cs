@@ -31,6 +31,7 @@ namespace EducationAdmin.Lessons
             return Repository.GetAllIncluding(m => m.Class, m => m.Teacher)
                   .WhereIf(input.StudentId != null, m => m.Class.Orders.Any(n=>n.StudentId== input.StudentId ))
                   .WhereIf(input.TeacherId != null, m => m.TeacherId == input.TeacherId)
+                  .WhereIf(input.ClassId != null, m => m.ClassId == input.ClassId)
                   .WhereIf(input.Start != null, m => m.LessonDate >= input.Start)
                   .WhereIf(input.End != null, m => m.LessonDate < input.End);
         }

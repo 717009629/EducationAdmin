@@ -2,11 +2,12 @@ import Entity from './entity'
 import User from './user';
 import Student from './student';
 import Order from './order';
+import Class from './class';
 
 export default class Lesson extends Entity<number>{
     lessonDate: Date
-    studentId: number
-    student?: Student
+    classId: number
+    clas?: Class
     orderId: number
     order?: Order
     lessonIndex:number

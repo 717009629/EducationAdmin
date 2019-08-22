@@ -12,6 +12,7 @@
           <Table :loading="loading" :columns="columns" :no-data-text="L('NoDatas')" border :data="list">
             <template slot-scope="{ row }" slot="action" v-if="hasPermission('Pages.Classes.Edit')">
               <Button v-if="hasPermission('Pages.Classes.Edit')" type="primary" size="small" @click="edit(row)" style="margin-right:5px">{{L('Edit')}}</Button>
+              <Button  type="primary" size="small" @click="lesson(row)" style="margin-right:5px">{{L('Lesson')}}</Button>
             </template>
           </Table>
           <Page show-sizer class-name="fengpage" :total="totalCount" class="margin-top-10" @on-change="pageChange" @on-page-size-change="pagesizeChange" :page-size="pageSize" :current="currentPage">
@@ -21,6 +22,7 @@
     </Card>
     <create-class v-model="createModalShow" @save-success="getpage"></create-class>
     <edit-class v-model="editModalShow" @save-success="getpage"></edit-class>
+     <class-lesson v-model="lessonModalShow"></class-lesson>
   </div>
 </template>
 <script lang="ts">
@@ -30,17 +32,19 @@ import AbpBase from "../../../lib/abpbase";
 import PageRequest from "@/store/entities/page-request";
 import CreateClass from "./create-class.vue";
 import EditClass from "./edit-class.vue";
+import ClassLesson from "./class-lesson.vue";
 
 class PageClassRequest extends PageRequest {}
 
 @Component({
-  components: { CreateClass, EditClass }
+  components: { CreateClass, EditClass,ClassLesson }
 })
 export default class Classs extends AbpBase {
   pagerequest: PageClassRequest = new PageClassRequest();
 
   createModalShow: boolean = false;
   editModalShow: boolean = false;
+  lessonModalShow: boolean = false;
   get list() {
     return this.$store.state.class.list;
   }
@@ -53,6 +57,10 @@ export default class Classs extends AbpBase {
   edit(row) {
     this.$store.commit("class/edit", row);
     this.editModalShow = true;
+  }
+  lesson(row) {
+    this.$store.commit("class/edit", row);
+    this.lessonModalShow = true;
   }
   pageChange(page: number) {
     this.$store.commit("class/setCurrentPage", page);

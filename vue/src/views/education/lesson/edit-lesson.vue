@@ -28,7 +28,7 @@
             </Option>
           </Select>
         </FormItem>
-        <FormItem :label="L('Course')" prop="course">
+        <FormItem :label="L('CourseItem')" prop="course">
           <Input v-model="lesson.course" />
         </FormItem>
       </Form>
@@ -43,7 +43,7 @@
 import { Component, Vue, Inject, Prop, Watch } from "vue-property-decorator";
 import Util from "../../../lib/util";
 import AbpBase from "../../../lib/abpbase";
-import Student from "../../../store/entities/student";
+import Class from "../../../store/entities/class";
 import Lesson from "../../../store/entities/lesson";
 @Component
 export default class EditLessone extends AbpBase {
@@ -105,7 +105,7 @@ export default class EditLessone extends AbpBase {
       });
       await this.$store.dispatch({
         type: "order/getAll",
-        data: { studentId: this.lesson.studentId }
+        data: { classId: this.lesson.classId }
       });
     }
   }
