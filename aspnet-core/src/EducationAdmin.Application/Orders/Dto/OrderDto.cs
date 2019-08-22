@@ -1,6 +1,7 @@
 ﻿using Abp.Application.Services.Dto;
 using Abp.AutoMapper;
 using Abp.Domain.Entities.Auditing;
+using EducationAdmin.Classes.Dto;
 using EducationAdmin.Contracts.Dto;
 using EducationAdmin.Courses.Dto;
 using EducationAdmin.Sales;
@@ -40,5 +41,9 @@ namespace EducationAdmin.Orders.Dto
         public string SalesmanName { get; set; }
 
         public string Note { get; set; }
+
+        public long? ClassId { get; set; }
+
+        public ClassDto Class { get; set; }
     }
 }

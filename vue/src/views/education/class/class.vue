@@ -12,7 +12,8 @@
           <Table :loading="loading" :columns="columns" :no-data-text="L('NoDatas')" border :data="list">
             <template slot-scope="{ row }" slot="action" v-if="hasPermission('Pages.Classes.Edit')">
               <Button v-if="hasPermission('Pages.Classes.Edit')" type="primary" size="small" @click="edit(row)" style="margin-right:5px">{{L('Edit')}}</Button>
-              <Button  type="primary" size="small" @click="lesson(row)" style="margin-right:5px">{{L('Lesson')}}</Button>
+              <Button type="primary" size="small" @click="lesson(row)" style="margin-right:5px">{{L('Lesson')}}</Button>
+              <Button type="primary" size="small" @click="order(row)" style="margin-right:5px">{{L('Student')}}</Button>
             </template>
           </Table>
           <Page show-sizer class-name="fengpage" :total="totalCount" class="margin-top-10" @on-change="pageChange" @on-page-size-change="pagesizeChange" :page-size="pageSize" :current="currentPage">
@@ -22,7 +23,8 @@
     </Card>
     <create-class v-model="createModalShow" @save-success="getpage"></create-class>
     <edit-class v-model="editModalShow" @save-success="getpage"></edit-class>
-     <class-lesson v-model="lessonModalShow"></class-lesson>
+    <class-lesson v-model="lessonModalShow"></class-lesson>
+     <class-order v-model="orderModalShow"></class-order>
   </div>
 </template>
 <script lang="ts">
@@ -33,11 +35,12 @@ import PageRequest from "@/store/entities/page-request";
 import CreateClass from "./create-class.vue";
 import EditClass from "./edit-class.vue";
 import ClassLesson from "./class-lesson.vue";
+import ClassOrder from "./class-order.vue";
 
 class PageClassRequest extends PageRequest {}
 
 @Component({
-  components: { CreateClass, EditClass,ClassLesson }
+  components: { CreateClass, EditClass, ClassLesson ,ClassOrder}
 })
 export default class Classs extends AbpBase {
   pagerequest: PageClassRequest = new PageClassRequest();
@@ -45,6 +48,7 @@ export default class Classs extends AbpBase {
   createModalShow: boolean = false;
   editModalShow: boolean = false;
   lessonModalShow: boolean = false;
+  orderModalShow: boolean = false;
   get list() {
     return this.$store.state.class.list;
   }
@@ -61,6 +65,10 @@ export default class Classs extends AbpBase {
   lesson(row) {
     this.$store.commit("class/edit", row);
     this.lessonModalShow = true;
+  }
+  order(row) {
+    this.$store.commit("class/edit", row);
+    this.orderModalShow = true;
   }
   pageChange(page: number) {
     this.$store.commit("class/setCurrentPage", page);
