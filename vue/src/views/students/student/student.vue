@@ -177,6 +177,13 @@ export default class Students extends AbpBase {
       }
     },
     {
+      title: this.L("LearnTeacher"),
+      key: "leanTeacher",
+      render: (h: any, params: any) => {
+        return h("span", params.row.teacher.name);
+      }
+    },
+    {
       title: this.L("Actions"),
       key: "Actions",
       width: 250,

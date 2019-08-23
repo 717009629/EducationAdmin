@@ -7,7 +7,8 @@
         <Button @click="calenderShow=!calenderShow" size='small'>{{calenderShow? L("List"):L("Calendar")}}</Button>
       </div>
       <div>
-        <FullCalendar v-if="calenderShow" defaultView="dayGridMonth" :plugins="calendarPlugins" :locale="locale" :events='events' :displayEventTime='false' :eventLimit='true' :buttonText="{today:L('Today')}">
+        <FullCalendar ref='calendar' v-show="calenderShow" defaultView="dayGridWeek" :plugins="calendarPlugins" :locale="locale" :events='events' :displayEventTime='false' :eventLimit='true'
+                      :header="{left:'title',center:'',right:'dayGridWeek, dayGridMonth today prev,next'}" :buttonText="{today:L('Today'),month:L('Month'),week:L('Week'),}">
         </FullCalendar>
         <!-- <Card dis-hover> -->
         <div v-if="!calenderShow">
@@ -48,11 +49,14 @@ class PageTeacherRequest extends PageRequest {
 export default class ClassBusiness extends AbpBase {
   @Prop({ type: Boolean, default: false }) value: boolean;
   teacher: Teacher = new Teacher();
-  calenderShow: boolean = false;
+  calenderShow: boolean = true;
   currentDate: Date = null;
   pagerequest: PageTeacherRequest = new PageTeacherRequest();
   get locale() {
     return abp.localization.currentLanguage.name;
+  }
+  getCalendarPage() {
+    (this.$refs.calendar as any).getApi().refetchEvents();
   }
   async events(arg, callback) {
     await this.getpage(500, arg.start, arg.end);
@@ -109,15 +113,14 @@ export default class ClassBusiness extends AbpBase {
   visibleChange(value: boolean) {
     if (!value) {
       this.$emit("input", value);
-      this.calenderShow = false;
     } else {
       this.teacher = Util.extend(
         true,
         {},
         this.$store.state.teacher.editTeacher
       );
-      this.getpage();
       this.calenderShow = true;
+      this.getCalendarPage();
     }
   }
   get pageSize() {
@@ -156,7 +159,7 @@ export default class ClassBusiness extends AbpBase {
         return h("span", new Date(params.row.lessonDate).toLocaleDateString());
       }
     },
-       {
+    {
       title: this.L("LessonNumber"),
       key: "lessonNumber"
     },

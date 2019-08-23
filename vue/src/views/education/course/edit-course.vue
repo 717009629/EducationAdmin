@@ -3,9 +3,9 @@
     <Modal :title="L('EditCourse')" :value="value" @on-ok="save" @on-visible-change="visibleChange" :mask-closable="false" :transfer="false">
       <Form ref="courseForm" label-position="top" :rules="CourseRule" :model="course">
         <FormItem :label="L('ClassType')" prop="classType">
-          <Select v-model="course.classType" :transfor='false'>
+          <Select v-model="course.classType" :transfor='false' disabled>
             <Option :value="0" :label="L('OneToMany')"></Option>
-            <Option :value="2" :label="L('OneToOne')"></Option>
+            <Option :value="1" :label="L('OneToOne')"></Option>
           </Select>
         </FormItem>
 
@@ -16,7 +16,7 @@
           <Input v-model="course.name" style="width:100%" />
         </FormItem>
         <FormItem :label="L('Price')" prop="price">
-          <Input v-model="course.price" />
+          <InputNumber v-model="course.price"  style="width:100%" />
         </FormItem>
         <FormItem :label="L('Note')" prop="note">
           <Input v-model="course.note" type="textarea" :rows="3" />

@@ -4,9 +4,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace EducationAdmin.Classes.Dto
+namespace EducationAdmin.Courses.Dto
 {
-    public class PagedClassResultRequestDto:PagedResultRequestDto
+    public class PagedCourseResultRequestDto: PagedResultRequestDto
     {
         public ClassType? ClassType { get; set; }
     }

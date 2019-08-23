@@ -1,7 +1,7 @@
 <template>
   <div>
     <Modal :title="L('Student')" :value="value" @on-visible-change="visibleChange" :mask-closable="false" :transfer="false" :width='1000'>
-      <Form ref="queryForm" :label-width="100" label-position="left" inline>
+      <Form ref="queryForm" :label-width="100" label-position="left" v-if="clas.course&&clas.course.classType===0" inline>
         <!-- <hr style="border-width:1px 0 0 0; border-style:solid; border-top-color:#ccc; margin:10px 0" /> -->
         <Row>
           <Button @click="addOrder" icon="android-add" type="primary" v-if="hasPermission('Pages.Orders.Create')">{{L('Add')}}</Button>
@@ -11,13 +11,13 @@
       <div class="margin-top-10">
         <Table :loading="loading" :columns="columns" :no-data-text="L('NoDatas')" border :data="list">
           <template slot-scope="{ row }" slot="action" v-if="hasPermission('Pages.Orders.Edit')">
-            <Button v-if="hasPermission('Pages.Orders.Edit')" type="primary" size="small" @click="edit(row)" style="margin-right:5px">{{L('Edit')}}</Button>
+            <!-- <Button v-if="hasPermission('Pages.Orders.Edit')" type="primary" size="small" @click="edit(row)" style="margin-right:5px">{{L('Edit')}}</Button> -->
           </template>
         </Table>
       </div>
       <div slot="footer"></div>
       <class-add-order v-model="addOrderModalShow" @save-success="getpage"></class-add-order>
-      <edit-order v-model="editModalShow" @save-success="getpage"></edit-order>
+      <!-- <edit-order v-model="editModalShow" @save-success="getpage"></edit-order> -->
     </Modal>
 
     <!-- </Card> -->
@@ -31,9 +31,9 @@ import AbpBase from "../../../lib/abpbase";
 import Class from "../../../store/entities/class";
 import Order from "../../../store/entities/order";
 import ClassAddOrder from "./class-add-order.vue";
-import EditOrder from "../../sales/order/edit-order.vue";
+// import EditOrder from "../../sales/order/edit-order.vue";
 @Component({
-  components: { ClassAddOrder, EditOrder }
+  components: { ClassAddOrder }
 })
 export default class ClassOrder extends AbpBase {
   @Prop({ type: Boolean, default: false }) value: boolean;
@@ -50,10 +50,10 @@ export default class ClassOrder extends AbpBase {
   addOrder() {
     this.addOrderModalShow = true;
   }
-  edit(row) {
-    this.$store.commit("order/edit", row);
-    this.editModalShow = true;
-  }
+  // edit(row) {
+  //   this.$store.commit("order/edit", row);
+  //   this.editModalShow = true;
+  // }
 
   async getpage() {
     await this.$store.dispatch({

@@ -7,8 +7,9 @@
         <Button @click="changeView" size='small'>{{calenderShow? L("List"):L("Calendar")}}</Button>
       </div>
       <div>
-        <FullCalendar ref="calendar" v-if="calenderShow" defaultView="dayGridMonth" :plugins="calendarPlugins" :locale="locale" :events='events' :eventLimit='5' @dateClick='dateClick'
-                      @eventClick='eventClick' :showNonCurrentDates='true' :displayEventTime='false' :buttonText="{today:L('Today')}"></FullCalendar>
+        <FullCalendar ref="calendar" v-show="calenderShow" defaultView="dayGridWeek" :plugins="calendarPlugins" :locale="locale" :events='events' :eventLimit='5' @dateClick='dateClick'
+                      @eventClick='eventClick' :showNonCurrentDates='true' :displayEventTime='false' :header="{left:'title',center:'',right:'dayGridWeek, dayGridMonth today prev,next'}"
+                      :buttonText="{today:L('Today'),month:L('Month'),week:L('Week'),}" ></FullCalendar>
 
         <!-- <Card dis-hover> -->
         <div v-if="!calenderShow">
@@ -21,7 +22,7 @@
           <div class="margin-top-10">
             <Table :loading="loading" :columns="columns" :no-data-text="L('NoDatas')" border :data="list">
               <template slot-scope="{ row }" slot="action" v-if="hasPermission('Pages.Lessons.Edit')">
-                <Button  type="primary" size="small" @click="edit(row)" style="margin-right:5px">{{L('Edit')}}</Button>
+                <Button type="primary" size="small" @click="edit(row)" style="margin-right:5px">{{L('Edit')}}</Button>
               </template>
             </Table>
             <Page show-sizer class-name="fengpage" :total="totalCount" class="margin-top-10" @on-change="pageChange" @on-page-size-change="pagesizeChange" :page-size="pageSize" :current="currentPage">
@@ -54,13 +55,13 @@ class PageClassRequest extends PageRequest {
   end?: Date;
 }
 
-@Component({ components: { FullCalendar,CreateLesson,EditLesson } })
+@Component({ components: { FullCalendar, CreateLesson, EditLesson } })
 export default class ClassBusiness extends AbpBase {
   @Prop({ type: Boolean, default: false }) value: boolean;
   clas: Class = new Class();
   createModalShow: boolean = false;
   editModalShow: boolean = false;
-  calenderShow: boolean = false;
+  calenderShow: boolean = true;
   currentDate: Date = null;
   pagerequest: PageClassRequest = new PageClassRequest();
   start: Date;
@@ -77,8 +78,7 @@ export default class ClassBusiness extends AbpBase {
     this.calenderShow = !this.calenderShow;
   }
   getCalendarPage() {
-    (this.$refs.calendar as any) .getApi().refetchEvents()
-    
+    (this.$refs.calendar as any).getApi().refetchEvents();
   }
   async events(arg, callback) {
     this.start = arg.start;
@@ -162,15 +162,13 @@ export default class ClassBusiness extends AbpBase {
   visibleChange(value: boolean) {
     if (!value) {
       this.$emit("input", value);
-      this.calenderShow = false;
+      // this.calenderShow = false;
     } else {
-      this.clas = Util.extend(
-        true,
-        {},
-        this.$store.state.class.editClass
-      );
-      this.getpage();
+      this.clas = Util.extend(true, {}, this.$store.state.class.editClass);
       this.calenderShow = true;
+      this.getCalendarPage();
+     // setTimeout( ()=> this.getCalendarPage(),100)
+     
     }
   }
   columns = [

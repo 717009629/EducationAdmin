@@ -10,7 +10,7 @@
           <TimePicker  format="HH:mm" placeholder="Select time" :steps="[1, 5]"  :value="lesson.lessonDate"></TimePicker>
         </FormItem> -->
         <FormItem :label="L('LessonNumber')" prop="lessonNumber">
-          <Select v-model="lesson.lessonIndex" >
+          <Select v-model="lesson.lessonNumber" >
             <Option v-for="n in lessonIndexs" :value="n" :key="n" :label="n">
             </Option>
           </Select>

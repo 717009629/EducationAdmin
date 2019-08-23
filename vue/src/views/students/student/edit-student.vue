@@ -293,7 +293,7 @@ export default class EditStudent extends AbpBase {
         {},
         this.$store.state.student.editStudent
       );
-       await this.$store.dispatch({
+      await this.$store.dispatch({
         type: "teacher/getAll"
       });
     }
@@ -303,6 +303,14 @@ export default class EditStudent extends AbpBase {
       {
         required: true,
         message: this.L("FieldIsRequired", undefined, this.L("StudentName")),
+        trigger: "blur"
+      }
+    ],
+    teacherId: [
+      {
+        type: "number",
+        required: true,
+        message: this.L("FieldIsRequired", undefined, this.L("Teacher")),
         trigger: "blur"
       }
     ]

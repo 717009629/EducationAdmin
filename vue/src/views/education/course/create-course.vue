@@ -5,7 +5,7 @@
         <FormItem :label="L('ClassType')" prop="classType">
           <Select v-model="course.classType" :transfor='false'>
             <Option :value="0" :label="L('OneToMany')"></Option>
-            <Option :value="2" :label="L('OneToOne')"></Option>
+            <Option :value="1" :label="L('OneToOne')"></Option>
           </Select>
         </FormItem>
 

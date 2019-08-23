@@ -7,9 +7,8 @@ using System.Text;
 
 namespace EducationAdmin.Courses.Dto
 {
-    [AutoMapFrom(typeof(Course))]
     [AutoMapTo(typeof(Course))]
-  public  class CourseDto:FullAuditedEntityDto<long>
+  public  class EditCourseDto:FullAuditedEntityDto<long>
     {
         public string Category { get; set; }
 
@@ -18,7 +17,6 @@ namespace EducationAdmin.Courses.Dto
 
         public decimal Price { get; set; }
 
-        public ClassType ClassType { get; set; }
 
         public string Note { get; set; }
     }

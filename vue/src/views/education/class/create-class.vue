@@ -9,7 +9,7 @@
 
         <FormItem :label="L('Course')" prop="courseId">
           <Select v-model="clas.courseId">
-            <Option v-for="c in courses" :value="c.id" :key="c.id"  :label="''+ c.id+'--' +c.name+'--'+(c.classType===0?L('OneToMany'):c.classType===1?L('OneToOne'):'')">
+            <Option v-for="c in courses" :value="c.id" :key="c.id" :label="''+ c.id+'--' +c.name">
               <!-- <span>{{c.id}}</span>
               <span>--</span>
               <span>{{c.name}}</span>
@@ -81,7 +81,8 @@ export default class CreateClass extends AbpBase {
         type: "teacher/getAll"
       });
       await this.$store.dispatch({
-        type: "course/getAll"
+        type: "course/getAll",
+        data: { classType: 0 }
       });
     }
   }

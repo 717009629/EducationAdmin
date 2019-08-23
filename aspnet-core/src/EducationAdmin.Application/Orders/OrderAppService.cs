@@ -4,8 +4,10 @@ using Abp.Domain.Repositories;
 using Abp.Extensions;
 using Abp.Linq.Extensions;
 using EducationAdmin.Authorization;
+using EducationAdmin.Education;
 using EducationAdmin.Orders.Dto;
 using EducationAdmin.Sales;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,7 +32,7 @@ namespace EducationAdmin.Orders
             return Repository.GetAllIncluding(m => m.Salesman, m => m.Student, m => m.Course, m => m.Class)
                     .WhereIf(input.StudentId != null, m => m.StudentId == input.StudentId)
                     .WhereIf(input.ClassId != null, m => m.ClassId == input.ClassId)
-                    .WhereIf(input.CourseId != null, m => m.CourseId == input.CourseId&&m.ClassId==null)
+                    .WhereIf(input.CourseId != null, m => m.CourseId == input.CourseId && m.ClassId == null)
                      .WhereIf(input.State != null, m => m.State == input.State)
                     .WhereIf(!input.StudentName.IsNullOrWhiteSpace(), x => x.Student.Name.Contains(input.StudentName));
         }
@@ -52,11 +54,23 @@ namespace EducationAdmin.Orders
         public async Task<OrderDto> Audite(AuditeOrderDto input)
         {
             CheckPermission(PermissionNames.Pages_Orders + ".Audite");
-            var order = await Repository.FirstOrDefaultAsync(m => m.Id == input.OrderId);
+            var order = await Repository.GetAllIncluding(m => m.Course, m => m.Student).FirstOrDefaultAsync(m => m.Id == input.OrderId);
             if (order.State == OrderState.Audited)
                 throw new Exception();
 
             order.State = OrderState.Audited;
+            if (order.Course.ClassType == ClassType.OnoToOne)
+            {
+                order.Class = new Class
+                {
+                    CourseId = order.CourseId,
+                    CreationTime = DateTime.Now,
+                    CreatorUserId = this.AbpSession.UserId,
+                    Name = $"{order.Course.Name}--{order.StudentId}--{order.Student.Name}",
+                    State = ClassState.Created,
+                    TeacherId = order.Student.TeacherId
+                };
+            }
             var r = await Repository.UpdateAsync(order);
             return ObjectMapper.Map<OrderDto>(r);
         }

@@ -8,7 +8,7 @@ using System.Text;
 
 namespace EducationAdmin.Courses
 {
-    public interface ICourseAppService:IAsyncCrudAppService<CourseDto,long,PagedResultRequestDto,CreateCourseDto,CourseDto>
+    public interface ICourseAppService:IAsyncCrudAppService<CourseDto,long, PagedCourseResultRequestDto, CreateCourseDto, EditCourseDto>
     {
     }
 }

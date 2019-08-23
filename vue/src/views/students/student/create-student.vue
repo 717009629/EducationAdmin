@@ -300,6 +300,14 @@ export default class CreateStudent extends AbpBase {
         message: this.L("FieldIsRequired", undefined, this.L("StudentName")),
         trigger: "blur"
       }
+    ],
+    teacherId: [
+      {
+        type:'number',
+        required: true,
+        message: this.L("FieldIsRequired", undefined, this.L("Teacher")),
+        trigger: "blur"
+      }
     ]
   };
 }

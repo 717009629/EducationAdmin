@@ -1,14 +1,15 @@
 <template>
   <div>
-    <Modal :value="value" @on-visible-change="visibleChange" :mask-closable="false" width="1200px">
+    <Modal :value="value" @on-visible-change="visibleChange" :mask-closable="false" width="1300px">
       <div slot="header">
         <span style="line-height:20px; font-size:14px;color:#17233d;font-weight:bold;margin-right:20px">{{L('Lesson')}}</span>
         <span style="line-height:20px; font-size:14px;color:#17233d;font-weight:bold;margin-right:20px">{{student.name}}</span>
         <Button @click="changeView" size='small'>{{calenderShow? L("List"):L("Calendar")}}</Button>
       </div>
       <div>
-        <FullCalendar ref="calendar" v-if="calenderShow" defaultView="dayGridMonth" :plugins="calendarPlugins" :locale="locale" :events='events' :eventLimit='5' @dateClick='dateClick'
-                      @eventClick='eventClick' :showNonCurrentDates='true' :displayEventTime='false' :buttonText="{today:L('Today')}"></FullCalendar>
+        <FullCalendar ref="calendar" v-show="calenderShow" defaultView="dayGridWeek" :plugins="calendarPlugins" :locale="locale" :events='events' :eventLimit='5'
+                      :header="{left:'title',center:'',right:'dayGridWeek, dayGridMonth today prev,next'}" :showNonCurrentDates='true' :displayEventTime='false'
+                      :buttonText="{today:L('Today'),month:L('Month'),week:L('Week'),}"></FullCalendar>
 
         <!-- <Card dis-hover> -->
         <div v-if="!calenderShow">
@@ -20,9 +21,9 @@
           </Form>
           <div class="margin-top-10">
             <Table :loading="loading" :columns="columns" :no-data-text="L('NoDatas')" border :data="list">
-              <template slot-scope="{ row }" slot="action" v-if="hasPermission('Pages.Lessons.Edit')">
+              <!-- <template slot-scope="{ row }" slot="action" v-if="hasPermission('Pages.Lessons.Edit')">
                 <Button v-if="hasPermission('Pages.Lessons.Edit')" type="primary" size="small" @click="edit(row)" style="margin-right:5px">{{L('Edit')}}</Button>
-              </template>
+              </template> -->
             </Table>
             <Page show-sizer class-name="fengpage" :total="totalCount" class="margin-top-10" @on-change="pageChange" @on-page-size-change="pagesizeChange" :page-size="pageSize" :current="currentPage">
             </Page>
@@ -58,7 +59,7 @@ export default class StudentBusiness extends AbpBase {
   student: Student = new Student();
   createModalShow: boolean = false;
   editModalShow: boolean = false;
-  calenderShow: boolean = false;
+  calenderShow: boolean = true;
   currentDate: Date = null;
   pagerequest: PageStudentRequest = new PageStudentRequest();
   start: Date;
@@ -75,8 +76,7 @@ export default class StudentBusiness extends AbpBase {
     this.calenderShow = !this.calenderShow;
   }
   getCalendarPage() {
-    (this.$refs.calendar as any) .getApi().refetchEvents()
-    
+    (this.$refs.calendar as any).getApi().refetchEvents();
   }
   async events(arg, callback) {
     this.start = arg.start;
@@ -87,7 +87,7 @@ export default class StudentBusiness extends AbpBase {
       return {
         id: m.id,
         start: new Date(m.lessonDate).setHours(m.lessonNumber + 8),
-        title: `#${m.lessonNumber}--${m.course}--${m.teacher.name}`,
+        title: `#${m.lessonNumber}-${m.class.name}-${m.course}-${m.teacher.name}`,
         color:
           new Date(new Date(m.lessonDate).toLocaleDateString()) < new Date()
             ? "#aaa"
@@ -110,10 +110,10 @@ export default class StudentBusiness extends AbpBase {
   create() {
     this.createModalShow = true;
   }
-  edit(row) {
-    this.$store.commit("lesson/edit", row);
-    this.editModalShow = true;
-  }
+  // edit(row) {
+  //   this.$store.commit("lesson/edit", row);
+  //   this.editModalShow = true;
+  // }
   pageChange(page: number) {
     this.$store.commit("lesson/setCurrentPage", page);
     this.getpage();
@@ -122,14 +122,14 @@ export default class StudentBusiness extends AbpBase {
     this.$store.commit("lesson/setPageSize", pagesize);
     this.getpage();
   }
-  dateClick(arg) {
-    this.currentDate = arg.date;
-    this.createModalShow = true;
-  }
-  eventClick(arg) {
-    this.$store.commit("lesson/edit", arg.event.extendedProps.lesson);
-    this.editModalShow = true;
-  }
+  // dateClick(arg) {
+  //   this.currentDate = arg.date;
+  //   this.createModalShow = true;
+  // }
+  // eventClick(arg) {
+  //   this.$store.commit("lesson/edit", arg.event.extendedProps.lesson);
+  //   this.editModalShow = true;
+  // }
 
   async getpage(count = null, start = null, end = null) {
     this.pagerequest.studentId = this.student.id;
@@ -160,15 +160,15 @@ export default class StudentBusiness extends AbpBase {
   visibleChange(value: boolean) {
     if (!value) {
       this.$emit("input", value);
-      this.calenderShow = false;
     } else {
+      this.getCalendarPage();
       this.student = Util.extend(
         true,
         {},
         this.$store.state.student.editStudent
       );
-      this.getpage();
       this.calenderShow = true;
+      
     }
   }
   columns = [
@@ -218,13 +218,13 @@ export default class StudentBusiness extends AbpBase {
           params.row.isFinish ? this.L("Fininshed") : this.L("Unfinished")
         );
       }
-    },
-    {
-      title: this.L("Actions"),
-      key: "Actions",
-      width: 150,
-      slot: "action"
     }
+    // {
+    //   title: this.L("Actions"),
+    //   key: "Actions",
+    //   width: 150,
+    //   slot: "action"
+    // }
   ];
 }
 </script>

@@ -210,7 +210,7 @@
     <text name="Classes">班级</text>
     <text name="CreateNewClass">创建班级</text>
     <text name="EditClass">编辑班级</text>
-    <text name="OnoToOne">一对一</text>
+    <text name="OneToOne">一对一</text>
     <text name="OneToMany">一对多</text>
 
     <text name="LessonIndex">课程编号</text>
@@ -242,6 +242,14 @@
     <text name="NotAudited">未审核</text>
     <text name="Audited">已审核</text>
     <text name="LessonNumber">节次</text>
+    <text name="OrderIndex">订单编号</text>
+    <text name="List">列表</text>
+    <text name="Calendar">日历</text>
+    <text name="Today">今天</text>
+    <text name="Month">月</text>
+    <text name="Week">周</text>
+    <text name="After the audit can not be edited, determine the audit?">审核后不能再编辑，确定要审核？</text>
+    <text name="LearnTeacher">学管老师</text>
 
   </texts>
 </localizationDictionary>

@@ -11,14 +11,6 @@
             </Option>
           </Select>
         </FormItem>
-        <FormItem :label="L('Order')" prop="orderId">
-          <Select v-model="lesson.orderId" filterable>
-            <Option v-for="item in orders" :value="item.id" :key="item.id" :label="item.id+'  ' +item.course.name">
-              <span>{{item.id}}</span>
-              <span style="margin-left:10px">{{item.course.name}}</span>
-            </Option>
-          </Select>
-        </FormItem>
 
         <FormItem :label="L('Teacher')" prop="teacherId">
           <Select v-model="lesson.teacherId" filterable>
@@ -68,7 +60,7 @@ export default class EditLessone extends AbpBase {
           new Date(m.lessonDate).toDateString() ===
             new Date(this.lesson.lessonDate).toDateString()
       )
-      .map(m => m.lessonIndex);
+      .map(m => m.lessonNumber);
     for (let n = 1; n <= 8; n++) {
       if (n === this.lesson.lessonNumber || array.indexOf(n) < 0) list.push(n);
     }
@@ -122,14 +114,6 @@ export default class EditLessone extends AbpBase {
         type: "number",
         required: true,
         message: this.L("FieldIsRequired", undefined, this.L("LessonNumber")),
-        trigger: "blur"
-      }
-    ],
-    orderId: [
-      {
-        type: "number",
-        required: true,
-        message: this.L("FieldIsRequired", undefined, this.L("Order")),
         trigger: "blur"
       }
     ],

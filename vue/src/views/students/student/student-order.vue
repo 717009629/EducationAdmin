@@ -144,6 +144,20 @@ export default class StudentOrder extends AbpBase {
       }
     },
     {
+      title: this.L("ClassType"),
+      key: "classType",
+      render: (h, params) => {
+        return h(
+          "span",
+          params.row.course.classType === 0
+            ? this.L("OneToMany")
+            : params.row.course.classType === 1
+            ? this.L("OneToOne")
+            : ""
+        );
+      }
+    },
+    {
       title: this.L("CoursePrice"),
       key: "coursePrice",
       render: (h, params) => {
@@ -182,7 +196,7 @@ export default class StudentOrder extends AbpBase {
       title: this.L("Class"),
       key: "class",
       render: (h, params) => {
-        return h("span", params.row.class.name);
+        return h("span", params.row.class? params.row.class.name:'');
       }
     },
 
