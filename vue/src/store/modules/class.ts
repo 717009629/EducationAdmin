@@ -43,6 +43,9 @@ class ClassModule extends ListModule<ClassState,any,Class>{
         async get(context:ActionContext<ClassState,any>,payload:any){
             let reponse=await Ajax.get('/api/services/app/Class/Get?Id='+payload.id);
             return reponse.data.result as Class;
+        },
+        async addOrder(context:ActionContext<ClassState,any>,payload:any){
+            await Ajax.post('/api/services/app/Class/AddOrders',payload.data);
         }
     };
     mutations={

@@ -187,10 +187,10 @@ export default class StudentBusiness extends AbpBase {
       key: "course"
     },
     {
-      title: this.L("StudentName"),
-      key: "studentName",
+      title: this.L("ClassName"),
+      key: "className",
       render: (h: any, params: any) => {
-        return h("span", params.row.student.name);
+        return h("span", params.row.class.name);
       }
     },
     {

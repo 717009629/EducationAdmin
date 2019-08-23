@@ -109,9 +109,9 @@
     <text name="Sex">性别</text>
     <text name="Parent">家长</text>
     <text name="Relation">关系</text>
-    <text name="Phone">手机</text>
-    <text name="FatherPhone">父亲手机</text>
-    <text name="MotherPhone">母亲手机</text>
+    <text name="Phone">电话</text>
+    <text name="FatherPhone">父亲电话</text>
+    <text name="MotherPhone">母亲电话</text>
     <text name="School">就读学校</text>
     <text name="Birthday">生日</text>
     <text name="Grade">年级</text>
@@ -148,7 +148,7 @@
     <text name="OrderDate">订单日期</text>
     <text name="SchoolBegin">入学日期</text>
     <text name="FullMoney">总金额</text>
-    <text name="ClassName">课程名称</text>
+    <text name="ClassName">班级名称</text>
     <text name="State">状态</text>
     <text name="StartDate">开始日期</text>
     <text name="EndDate">结束日期</text>
@@ -195,7 +195,7 @@
     <text name="Customer">客户</text>
     <text name="SalesManage">销售管理</text>
     <text name="OtherGuadian">其他监护人</text>
-    <text name="OtherGuadianPhone">其他监护人手机</text>
+    <text name="OtherGuadianPhone">其他监护人电话</text>
     <text name="CreateNewCustomer">添加客户</text>
     <text name="EditCustomer">编辑客户</text>
     <text name="Lessons">课程表</text>
@@ -205,7 +205,39 @@
     <text name="LessonDate">上课日期</text>
     <text name="Teacher">老师</text>
     <text name="Teachers">老师</text>
-    
+    <text name="Class">班级</text>
+    <text name="Classes">班级</text>
+    <text name="CreateNewClass">创建班级</text>
+    <text name="EditClass">编辑班级</text>
+    <text name="OnoToOne">一对一</text>
+    <text name="OneToMany">一对多</text>
+
+    <text name="LessonIndex">课程编号</text>
+    <text name="ClassIndex">班级编号</text>
+    <text name="ClassType">授课类型</text>
+    <text name="ScoreRank">成绩排名</text>
+    <text name="ClassRank">班级排名</text>
+
+
+
+    <text name="gradeRank">年级排名</text>
+    <text name="Examination">会考成绩</text>
+    <text name="Chinese">语文</text>
+    <text name="Math">数学</text>
+    <text name="English">英语</text>
+    <text name="Biology">生物</text>
+    <text name="History">历史</text>
+    <text name="Geography">地理</text>
+    <text name="Physics">物理</text>
+    <text name="Chemistry">化学</text>
+    <text name="Political">政治</text>
+
+    <text name="ParentsInfo">家长信息</text>
+
+    <text name="District">区/县</text>
+    <text name="AuditedReason">审核/退回原因</text>
+    <text name="Reject">退回</text>
+    <text name="CustomerIndex">客户编号</text>
 
   </texts>
 </localizationDictionary>

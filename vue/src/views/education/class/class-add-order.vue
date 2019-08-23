@@ -3,11 +3,14 @@
     <Modal :title="L('Student')" :value="value" @on-visible-change="visibleChange" :mask-closable="false" :transfer="false" :width='1000'>
       <!-- <Card dis-hover> -->
       <div class="margin-top-10">
-        <Table :loading="loading" :columns="columns" :no-data-text="L('NoDatas')" border :data="list" @on-selection-change='selectionChange'>
-
+        <Table :loading="loading" :columns="columns" :no-data-text="L('NoDatas')" border :data="list" >
+          <template slot-scope="{ row }" slot="action" v-if="hasPermission('Pages.Classes.Edit')">
+            <Button type="primary" size="small" @click="add(row)" style="margin-right:5px">{{L('Add')}}</Button>
+          </template>
         </Table>
       </div>
-
+      <div slot="footer">
+      </div>
     </Modal>
 
     <!-- </Card> -->
@@ -29,7 +32,7 @@ export default class ClassOrder extends AbpBase {
   createModalShow: boolean = false;
   editModalShow: boolean = false;
   contractModalShow: boolean = false;
-  selectionList=[];
+  selectionList = [];
   get list() {
     return this.$store.state.order.freeList;
   }
@@ -37,10 +40,10 @@ export default class ClassOrder extends AbpBase {
     return this.$store.state.order.loading;
   }
 
-  selectionChange(selection){
-    this.selectionList=selection;
-    console.log(this.selectionList);
-  }
+  // selectionChange(selection) {
+  //   this.selectionList = selection;
+  //   console.log(this.selectionList);
+  // }
 
   async getpage() {
     await this.$store.dispatch({
@@ -58,12 +61,37 @@ export default class ClassOrder extends AbpBase {
     }
   }
 
+  // async save() {
+  //   if (this.selectionList.length < 1) {
+  //     this.$Modal.error({
+  //       title: window.abp.localization.localize("Failed"),
+  //       content: this.L("Please select one at least!")
+  //     });
+  //     return;
+  //   }
+  //   var orderIds = this.selectionList.map(m => m.id);
+  //   console.log(orderIds);
+  //   await this.$store.dispatch({
+  //     type: "class/addOrder",
+  //     data: { classId: this.clas.id, orderIds }
+  //   });
+  //   this.$emit("save-success");
+  //   this.$emit("input", false);
+  // }
+  // cancel() {
+  //   this.$emit("input", false);
+  // }
+
+  async add(row) {
+    await this.$store.dispatch({
+      type: "class/addOrder",
+      data: { classId: this.clas.id, orderId: row.id }
+    });
+    await this.getpage();
+    this.$emit("save-success");
+  }
+
   columns = [
-    {
-      type: "selection",
-      width: 60,
-      align: "center"
-    },
     {
       title: this.L("OrderIndex"),
       key: "name",
@@ -91,6 +119,12 @@ export default class ClassOrder extends AbpBase {
       render: (h: any, params: any) => {
         return h("span", params.row.student.phone);
       }
+    },
+    {
+      title: this.L("Actions"),
+      key: "Actions",
+      width: 250,
+      slot: "action"
     }
   ];
 }
