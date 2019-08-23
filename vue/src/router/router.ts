@@ -79,8 +79,8 @@ export const appRouters: Array<Router> = [{
     children: [
         { path: 'customer', permission: 'Pages.Customers', meta: { title: 'Customers' }, name: 'customer', component: () => import('../views/sales/customer/customer.vue') },
         { path: 'record', permission: 'Pages.Records', meta: { title: 'Records' }, name: 'record', component: () => import('../views/sales/record/record.vue') },
-        { path: 'order', permission: 'Pages.Orders', meta: { title: 'Orders' }, name: 'order', component: () => import('../views/sales/order/order.vue') },
-        { path: 'contract', permission: 'Pages.Contracts', meta: { title: 'Contracts' }, name: 'contract', component: () => import('../views/sales/contract/contract.vue') }
+        { path: 'order', permission: 'Pages.Orders', meta: { title: 'Orders' }, name: 'order', component: () => import('../views/sales/order/order.vue') }
+        // { path: 'contract', permission: 'Pages.Contracts', meta: { title: 'Contracts' }, name: 'contract', component: () => import('../views/sales/contract/contract.vue') }
     ]
 },
 {

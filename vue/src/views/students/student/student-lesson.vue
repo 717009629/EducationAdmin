@@ -31,8 +31,6 @@
         </div>
       </div>
       <div slot="footer"></div>
-      <create-lesson v-model="createModalShow" @save-success="getCalendarPage" :date='currentDate'></create-lesson>
-      <edit-lesson v-model="editModalShow" @save-success="getCalendarPage"></edit-lesson>
     </Modal>
   </div>
 </template>
@@ -88,8 +86,8 @@ export default class StudentBusiness extends AbpBase {
     var list = this.$store.state.lesson.list.map(m => {
       return {
         id: m.id,
-        start: new Date(m.lessonDate).setHours(m.lessonIndex + 8),
-        title: `#${m.lessonIndex}--${m.course}--${m.teacher.name}`,
+        start: new Date(m.lessonDate).setHours(m.lessonNumber + 8),
+        title: `#${m.lessonNumber}--${m.course}--${m.teacher.name}`,
         color:
           new Date(new Date(m.lessonDate).toLocaleDateString()) < new Date()
             ? "#aaa"
@@ -201,8 +199,8 @@ export default class StudentBusiness extends AbpBase {
       }
     },
     {
-      title: this.L("LessonIndex"),
-      key: "lessonIndex"
+      title: this.L("LessonNumber"),
+      key: "lessonNumber"
     },
     {
       title: this.L("Teacher"),

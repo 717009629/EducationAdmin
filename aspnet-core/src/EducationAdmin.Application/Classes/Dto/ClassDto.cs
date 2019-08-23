@@ -27,6 +27,8 @@ namespace EducationAdmin.Classes.Dto
 
         public TeacherDto Teacher { get; set; }
 
+        public ClassState State { get; set; }
+
         public long TeacherId { get; set; }
     }
 }

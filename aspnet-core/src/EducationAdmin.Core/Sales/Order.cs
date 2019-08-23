@@ -21,7 +21,7 @@ namespace EducationAdmin.Sales
 
         public decimal FullMoney { get; set; }
 
-        public string State { get; set; }
+        public OrderState State { get; set; }
 
         public string ClassName { get; set; }
 
@@ -47,5 +47,11 @@ namespace EducationAdmin.Sales
 
 
    //     public List<CourseItem> CourseItems { get; set; }
+    }
+
+    public enum OrderState
+    {
+        Created=0,
+        Audited=1
     }
 }

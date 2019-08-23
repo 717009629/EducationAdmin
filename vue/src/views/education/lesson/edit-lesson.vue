@@ -5,8 +5,8 @@
         <FormItem :label="L('LessonDate')">
           <DatePicker type="date" placeholder="Select date" readonly :value="lesson.lessonDate"></DatePicker>
         </FormItem>
-        <FormItem :label="L('LessonIndex')" prop="lessonIndex">
-          <Select v-model="lesson.lessonIndex" >
+        <FormItem :label="L('LessonNumber')" prop="lessonNumber">
+          <Select v-model="lesson.lessonNumber" >
             <Option v-for="n in lessonIndexs" :value="n" :key="n" :label="n" >
             </Option>
           </Select>
@@ -70,7 +70,7 @@ export default class EditLessone extends AbpBase {
       )
       .map(m => m.lessonIndex);
     for (let n = 1; n <= 8; n++) {
-      if (n === this.lesson.lessonIndex || array.indexOf(n) < 0) list.push(n);
+      if (n === this.lesson.lessonNumber || array.indexOf(n) < 0) list.push(n);
     }
     return list;
     //this.lessonIndexs= list;
@@ -117,11 +117,11 @@ export default class EditLessone extends AbpBase {
         trigger: "blur"
       }
     ],
-    lessonIndex: [
+    lessonNumber: [
       {
         type: "number",
         required: true,
-        message: this.L("FieldIsRequired", undefined, this.L("LessonIndex")),
+        message: this.L("FieldIsRequired", undefined, this.L("LessonNumber")),
         trigger: "blur"
       }
     ],

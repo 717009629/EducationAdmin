@@ -21,7 +21,7 @@
           <div class="margin-top-10">
             <Table :loading="loading" :columns="columns" :no-data-text="L('NoDatas')" border :data="list">
               <template slot-scope="{ row }" slot="action" v-if="hasPermission('Pages.Lessons.Edit')">
-                <Button v-if="hasPermission('Pages.Lessons.Edit')" type="primary" size="small" @click="edit(row)" style="margin-right:5px">{{L('Edit')}}</Button>
+                <Button  type="primary" size="small" @click="edit(row)" style="margin-right:5px">{{L('Edit')}}</Button>
               </template>
             </Table>
             <Page show-sizer class-name="fengpage" :total="totalCount" class="margin-top-10" @on-change="pageChange" @on-page-size-change="pagesizeChange" :page-size="pageSize" :current="currentPage">
@@ -88,8 +88,8 @@ export default class ClassBusiness extends AbpBase {
     var list = this.$store.state.lesson.list.map(m => {
       return {
         id: m.id,
-        start: new Date(m.lessonDate).setHours(m.lessonIndex + 8),
-        title: `#${m.lessonIndex}--${m.course}--${m.teacher.name}`,
+        start: new Date(m.lessonDate).setHours(m.lessonNumber + 8),
+        title: `#${m.lessonNumber}--${m.course}--${m.teacher.name}`,
         color:
           new Date(new Date(m.lessonDate).toLocaleDateString()) < new Date()
             ? "#aaa"
@@ -201,8 +201,8 @@ export default class ClassBusiness extends AbpBase {
       }
     },
     {
-      title: this.L("LessonIndex"),
-      key: "lessonIndex"
+      title: this.L("LessonNumber"),
+      key: "lessonNumber"
     },
     {
       title: this.L("Teacher"),

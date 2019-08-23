@@ -22,7 +22,7 @@ namespace EducationAdmin.Orders.Dto
 
         public decimal FullMoney { get; set; }
 
-        public string State { get; set; }
+   
 
 
         public long StudentId { get; set; }

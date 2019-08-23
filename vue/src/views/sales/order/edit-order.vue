@@ -4,7 +4,7 @@
       <Form ref="orderForm" label-position="top" :rules="OrderRule" :model="order">
 
         <FormItem :label="L('Course')" prop="courseId">
-          <Select v-model="order.courseId" filterable>
+          <Select v-model="order.courseId" filterable @on-change='selectChange'>
             <Option v-for="item in courseList" :value="item.id" :key="item.id" :label="item.category+'：'+item.name+'：'+item.price+'元'">
               <span>{{item.category}}</span>
               <span>：</span>
@@ -16,23 +16,17 @@
 
         <Row :gutter="16">
           <i-col span="12">
+            <FormItem :label="L('FullMoney')" prop="fullMoney">
+              <InputNumber v-model="order.fullMoney" style="width:100%" />
+            </FormItem>
+          </i-col>
+          <i-col span="12">
             <FormItem :label="L('OrderDate')" prop="orderDate">
               <DatePicker type="date" placeholder="Select date" v-model="order.orderDate"></DatePicker>
             </FormItem>
           </i-col>
-          <i-col span="12">
-            <FormItem :label="L('SchoolBegin')" prop="schoolBegin">
-              <DatePicker type="date" placeholder="Select date" v-model="order.schoolBegin"></DatePicker>
-            </FormItem>
-          </i-col>
         </Row>
 
-        <!-- <FormItem :label="L('FullMoney')" prop="fullMoney">
-          <Input v-model="order.fullMoney" />
-        </FormItem> -->
-        <FormItem :label="L('OrderState')" prop="state">
-          <Input v-model="order.state" />
-        </FormItem>
         <FormItem :label="L('Note')" prop="note">
           <Input v-model="order.note" type="textarea" :rows="3" />
         </FormItem>
@@ -56,6 +50,14 @@ export default class EditOrdere extends AbpBase {
   order: Order = new Order();
   get courseList() {
     return this.$store.state.course.list;
+  }
+  selectChange(option) {
+    let courses = this.courseList.filter(m => m.id === option);
+    if (courses.length === 0) {
+      this.order.fullMoney = 0;
+      return;
+    }
+    this.order.fullMoney = courses[0].price;
   }
   save() {
     (this.$refs.orderForm as any).validate(async (valid: boolean) => {
@@ -88,7 +90,23 @@ export default class EditOrdere extends AbpBase {
       this.getAllCourse();
     }
   }
-  OrderRule = {
+OrderRule = {
+    courseId: [
+      {
+        type: "number",
+        required: true,
+        message: this.L("FieldIsRequired", undefined, this.L("CoureId")),
+        trigger: "blur"
+      }
+    ],
+    fullMoney: [
+      {
+        type: "number",
+        required: true,
+        message: this.L("FieldIsRequired", undefined, this.L("FullMoney")),
+        trigger: "blur"
+      }
+    ],
     orderDate: [
       {
         type: "date",
@@ -96,15 +114,15 @@ export default class EditOrdere extends AbpBase {
         message: this.L("FieldIsRequired", undefined, this.L("OrderDate")),
         trigger: "blur"
       }
-    ],
-    schoolBegin: [
-      {
-        type: "date",
-        required: true,
-        message: this.L("FieldIsRequired", undefined, this.L("SchoolBegin")),
-        trigger: "blur"
-      }
     ]
+    // schoolBegin: [
+    //   {
+    //     type: "date",
+    //     required: true,
+    //     message: this.L("FieldIsRequired", undefined, this.L("SchoolBegin")),
+    //     trigger: "blur"
+    //   }
+    // ]
   };
 }
 </script>

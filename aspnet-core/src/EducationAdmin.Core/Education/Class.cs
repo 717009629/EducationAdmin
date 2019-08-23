@@ -24,6 +24,10 @@ namespace EducationAdmin.Education
         public User Teacher { get; set; }
 
         public long TeacherId { get; set; }
+
+        public ClassState State { get; set; }
+
+        
     }
 
 
@@ -31,5 +35,12 @@ namespace EducationAdmin.Education
     {
         OneToMany=0,
         OnoToOne=1
+    }
+
+    public enum ClassState
+    {
+        Created=0,
+
+        Close=1
     }
 }

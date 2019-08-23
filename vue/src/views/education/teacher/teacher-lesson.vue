@@ -59,8 +59,8 @@ export default class ClassBusiness extends AbpBase {
     var list = this.$store.state.lesson.list.map(m => {
       return {
         id: m.id,
-        start: new Date(m.lessonDate).setHours(m.lessonIndex + 8),
-        title: `#${m.lessonIndex}--${m.course}--${m.class.name}`,
+        start: new Date(m.lessonDate).setHours(m.lessonNumber + 8),
+        title: `#${m.lessonNumber}--${m.course}--${m.class.name}`,
         color:
           new Date(new Date(m.lessonDate).toLocaleDateString()) < new Date()
             ? "#aaa"
@@ -155,6 +155,10 @@ export default class ClassBusiness extends AbpBase {
       render: (h: any, params: any) => {
         return h("span", new Date(params.row.lessonDate).toLocaleDateString());
       }
+    },
+       {
+      title: this.L("LessonNumber"),
+      key: "lessonNumber"
     },
     {
       title: this.L("Teacher"),

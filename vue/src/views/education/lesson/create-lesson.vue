@@ -9,7 +9,7 @@
         <!-- <FormItem :label="L('LessonTime')">
           <TimePicker  format="HH:mm" placeholder="Select time" :steps="[1, 5]"  :value="lesson.lessonDate"></TimePicker>
         </FormItem> -->
-        <FormItem :label="L('LessonIndex')" prop="lessonIndex">
+        <FormItem :label="L('LessonNumber')" prop="lessonNumber">
           <Select v-model="lesson.lessonIndex" >
             <Option v-for="n in lessonIndexs" :value="n" :key="n" :label="n">
             </Option>
@@ -66,7 +66,7 @@ export default class CreateLesson extends AbpBase {
         m =>
           this.date &&
           new Date(m.lessonDate).toDateString() === this.date.toDateString() &&
-          m.lessonIndex === n
+          m.lessonNumber === n
       ).length;
       if (count < 1) {
         list.push(n);
@@ -121,11 +121,11 @@ export default class CreateLesson extends AbpBase {
         trigger: "blur"
       }
     ],
-    lessonIndex: [
+    lessonNumber: [
       {
         type: "number",
         required: true,
-        message: this.L("FieldIsRequired", undefined, this.L("LessonIndex")),
+        message: this.L("FieldIsRequired", undefined, this.L("LessonNumber")),
         trigger: "blur"
       }
     ],

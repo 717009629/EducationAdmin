@@ -251,6 +251,21 @@ export default class CreateStudent extends AbpBase {
     if (list.length === 0) return [];
     return list[0].child;
   }
+  get sex() {
+    return this.student.sex
+      ? "male"
+      : this.student.sex === false
+      ? "female"
+      : "";
+  }
+
+  set sex(val) {
+    this.student.sex = val === "male" ? true : val === "female" ? false : null;
+  }
+
+  get teachers() {
+    return this.$store.state.teacher.list;
+  }
 
   save() {
     (this.$refs.studentForm as any).validate(async (valid: boolean) => {

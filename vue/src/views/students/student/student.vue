@@ -19,7 +19,7 @@
           <Table :loading="loading" :columns="columns" :no-data-text="L('NoDatas')" border :data="list">
             <template slot-scope="{ row }" slot="action" v-if="hasPermission('Pages.Students.Edit')||hasPermission('Pages.Records')||hasPermission('Pages.Orders')||hasPermission('Pages.Contracts')">
               <Button v-if="hasPermission('Pages.Students.Edit')" type="primary" size="small" @click="edit(row)" style="margin-right:5px">{{L('Edit')}}</Button>
-              <Button v-if="hasPermission('Pages.Orders')||hasPermission('Pages.Contracts')" type="primary" size="small" @click="business(row)" style="margin-right:5px">{{L('Business')}}</Button>
+              <Button v-if="hasPermission('Pages.Orders')||hasPermission('Pages.Contracts')" type="primary" size="small" @click="order(row)" style="margin-right:5px">{{L('Order')}}</Button>
               <Button v-if="hasPermission('Pages.Lessons')" type="primary" size="small" @click="lesson(row)" style="margin-right:5px">{{L('Lessons')}}</Button>
             </template>
           </Table>
@@ -30,7 +30,7 @@
     </Card>
     <create-student v-model="createModalShow" @save-success="getpage"></create-student>
     <edit-student v-model="editModalShow" @save-success="getpage"></edit-student>
-    <student-business v-model="businessModalShow"></student-business>
+    <student-order v-model="orderModalShow"></student-order>
     <student-lesson v-model="lessonModalShow"></student-lesson>
   </div>
 </template>
@@ -41,7 +41,7 @@ import AbpBase from "../../../lib/abpbase";
 import PageRequest from "../../../store/entities/page-request";
 import CreateStudent from "./create-student.vue";
 import EditStudent from "./edit-student.vue";
-import StudentBusiness from "./student-business.vue";
+import StudentOrder from "./student-order.vue";
 import StudentLesson from "./student-lesson.vue";
 
 class PageStudentRequest extends PageRequest {
@@ -49,16 +49,16 @@ class PageStudentRequest extends PageRequest {
 }
 
 @Component({
-  components: { CreateStudent, EditStudent, StudentBusiness, StudentLesson }
+  components: { CreateStudent, EditStudent, StudentOrder, StudentLesson }
 })
 export default class Students extends AbpBase {
   pagerequest: PageStudentRequest = new PageStudentRequest();
 
   createModalShow: boolean = false;
   editModalShow: boolean = false;
-  businessModalShow: boolean = false;
+  orderModalShow: boolean = false;
   lessonModalShow: boolean = false;
-  
+
   get list() {
     return this.$store.state.student.list;
   }
@@ -72,9 +72,9 @@ export default class Students extends AbpBase {
     this.$store.commit("student/edit", row);
     this.editModalShow = true;
   }
-  business(row) {
+  order(row) {
     this.$store.commit("student/edit", row);
-    this.businessModalShow = true;
+    this.orderModalShow = true;
   }
   lesson(row) {
     this.$store.commit("student/edit", row);
@@ -124,12 +124,17 @@ export default class Students extends AbpBase {
     //   key: "province"
     // },
     {
-      title: this.L("City"),
-      key: "city"
-    },
-    {
-      title: this.L("Address"),
-      key: "address"
+      title: this.L("Location"),
+      key: "Location",
+      tooltip: true,
+      render: (h: any, params: any) => {
+        return h("span", [
+          h("span", params.row.province),
+          h("span", params.row.city),
+          h("span", params.row.district),
+          h("span", params.row.address)
+        ]);
+      }
     },
     {
       title: this.L("Sex"),
@@ -143,10 +148,6 @@ export default class Students extends AbpBase {
             : ""
         );
       }
-    },
-    {
-      title: this.L("Parent"),
-      key: "parent"
     },
     // {
     //   title: this.L("Relation"),
@@ -174,14 +175,6 @@ export default class Students extends AbpBase {
       render: (h: any, params: any) => {
         return h("span", new Date(params.row.birthday).toLocaleDateString());
       }
-    },
-    {
-      title: this.L("Origin"),
-      key: "origin"
-    },
-    {
-      title: this.L("Salesman"),
-      key: "salesmanName"
     },
     {
       title: this.L("Actions"),

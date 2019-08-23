@@ -19,7 +19,7 @@
             <template slot-scope="{ row }" slot="action" v-if="hasPermission('Pages.Orders.Edit')">
               <Button v-if="hasPermission('Pages.Orders.Edit')" type="primary" size="small" @click="edit(row)" style="margin-right:5px">{{L('Edit')}}</Button>
 
-              <Button v-if="hasPermission('Pages.Orders.Edit')&&!row.contract" type="primary" size="small" @click="showContract(row)" style="margin-right:5px">{{L('ConvertContract')}}</Button>
+              <!-- <Button v-if="hasPermission('Pages.Orders.Edit')&&!row.contract" type="primary" size="small" @click="showContract(row)" style="margin-right:5px">{{L('ConvertContract')}}</Button> -->
             </template>
           </Table>
           <Page show-sizer class-name="fengpage" :total="totalCount" class="margin-top-10" @on-change="pageChange" @on-page-size-change="pagesizeChange" :page-size="pageSize" :current="currentPage">
@@ -37,20 +37,20 @@ import Util from "@/lib/util";
 import AbpBase from "@/lib/abpbase";
 import PageRequest from "@/store/entities/page-request";
 import EditOrder from "./edit-order.vue";
-import CreateContract from "../contract/create-contract.vue";
+// import CreateContract from "../contract/create-contract.vue";
 
 class PageOrderRequest extends PageRequest {
   studentName: string = "";
 }
 
 @Component({
-  components: { EditOrder, CreateContract }
+  components: { EditOrder }
 })
 export default class Orders extends AbpBase {
   pagerequest: PageOrderRequest = new PageOrderRequest();
 
   editModalShow: boolean = false;
-  contractModalShow: boolean = false;
+  // contractModalShow: boolean = false;
   get list() {
     return this.$store.state.order.list;
   }
@@ -61,10 +61,10 @@ export default class Orders extends AbpBase {
     this.$store.commit("order/edit", row);
     this.editModalShow = true;
   }
-  showContract(row) {
-    this.$store.commit("order/edit", row);
-    this.contractModalShow = true;
-  }
+  // showContract(row) {
+  //   this.$store.commit("order/edit", row);
+  //   this.contractModalShow = true;
+  // }
 
   pageChange(page: number) {
     this.$store.commit("order/setCurrentPage", page);
@@ -122,13 +122,13 @@ export default class Orders extends AbpBase {
         return h("span", new Date(params.row.orderDate).toLocaleDateString());
       }
     },
-    {
-      title: this.L("SchoolBegin"),
-      key: "schoolBegin",
-      render: (h: any, params: any) => {
-        return h("span", new Date(params.row.schoolBegin).toLocaleDateString());
-      }
-    },
+    // {
+    //   title: this.L("SchoolBegin"),
+    //   key: "schoolBegin",
+    //   render: (h: any, params: any) => {
+    //     return h("span", new Date(params.row.schoolBegin).toLocaleDateString());
+    //   }
+    // },
     {
       title: this.L("CourseName"),
       key: "courseName",
@@ -144,9 +144,13 @@ export default class Orders extends AbpBase {
       }
     },
     {
-      title: this.L("State"),
-      key: "state"
+      title: this.L("FullMoney"),
+      key: "fullMoney"
     },
+    // {
+    //   title: this.L("State"),
+    //   key: "state"
+    // },
     {
       title: this.L("Note"),
       key: "note",

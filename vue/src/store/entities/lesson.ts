@@ -10,7 +10,7 @@ export default class Lesson extends Entity<number>{
     clas?: Class
     orderId: number
     order?: Order
-    lessonIndex:number
+    lessonNumber:number
     isFinish: boolean
     teacherId: number
     teacher?: User
