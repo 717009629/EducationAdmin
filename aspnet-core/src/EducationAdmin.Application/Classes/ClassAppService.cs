@@ -33,15 +33,19 @@ namespace EducationAdmin.Classes
         public async Task AddOrders(AddOrderDto input)
         {
             var clas = await Repository.FirstOrDefaultAsync(m => m.Id == input.ClassId);
+            if (clas.State == ClassState.Closed)
+                throw new Exception();
+
             var order = await OrderRepository.FirstOrDefaultAsync(m => input.OrderId == m.Id);
+            if (order.State == OrderState.Created)
+                throw new Exception();
+
             if (order.ClassId != null)
-            {
                 throw new Exception();
-            }
+
             if (order.CourseId != clas.CourseId)
-            {
                 throw new Exception();
-            }
+
 
             order.ClassId = clas.Id;
 

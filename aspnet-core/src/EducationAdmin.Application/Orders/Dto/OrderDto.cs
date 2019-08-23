@@ -26,7 +26,6 @@ namespace EducationAdmin.Orders.Dto
 
         public OrderState State { get; set; }
 
-
         public long StudentId { get; set; }
 
         public StudentDto Student { get; set; }

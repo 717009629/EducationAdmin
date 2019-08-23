@@ -99,7 +99,8 @@ export default class Orders extends AbpBase {
       key: "id",
       render: (h: any, params: any) => {
         return h("span", ("000000" + params.row.id).slice(-6));
-      }
+      },
+      width:50
     },
 
     {
@@ -147,10 +148,27 @@ export default class Orders extends AbpBase {
       title: this.L("FullMoney"),
       key: "fullMoney"
     },
-    // {
-    //   title: this.L("State"),
-    //   key: "state"
-    // },
+    {
+      title: this.L("State"),
+      key: "state",
+      render: (h, params) => {
+        return h(
+          "span",
+          params.row.state === 0
+            ? this.L("NotAudited")
+            : params.row.state === 1
+            ? this.L("Audited")
+            : ""
+        );
+      }
+    },
+    {
+      title: this.L("Class"),
+      key: "class",
+      render: (h, params) => {
+        return h("span", params.row.class.name);
+      }
+    },
     {
       title: this.L("Note"),
       key: "note",
@@ -164,7 +182,7 @@ export default class Orders extends AbpBase {
     {
       title: this.L("Actions"),
       key: "Actions",
-      width: 220,
+      width: 150,
       slot: "action"
     }
   ];

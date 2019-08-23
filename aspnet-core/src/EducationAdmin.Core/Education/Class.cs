@@ -41,6 +41,6 @@ namespace EducationAdmin.Education
     {
         Created=0,
 
-        Close=1
+        Closed=1,
     }
 }

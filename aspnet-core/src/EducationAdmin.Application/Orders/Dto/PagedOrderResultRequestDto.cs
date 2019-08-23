@@ -1,4 +1,5 @@
 ﻿using Abp.Application.Services.Dto;
+using EducationAdmin.Sales;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -15,5 +16,7 @@ namespace EducationAdmin.Orders.Dto
         public long? ClassId { get; set; }
 
         public long? CourseId { get; set; }
+
+        public OrderState? State { get; set; }
     }
 }

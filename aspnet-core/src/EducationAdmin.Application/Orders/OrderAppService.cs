@@ -27,10 +27,11 @@ namespace EducationAdmin.Orders
 
         protected override IQueryable<Order> CreateFilteredQuery(PagedOrderResultRequestDto input)
         {
-            return Repository.GetAllIncluding(m => m.Salesman, m => m.Student, m => m.Course, m => m.Contract)
+            return Repository.GetAllIncluding(m => m.Salesman, m => m.Student, m => m.Course, m => m.Class)
                     .WhereIf(input.StudentId != null, m => m.StudentId == input.StudentId)
                     .WhereIf(input.ClassId != null, m => m.ClassId == input.ClassId)
                     .WhereIf(input.CourseId != null, m => m.CourseId == input.CourseId&&m.ClassId==null)
+                     .WhereIf(input.State != null, m => m.State == input.State)
                     .WhereIf(!input.StudentName.IsNullOrWhiteSpace(), x => x.Student.Name.Contains(input.StudentName));
         }
 
@@ -40,9 +41,24 @@ namespace EducationAdmin.Orders
             return base.Create(input);
         }
 
-        public override Task<OrderDto> Update(EditOrderDto input)
+        public override async Task<OrderDto> Update(EditOrderDto input)
         {
-            return base.Update(input);
+            var order = await Repository.FirstOrDefaultAsync(m => m.Id == input.Id);
+            if (order.State == OrderState.Audited)
+                throw new Exception();
+            return await base.Update(input);
+        }
+
+        public async Task<OrderDto> Audite(AuditeOrderDto input)
+        {
+            CheckPermission(PermissionNames.Pages_Contracts + ".Audite");
+            var order = await Repository.FirstOrDefaultAsync(m => m.Id == input.OrderId);
+            if (order.State == OrderState.Audited)
+                throw new Exception();
+
+            order.State = OrderState.Audited;
+            var r = await Repository.UpdateAsync(order);
+            return ObjectMapper.Map<OrderDto>(r);
         }
     }
 }

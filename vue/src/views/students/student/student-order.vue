@@ -32,7 +32,7 @@ import CreateOrder from "../../sales/order/create-order.vue";
 import EditOrder from "../../sales/order/edit-order.vue";
 //import CreateContract from "../../sales/contract/create-contract.vue";
 @Component({
-  components: { CreateOrder, EditOrder}
+  components: { CreateOrder, EditOrder }
 })
 export default class StudentOrder extends AbpBase {
   @Prop({ type: Boolean, default: false }) value: boolean;
@@ -103,7 +103,8 @@ export default class StudentOrder extends AbpBase {
       key: "name",
       render: (h: any, params: any) => {
         return h("span", ("000000" + params.row.id).slice(-6));
-      }
+      },
+      width:80
     },
 
     {
@@ -150,14 +151,37 @@ export default class StudentOrder extends AbpBase {
       tooltip: true
     },
     {
+      title: this.L("State"),
+      key: "state",
+      render: (h, params) => {
+        return h(
+          "span",
+          params.row.state === 0
+            ? this.L("NotAudited")
+            : params.row.state === 1
+            ? this.L("Audited")
+            : ""
+        );
+      }
+    },
+    {
+      title: this.L("Class"),
+      key: "class",
+      render: (h, params) => {
+        return h("span", params.row.class.name);
+      }
+    },
+
+    {
       title: this.L("SalesmanName"),
-      key: "salesmanName"
+      key: "salesmanName",
+      width:80
     },
 
     {
       title: this.L("Actions"),
       key: "Actions",
-      width: 220,
+      width: 150,
       slot: "action"
     }
   ];
