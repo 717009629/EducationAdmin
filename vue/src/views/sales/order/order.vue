@@ -17,8 +17,8 @@
         <div class="margin-top-10">
           <Table :loading="loading" :columns="columns" :no-data-text="L('NoDatas')" border :data="list">
             <template slot-scope="{ row }" slot="action" v-if="hasPermission('Pages.Orders.Edit')">
-              <Button v-if="hasPermission('Pages.Orders.Edit')" type="primary" size="small" @click="edit(row)" style="margin-right:5px">{{L('Edit')}}</Button>
-
+              <Button v-if="hasPermission('Pages.Orders.Edit')&&row.state!==1" type="primary" size="small" @click="edit(row)" style="margin-right:5px">{{L('Edit')}}</Button>
+              <Button v-if="hasPermission('Pages.Orders.Audite')&&row.state!==1" type="primary" size="small" @click="audite(row)" style="margin-right:5px">{{L('Audite')}}</Button>
               <!-- <Button v-if="hasPermission('Pages.Orders.Edit')&&!row.contract" type="primary" size="small" @click="showContract(row)" style="margin-right:5px">{{L('ConvertContract')}}</Button> -->
             </template>
           </Table>
@@ -28,7 +28,7 @@
       </div>
     </Card>
     <edit-order v-model="editModalShow" @save-success="getpage"></edit-order>
-    <create-contract v-model="contractModalShow"></create-contract>
+    <!-- <create-contract v-model="contractModalShow"></create-contract> -->
   </div>
 </template>
 <script lang="ts">
@@ -83,6 +83,21 @@ export default class Orders extends AbpBase {
       data: this.pagerequest
     });
   }
+  audite(row) {
+    this.$Modal.confirm({
+      title: this.L("Confirm"),
+      content: this.L(
+        "After the audit can not be edited, determine the audit?"
+      ),
+      onOk: async () => {
+        await this.$store.dispatch({
+          type: "order/audite",
+          data: { orderId: row.id }
+        });
+        await this.getpage();
+      }
+    });
+  }
   get pageSize() {
     return this.$store.state.order.pageSize;
   }
@@ -100,7 +115,7 @@ export default class Orders extends AbpBase {
       render: (h: any, params: any) => {
         return h("span", ("000000" + params.row.id).slice(-6));
       },
-      width:50
+      width: 80
     },
 
     {

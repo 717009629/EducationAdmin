@@ -54,7 +54,10 @@ class OrderModule extends ListModule<OrderState,any,Order>{
         async get(context:ActionContext<OrderState,any>,payload:any){
             let reponse=await Ajax.get('/api/services/app/Order/Get?Id='+payload.id);
             return reponse.data.result as Order;
-        }
+        },
+        async audite(context:ActionContext<OrderState,any>,payload:any){
+            await Ajax.post('/api/services/app/Order/Audite',payload.data);
+        },
     };
     mutations={
         setCurrentPage(state:OrderState,page:number){

@@ -10,8 +10,8 @@
     <div class="margin-top-10">
       <Table :loading="loading" :columns="columns" :no-data-text="L('NoDatas')" border :data="list">
         <template slot-scope="{ row }" slot="action" v-if="hasPermission('Pages.Orders.Edit')">
-          <Button v-if="hasPermission('Pages.Orders.Edit')" type="primary" size="small" @click="edit(row)" style="margin-right:5px">{{L('Edit')}}</Button>
-
+          <Button v-if="hasPermission('Pages.Orders.Edit')&&row.state!==1" type="primary" size="small" @click="edit(row)" style="margin-right:5px">{{L('Edit')}}</Button>
+          <Button v-if="hasPermission('Pages.Orders.Audite')&&row.state!==1" type="primary" size="small" @click="audite(row)" style="margin-right:5px">{{L('Audite')}}</Button>
           <!-- <Button v-if="hasPermission('Pages.Orders.Edit')" type="primary" size="small" @click="showContract(row)" style="margin-right:5px">{{L('ConvertContract')}}</Button> -->
         </template>
       </Table>
@@ -54,7 +54,21 @@ export default class StudentOrder extends AbpBase {
     this.$store.commit("order/edit", row);
     this.editModalShow = true;
   }
-
+  audite(row) {
+    this.$Modal.confirm({
+      title: this.L("Confirm"),
+      content: this.L(
+        "After the audit can not be edited, determine the audit?"
+      ),
+      onOk: async () => {
+        await this.$store.dispatch({
+          type: "order/audite",
+          data: { orderId: row.id }
+        });
+        await this.getpage();
+      }
+    });
+  }
   // showContract(row) {
   //   this.$store.commit("order/edit", row);
   //   this.contractModalShow = true;
@@ -104,7 +118,7 @@ export default class StudentOrder extends AbpBase {
       render: (h: any, params: any) => {
         return h("span", ("000000" + params.row.id).slice(-6));
       },
-      width:80
+      width: 80
     },
 
     {
@@ -175,7 +189,7 @@ export default class StudentOrder extends AbpBase {
     {
       title: this.L("SalesmanName"),
       key: "salesmanName",
-      width:80
+      width: 80
     },
 
     {

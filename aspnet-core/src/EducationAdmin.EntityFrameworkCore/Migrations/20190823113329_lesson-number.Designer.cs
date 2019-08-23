@@ -4,14 +4,16 @@ using EducationAdmin.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EducationAdmin.Migrations
 {
     [DbContext(typeof(EducationAdminDbContext))]
-    partial class EducationAdminDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190823113329_lesson-number")]
+    partial class lessonnumber
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1061,8 +1063,6 @@ namespace EducationAdmin.Migrations
                     b.Property<long?>("LastModifierUserId");
 
                     b.Property<string>("Name");
-
-                    b.Property<string>("Note");
 
                     b.Property<int>("State");
 

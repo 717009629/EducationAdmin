@@ -18,6 +18,9 @@
         <FormItem :label="L('Price')" prop="price">
           <Input v-model="course.price" />
         </FormItem>
+        <FormItem :label="L('Note')" prop="note">
+          <Input v-model="course.note" type="textarea" :rows="3" />
+        </FormItem>
       </Form>
       <div slot="footer">
         <Button @click="cancel">{{L('Cancel')}}</Button>

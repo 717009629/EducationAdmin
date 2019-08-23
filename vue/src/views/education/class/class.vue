@@ -24,7 +24,7 @@
     <create-class v-model="createModalShow" @save-success="getpage"></create-class>
     <edit-class v-model="editModalShow" @save-success="getpage"></edit-class>
     <class-lesson v-model="lessonModalShow"></class-lesson>
-     <class-order v-model="orderModalShow"></class-order>
+    <class-order v-model="orderModalShow"></class-order>
   </div>
 </template>
 <script lang="ts">
@@ -40,7 +40,7 @@ import ClassOrder from "./class-order.vue";
 class PageClassRequest extends PageRequest {}
 
 @Component({
-  components: { CreateClass, EditClass, ClassLesson ,ClassOrder}
+  components: { CreateClass, EditClass, ClassLesson, ClassOrder }
 })
 export default class Classs extends AbpBase {
   pagerequest: PageClassRequest = new PageClassRequest();
@@ -138,6 +138,10 @@ export default class Classs extends AbpBase {
       render: (h: any, params: any) => {
         return h("span", params.row.teacher.name);
       }
+    },
+    {
+      title: this.L("Note"),
+      key: "note"
     },
     {
       title: this.L("Actions"),

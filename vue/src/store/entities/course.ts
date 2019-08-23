@@ -9,4 +9,5 @@ export default class Course extends Entity<number>{
     lastModifierUserId?: number
     creationTime?: string
     creatorUserId?: number
+    note?:string
 }

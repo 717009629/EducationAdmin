@@ -8,8 +8,8 @@
         </FormItem>
 
         <FormItem :label="L('Course')" prop="courseId">
-          <Select v-model="clas.courseId">
-            <Option v-for="c in courses" :value="c.id" :key="c.id"  :label="''+ c.id+'--' +c.name+'--'+(c.classType===0?L('OneToMany'):c.classType===1?L('OneToOne'):'')">
+          <Select v-model="clas.courseId" disabled>
+            <Option v-for="c in courses" :value="c.id" :key="c.id" :label="''+ c.id+'--' +c.name+'--'+(c.classType===0?L('OneToMany'):c.classType===1?L('OneToOne'):'')">
               <!-- <span>{{c.id}}</span>
               <span>--</span>
               <span>{{c.name}}</span>
@@ -26,6 +26,10 @@
               <span style="margin-left:10px">{{item.name}}</span>
             </Option>
           </Select>
+        </FormItem>
+
+        <FormItem :label="L('Note')" prop="note">
+          <Input v-model="clas.note" type="textarea" :rows="3" />
         </FormItem>
 
       </Form>

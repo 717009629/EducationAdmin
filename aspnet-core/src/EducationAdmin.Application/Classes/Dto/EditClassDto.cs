@@ -18,10 +18,12 @@ namespace EducationAdmin.Classes.Dto
 
 
 
-        public long CourseId { get; set; }
+       // public long CourseId { get; set; }
 
 
 
         public long TeacherId { get; set; }
+
+        public string Note { get; set; }
     }
 }

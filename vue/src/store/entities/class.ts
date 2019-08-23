@@ -16,4 +16,5 @@ export default class Class extends Entity<number>{
     lastModifierUserId?: number
     creationTime?: string
     creatorUserId?: number
+    note?:string
 }

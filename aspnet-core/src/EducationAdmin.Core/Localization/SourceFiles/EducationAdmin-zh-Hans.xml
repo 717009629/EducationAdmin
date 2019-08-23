@@ -239,7 +239,9 @@
     <text name="AuditedReason">审核/拒绝原因</text>
     <text name="CustomerIndex">客户编号</text>
     <text name="CoursePrice">课程套餐价格</text>
-    
+    <text name="NotAudited">未审核</text>
+    <text name="Audited">已审核</text>
+    <text name="LessonNumber">节次</text>
 
   </texts>
 </localizationDictionary>

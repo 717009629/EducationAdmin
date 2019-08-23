@@ -5,7 +5,7 @@
       :value="value"
       @on-ok="save"
       @on-visible-change="visibleChange"
-      width='600px'
+      width='700px'
     >
       <Form ref="roleForm" label-position="top" :rules="roleRule" :model="role">
         <Tabs value="detail">
@@ -24,7 +24,7 @@
             <CheckboxGroup v-model="role.grantedPermissions">
               <template v-for="(permission, index) in permissions" >
                 <hr v-if="permission.name.split('.').length===2&&index!==0" style="margin:10px 0;border-top:1px solid #ddd;border-left:0px" :key="permission.name+1"  />
-                <Checkbox :label="permission.name" :key="permission.name" style="width:130px" > 
+                <Checkbox :label="permission.name" :key="permission.name" style="width:120px" > 
                   <span>{{permission.displayName}}</span>
                 </Checkbox>
               </template>

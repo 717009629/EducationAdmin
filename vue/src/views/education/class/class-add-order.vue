@@ -48,7 +48,7 @@ export default class ClassOrder extends AbpBase {
   async getpage() {
     await this.$store.dispatch({
       type: "order/getAllFree",
-      data: { courseId: this.clas.courseId }
+      data: { courseId: this.clas.courseId, state:1 }
     });
   }
 

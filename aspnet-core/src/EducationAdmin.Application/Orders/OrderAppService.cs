@@ -51,7 +51,7 @@ namespace EducationAdmin.Orders
 
         public async Task<OrderDto> Audite(AuditeOrderDto input)
         {
-            CheckPermission(PermissionNames.Pages_Contracts + ".Audite");
+            CheckPermission(PermissionNames.Pages_Orders + ".Audite");
             var order = await Repository.FirstOrDefaultAsync(m => m.Id == input.OrderId);
             if (order.State == OrderState.Audited)
                 throw new Exception();

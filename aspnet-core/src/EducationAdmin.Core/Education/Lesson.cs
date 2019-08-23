@@ -20,7 +20,7 @@ namespace EducationAdmin.Education
 
         public Class Class { get; set; }
 
-        public int LessonIndex { get; set; }
+        public int LessonNumber { get; set; }
 
         public bool IsFinish { get; set; }
 

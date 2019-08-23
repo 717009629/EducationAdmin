@@ -115,7 +115,10 @@ export default class Courses extends AbpBase {
       title: this.L("Price"),
       key: "price"
     },
-
+    {
+      title: this.L("Note"),
+      key: "note"
+    },
     {
       title: this.L("Actions"),
       key: "Actions",
