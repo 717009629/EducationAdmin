@@ -4,8 +4,9 @@
       <Form ref="courseForm" label-position="top" :rules="CourseRule" :model="course">
         <FormItem :label="L('ClassType')" prop="classType">
           <Select v-model="course.classType" :transfor='false'>
-            <Option :value="0" :label="L('OneToMany')"></Option>
-            <Option :value="1" :label="L('OneToOne')"></Option>
+            <Option v-for="item in classType" :key="item.key" :value="item.key" :label=" L(item.value)" ></Option>
+            <!-- <Option :value="0" :label="L('OneToMany')"></Option>
+            <Option :value="1" :label="L('OneToOne')"></Option> -->
           </Select>
         </FormItem>
 
@@ -39,6 +40,7 @@ import Course from "../../../store/entities/course";
 export default class CreateCourse extends AbpBase {
   @Prop({ type: Boolean, default: false }) value: boolean;
   course: Course = new Course();
+  classType=window.abp.custom.classType;
   save() {
     (this.$refs.courseForm as any).validate(async (valid: boolean) => {
       if (valid) {

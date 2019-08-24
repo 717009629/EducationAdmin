@@ -36,7 +36,7 @@ namespace EducationAdmin.Education
     public enum ClassType
     {
         OneToMany=0,
-        OnoToOne=1
+        OneToOne=1
     }
 
     public enum ClassState

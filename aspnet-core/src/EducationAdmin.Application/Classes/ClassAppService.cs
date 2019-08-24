@@ -36,7 +36,7 @@ namespace EducationAdmin.Classes
         public override async Task<ClassDto> Create(CreateClassDto input)
         {
             var course = await CourseRepository.FirstOrDefaultAsync(m => m.Id == input.CourseId);
-            if (course.ClassType == ClassType.OnoToOne)
+            if (course.ClassType == ClassType.OneToOne)
                 throw new Exception();
             return await base.Create(input);
         }
@@ -46,7 +46,7 @@ namespace EducationAdmin.Classes
             var clas = await Repository.GetAllIncluding(m => m.Course).FirstOrDefaultAsync(m => m.Id == input.ClassId);
             if (clas.State == ClassState.Closed)
                 throw new Exception();
-            if (clas.Course.ClassType == ClassType.OnoToOne)
+            if (clas.Course.ClassType == ClassType.OneToOne)
                 throw new Exception();
 
             var order = await OrderRepository.FirstOrDefaultAsync(m => input.OrderId == m.Id);

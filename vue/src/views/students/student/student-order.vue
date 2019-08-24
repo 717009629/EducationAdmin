@@ -149,11 +149,7 @@ export default class StudentOrder extends AbpBase {
       render: (h, params) => {
         return h(
           "span",
-          params.row.course.classType === 0
-            ? this.L("OneToMany")
-            : params.row.course.classType === 1
-            ? this.L("OneToOne")
-            : ""
+          this.L(window.abp.custom.ClassType[params.row.course.classType])
         );
       }
     },
@@ -184,11 +180,7 @@ export default class StudentOrder extends AbpBase {
       render: (h, params) => {
         return h(
           "span",
-          params.row.state === 0
-            ? this.L("NotAudited")
-            : params.row.state === 1
-            ? this.L("Audited")
-            : ""
+          this.L(window.abp.custom.OrderState[params.row.state])
         );
       }
     },

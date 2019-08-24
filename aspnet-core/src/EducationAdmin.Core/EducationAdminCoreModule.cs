@@ -33,6 +33,7 @@ namespace EducationAdmin
             AppRoleConfig.Configure(Configuration.Modules.Zero().RoleManagement);
 
             Configuration.Settings.Providers.Add<AppSettingProvider>();
+            Configuration.CustomConfigProviders.Add(new CustomConfigProvider());
         }
 
         public override void Initialize()

@@ -59,7 +59,7 @@ namespace EducationAdmin.Orders
                 throw new Exception();
 
             order.State = OrderState.Audited;
-            if (order.Course.ClassType == ClassType.OnoToOne)
+            if (order.Course.ClassType == ClassType.OneToOne)
             {
                 order.Class = new Class
                 {

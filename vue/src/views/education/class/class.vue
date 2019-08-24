@@ -124,11 +124,7 @@ export default class Classs extends AbpBase {
       render: (h: any, params: any) => {
         return h(
           "span",
-          params.row.course.classType === 0
-            ? this.L("OneToMany")
-            : params.row.course.classType === 1
-            ? this.L("OneToOne")
-            : ""
+          this.L(window.abp.custom.ClassType[params.row.course.classType])
         );
       }
     },
