@@ -7,8 +7,9 @@
         <Button @click="calenderShow=!calenderShow" size='small'>{{calenderShow? L("List"):L("Calendar")}}</Button>
       </div>
       <div>
-        <FullCalendar ref='calendar' v-show="calenderShow" defaultView="dayGridWeek" :plugins="calendarPlugins" :locale="locale" :events='events' :displayEventTime='false' :eventLimit='true'
-                      :header="{left:'title',center:'',right:'dayGridWeek, dayGridMonth today prev,next'}" :buttonText="{today:L('Today'),month:L('Month'),week:L('Week'),}">
+        <FullCalendar ref='calendar' v-if="calenderShow&&value" defaultView="timeGridWeek" :plugins="calendarPlugins" :locale="locale" :events='events' :displayEventTime='true' :eventLimit='true'
+          :allDaySlot='false' minTime ='07:00:00' maxTime ='21:00:00' slotDuration='00:15:00' slotLabelInterval='01:00'
+                      :header="{left:'title',center:'',right:'timeGridWeek, dayGridMonth today prev,next'}" :buttonText="{today:L('Today'),month:L('Month'),week:L('Week'),}">
         </FullCalendar>
         <!-- <Card dis-hover> -->
         <div v-if="!calenderShow">
@@ -39,6 +40,7 @@ import FullCalendar from "@fullcalendar/vue";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import { dateToLocalArray } from "@fullcalendar/core/datelib/marker";
+import timeGridPlugin from "@fullcalendar/timegrid"
 import PageRequest from "../../../store/entities/page-request";
 class PageTeacherRequest extends PageRequest {
   teacherId?: number;
@@ -64,6 +66,7 @@ export default class ClassBusiness extends AbpBase {
       return {
         id: m.id,
         start: new Date(m.lessonDate).setHours(m.lessonNumber + 8),
+        end: new Date(m.lessonDate).setHours(m.lessonNumber + 9),
         title: `#${m.lessonNumber}--${m.course}--${m.class.name}`,
         color:
           new Date(new Date(m.lessonDate).toLocaleDateString()) < new Date()
@@ -75,7 +78,7 @@ export default class ClassBusiness extends AbpBase {
     callback(list);
   }
 
-  calendarPlugins: any = [dayGridPlugin, interactionPlugin];
+  calendarPlugins: any = [dayGridPlugin, interactionPlugin,timeGridPlugin];
 
   get list() {
     return this.$store.state.lesson.list;
@@ -120,7 +123,7 @@ export default class ClassBusiness extends AbpBase {
         this.$store.state.teacher.editTeacher
       );
       this.calenderShow = true;
-      this.getCalendarPage();
+      setTimeout(()=> (this.$refs.calendar as any).getApi().render(),300)
     }
   }
   get pageSize() {
@@ -186,4 +189,5 @@ export default class ClassBusiness extends AbpBase {
 <style lang='less'>
 @import "~@fullcalendar/core/main.css";
 @import "~@fullcalendar/daygrid/main.css";
+@import "~@fullcalendar/timegrid/main.css";
 </style>
