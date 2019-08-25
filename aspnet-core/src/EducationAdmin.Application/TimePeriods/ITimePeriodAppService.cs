@@ -7,7 +7,7 @@ using System.Text;
 
 namespace EducationAdmin.TimePeriods
 {
-    public interface ITimePeriodAppService:IAsyncCrudAppService<TimePeriodDto,long,PagedResultRequestDto, CreateTimePeriodDto, TimePeriodDto>
+    public interface ITimePeriodAppService:IAsyncCrudAppService<TimePeriodDto,long, PagedTimePeriodResultRequestDto, CreateTimePeriodDto, EditTimePeriodDto>
     {
     }
 }

@@ -17,6 +17,7 @@ import customer from './modules/customer'
 import lesson from './modules/lesson'
 import teacher from './modules/teacher'
 import clas from './modules/class'
+import timePeriod from './modules/timePeriod'
 const store = new Vuex.Store({
     state: {
         //
@@ -43,7 +44,8 @@ const store = new Vuex.Store({
         customer,
         lesson,
         teacher,
-        class: clas
+        class: clas,
+        timePeriod
     }
 });
 

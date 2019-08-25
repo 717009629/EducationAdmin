@@ -5,9 +5,9 @@
         <FormItem :label="L('LessonDate')">
           <DatePicker type="date" placeholder="Select date" readonly :value="lesson.lessonDate"></DatePicker>
         </FormItem>
-        <FormItem :label="L('LessonNumber')" prop="lessonNumber">
-          <Select v-model="lesson.lessonNumber" >
-            <Option v-for="n in lessonIndexs" :value="n" :key="n" :label="n" >
+        <FormItem :label="L('TimePeriod')" prop="timePeriodId">
+          <Select v-model="lesson.timePeriodId">
+            <Option v-for="item in timePeriods" :value="item.id" :key="item.id" :label="item.start.slice(0,5)+' - '+item.end.slice(0,5)">
             </Option>
           </Select>
         </FormItem>
@@ -50,7 +50,10 @@ export default class EditLessone extends AbpBase {
   get teachers() {
     return this.$store.state.teacher.list;
   }
-  get lessonIndexs() {
+  get periods() {
+    return this.$store.state.timePeriod.list;
+  }
+  get timePeriods() {
     let list = [];
     let lessons = this.$store.state.lesson.list;
     let array = lessons
@@ -60,9 +63,13 @@ export default class EditLessone extends AbpBase {
           new Date(m.lessonDate).toDateString() ===
             new Date(this.lesson.lessonDate).toDateString()
       )
-      .map(m => m.lessonNumber);
-    for (let n = 1; n <= 8; n++) {
-      if (n === this.lesson.lessonNumber || array.indexOf(n) < 0) list.push(n);
+      .map(m => m.timePeriodId);
+    for (let n = 0; n < this.periods.length; n++) {
+      if (
+        this.periods[n].id === this.lesson.timePeriodId ||
+        array.indexOf(this.periods[n].id) < 0
+      )
+        list.push(this.periods[n]);
     }
     return list;
     //this.lessonIndexs= list;
@@ -99,6 +106,10 @@ export default class EditLessone extends AbpBase {
         type: "order/getAll",
         data: { classId: this.lesson.classId }
       });
+      await this.$store.dispatch({
+        type: "timePeriod/getAll",
+        data: { isActive: true }
+      });
     }
   }
   LessonRule = {
@@ -109,11 +120,19 @@ export default class EditLessone extends AbpBase {
         trigger: "blur"
       }
     ],
-    lessonNumber: [
+    timePeriod: [
       {
         type: "number",
         required: true,
-        message: this.L("FieldIsRequired", undefined, this.L("LessonNumber")),
+        message: this.L("FieldIsRequired", undefined, this.L("TimePeriod")),
+        trigger: "blur"
+      }
+    ],
+    orderId: [
+      {
+        type: "number",
+        required: true,
+        message: this.L("FieldIsRequired", undefined, this.L("Order")),
         trigger: "blur"
       }
     ],

@@ -7,13 +7,9 @@ using System.Text;
 
 namespace EducationAdmin.TimePeriods.Dto
 {
-    [AutoMapFrom(typeof(TimePeriod))]
     [AutoMapTo(typeof(TimePeriod))]
-    public class TimePeriodDto:FullAuditedEntityDto<long>   
+    public class EditTimePeriodDto
     {
-        public TimeSpan Start { get; set; }
-
-        public TimeSpan End { get; set; }
 
         public bool IsActive { get; set; }
     }

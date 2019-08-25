@@ -10,7 +10,7 @@ using System.Text;
 namespace EducationAdmin.Lessons.Dto
 {
     [AutoMapTo(typeof(Lesson))]
-    public class EditLessionDto:FullAuditedEntityDto<long>
+    public class EditLessionDto : FullAuditedEntityDto<long>
     {
 
         public DateTime LessonDate { get; set; }
@@ -27,5 +27,11 @@ namespace EducationAdmin.Lessons.Dto
 
 
         public string Course { get; set; }
+
+        public long TimePeriodId { get; set; }
+
+        public TimeSpan Start { get; set; }
+
+        public TimeSpan End { get; set; }
     }
 }

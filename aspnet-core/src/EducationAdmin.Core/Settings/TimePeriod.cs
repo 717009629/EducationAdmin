@@ -13,5 +13,7 @@ namespace EducationAdmin.Settings
         public TimeSpan End { get; set; }
         public int TenantId { get; set ; }
 
+        public bool IsActive { get; set; }
+
     }
 }

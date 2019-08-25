@@ -9,13 +9,18 @@
         <!-- <FormItem :label="L('LessonTime')">
           <TimePicker  format="HH:mm" placeholder="Select time" :steps="[1, 5]"  :value="lesson.lessonDate"></TimePicker>
         </FormItem> -->
-        <FormItem :label="L('LessonNumber')" prop="lessonNumber">
-          <Select v-model="lesson.lessonNumber" >
+        <!-- <FormItem :label="L('LessonNumber')" prop="lessonNumber">
+          <Select v-model="lesson.lessonNumber">
             <Option v-for="n in lessonIndexs" :value="n" :key="n" :label="n">
             </Option>
           </Select>
+        </FormItem> -->
+        <FormItem :label="L('TimePeriod')" prop="timePeriodId">
+          <Select v-model="lesson.timePeriodId">
+            <Option v-for="item in timePeriods" :value="item.id" :key="item.id" :label="item.start.slice(0,5)+' - '+item.end.slice(0,5)">
+            </Option>
+          </Select>
         </FormItem>
-
 
         <FormItem :label="L('Teacher')" prop="teacherId">
           <Select v-model="lesson.teacherId" filterable>
@@ -58,18 +63,23 @@ export default class CreateLesson extends AbpBase {
   get teachers() {
     return this.$store.state.teacher.list;
   }
-  get lessonIndexs() {
+  get periods() {
+    return this.$store.state.timePeriod.list;
+  }
+  get timePeriods() {
     let list = [];
     let lessons = this.$store.state.lesson.list;
-    for (var n = 1; n <= 8; n++) {
-      let count = lessons.filter(
+    let array = lessons
+      .filter(
         m =>
           this.date &&
-          new Date(m.lessonDate).toDateString() === this.date.toDateString() &&
-          m.lessonNumber === n
-      ).length;
-      if (count < 1) {
-        list.push(n);
+          new Date(m.lessonDate).toDateString() === this.date.toDateString()
+      )
+      .map(m => m.timePeriodId);
+    
+    for (var n = 0; n < this.periods.length; n++) {
+      if (array.indexOf(this.periods[n].id) < 0) {
+        list.push(this.periods[n]);
       }
     }
     return list;
@@ -97,11 +107,7 @@ export default class CreateLesson extends AbpBase {
     if (!value) {
       this.$emit("input", value);
     } else {
-      this.clas = Util.extend(
-        true,
-        {},
-        this.$store.state.class.editClass
-      );
+      this.clas = Util.extend(true, {}, this.$store.state.class.editClass);
       this.lesson.classId = this.clas.id;
       this.lesson.lessonDate = this.date;
       await this.$store.dispatch({
@@ -110,6 +116,10 @@ export default class CreateLesson extends AbpBase {
       await this.$store.dispatch({
         type: "order/getAll",
         data: { classId: this.clas.id }
+      });
+      await this.$store.dispatch({
+        type: "timePeriod/getAll",
+        data: { isActive: true }
       });
     }
   }
@@ -121,11 +131,11 @@ export default class CreateLesson extends AbpBase {
         trigger: "blur"
       }
     ],
-    lessonNumber: [
+    timePeriodId: [
       {
         type: "number",
         required: true,
-        message: this.L("FieldIsRequired", undefined, this.L("LessonNumber")),
+        message: this.L("FieldIsRequired", undefined, this.L("TimePeriod")),
         trigger: "blur"
       }
     ],

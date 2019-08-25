@@ -33,5 +33,16 @@ namespace EducationAdmin.Lessons.Dto
         public UserDto Teacher { get; set; }
 
         public string Course { get; set; }
+
+        public long TimePeriodId { get; set; }
+
+
+        public TimeSpan Start { get; set; }
+
+        public TimeSpan End { get; set; }
+
+        public DateTime StartTime { get { return LessonDate + Start; } }
+
+        public DateTime EndTime { get { return LessonDate + End; } }
     }
 }

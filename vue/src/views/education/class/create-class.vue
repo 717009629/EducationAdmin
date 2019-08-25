@@ -44,6 +44,7 @@ import Util from "../../../lib/util";
 import AbpBase from "../../../lib/abpbase";
 import Student from "../../../store/entities/student";
 import Class from "../../../store/entities/class";
+import TimePeriod from "../../../store/entities/timePeriod";
 @Component
 export default class CreateClass extends AbpBase {
   @Prop({ type: Boolean, default: false }) value: boolean;
@@ -55,7 +56,6 @@ export default class CreateClass extends AbpBase {
   get courses() {
     return this.$store.state.course.list;
   }
-
   save() {
     (this.$refs.classForm as any).validate(async (valid: boolean) => {
       if (valid) {

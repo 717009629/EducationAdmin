@@ -24,5 +24,11 @@ namespace EducationAdmin.Lessons.Dto
 
 
         public string Course { get; set; }
+
+        public long TimePeriodId { get; set; }
+
+        public TimeSpan Start { get; set; }
+
+        public TimeSpan End { get; set; }
     }
 }

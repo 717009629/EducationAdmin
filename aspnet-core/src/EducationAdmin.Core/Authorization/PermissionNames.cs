@@ -25,6 +25,8 @@
 
         public const string Pages_Classes = "Pages.Classes";
 
+        public const string Pages_TimePeriods = "Pages.TimePeriods";
+
 
     }
 }

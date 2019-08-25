@@ -13,5 +13,7 @@ namespace EducationAdmin.TimePeriods.Dto
         public TimeSpan Start { get; set; }
 
         public TimeSpan End { get; set; }
+
+        public bool IsActive { get; set; }
     }
 }
