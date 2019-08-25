@@ -2,6 +2,7 @@
 using Abp.Domain.Entities.Auditing;
 using EducationAdmin.Authorization.Users;
 using EducationAdmin.Sales;
+using EducationAdmin.Settings;
 using EducationAdmin.Students;
 using System;
 using System.Collections.Generic;
@@ -20,7 +21,7 @@ namespace EducationAdmin.Education
 
         public Class Class { get; set; }
 
-        public int LessonNumber { get; set; }
+       // public int LessonNumber { get; set; }
 
         public bool IsFinish { get; set; }
 
@@ -29,5 +30,13 @@ namespace EducationAdmin.Education
         public User Teacher { get; set; }
 
         public string Course { get; set; }
+
+        public long TimePeriodId { get; set; }
+
+        public TimePeriod TimePeriod { get; set; }
+
+        public TimeSpan Start { get; set; }
+
+        public TimeSpan End { get; set; }
     }
 }

@@ -28,6 +28,10 @@ namespace EducationAdmin.Teachers
 
         public async Task<PagedResultDto<TeacherDto>> GetAll(PagedTeacherResultRequestDto input)
         {
+            if (input.MaxResultCount == 0)
+            {
+                input.MaxResultCount = int.MaxValue;
+            }
             var query = Repository.GetAll().Where(m => m.Type == UserType.Teacher).WhereIf(input.Name != null, m => m.Name.Contains(input.Name));
             var count = await query.CountAsync();
             var list = await query.Skip(input.SkipCount).Take(input.MaxResultCount).ToListAsync();

@@ -6,6 +6,8 @@ using EducationAdmin.MultiTenancy;
 using EducationAdmin.Sales;
 using EducationAdmin.Education;
 using EducationAdmin.Students;
+using EducationAdmin.Settings;
+using EducationAdmin.Migrations;
 
 namespace EducationAdmin.EntityFrameworkCore
 {
@@ -38,6 +40,8 @@ namespace EducationAdmin.EntityFrameworkCore
 
         public DbSet<Class> Classes { get; set; }   
 
+        public DbSet<TimePeriod> TimePeriods { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Record>().HasOne(m => m.Customer).WithMany().OnDelete(DeleteBehavior.Restrict);
@@ -47,6 +51,7 @@ namespace EducationAdmin.EntityFrameworkCore
             modelBuilder.Entity<Contract>().HasOne(m => m.Student).WithMany().OnDelete(DeleteBehavior.Restrict);
             modelBuilder.Entity<Lesson>().HasOne(m => m.Class).WithMany(m=>m.Lessons).OnDelete(DeleteBehavior.Restrict);
             modelBuilder.Entity<Lesson>().HasOne(m => m.Teacher).WithMany().OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<Lesson>().HasOne(m => m.TimePeriod).WithMany().OnDelete(DeleteBehavior.Restrict);
             base.OnModelCreating(modelBuilder);
         }
     }

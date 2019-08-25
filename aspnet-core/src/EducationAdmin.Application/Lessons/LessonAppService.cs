@@ -27,7 +27,10 @@ namespace EducationAdmin.Lessons
 
         protected override IQueryable<Lesson> CreateFilteredQuery(PagedLessonResultRequestDto input)
         {
-
+            if (input.MaxResultCount == 0)
+            {
+                input.MaxResultCount = int.MaxValue;
+            }
             return Repository.GetAllIncluding(m => m.Class, m => m.Teacher)
                   .WhereIf(input.StudentId != null, m => m.Class.Orders.Any(n=>n.StudentId== input.StudentId ))
                   .WhereIf(input.TeacherId != null, m => m.TeacherId == input.TeacherId)
