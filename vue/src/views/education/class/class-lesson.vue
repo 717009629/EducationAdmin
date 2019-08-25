@@ -9,8 +9,8 @@
       <div>
         <FullCalendar ref="calendar" v-if="calenderShow&&value" defaultView="timeGridWeek" :plugins="calendarPlugins" :locale="locale" :events='events' :eventLimit='5' @dateClick='dateClick'
                       @eventClick='eventClick' :showNonCurrentDates='true' :displayEventTime='true' :header="{left:'title',center:'',right:'timeGridWeek,dayGridMonth today prev,next'}"
-                      :allDaySlot='false' minTime ='07:00:00' maxTime ='21:00:00' slotDuration='00:15:00' slotLabelInterval='01:00' 
-                      :buttonText="{today:L('Today'),month:L('Month'),week:L('Week'),}" ></FullCalendar>
+                      :allDaySlot='false' minTime='07:00:00' maxTime='21:00:00' slotDuration='00:15:00' slotLabelInterval='01:00' :buttonText="{today:L('Today'),month:L('Month'),week:L('Week'),}">
+        </FullCalendar>
 
         <!-- <Card dis-hover> -->
         <div v-if="!calenderShow">
@@ -47,7 +47,7 @@ import CreateLesson from "../lesson/create-lesson.vue";
 import EditLesson from "../lesson/edit-lesson.vue";
 import FullCalendar from "@fullcalendar/vue";
 import dayGridPlugin from "@fullcalendar/daygrid";
-import timeGridPlugin from "@fullcalendar/timegrid"
+import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import { dateToLocalArray } from "@fullcalendar/core/datelib/marker";
 import PageRequest from "../../../store/entities/page-request";
@@ -92,7 +92,7 @@ export default class ClassBusiness extends AbpBase {
         id: m.id,
         start: m.startTime,
         end: m.endTime,
-        title: `#${m.lessonNumber}--${m.course}--${m.teacher.name}`,
+        title: `${m.course}--${m.teacher.name}`,
         color:
           new Date(new Date(m.lessonDate).toLocaleDateString()) < new Date()
             ? "#aaa"
@@ -104,7 +104,7 @@ export default class ClassBusiness extends AbpBase {
     return list;
   }
 
-  calendarPlugins: any = [dayGridPlugin, interactionPlugin,timeGridPlugin];
+  calendarPlugins: any = [dayGridPlugin, interactionPlugin, timeGridPlugin];
 
   get list() {
     return this.$store.state.lesson.list;
@@ -170,9 +170,8 @@ export default class ClassBusiness extends AbpBase {
       this.clas = Util.extend(true, {}, this.$store.state.class.editClass);
       this.calenderShow = true;
       //this.getCalendarPage();
-        setTimeout(()=> (this.$refs.calendar as any).getApi().render(),300)
-     // setTimeout( ()=> this.getCalendarPage(),100)
-     
+      setTimeout(() => (this.$refs.calendar as any).getApi().render(), 300);
+      // setTimeout( ()=> this.getCalendarPage(),100)
     }
   }
   columns = [
@@ -205,8 +204,11 @@ export default class ClassBusiness extends AbpBase {
     {
       title: this.L("TimePeriod"),
       key: "timePeriod",
-      render:(h,params)=>{
-         return h("span", params.row.startTime.slice(0,5)+' - '+params.rows.endTime.slice(0,5));
+      render: (h, params) => {
+        return h(
+          "span",
+          params.row.start.slice(0, 5) + " - " + params.row.end.slice(0, 5)
+        );
       }
     },
     {

@@ -98,7 +98,7 @@ export default class Lessons extends AbpBase {
     },
 
     {
-      title: this.L("Course"),
+      title: this.L("CourseItem"),
       key: "course"
     },
     {
@@ -123,14 +123,15 @@ export default class Lessons extends AbpBase {
       }
     },
     {
-      title: this.L("LessonNumber"),
-      key: "lessonNumber"
-    },
-    {
-      title: this.L("LessonDate"),
-      key: "lessonDate",
-      render: (h: any, params: any) => {
-        return h("span", new Date(params.row.lessonDate).toLocaleDateString());
+      title: this.L("TimePeriod"),
+      key: "timePeriod",
+      render: (h, params) => {
+        return h(
+          "span",
+          params.row.start.slice(0, 5) +
+            " - " +
+            params.row.end.slice(0, 5)
+        );
       }
     },
 

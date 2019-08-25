@@ -250,7 +250,12 @@
     <text name="Week">周</text>
     <text name="After the audit can not be edited, determine the audit?">审核后不能再编辑，确定要审核？</text>
     <text name="LearnTeacher">学管老师</text>
-
+    <text name="TimePeriods">时段</text>
+    <text name="TimePeriod">时段</text>
+    <text name="Start">开始</text>
+    <text name="End">结束</text>
+    <text name="CourseItem">科目</text>
+    
   </texts>
 </localizationDictionary>
 

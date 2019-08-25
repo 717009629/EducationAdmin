@@ -76,6 +76,9 @@ namespace EducationAdmin.Lessons
             input.End = period.End;
             return await base.Update(input);
         }
-
+        protected override IQueryable<Lesson> ApplySorting(IQueryable<Lesson> query, PagedLessonResultRequestDto input)
+        {
+            return base.ApplySorting(query, input).OrderBy(m=>m.LessonDate).ThenBy(m=>m.Start);
+        }
     }
 }

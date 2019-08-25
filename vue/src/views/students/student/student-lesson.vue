@@ -89,7 +89,7 @@ export default class StudentBusiness extends AbpBase {
         id: m.id,
         start: m.startTime,
         end: m.endTime,
-        title: `#${m.lessonNumber}-${m.class.name}-${m.course}-${m.teacher.name}`,
+        title: `${m.class.name}-${m.course}-${m.teacher.name}`,
         color:
           new Date(new Date(m.lessonDate).toLocaleDateString()) < new Date()
             ? "#aaa"
@@ -211,9 +211,9 @@ export default class StudentBusiness extends AbpBase {
       render: (h, params) => {
         return h(
           "span",
-          params.row.startTime.slice(0, 5) +
+          params.row.start.slice(0, 5) +
             " - " +
-            params.rows.endTime.slice(0, 5)
+            params.row.end.slice(0, 5)
         );
       }
     },
