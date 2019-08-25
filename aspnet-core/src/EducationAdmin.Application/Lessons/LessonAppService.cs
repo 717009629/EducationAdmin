@@ -8,6 +8,7 @@ using EducationAdmin.Education;
 using EducationAdmin.Lessons.Dto;
 using EducationAdmin.Settings;
 using EducationAdmin.Students;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,16 +32,22 @@ namespace EducationAdmin.Lessons
 
         protected override IQueryable<Lesson> CreateFilteredQuery(PagedLessonResultRequestDto input)
         {
-            if (input.MaxResultCount == 0)
-            {
-                input.MaxResultCount = int.MaxValue;
-            }
-            return Repository.GetAllIncluding(m => m.Class, m => m.Teacher)
+            
+            return base.CreateFilteredQuery(input).Include(m => m.Class).Include( m => m.Teacher)
                   .WhereIf(input.StudentId != null, m => m.Class.Orders.Any(n => n.StudentId == input.StudentId))
                   .WhereIf(input.TeacherId != null, m => m.TeacherId == input.TeacherId)
                   .WhereIf(input.ClassId != null, m => m.ClassId == input.ClassId)
                   .WhereIf(input.Start != null, m => m.LessonDate >= input.Start)
                   .WhereIf(input.End != null, m => m.LessonDate < input.End);
+        }
+
+        protected override IQueryable<Lesson> ApplyPaging(IQueryable<Lesson> query, PagedLessonResultRequestDto input)
+        {
+            if (input.MaxResultCount == 0)
+            {
+                input.MaxResultCount = int.MaxValue;
+            }
+            return base.ApplyPaging(query, input);
         }
         public override async Task<LessonDto> Create(CreateLessionDto input)
         {

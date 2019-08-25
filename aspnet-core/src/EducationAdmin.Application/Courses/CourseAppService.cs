@@ -27,13 +27,19 @@ namespace EducationAdmin.Courses
 
         protected override IQueryable<Course> CreateFilteredQuery(PagedCourseResultRequestDto input)
         {
+           
+
+            return base.CreateFilteredQuery(input)
+                .WhereIf(input.ClassType != null, m => m.ClassType == input.ClassType);
+        }
+
+        protected override IQueryable<Course> ApplyPaging(IQueryable<Course> query, PagedCourseResultRequestDto input)
+        {
             if (input.MaxResultCount == 0)
             {
                 input.MaxResultCount = int.MaxValue;
             }
-
-            return Repository.GetAll()
-                .WhereIf(input.ClassType != null, m => m.ClassType == input.ClassType);
+            return base.ApplyPaging(query, input);
         }
 
     }

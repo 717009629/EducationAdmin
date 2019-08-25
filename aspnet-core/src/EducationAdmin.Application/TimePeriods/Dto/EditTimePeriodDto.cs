@@ -8,7 +8,7 @@ using System.Text;
 namespace EducationAdmin.TimePeriods.Dto
 {
     [AutoMapTo(typeof(TimePeriod))]
-    public class EditTimePeriodDto
+    public class EditTimePeriodDto:FullAuditedEntityDto<long>
     {
 
         public bool IsActive { get; set; }

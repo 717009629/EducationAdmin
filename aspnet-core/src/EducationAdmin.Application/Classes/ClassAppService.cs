@@ -69,7 +69,7 @@ namespace EducationAdmin.Classes
         protected override IQueryable<Class> CreateFilteredQuery(PagedClassResultRequestDto input)
         {
 
-            return Repository.GetAllIncluding(m => m.Course, m => m.Teacher)
+            return base.CreateFilteredQuery(input).Include(m => m.Course).Include(m => m.Teacher)
                 .WhereIf(input.ClassType != null, m => m.Course.ClassType == input.ClassType);
         }
     }

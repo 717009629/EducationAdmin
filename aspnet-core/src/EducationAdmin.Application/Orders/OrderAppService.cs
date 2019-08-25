@@ -29,7 +29,7 @@ namespace EducationAdmin.Orders
 
         protected override IQueryable<Order> CreateFilteredQuery(PagedOrderResultRequestDto input)
         {
-            return Repository.GetAllIncluding(m => m.Salesman, m => m.Student, m => m.Course, m => m.Class)
+            return base.CreateFilteredQuery(input).Include(m => m.Salesman).Include(m => m.Student).Include(m => m.Course).Include(m => m.Class)
                     .WhereIf(input.StudentId != null, m => m.StudentId == input.StudentId)
                     .WhereIf(input.ClassId != null, m => m.ClassId == input.ClassId)
                     .WhereIf(input.CourseId != null, m => m.CourseId == input.CourseId && m.ClassId == null)

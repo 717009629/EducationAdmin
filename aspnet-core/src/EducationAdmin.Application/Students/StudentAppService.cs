@@ -12,6 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using EducationAdmin.Students;
+using Microsoft.EntityFrameworkCore;
 
 namespace EducationAdmin.Sales
 {
@@ -34,7 +35,7 @@ namespace EducationAdmin.Sales
 
         protected override IQueryable<Student> CreateFilteredQuery(PagedStudentResultRequestDto input)
         {
-            return Repository.GetAllIncluding(x => x.Teacher)
+            return base.CreateFilteredQuery(input).Include(x => x.Teacher)
                .WhereIf(!input.Keyword.IsNullOrWhiteSpace(), x => x.Name.Contains(input.Keyword) );
         }
 

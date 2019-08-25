@@ -33,7 +33,7 @@ namespace EducationAdmin.Records
 
         protected override IQueryable<Record> CreateFilteredQuery(PagedRecordResultRequestDto input)
         {
-            return Repository.GetAllIncluding(m => m.Salesman, m => m.Customer)
+            return base.CreateFilteredQuery(input).Include(m => m.Salesman).Include(m => m.Customer)
                     .WhereIf(input.CustomerId != null, m => m.CustomerId == input.CustomerId)
                     .WhereIf(!input.StudentName.IsNullOrWhiteSpace(), x => x.Customer.StudentName.Contains(input.StudentName));
         }
@@ -43,7 +43,7 @@ namespace EducationAdmin.Records
             input.SalesmanId = this.AbpSession.UserId.Value;
             var customer = await CustomerRepository.FirstOrDefaultAsync(input.CustomerId);
             customer.State = input.State;
-            
+
             return await base.Create(input);
         }
 
