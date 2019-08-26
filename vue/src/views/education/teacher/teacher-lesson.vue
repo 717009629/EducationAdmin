@@ -68,10 +68,7 @@ export default class ClassBusiness extends AbpBase {
         start: m.startTime,
         end: m.endTime,
         title: `${m.course}--${m.class.name}`,
-        color:
-          new Date(new Date(m.lessonDate).toLocaleDateString()) < new Date()
-            ? "#aaa"
-            : "#0f0",
+        color: new Date(m.endTime) < new Date() ? "#aaa" : "#0f0",
         lesson: m
       };
     });
@@ -168,9 +165,7 @@ export default class ClassBusiness extends AbpBase {
       render: (h, params) => {
         return h(
           "span",
-          params.row.start.slice(0, 5) +
-            " - " +
-            params.row.end.slice(0, 5)
+          params.row.start.slice(0, 5) + " - " + params.row.end.slice(0, 5)
         );
       }
     },

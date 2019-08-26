@@ -56,34 +56,38 @@ export default class CreateLesson extends AbpBase {
   lesson: Lesson = new Lesson();
   clas: Class = new Class();
 
-  get orders() {
-    return this.$store.state.order.list;
-  }
+  // get orders() {
+  //   return this.$store.state.order.list;
+  // }
 
   get teachers() {
     return this.$store.state.teacher.list;
   }
-  get periods() {
-    return this.$store.state.timePeriod.list;
-  }
+  // get periods() {
+  //   return this.$store.state.timePeriod.list;
+  // }
   get timePeriods() {
-    let list = [];
-    let lessons = this.$store.state.lesson.list;
-    let array = lessons
-      .filter(
-        m =>
-          this.date &&
-          new Date(m.lessonDate).toDateString() === this.date.toDateString()
-      )
-      .map(m => m.timePeriodId);
-    
-    for (var n = 0; n < this.periods.length; n++) {
-      if (array.indexOf(this.periods[n].id) < 0) {
-        list.push(this.periods[n]);
-      }
-    }
-    return list;
+    return this.$store.state.timePeriod.listAvailable;
   }
+
+  //   get timePeriods() {
+  //   let list = [];
+  //   let lessons = this.$store.state.lesson.list;
+  //   let array = lessons
+  //     .filter(
+  //       m =>
+  //         this.date &&
+  //         new Date(m.lessonDate).toDateString() === this.date.toDateString()
+  //     )
+  //     .map(m => m.timePeriodId);
+    
+  //   for (var n = 0; n < this.periods.length; n++) {
+  //     if (array.indexOf(this.periods[n].id) < 0) {
+  //       list.push(this.periods[n]);
+  //     }
+  //   }
+  //   return list;
+  // }
 
   save() {
     (this.$refs.lessonForm as any).validate(async (valid: boolean) => {
@@ -113,13 +117,13 @@ export default class CreateLesson extends AbpBase {
       await this.$store.dispatch({
         type: "teacher/getAll"
       });
+      // await this.$store.dispatch({
+      //   type: "order/getAll",
+      //   data: { classId: this.clas.id }
+      // });
       await this.$store.dispatch({
-        type: "order/getAll",
-        data: { classId: this.clas.id }
-      });
-      await this.$store.dispatch({
-        type: "timePeriod/getAll",
-        data: { isActive: true }
+        type: "timePeriod/getAllAvailable",
+        data: { date:this.date, classId:this.clas.id }
       });
     }
   }

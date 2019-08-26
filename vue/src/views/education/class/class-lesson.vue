@@ -93,10 +93,7 @@ export default class ClassBusiness extends AbpBase {
         start: m.startTime,
         end: m.endTime,
         title: `${m.course}--${m.teacher.name}`,
-        color:
-          new Date(new Date(m.lessonDate).toLocaleDateString()) < new Date()
-            ? "#aaa"
-            : "#0f0",
+        color: new Date(m.endTime) < new Date() ? "#aaa" : "#0f0",
         lesson: m
       };
     });

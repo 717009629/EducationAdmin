@@ -50,29 +50,9 @@ export default class EditLessone extends AbpBase {
   get teachers() {
     return this.$store.state.teacher.list;
   }
-  get periods() {
-    return this.$store.state.timePeriod.list;
-  }
+
   get timePeriods() {
-    let list = [];
-    let lessons = this.$store.state.lesson.list;
-    let array = lessons
-      .filter(
-        m =>
-          this.lesson.lessonDate &&
-          new Date(m.lessonDate).toDateString() ===
-            new Date(this.lesson.lessonDate).toDateString()
-      )
-      .map(m => m.timePeriodId);
-    for (let n = 0; n < this.periods.length; n++) {
-      if (
-        this.periods[n].id === this.lesson.timePeriodId ||
-        array.indexOf(this.periods[n].id) < 0
-      )
-        list.push(this.periods[n]);
-    }
-    return list;
-    //this.lessonIndexs= list;
+    return this.$store.state.timePeriod.listAvailable;
   }
 
   save() {
@@ -103,12 +83,12 @@ export default class EditLessone extends AbpBase {
         type: "teacher/getAll"
       });
       await this.$store.dispatch({
-        type: "order/getAll",
-        data: { classId: this.lesson.classId }
-      });
-      await this.$store.dispatch({
-        type: "timePeriod/getAll",
-        data: { isActive: true }
+        type: "timePeriod/getAllAvailable",
+        data: {
+          date: this.lesson.lessonDate,
+          classId: this.lesson.classId,
+          lessonId: this.lesson.id
+        }
       });
     }
   }

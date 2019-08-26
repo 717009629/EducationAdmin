@@ -9,6 +9,7 @@ import ListMutations from './list-mutations'
 
 interface TimePeriodState extends ListState<TimePeriod>{
     editTimePeriod:TimePeriod
+    listAvailable: Array<TimePeriod>
 }
 class TimePeriodMutations extends ListMutations<TimePeriod>{
 
@@ -20,7 +21,8 @@ class TimePeriodModule extends ListModule<TimePeriodState,any,TimePeriod>{
         pageSize:10,
         list: new Array<TimePeriod>(),
         loading:false,
-        editTimePeriod:new TimePeriod()
+        editTimePeriod:new TimePeriod(),
+        listAvailable: new Array<TimePeriod>(),
     }
     actions={
         async getAll(context:ActionContext<TimePeriodState,any>,payload:any){
@@ -31,6 +33,11 @@ class TimePeriodModule extends ListModule<TimePeriodState,any,TimePeriod>{
             context.state.totalCount=page.totalCount;
             context.state.list=page.items;
         },
+        async getAllAvailable(context:ActionContext<TimePeriodState,any>,payload:any){
+            let reponse=await Ajax.get('/api/services/app/TimePeriod/GetAllAvailable',{params:payload.data});
+            context.state.listAvailable=reponse.data.result;
+        },
+
         async create(context:ActionContext<TimePeriodState,any>,payload:any){
             await Ajax.post('/api/services/app/TimePeriod/Create',payload.data);
         },
