@@ -13,7 +13,8 @@
                 :menu-list="menuList">
                 <div slot="top" class="logo-con">
                   <a>
-                    <Icon type="cube" size="32"></Icon>
+                    <!-- <Icon type="cube" size="32"></Icon> -->
+                    <img src="@/assets/logo.jpg" />
                     <h1 >{{L('AppName')}}</h1>
                   </a>
                    

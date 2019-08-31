@@ -6,7 +6,7 @@
           <DatePicker type="date" placeholder="Select date" readonly :value="lesson.lessonDate"></DatePicker>
         </FormItem>
         <FormItem :label="L('TimePeriod')" prop="timePeriodId">
-          <Select v-model="lesson.timePeriodId">
+          <Select v-model="lesson.timePeriodId" @on-change="timeChange">
             <Option v-for="item in timePeriods" :value="item.id" :key="item.id" :label="item.start.slice(0,5)+' - '+item.end.slice(0,5)">
             </Option>
           </Select>
@@ -48,13 +48,37 @@ export default class EditLessone extends AbpBase {
   }
 
   get teachers() {
-    return this.$store.state.teacher.list;
+    let teachers = this.$store.state.teacher.listAvailable;
+    //console.log(this.lesson.teacherId);
+    // console.log(teachers);
+    return teachers;
+  }
+  @Watch("teachers")
+  watchTeacher(n,o) {
+    if (n.filter(m => m.id === this.lesson.teacherId).length === 0) {
+      this.lesson.teacherId = undefined;
+    }
   }
 
   get timePeriods() {
     return this.$store.state.timePeriod.listAvailable;
   }
-
+  async timeChange() {
+    await this.$store.dispatch({
+      type: "teacher/getAllAvailable",
+      data: {
+        date: this.lesson.lessonDate,
+        timePeriodId: this.lesson.timePeriodId,
+        lessonId: this.lesson.id
+      }
+    });
+  }
+  // clearTeacher() {
+  //   let teachers = this.$store.state.teacher.listAvailable;
+  //   if (teachers.filter(m => m.id === this.lesson.teacherId).length === 0) {
+  //     this.lesson.teacherId = undefined;
+  //   }
+  // }
   save() {
     (this.$refs.lessonForm as any).validate(async (valid: boolean) => {
       if (valid) {
@@ -80,7 +104,12 @@ export default class EditLessone extends AbpBase {
       this.lesson = Util.extend(true, {}, this.$store.state.lesson.editLesson);
       //this.setLessonIndexs();
       await this.$store.dispatch({
-        type: "teacher/getAll"
+        type: "teacher/getAllAvailable",
+        data: {
+          date: this.lesson.lessonDate,
+          timePeriodId: this.lesson.timePeriodId,
+          lessonId: this.lesson.id
+        }
       });
       await this.$store.dispatch({
         type: "timePeriod/getAllAvailable",

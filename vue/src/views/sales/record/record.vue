@@ -61,7 +61,6 @@ import Util from "@/lib/util";
 import AbpBase from "@/lib/abpbase";
 import PageRequest from "@/store/entities/page-request";
 import EditRecord from "./edit-record.vue";
-import CustomerState from '../../../store/entities/customerState'
 
 class PageRecordRequest extends PageRequest {
   studentName: string = "";
@@ -145,7 +144,7 @@ export default class Records extends AbpBase {
       title: this.L("State"),
       key: "state",
       render:(h,params)=>{
-        return h('span',this.L(CustomerState[params.row.state]))
+        return h("span", this.L(window.abp.custom.CustomerState[params.row.state]));
       }
     },
     {

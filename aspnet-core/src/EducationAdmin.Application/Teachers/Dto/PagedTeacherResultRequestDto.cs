@@ -7,5 +7,6 @@ namespace EducationAdmin.Teachers.Dto
     public class PagedTeacherResultRequestDto : PagedResultRequestDto
     {
         public string Name { get; set; }
+
     }
 }

@@ -16,7 +16,7 @@
           </Select>
         </FormItem> -->
         <FormItem :label="L('TimePeriod')" prop="timePeriodId">
-          <Select v-model="lesson.timePeriodId">
+          <Select v-model="lesson.timePeriodId" @on-change="timeChange">
             <Option v-for="item in timePeriods" :value="item.id" :key="item.id" :label="item.start.slice(0,5)+' - '+item.end.slice(0,5)">
             </Option>
           </Select>
@@ -61,7 +61,7 @@ export default class CreateLesson extends AbpBase {
   // }
 
   get teachers() {
-    return this.$store.state.teacher.list;
+    return this.$store.state.teacher.listAvailable;
   }
   // get periods() {
   //   return this.$store.state.timePeriod.list;
@@ -69,7 +69,19 @@ export default class CreateLesson extends AbpBase {
   get timePeriods() {
     return this.$store.state.timePeriod.listAvailable;
   }
+  async timeChange() {
+    await this.$store.dispatch({
+      type: "teacher/getAllAvailable",
+      data: { date: this.date, timePeriodId: this.lesson.timePeriodId }
+    });
+  }
 
+  @Watch("teachers")
+  watchTeacher(n, o) {
+    if (n.filter(m => m.id === this.lesson.teacherId).length === 0) {
+      this.lesson.teacherId = undefined;
+    }
+  }
   //   get timePeriods() {
   //   let list = [];
   //   let lessons = this.$store.state.lesson.list;
@@ -80,7 +92,7 @@ export default class CreateLesson extends AbpBase {
   //         new Date(m.lessonDate).toDateString() === this.date.toDateString()
   //     )
   //     .map(m => m.timePeriodId);
-    
+
   //   for (var n = 0; n < this.periods.length; n++) {
   //     if (array.indexOf(this.periods[n].id) < 0) {
   //       list.push(this.periods[n]);
@@ -115,15 +127,12 @@ export default class CreateLesson extends AbpBase {
       this.lesson.classId = this.clas.id;
       this.lesson.lessonDate = this.date;
       await this.$store.dispatch({
-        type: "teacher/getAll"
+        type: "teacher/getAllAvailable",
+        data: { date: this.date, timePeriodId: this.lesson.timePeriodId }
       });
-      // await this.$store.dispatch({
-      //   type: "order/getAll",
-      //   data: { classId: this.clas.id }
-      // });
       await this.$store.dispatch({
         type: "timePeriod/getAllAvailable",
-        data: { date:this.date, classId:this.clas.id }
+        data: { date: this.date, classId: this.clas.id }
       });
     }
   }

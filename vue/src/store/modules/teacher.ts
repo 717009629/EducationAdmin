@@ -9,6 +9,7 @@ import ListMutations from './list-mutations'
 
 interface TeacherState extends ListState<Teacher>{
     editTeacher:Teacher
+    listAvailable:  Array<Teacher>
 }
 class TeacherMutations extends ListMutations<Teacher>{
 
@@ -19,8 +20,10 @@ class TeacherModule extends ListModule<TeacherState,any,Teacher>{
         currentPage:1,
         pageSize:10,
         list: new Array<Teacher>(),
+        listAvailable: new Array<Teacher>(),
         loading:false,
         editTeacher:new Teacher()
+
     }
     actions={
         async getAll(context:ActionContext<TeacherState,any>,payload:any){
@@ -30,6 +33,10 @@ class TeacherModule extends ListModule<TeacherState,any,Teacher>{
             let page=reponse.data.result as PageResult<Teacher>;
             context.state.totalCount=page.totalCount;
             context.state.list=page.items;
+        },
+        async getAllAvailable(context:ActionContext<TeacherState,any>,payload:any){
+            let reponse=await Ajax.get('/api/services/app/Teacher/GetAllAvailable',{params:payload.data});
+            context.state.listAvailable=reponse.data.result;
         },
         async get(context:ActionContext<TeacherState,any>,payload:any){
             let reponse=await Ajax.get('/api/services/app/Teacher/Get?Id='+payload.id);

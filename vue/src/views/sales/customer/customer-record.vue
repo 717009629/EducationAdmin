@@ -57,7 +57,6 @@ import AbpBase from "../../../lib/abpbase";
 import Customer from "../../../store/entities/customer";
 import CreateRecord from "../../sales/record/create-record.vue";
 import EditRecord from "../../sales/record/edit-record.vue";
-import CustomerState from "../../../store/entities/customerState";
 
 @Component({ components: { CreateRecord, EditRecord } })
 export default class CustomerBusiness extends AbpBase {
@@ -107,7 +106,7 @@ export default class CustomerBusiness extends AbpBase {
       title: this.L("State"),
       key: "state",
       render:(h,params)=>{
-        return h('span',this.L(CustomerState[params.row.state]))
+          return h("span", this.L(window.abp.custom.CustomerState[params.row.state]));
       }
     },
     {

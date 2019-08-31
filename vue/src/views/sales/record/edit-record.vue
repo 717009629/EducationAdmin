@@ -7,7 +7,7 @@
         </FormItem>
         <FormItem :label="L('Progress')" prop="state">
           <Select v-model="record.state">
-            <Option v-for="n in 3" :key="n" :value="n">{{L(CustomerState[n] )}}</Option>
+            <Option v-for="item  in customerState"  :key="item.key" :value="item.key" :label=" L(item.value)" ></Option>
           </Select>
         </FormItem>
         <FormItem :label="L('RecordDate')" prop="date">
@@ -31,6 +31,7 @@ import CustomerState from "../../../store/entities/customerState";
 @Component
 export default class EditRecorde extends AbpBase {
   @Prop({ type: Boolean, default: false }) value: boolean;
+  customerState=window.abp.custom.customerState;
   record: Record = new Record();
   CustomerState=CustomerState;
   save() {
@@ -69,6 +70,7 @@ export default class EditRecorde extends AbpBase {
     state: [
       {
         required: true,
+        type:'number',
         message: this.L("FieldIsRequired", undefined, this.L("RecordProgress")),
         trigger: "blur"
       }

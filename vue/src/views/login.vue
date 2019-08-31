@@ -4,7 +4,7 @@
       <div class="top">
         <div class="header">
           <a>
-            <!-- <img class="logo"/> -->
+            <img class="logo" src="@/assets/logosm.png"/>
             <span class="title">{{L('AppName')}}</span>
           </a>
         </div>

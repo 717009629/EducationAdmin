@@ -16,6 +16,7 @@ namespace EducationAdmin.Configuration
             GetDict<ClassState>(dict);
             GetDict<OrderState>(dict);
             GetDict<ClassType>(dict);
+            GetDict<CustomerState>(dict);
             return dict;
         }
 

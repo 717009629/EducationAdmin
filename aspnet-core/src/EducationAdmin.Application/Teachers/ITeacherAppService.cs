@@ -11,5 +11,7 @@ namespace EducationAdmin.Teachers
     public interface ITeacherAppService:IApplicationService
     {
        Task<PagedResultDto<TeacherDto>> GetAll(PagedTeacherResultRequestDto input);
+
+        Task<List<TeacherDto>> GetAllAvailable(DateTime date, long? timePeriodId, long? lessionId);
     }
 }
