@@ -33,8 +33,10 @@
               </i-col>
 
             </Row>
-
-            <Row :gutter='16'>
+            <FormItem :label="L('Province')" prop="province">
+              <Cascader :data="data" v-model="location"></Cascader>
+            </FormItem>
+            <!-- <Row :gutter='16'>
               <i-col span=8>
                 <FormItem :label="L('Province')" prop="province">
                   <Select v-model="student.province">
@@ -56,7 +58,7 @@
                   </Select>
                 </FormItem>
               </i-col>
-            </Row>
+            </Row> -->
             <FormItem :label="L('Address')" prop="address">
               <Input v-model="student.address" />
             </FormItem>
@@ -240,17 +242,28 @@ import Places from "../../../assets/json/city.json";
 export default class CreateStudent extends AbpBase {
   @Prop({ type: Boolean, default: false }) value: boolean;
   student: Student = new Student();
-  provinces = Places;
-  get cities() {
-    var list = this.provinces.filter(m => m.name === this.student.province);
-    if (list.length === 0) return [];
-    return list[0].child;
+  data: any;
+
+  //provinces = Places;
+  get location() {
+    return [this.student.province, this.student.city, this.student.district];
   }
-  get districts() {
-    var list = this.cities.filter(m => m.name === this.student.city);
-    if (list.length === 0) return [];
-    return list[0].child;
+  set location(val) {
+    this.student.province = val.length > 0 ? val[0] : "";
+    this.student.city = val.length > 1 ? val[1] : "";
+    this.student.district = val.length > 2 ? val[2] : "";
   }
+
+  // get cities() {
+  //   var list = this.provinces.filter(m => m.name === this.student.province);
+  //   if (list.length === 0) return [];
+  //   return list[0].child;
+  // }
+  // get districts() {
+  //   var list = this.cities.filter(m => m.name === this.student.city);
+  //   if (list.length === 0) return [];
+  //   return list[0].child;
+  // }
   get sex() {
     return this.student.sex
       ? "male"
@@ -293,6 +306,25 @@ export default class CreateStudent extends AbpBase {
       });
     }
   }
+  created() {
+    var temp = Places.map(m => {
+      return {
+        value: m.name,
+        label: m.name,
+        children: m.child.map(n => {
+          return {
+            value: n.name,
+            label: n.name,
+            children: n.child.map(o => {
+              return { value: o.name, label: o.name };
+            })
+          };
+        })
+      };
+    });
+
+    this.data = temp;
+  }
   studentRule = {
     name: [
       {
@@ -303,7 +335,7 @@ export default class CreateStudent extends AbpBase {
     ],
     teacherId: [
       {
-        type:'number',
+        type: "number",
         required: true,
         message: this.L("FieldIsRequired", undefined, this.L("Teacher")),
         trigger: "blur"
