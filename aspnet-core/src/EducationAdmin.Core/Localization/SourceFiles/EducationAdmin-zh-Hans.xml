@@ -57,8 +57,8 @@
     <text name="PasswordRequireNonAlphanumeric">密码至少需要包含一个特殊字符（非字母或数字的字符）.</text>
     <text name="PasswordRequireUppercase">密码至少需要一位是A到Z的大写字母.</text>
     <text name="PasswordTooShort">密码长度太短</text>
-    <text name="UserName">用户名</text>
-    <text name="Name">名称</text>
+    <text name="UserName">登陆账号</text>
+    <text name="Name">真实姓名</text>
     <text name="IsActive">是否启用</text>
     <text name="LastLoginTime">最近登陆时间</text>
     <text name="RoleName">角色名</text>
@@ -255,6 +255,18 @@
     <text name="Start">开始</text>
     <text name="End">结束</text>
     <text name="CourseItem">科目</text>
+
+
+    <text name="UserType">用户类型</text>
+    <text name="NativePlace">籍贯</text>
+    <text name="Else">其他</text>
+    <text name="IdentityCard">身份证</text>
+    <text name="PoliticsStatus">政治面貌</text>
+    <text name="SchoolTag">毕业院校</text>
+    <text name="EducationBackground">学历</text>
+    <text name="Nation">民族</text>
+    <text name="MaritalStatus">婚姻状况</text>
+    <text name="WorkingYears">工龄</text>
     
   </texts>
 </localizationDictionary>

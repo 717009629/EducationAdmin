@@ -38,6 +38,27 @@ namespace EducationAdmin.Users.Dto
         public string Phone { get; set; }
 
 
+        public string IdentityCard { get; set; }
+
+        public string Province { get; set; }
+
+        public string City { get; set; }
+
+        public string District { get; set; }
+
+        public string PoliticsStatus { get; set; }
+
+        public string SchoolTag { get; set; }
+
+        public string EducationBackground { get; set; }
+
+        public string Nation { get; set; }
+
+        public string MaritalStatus { get; set; }
+
+        public int? WorkingYears { get; set; }
+
+
         public bool IsActive { get; set; }
 
         public string[] RoleNames { get; set; }

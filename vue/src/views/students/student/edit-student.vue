@@ -33,7 +33,7 @@
               </i-col>
 
             </Row>
-            <FormItem :label="L('Province')" prop="province">
+            <FormItem :label="L('NativePlace')" prop="nativePlace">
               <Cascader :data="data" v-model="location"></Cascader>
             </FormItem>
             <!-- <Row :gutter='16'>
@@ -244,10 +244,10 @@ export default class EditStudent extends AbpBase {
   student: Student = new Student();
   //provinces = Places;
   data: any;
-  get location() {
+  get nativePlace() {
     return [this.student.province, this.student.city, this.student.district];
   }
-  set location(val) {
+  set nativePlace(val) {
     this.student.province = val.length > 0 ? val[0] : "";
     this.student.city = val.length > 1 ? val[1] : "";
     this.student.district = val.length > 2 ? val[2] : "";

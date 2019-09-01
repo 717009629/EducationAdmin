@@ -1,5 +1,6 @@
 ﻿using Abp.Configuration;
 using Abp.Configuration.Startup;
+using EducationAdmin.Authorization.Users;
 using EducationAdmin.Education;
 using EducationAdmin.Sales;
 using System;
@@ -17,6 +18,7 @@ namespace EducationAdmin.Configuration
             GetDict<OrderState>(dict);
             GetDict<ClassType>(dict);
             GetDict<CustomerState>(dict);
+            GetDict<UserType>(dict);
             return dict;
         }
 

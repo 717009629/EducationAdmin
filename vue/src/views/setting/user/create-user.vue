@@ -1,22 +1,38 @@
 <template>
   <div>
-    <Modal :title="L('CreateNewUser')" :value="value" @on-ok="save" @on-visible-change="visibleChange">
+    <Modal :title="L('CreateNewUser')" :value="value" @on-ok="save" @on-visible-change="visibleChange" :width='700'>
       <Form ref="userForm" label-position="top" :rules="userRule" :model="user">
         <Tabs value="detail">
           <TabPane :label="L('UserDetails')" name="detail">
-            <FormItem :label="L('UserName')" prop="userName">
-              <Input v-model="user.userName" :maxlength="32" :minlength="2" />
-            </FormItem>
-            <FormItem :label="L('Name')" prop="name">
-              <Input v-model="user.name" :maxlength="32" />
-            </FormItem>
-            <FormItem :label="L('UserType')" prop="type">
-              <Select v-model="user.type" >
-                <Option value="0">{{L("Business")}}</Option>
-                <Option value="1">{{L("Teacher")}}</Option>
-                <Option value="2">{{L("Admin")}}</Option>
-              </Select>
-            </FormItem>
+
+            <Row :gutter="16">
+              <i-col span="12">
+                <FormItem :label="L('UserName')" prop="userName">
+                  <Input v-model="user.userName" :maxlength="32" :minlength="2" />
+                </FormItem>
+              </i-col>
+              <i-col span="12">
+                <FormItem :label="L('Name')" prop="name">
+                  <Input v-model="user.name" :maxlength="32" />
+                </FormItem>
+              </i-col>
+            </Row>
+
+            <Row :gutter="16">
+              <i-col span="8">
+                <FormItem :label="L('UserType')" prop="type">
+                  <Select v-model="user.type">
+                    <Option v-for="item in userType" :key="item.key" :value="item.key">{{L(item.value)}}</Option>
+                  </Select>
+                </FormItem>
+              </i-col>
+              <i-col span="16">
+                <FormItem :label="L('NativePlace')" prop="nativePlace">
+                  <Cascader :data="data" v-model="nativePlace"></Cascader>
+                </FormItem>
+              </i-col>
+            </Row>
+
             <Row :gutter="16">
               <i-col span="12">
                 <FormItem :label="L('Sex')" prop="sex">
@@ -62,6 +78,52 @@
               <Checkbox v-model="user.isActive">{{L('IsActive')}}</Checkbox>
             </FormItem>
           </TabPane>
+          <TabPane :label="L('Else')" name="else">
+
+            <Row :gutter="16">
+              <i-col span="12">
+                <FormItem :label="L('IdentityCard')" prop="identityCard">
+                  <Input v-model="user.identityCard" />
+                </FormItem>
+              </i-col>
+              <i-col span="12">
+                <FormItem :label="L('PoliticsStatus')" prop="politicsStatus">
+                  <Input v-model="user.politicsStatus" />
+                </FormItem>
+              </i-col>
+            </Row>
+            <Row :gutter="16">
+              <i-col span="12">
+                <FormItem :label="L('SchoolTag')" prop="schoolTag">
+                  <Input v-model="user.schoolTag" />
+                </FormItem>
+              </i-col>
+              <i-col span="12">
+                <FormItem :label="L('EducationBackground')" prop="educationBackground">
+                  <Input v-model="user.educationBackground" />
+                </FormItem>
+              </i-col>
+            </Row>
+            <Row :gutter="16">
+              <i-col span="12">
+                <FormItem :label="L('Nation')" prop="nation">
+                  <Input v-model="user.nation" />
+                </FormItem>
+              </i-col>
+              <i-col span="12">
+                <FormItem :label="L('MaritalStatus')" prop="maritalStatus">
+                  <Input v-model="user.maritalStatus" />
+                </FormItem>
+              </i-col>
+            </Row>
+            <Row :gutter="16">
+              <i-col span="12">
+                <FormItem :label="L('WorkingYears')" prop="workingYears">
+                  <Input v-model="user.workingYears" />
+                </FormItem>
+              </i-col>
+            </Row>
+          </TabPane>
           <TabPane :label="L('UserRoles')" name="roles">
             <CheckboxGroup v-model="user.roleNames">
               <Checkbox :label="role.normalizedName" v-for="role in roles" :key="role.id"><span>{{role.name}}</span></Checkbox>
@@ -81,10 +143,22 @@ import { Component, Vue, Inject, Prop, Watch } from "vue-property-decorator";
 import Util from "../../../lib/util";
 import AbpBase from "../../../lib/abpbase";
 import User from "../../../store/entities/user";
+import Places from "../../../assets/json/city.json";
 @Component
 export default class CreateUser extends AbpBase {
   @Prop({ type: Boolean, default: false }) value: boolean;
   user: User = new User();
+  userType = window.abp.custom.userType;
+  data: any;
+
+  get nativePlace() {
+    return [this.user.province, this.user.city, this.user.district];
+  }
+  set nativePlace(val) {
+    this.user.province = val.length > 0 ? val[0] : "";
+    this.user.city = val.length > 1 ? val[1] : "";
+    this.user.district = val.length > 2 ? val[2] : "";
+  }
   get roles() {
     return this.$store.state.user.roles;
   }
@@ -116,6 +190,25 @@ export default class CreateUser extends AbpBase {
       this.$emit("input", value);
     }
   }
+  created() {
+    var temp = Places.map(m => {
+      return {
+        value: m.name,
+        label: m.name,
+        children: m.child.map(n => {
+          return {
+            value: n.name,
+            label: n.name,
+            children: n.child.map(o => {
+              return { value: o.name, label: o.name };
+            })
+          };
+        })
+      };
+    });
+
+    this.data = temp;
+  }
   validatePassCheck = (rule: any, value: any, callback: any) => {
     if (!value) {
       callback(new Error(this.L("ConfirmPasswordMsg")));
@@ -125,6 +218,7 @@ export default class CreateUser extends AbpBase {
       callback();
     }
   };
+
   userRule = {
     userName: [
       {
@@ -141,7 +235,14 @@ export default class CreateUser extends AbpBase {
       }
     ],
     // surname:[{required:true,message:this.L('FieldIsRequired',undefined,this.L('Surname')),trigger: 'blur'}],
-     emailAddress:[{required:true,message:this.L('FieldIsRequired',undefined,this.L('Email')),trigger: 'blur'},{type: 'email'}],
+    emailAddress: [
+      {
+        required: true,
+        message: this.L("FieldIsRequired", undefined, this.L("Email")),
+        trigger: "blur"
+      },
+      { type: "email" }
+    ],
     phone: [{ type: "string" }],
     password: [
       {
