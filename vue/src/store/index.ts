@@ -18,6 +18,8 @@ import lesson from './modules/lesson'
 import teacher from './modules/teacher'
 import clas from './modules/class'
 import timePeriod from './modules/timePeriod'
+import subject from './modules/subject'
+import option from './modules/option'
 const store = new Vuex.Store({
     state: {
         //
@@ -45,7 +47,9 @@ const store = new Vuex.Store({
         lesson,
         teacher,
         class: clas,
-        timePeriod
+        timePeriod,
+        subject,
+        option
     }
 });
 

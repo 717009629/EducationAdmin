@@ -29,7 +29,7 @@ namespace EducationAdmin.Education
 
         public User Teacher { get; set; }
 
-        public string Course { get; set; }
+        public string Subject { get; set; }
 
         public long TimePeriodId { get; set; }
 

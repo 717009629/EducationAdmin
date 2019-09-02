@@ -54,7 +54,9 @@ export const appRouters: Array<Router> = [{
         { path: 'user', permission: 'Pages.Users', meta: { title: 'Users' }, name: 'user', component: () => import('../views/setting/user/user.vue') },
         { path: 'role', permission: 'Pages.Roles', meta: { title: 'Roles' }, name: 'role', component: () => import('../views/setting/role/role.vue') },
         { path: 'tenant', permission: 'Pages.Tenants', meta: { title: 'Tenants' }, name: 'tenant', component: () => import('../views/setting/tenant/tenant.vue') },
-        { path: 'timeperiod', permission: 'Pages.TimePeriods', meta: { title: 'TimePeriods' }, name: 'timePeriod', component: () => import('../views/setting/timePeriod/time-period.vue') }
+        { path: 'timeperiod', permission: 'Pages.TimePeriods', meta: { title: 'TimePeriods' }, name: 'timePeriod', component: () => import('../views/setting/timePeriod/time-period.vue') },
+        { path: 'subject', permission: 'Pages.Subjects', meta: { title: 'Subjects' }, name: 'subject', component: () => import('../views/setting/subject/subject.vue') },
+        { path: 'option', permission: 'Pages.Options', meta: { title: 'Options' }, name: 'option', component: () => import('../views/setting/option/option.vue') }
     ]
 },
 {

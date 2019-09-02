@@ -113,7 +113,7 @@
     <text name="Phone">电话</text>
     <text name="FatherPhone">父亲电话</text>
     <text name="MotherPhone">母亲电话</text>
-    <text name="School">就读学校</text>
+    <text name="School">学校</text>
     <text name="Birthday">生日</text>
     <text name="Grade">年级</text>
     <text name="CourseType">课程小类</text>
@@ -267,7 +267,17 @@
     <text name="Nation">民族</text>
     <text name="MaritalStatus">婚姻状况</text>
     <text name="WorkingYears">工龄</text>
-    
+
+    <text name="Subject">科目</text>
+    <text name="Subjects">科目</text>
+    <text name="Option">选项参数</text>
+    <text name="Options">选项参数</text>
+    <text name="OptionName">选项名称</text>
+    <text name="CreateNewOption">创建新选项</text>
+    <text name="EditOption">编辑选项</text>
+    <text name="SubjectName">科目名称</text>
+    <text name="CreateNewSubject">创新新科目</text>
+    <text name="EditSubject">编辑科目</text>
   </texts>
 </localizationDictionary>
 

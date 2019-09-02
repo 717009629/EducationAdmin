@@ -27,6 +27,11 @@
 
         public const string Pages_TimePeriods = "Pages.TimePeriods";
 
+        public const string Pages_Subjects = "Pages.Subjects";
+
+        public const string Pages_Options = "Pages.Options";
+        
+
 
     }
 }

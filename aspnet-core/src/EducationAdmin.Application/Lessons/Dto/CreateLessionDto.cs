@@ -23,7 +23,7 @@ namespace EducationAdmin.Lessons.Dto
         public long TeacherId { get; set; }
 
 
-        public string Course { get; set; }
+        public string Subject { get; set; }
 
         public long TimePeriodId { get; set; }
 

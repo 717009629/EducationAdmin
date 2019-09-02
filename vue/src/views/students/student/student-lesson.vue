@@ -89,7 +89,7 @@ export default class StudentBusiness extends AbpBase {
         id: m.id,
         start: m.startTime,
         end: m.endTime,
-        title: `${m.class.name}-${m.course}-${m.teacher.name}`,
+        title: `${m.class.name}-${m.subject}-${m.teacher.name}`,
         color: new Date(m.endTime) < new Date() ? "#aaa" : "#0f0",
         lesson: m
       };
@@ -176,17 +176,10 @@ export default class StudentBusiness extends AbpBase {
     }
   }
   columns = [
-    // {
-    //   title: this.L("Index"),
-    //   key: "id",
-    //   render: (h: any, params: any) => {
-    //     return h("span", ("000000" + params.row.id).slice(-6));
-    //   }
-    // },
 
     {
-      title: this.L("Course"),
-      key: "course"
+      title: this.L("Subject"),
+      key: "subject"
     },
     {
       title: this.L("ClassName"),

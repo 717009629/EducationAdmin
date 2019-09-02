@@ -98,8 +98,8 @@ export default class Lessons extends AbpBase {
     },
 
     {
-      title: this.L("CourseItem"),
-      key: "course"
+      title: this.L("Subject"),
+      key: "subject"
     },
     {
       title: this.L("ClassIndex"),

@@ -4,14 +4,16 @@ using EducationAdmin.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EducationAdmin.Migrations
 {
     [DbContext(typeof(EducationAdminDbContext))]
-    partial class EducationAdminDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190902112320_AddSubjectAndOption")]
+    partial class AddSubjectAndOption
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1142,6 +1144,8 @@ namespace EducationAdmin.Migrations
 
                     b.Property<long>("ClassId");
 
+                    b.Property<string>("Course");
+
                     b.Property<DateTime>("CreationTime");
 
                     b.Property<long?>("CreatorUserId");
@@ -1163,8 +1167,6 @@ namespace EducationAdmin.Migrations
                     b.Property<DateTime>("LessonDate");
 
                     b.Property<TimeSpan>("Start");
-
-                    b.Property<string>("Subject");
 
                     b.Property<long>("TeacherId");
 

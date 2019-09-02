@@ -20,8 +20,8 @@
             </Option>
           </Select>
         </FormItem>
-        <FormItem :label="L('CourseItem')" prop="course">
-          <Input v-model="lesson.course" />
+        <FormItem :label="L('Subject')" prop="subject">
+          <Input v-model="lesson.subject" />
         </FormItem>
       </Form>
       <div slot="footer">
@@ -122,10 +122,10 @@ export default class EditLessone extends AbpBase {
     }
   }
   LessonRule = {
-    course: [
+    subject: [
       {
         required: true,
-        message: this.L("FieldIsRequired", undefined, this.L("Course")),
+        message: this.L("FieldIsRequired", undefined, this.L("Subject")),
         trigger: "blur"
       }
     ],

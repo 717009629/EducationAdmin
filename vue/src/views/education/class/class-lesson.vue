@@ -92,7 +92,7 @@ export default class ClassBusiness extends AbpBase {
         id: m.id,
         start: m.startTime,
         end: m.endTime,
-        title: `${m.course}--${m.teacher.name}`,
+        title: `${m.subject}--${m.teacher.name}`,
         color: new Date(m.endTime) < new Date() ? "#aaa" : "#0f0",
         lesson: m
       };
@@ -181,8 +181,8 @@ export default class ClassBusiness extends AbpBase {
     // },
 
     {
-      title: this.L("Course"),
-      key: "course"
+      title: this.L("Subject"),
+      key: "subject"
     },
     {
       title: this.L("ClassName"),
