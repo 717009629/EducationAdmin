@@ -40,13 +40,12 @@ import AbpBase from "../../../lib/abpbase";
 import PageRequest from "@/store/entities/page-request";
 import CreateOption from "./create-option.vue";
 import EditOption from "./edit-option.vue";
-import OptionTab from "./option-tab.vue";
 import Categories from "../../../store/entities/optionCategory";
 
 class PageOptionRequest extends PageRequest {}
 
 @Component({
-  components: { CreateOption, EditOption, OptionTab }
+  components: { CreateOption, EditOption }
 })
 export default class Options extends AbpBase {
   pagerequest: PageOptionRequest = new PageOptionRequest();
