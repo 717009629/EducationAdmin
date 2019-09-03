@@ -65,21 +65,13 @@
             <Row :gutter='16'>
               <i-col span=10>
                 <FormItem :label="L('School')" prop="school">
-                  <Input v-model="student.school" />
+                  <AutoComplete :data='schools' v-model="student.school" :transfer="true"/>
                 </FormItem>
               </i-col>
               <i-col span=6>
                 <FormItem :label="L('Grade')" prop="grade">
                   <Select v-model="student.grade" style="z-index:10000" :transfer="true">
-                    <Option label="小学一年级" value="小学一年级"></Option>
-                    <Option label="小学二年级" value="小学二年级"></Option>
-                    <Option label="小学三年级" value="小学三年级"></Option>
-                    <Option label="小学四年级" value="小学四年级"></Option>
-                    <Option label="小学五年级" value="小学五年级"></Option>
-                    <Option label="小学六年级" value="小学六年级"></Option>
-                    <Option label="初中一年级" value="初中一年级"></Option>
-                    <Option label="初中二年级" value="初中二年级"></Option>
-                    <Option label="初中三年级" value="初中三年级"></Option>
+                    <Option v-for="item in grades" :label="item.name" :value="item.name" :key="item.name"></Option>                 
                   </Select>
                 </FormItem>
               </i-col>
@@ -89,7 +81,6 @@
                 </FormItem>
               </i-col>
             </Row>
-
           </TabPane>
           <TabPane :label="L('ScoreRank')" name="score">
             <Row :gutter='16'>
@@ -254,16 +245,7 @@ export default class CreateStudent extends AbpBase {
     this.student.district = val.length > 2 ? val[2] : "";
   }
 
-  // get cities() {
-  //   var list = this.provinces.filter(m => m.name === this.student.province);
-  //   if (list.length === 0) return [];
-  //   return list[0].child;
-  // }
-  // get districts() {
-  //   var list = this.cities.filter(m => m.name === this.student.city);
-  //   if (list.length === 0) return [];
-  //   return list[0].child;
-  // }
+
   get sex() {
     return this.student.sex
       ? "male"
@@ -279,7 +261,12 @@ export default class CreateStudent extends AbpBase {
   get teachers() {
     return this.$store.state.teacher.list;
   }
-
+  get grades() {
+    return this.$store.state.option.list.filter(m => m.category === "grade");
+  }
+  get schools() {
+    return this.$store.state.option.list.filter(m => m.category === "school").map(m=>m.name);
+  }
   save() {
     (this.$refs.studentForm as any).validate(async (valid: boolean) => {
       if (valid) {
@@ -307,6 +294,10 @@ export default class CreateStudent extends AbpBase {
     }
   }
   created() {
+    this.$store.dispatch({
+      type: "option/getAll",
+      data: { maxResultCount: 10000, isActive: true }
+    });
     var temp = Places.map(m => {
       return {
         value: m.name,

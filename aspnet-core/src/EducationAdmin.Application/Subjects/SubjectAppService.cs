@@ -59,6 +59,27 @@ namespace EducationAdmin.Subjects
             return base.ApplyPaging(query, input);
         }
 
+        public override async Task<SubjectDto> Create(CreateSubjectDto input)
+        {
+            input.Name = input.Name.Trim();
+            var d = await Repository.FirstOrDefaultAsync(m => m.Name == input.Name );
+            if (d != null)
+            {
+                throw new UserFriendlyException("The subject name can't be repeated!");
+            }
+            return await base.Create(input);
+        }
+
+        public override async Task<SubjectDto> Update(EditSubjectDto input)
+        {
+            input.Name = input.Name.Trim();
+            var d = await Repository.FirstOrDefaultAsync(m => m.Name == input.Name && m.Id != input.Id);
+            if (d != null)
+            {
+                throw new UserFriendlyException("The subject name can't be repeated!");
+            }
+            return await base.Update(input);
+        }
 
     }
 }

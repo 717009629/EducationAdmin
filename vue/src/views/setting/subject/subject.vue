@@ -14,8 +14,8 @@
               <Button v-if="hasPermission('Pages.Subjects.Edit')" type="primary" size="small" @click="edit(row)" style="margin-right:5px">{{L('Edit')}}</Button>
             </template>
           </Table>
-          <Page show-sizer class-name="fengpage" :total="totalCount" class="margin-top-10" @on-change="pageChange" @on-page-size-change="pagesizeChange" :page-size="pageSize" :current="currentPage">
-          </Page>
+          <!-- <Page show-sizer class-name="fengpage" :total="totalCount" class="margin-top-10" @on-change="pageChange" @on-page-size-change="pagesizeChange" :page-size="pageSize" :current="currentPage">
+          </Page> -->
         </div>
       </div>
     </Card>
@@ -31,13 +31,13 @@ import PageRequest from "@/store/entities/page-request";
 import CreateSubject from "./create-subject.vue";
 import EditSubject from "./edit-subject.vue";
 
-class PageSubjectRequest extends PageRequest {}
+//class PageSubjectRequest extends PageRequest {}
 
 @Component({
   components: { CreateSubject, EditSubject }
 })
 export default class Subjects extends AbpBase {
-  pagerequest: PageSubjectRequest = new PageSubjectRequest();
+  //pagerequest: PageSubjectRequest = new PageSubjectRequest();
 
   createModalShow: boolean = false;
   editModalShow: boolean = false;
@@ -54,21 +54,21 @@ export default class Subjects extends AbpBase {
     this.$store.commit("subject/edit", row);
     this.editModalShow = true;
   }
-  pageChange(page: number) {
-    this.$store.commit("subject/setCurrentPage", page);
-    this.getpage();
-  }
-  pagesizeChange(pagesize: number) {
-    this.$store.commit("subject/setPageSize", pagesize);
-    this.getpage();
-  }
+  // pageChange(page: number) {
+  //   this.$store.commit("subject/setCurrentPage", page);
+  //   this.getpage();
+  // }
+  // pagesizeChange(pagesize: number) {
+  //   this.$store.commit("subject/setPageSize", pagesize);
+  //   this.getpage();
+  // }
   async getpage() {
-    this.pagerequest.maxResultCount = this.pageSize;
-    this.pagerequest.skipCount = (this.currentPage - 1) * this.pageSize;
+    // this.pagerequest.maxResultCount = this.pageSize;
+    // this.pagerequest.skipCount = (this.currentPage - 1) * this.pageSize;
 
     await this.$store.dispatch({
       type: "subject/getAll",
-      data: this.pagerequest
+      data: {maxResultCount:1000}
     });
   }
   get pageSize() {

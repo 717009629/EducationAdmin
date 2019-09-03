@@ -42,13 +42,13 @@ import CreateOption from "./create-option.vue";
 import EditOption from "./edit-option.vue";
 import Categories from "../../../store/entities/optionCategory";
 
-class PageOptionRequest extends PageRequest {}
+//class PageOptionRequest extends PageRequest {}
 
 @Component({
   components: { CreateOption, EditOption }
 })
 export default class Options extends AbpBase {
-  pagerequest: PageOptionRequest = new PageOptionRequest();
+  //pagerequest: PageOptionRequest = new PageOptionRequest();
 
   createModalShow: boolean = false;
   editModalShow: boolean = false;
@@ -71,18 +71,18 @@ export default class Options extends AbpBase {
   async getpage() {
     await this.$store.dispatch({
       type: "option/getAll",
-      data: this.pagerequest
+      data: { maxResultCount: 10000 }
     });
   }
-  get pageSize() {
-    return this.$store.state.option.pageSize;
-  }
-  get totalCount() {
-    return this.$store.state.option.totalCount;
-  }
-  get currentPage() {
-    return this.$store.state.option.currentPage;
-  }
+  // get pageSize() {
+  //   return this.$store.state.option.pageSize;
+  // }
+  // get totalCount() {
+  //   return this.$store.state.option.totalCount;
+  // }
+  // get currentPage() {
+  //   return this.$store.state.option.currentPage;
+  // }
 
   columns = [
     {

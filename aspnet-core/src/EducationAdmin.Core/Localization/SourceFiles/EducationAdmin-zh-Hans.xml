@@ -278,6 +278,8 @@
     <text name="SubjectName">科目名称</text>
     <text name="CreateNewSubject">创新新科目</text>
     <text name="EditSubject">编辑科目</text>
+    <text name="The subject name can't be repeated!">科目名称不能重复！</text>
+    <text name="The name can't be repeated!">名称不能重复！</text>
   </texts>
 </localizationDictionary>
 

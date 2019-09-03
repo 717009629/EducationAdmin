@@ -60,5 +60,27 @@ namespace EducationAdmin.Options
         }
 
 
+        public override async Task<OptionDto> Create(CreateOptionDto input)
+        {
+            input.Name = input.Name.Trim();
+            var d = await Repository.FirstOrDefaultAsync(m => m.Name == input.Name && m.Category == input.Category);
+            if (d != null)
+            {
+                throw new UserFriendlyException("The name can't be repeated");
+            }
+            return await base.Create(input);
+        }
+
+        public override async Task<OptionDto> Update(EditOptionDto input)
+        {
+            input.Name = input.Name.Trim();
+            var d = await Repository.FirstOrDefaultAsync(m => m.Name == input.Name && m.Category == input.Category && m.Id != input.Id);
+            if (d != null)
+            {
+                throw new UserFriendlyException("The name can't be repeated!");
+            }
+            return await base.Update(input);
+        }
+
     }
 }

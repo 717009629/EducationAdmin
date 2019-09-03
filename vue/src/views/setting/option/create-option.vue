@@ -49,7 +49,6 @@ export default class CreateOption extends AbpBase {
   }
   @Watch("category")
   cateoryChange(n, o) {
-    console.log(n);
     this.option.category = n;
   }
   cancel() {
