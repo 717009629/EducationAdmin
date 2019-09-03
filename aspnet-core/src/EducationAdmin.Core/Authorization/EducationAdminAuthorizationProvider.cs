@@ -26,6 +26,8 @@ namespace EducationAdmin.Authorization
             SetPermission(context, PermissionNames.Pages_TimePeriods, "TimePeriods", multiTenancySides: MultiTenancySides.Tenant);
             SetPermission(context, PermissionNames.Pages_Subjects, "Subjects", multiTenancySides: MultiTenancySides.Tenant);
             SetPermission(context, PermissionNames.Pages_Options, "Options", multiTenancySides: MultiTenancySides.Tenant);
+            SetPermission(context, PermissionNames.Pages_LessonAttendances, "LessonAttendances", multiTenancySides: MultiTenancySides.Tenant);
+            
 
             context.CreatePermission(PermissionNames.Pages_Teachers, L("Teachers"), multiTenancySides: MultiTenancySides.Tenant);
         }

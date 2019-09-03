@@ -3,6 +3,9 @@ using Abp.Domain.Repositories;
 using Abp.EntityFrameworkCore;
 using Abp.EntityFrameworkCore.Repositories;
 using AutoMapper;
+using EducationAdmin.Repository;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace EducationAdmin.EntityFrameworkCore.Repositories
 {
@@ -11,7 +14,7 @@ namespace EducationAdmin.EntityFrameworkCore.Repositories
     /// </summary>
     /// <typeparam name="TEntity">Entity type</typeparam>
     /// <typeparam name="TPrimaryKey">Primary key type of the entity</typeparam>
-    public abstract class EducationAdminRepositoryBase<TEntity, TPrimaryKey> : EfCoreRepositoryBase<EducationAdminDbContext, TEntity, TPrimaryKey>
+    public abstract class EducationAdminRepositoryBase<TEntity, TPrimaryKey> : EfCoreRepositoryBase<EducationAdminDbContext, TEntity, TPrimaryKey>, IInsertMutiRepository<TEntity, TPrimaryKey>
         where TEntity : class, IEntity<TPrimaryKey>
     {
         protected EducationAdminRepositoryBase(IDbContextProvider<EducationAdminDbContext> dbContextProvider)
@@ -20,6 +23,12 @@ namespace EducationAdmin.EntityFrameworkCore.Repositories
         }
 
         // Add your common methods for all repositories
+
+        public async Task InsertListAsync(IEnumerable<TEntity> entities)
+        {
+            Context.AddRange(entities);
+            await Context.SaveChangesAsync();
+        }
     }
 
     /// <summary>

@@ -30,6 +30,8 @@
         public const string Pages_Subjects = "Pages.Subjects";
 
         public const string Pages_Options = "Pages.Options";
+        public const string Pages_LessonAttendances = "Pages.LessonAttendances";
+
         
 
 

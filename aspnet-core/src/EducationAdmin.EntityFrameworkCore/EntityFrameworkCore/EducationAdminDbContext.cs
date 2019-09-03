@@ -14,11 +14,11 @@ namespace EducationAdmin.EntityFrameworkCore
     public class EducationAdminDbContext : AbpZeroDbContext<Tenant, Role, User, EducationAdminDbContext>
     {
         /* Define a DbSet for each entity of the application */
-        
+
         public EducationAdminDbContext(DbContextOptions<EducationAdminDbContext> options)
             : base(options)
         {
-            
+
         }
 
         public DbSet<Student> Students { get; set; }
@@ -29,16 +29,18 @@ namespace EducationAdmin.EntityFrameworkCore
 
         public DbSet<Course> Courses { get; set; }
 
-      //  public DbSet<CourseItem> CourseItems { get; set; }
+        //  public DbSet<CourseItem> CourseItems { get; set; }
 
         public DbSet<Contract> Contracts { get; set; }
 
         public DbSet<Customer> Customer { get; set; }
- 
+
 
         public DbSet<Lesson> Lessons { get; set; }
 
-        public DbSet<Class> Classes { get; set; }   
+        public DbSet<LessonAttendance> LessonAttendances { get; set; }
+
+        public DbSet<Class> Classes { get; set; }
 
         public DbSet<TimePeriod> TimePeriods { get; set; }
 
@@ -50,10 +52,10 @@ namespace EducationAdmin.EntityFrameworkCore
         {
             modelBuilder.Entity<Record>().HasOne(m => m.Customer).WithMany().OnDelete(DeleteBehavior.Restrict);
             modelBuilder.Entity<Order>().HasOne(m => m.Student).WithMany().OnDelete(DeleteBehavior.Restrict);
-            modelBuilder.Entity<Contract>().HasOne(m => m.Order).WithOne(m=>m.Contract).OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<Contract>().HasOne(m => m.Order).WithOne(m => m.Contract).OnDelete(DeleteBehavior.Restrict);
             modelBuilder.Entity<Contract>().HasOne(m => m.Salesman).WithMany().OnDelete(DeleteBehavior.Restrict);
             modelBuilder.Entity<Contract>().HasOne(m => m.Student).WithMany().OnDelete(DeleteBehavior.Restrict);
-            modelBuilder.Entity<Lesson>().HasOne(m => m.Class).WithMany(m=>m.Lessons).OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<Lesson>().HasOne(m => m.Class).WithMany(m => m.Lessons).OnDelete(DeleteBehavior.Restrict);
             modelBuilder.Entity<Lesson>().HasOne(m => m.Teacher).WithMany().OnDelete(DeleteBehavior.Restrict);
             modelBuilder.Entity<Lesson>().HasOne(m => m.TimePeriod).WithMany().OnDelete(DeleteBehavior.Restrict);
             base.OnModelCreating(modelBuilder);

@@ -31,7 +31,9 @@
           </Select>
         </FormItem>
         <FormItem :label="L('Subject')" prop="subject">
-          <Input v-model="lesson.subject" />
+          <Select v-model="lesson.subject">
+            <Option v-for="item in subjects" :value="item.name" :key="item.name" :label="item.name"></Option>
+          </Select>
         </FormItem>
       </Form>
       <div slot="footer">
@@ -56,9 +58,9 @@ export default class CreateLesson extends AbpBase {
   lesson: Lesson = new Lesson();
   clas: Class = new Class();
 
-  // get orders() {
-  //   return this.$store.state.order.list;
-  // }
+  get subjects() {
+    return this.$store.state.subject.list;
+  }
 
   get teachers() {
     return this.$store.state.teacher.listAvailable;
@@ -135,6 +137,12 @@ export default class CreateLesson extends AbpBase {
         data: { date: this.date, classId: this.clas.id }
       });
     }
+  }
+  created() {
+    this.$store.dispatch({
+      type: "subject/getAll",
+      data: { maxResultCount: 10000, isActive: true }
+    });
   }
   LessonRule = {
     subject: [
