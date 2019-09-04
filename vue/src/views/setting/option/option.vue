@@ -15,6 +15,7 @@
               <Table :loading="loading" :columns="columns" :no-data-text="L('NoDatas')" border :data="list.filter(m=>m.category===category.value)">
                 <template slot-scope="{ row }" slot="action" v-if="hasPermission('Pages.Options.Edit')">
                   <Button v-if="hasPermission('Pages.Options.Edit')" type="primary" size="small" @click="edit(row)" style="margin-right:5px">{{L('Edit')}}</Button>
+                  <Button v-if="hasPermission('Pages.Options.Delete')" type="primary" size="small" @click="remove(row)" style="margin-right:5px">{{L('Delete')}}</Button>
                 </template>
               </Table>
             </TabPane>
@@ -29,7 +30,7 @@
         </div>
       </div>
     </Card>
-    <create-option v-model="createModalShow" @save-success="getpage" :category='category'></create-option>
+    <create-option v-model="createModalShow" @save-success="getpage"></create-option>
     <edit-option v-model="editModalShow" @save-success="getpage"></edit-option>
   </div>
 </template>
@@ -61,13 +62,28 @@ export default class Options extends AbpBase {
     return this.$store.state.option.loading;
   }
   create() {
+    this.$store.commit("option/setCurrentCategory", this.category);
     this.createModalShow = true;
   }
   edit(row) {
     this.$store.commit("option/edit", row);
     this.editModalShow = true;
   }
-
+  async remove(row) {
+    this.$Modal.confirm({
+      title: this.L("Tips"),
+      content: this.L("DeleteOptionConfirm"),
+      okText: this.L("Yes"),
+      cancelText: this.L("No"),
+      onOk: async () => {
+        await this.$store.dispatch({
+          type: "option/delete",
+          data: row
+        });
+        await this.getpage();
+      }
+    });
+  }
   async getpage() {
     await this.$store.dispatch({
       type: "option/getAll",

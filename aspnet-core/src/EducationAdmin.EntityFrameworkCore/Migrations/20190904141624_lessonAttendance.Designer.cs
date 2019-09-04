@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EducationAdmin.Migrations
 {
     [DbContext(typeof(EducationAdminDbContext))]
-    [Migration("20190903150502_lessonAttendance")]
+    [Migration("20190904141624_lessonAttendance")]
     partial class lessonAttendance
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -1187,9 +1187,9 @@ namespace EducationAdmin.Migrations
 
             modelBuilder.Entity("EducationAdmin.Education.LessonAttendance", b =>
                 {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<long>("LessonId");
+
+                    b.Property<long>("OrderId");
 
                     b.Property<bool>("Attended");
 
@@ -1201,21 +1201,21 @@ namespace EducationAdmin.Migrations
 
                     b.Property<DateTime?>("DeletionTime");
 
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
                     b.Property<bool>("IsDeleted");
 
                     b.Property<DateTime?>("LastModificationTime");
 
                     b.Property<long?>("LastModifierUserId");
 
-                    b.Property<long>("LessonId");
+                    b.Property<int>("TenantId");
 
-                    b.Property<long>("StudentId");
+                    b.HasKey("LessonId", "OrderId");
 
-                    b.HasKey("Id");
-
-                    b.HasIndex("LessonId");
-
-                    b.HasIndex("StudentId");
+                    b.HasIndex("OrderId");
 
                     b.ToTable("LessonAttendances");
                 });
@@ -1842,9 +1842,9 @@ namespace EducationAdmin.Migrations
                         .HasForeignKey("LessonId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("EducationAdmin.Students.Student", "Student")
+                    b.HasOne("EducationAdmin.Sales.Order", "Order")
                         .WithMany()
-                        .HasForeignKey("StudentId")
+                        .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

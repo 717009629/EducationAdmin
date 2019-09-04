@@ -58,6 +58,8 @@ namespace EducationAdmin.EntityFrameworkCore
             modelBuilder.Entity<Lesson>().HasOne(m => m.Class).WithMany(m => m.Lessons).OnDelete(DeleteBehavior.Restrict);
             modelBuilder.Entity<Lesson>().HasOne(m => m.Teacher).WithMany().OnDelete(DeleteBehavior.Restrict);
             modelBuilder.Entity<Lesson>().HasOne(m => m.TimePeriod).WithMany().OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<LessonAttendance>().HasKey(m=>new { m.LessonId,m.OrderId });
+            modelBuilder.Entity<LessonAttendance>().Property(m => m.Id).UseSqlServerIdentityColumn();
             base.OnModelCreating(modelBuilder);
         }
     }

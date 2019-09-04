@@ -1185,9 +1185,9 @@ namespace EducationAdmin.Migrations
 
             modelBuilder.Entity("EducationAdmin.Education.LessonAttendance", b =>
                 {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<long>("LessonId");
+
+                    b.Property<long>("OrderId");
 
                     b.Property<bool>("Attended");
 
@@ -1199,19 +1199,19 @@ namespace EducationAdmin.Migrations
 
                     b.Property<DateTime?>("DeletionTime");
 
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
                     b.Property<bool>("IsDeleted");
 
                     b.Property<DateTime?>("LastModificationTime");
 
                     b.Property<long?>("LastModifierUserId");
 
-                    b.Property<long>("LessonId");
+                    b.Property<int>("TenantId");
 
-                    b.Property<long>("OrderId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("LessonId");
+                    b.HasKey("LessonId", "OrderId");
 
                     b.HasIndex("OrderId");
 

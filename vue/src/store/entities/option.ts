@@ -1,7 +1,7 @@
 import Entity from './entity'
 
 
-export default class TimePeriod extends Entity<number>{
+export default class Option extends Entity<number>{
     isAcitve:boolean
     name?:string
     category?:string

@@ -7,6 +7,6 @@ namespace EducationAdmin.LessonAttendances.Dto
 {
     public class PagedLessonAttendanceResultRequestDto : PagedResultRequestDto
     {
-        //public bool? IsActive { get; set; }
+        public long? LessonId { get; set; }
     }
 }

@@ -88,12 +88,16 @@ export default class ClassBusiness extends AbpBase {
     await this.getpage(500, arg.start, arg.end);
 
     var list = this.$store.state.lesson.list.map(m => {
+      let color = new Date(m.endTime) < new Date() ? "#aaa" : "#0f0";
+      if (m.isFinish) {
+        color = "#57a3f3";
+      }
       return {
         id: m.id,
         start: m.startTime,
         end: m.endTime,
         title: `${m.subject}--${m.teacher.name}`,
-        color: new Date(m.endTime) < new Date() ? "#aaa" : "#0f0",
+        color:color,
         lesson: m
       };
     });

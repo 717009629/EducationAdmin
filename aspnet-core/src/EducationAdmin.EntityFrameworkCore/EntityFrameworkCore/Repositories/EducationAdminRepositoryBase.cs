@@ -46,4 +46,5 @@ namespace EducationAdmin.EntityFrameworkCore.Repositories
 
         // Do not add any method here, add to the class above (since this inherits it)!!!
     }
+   
 }

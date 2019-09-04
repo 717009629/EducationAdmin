@@ -12,6 +12,14 @@
     <Compile Remove="Migrations\20190817142809_lesson.Designer.cs" />
     <Compile Remove="Migrations\20190817143214_lesson.cs" />
     <Compile Remove="Migrations\20190817143214_lesson.Designer.cs" />
+    <Compile Remove="Migrations\20190903150502_lessonAttendance.cs" />
+    <Compile Remove="Migrations\20190903150502_lessonAttendance.Designer.cs" />
+    <Compile Remove="Migrations\20190904003235_lessonattendance-2.cs" />
+    <Compile Remove="Migrations\20190904003235_lessonattendance-2.Designer.cs" />
+    <Compile Remove="Migrations\20190904135010_lessonAttendance3.cs" />
+    <Compile Remove="Migrations\20190904135010_lessonAttendance3.Designer.cs" />
+    <Compile Remove="Migrations\20190904140525_lessonAttendance.cs" />
+    <Compile Remove="Migrations\20190904140525_lessonAttendance.Designer.cs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.4" />

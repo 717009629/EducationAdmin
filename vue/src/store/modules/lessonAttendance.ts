@@ -34,6 +34,9 @@ class LessonAttendanceModule extends ListModule<LessonAttendanceState,any,Lesson
         async create(context:ActionContext<LessonAttendanceState,any>,payload:any){
             await Ajax.post('/api/services/app/LessonAttendance/Create',payload.data);
         },
+        async createMult(context:ActionContext<LessonAttendanceState,any>,payload:any){
+            await Ajax.post('/api/services/app/LessonAttendance/CreateMult',payload.data);
+        },
         async update(context:ActionContext<LessonAttendanceState,any>,payload:any){
             await Ajax.put('/api/services/app/LessonAttendance/Update',payload.data);
         },

@@ -10,5 +10,6 @@ namespace EducationAdmin.LessonAttendances
 {
     public interface ILessonAttendanceAppService:IAsyncCrudAppService<LessonAttendanceDto,long, PagedLessonAttendanceResultRequestDto, CreateLessonAttendanceDto, EditLessonAttendanceDto>
     {
+        Task CreateMult(CreateMultLessonAttendanceDto input);
     }
 }

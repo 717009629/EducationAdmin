@@ -8,7 +8,7 @@
       </div>
       <div>
         <FullCalendar ref='calendar' v-if="calenderShow&&value" defaultView="timeGridWeek" :plugins="calendarPlugins" :locale="locale" :events='events' :displayEventTime='true' :eventLimit='true'
-                      :allDaySlot='false' minTime='07:00:00' maxTime='21:00:00' slotDuration='00:15:00' slotLabelInterval='01:00'
+                      @eventClick='eventClick' :allDaySlot='false' minTime='07:00:00' maxTime='21:00:00' slotDuration='00:15:00' slotLabelInterval='01:00'
                       :header="{left:'title',center:'',right:'timeGridWeek, dayGridMonth today prev,next'}" :buttonText="{today:L('Today'),month:L('Month'),week:L('Week'),}">
         </FullCalendar>
         <!-- <Card dis-hover> -->
@@ -27,6 +27,8 @@
         </div>
       </div>
       <div slot="footer"></div>
+      <create-lesson-attendance v-model="createLessonAttendaceModalShow"></create-lesson-attendance>
+      <edit-lesson-attendance v-model="editLessonAttendaceModalShow"></edit-lesson-attendance>
     </Modal>
   </div>
 </template>
@@ -42,18 +44,25 @@ import interactionPlugin from "@fullcalendar/interaction";
 import { dateToLocalArray } from "@fullcalendar/core/datelib/marker";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import PageRequest from "../../../store/entities/page-request";
+import CreateLessonAttendance from "../../students/lessonAttendance/create-lesson-attendance.vue";
+import EditLessonAttendance from "../../students/lessonAttendance/edit-lesson-attendance.vue";
 class PageTeacherRequest extends PageRequest {
   teacherId?: number;
   start?: Date;
   end?: Date;
 }
-@Component({ components: { FullCalendar } })
+@Component({
+  components: { FullCalendar, CreateLessonAttendance, EditLessonAttendance }
+})
 export default class ClassBusiness extends AbpBase {
   @Prop({ type: Boolean, default: false }) value: boolean;
   teacher: Teacher = new Teacher();
   calenderShow: boolean = true;
+  createLessonAttendaceModalShow = false;
+  editLessonAttendaceModalShow = false;
   currentDate: Date = null;
   pagerequest: PageTeacherRequest = new PageTeacherRequest();
+  calendarPlugins: any = [dayGridPlugin, interactionPlugin, timeGridPlugin];
   get locale() {
     return abp.localization.currentLanguage.name;
   }
@@ -63,19 +72,30 @@ export default class ClassBusiness extends AbpBase {
   async events(arg, callback) {
     await this.getpage(500, arg.start, arg.end);
     var list = this.$store.state.lesson.list.map(m => {
+      let color = new Date(m.endTime) < new Date() ? "#aaa" : "#0f0";
+      if (m.isFinish) {
+        color = "#57a3f3";
+      }
       return {
         id: m.id,
         start: m.startTime,
         end: m.endTime,
         title: `${m.subject}--${m.class.name}`,
-        color: new Date(m.endTime) < new Date() ? "#aaa" : "#0f0",
+        color: color,
         lesson: m
       };
     });
     callback(list);
   }
-
-  calendarPlugins: any = [dayGridPlugin, interactionPlugin, timeGridPlugin];
+  eventClick(arg) {
+    let lesson = arg.event.extendedProps.lesson;
+    this.$store.commit("lesson/edit", lesson);
+    if (lesson.isFinish) {
+      this.editLessonAttendaceModalShow = true;
+    } else {
+      this.createLessonAttendaceModalShow = true;
+    }
+  }
 
   get list() {
     return this.$store.state.lesson.list;

@@ -18,6 +18,7 @@ using System.Linq.Dynamic.Core;
 using System.Text;
 using System.Threading.Tasks;
 using EducationAdmin.Repository;
+using EducationAdmin.Sales;
 
 namespace EducationAdmin.LessonAttendances
 {
@@ -25,12 +26,14 @@ namespace EducationAdmin.LessonAttendances
     public class LessonAttendanceAppService : AsyncCrudAppService<LessonAttendance, LessonAttendanceDto, long, PagedLessonAttendanceResultRequestDto, CreateLessonAttendanceDto, EditLessonAttendanceDto>, ILessonAttendanceAppService
     {
         private readonly IRepository<Lesson, long> LessonRepository;
-        public LessonAttendanceAppService(IInsertMutiRepository<LessonAttendance, long> repository, IRepository<Lesson, long> lessonRepository) : base(repository)
+        private readonly IRepository<Order, long> OrderRepository;
+        public LessonAttendanceAppService(IInsertMutiRepository<LessonAttendance, long> repository, IRepository<Lesson, long> lessonRepository, IRepository<Order, long> orderRepository) : base(repository)
         {
             this.CreatePermissionName = PermissionNames.Pages_LessonAttendances + ".Create";
             this.UpdatePermissionName = PermissionNames.Pages_LessonAttendances + ".Edit";
             this.DeletePermissionName = PermissionNames.Pages_LessonAttendances + ".Delete";
             LessonRepository = lessonRepository;
+            OrderRepository = orderRepository;
         }
 
         [AbpAuthorize]
@@ -42,12 +45,8 @@ namespace EducationAdmin.LessonAttendances
 
         protected override IQueryable<LessonAttendance> CreateFilteredQuery(PagedLessonAttendanceResultRequestDto input)
         {
-            if (input.MaxResultCount == 0)
-            {
-                input.MaxResultCount = int.MaxValue;
-            }
             // return Repository.GetAll().OrderBy(m=>m.Start)
-            return base.CreateFilteredQuery(input);
+            return base.CreateFilteredQuery(input).Include(m=>m.Order.Student).Include(m=>m.Lesson.Class).Include(m=>m.Lesson.Teacher).WhereIf(input.LessonId!=null, m=>m.LessonId==input.LessonId);
 
         }
         protected override IQueryable<LessonAttendance> ApplyPaging(IQueryable<LessonAttendance> query, PagedLessonAttendanceResultRequestDto input)
@@ -72,5 +71,25 @@ namespace EducationAdmin.LessonAttendances
             return await base.Update(input);
         }
 
+        public async Task CreateMult(CreateMultLessonAttendanceDto input)
+        {
+            var lesson = await LessonRepository.FirstOrDefaultAsync(input.LessonId);
+            if (lesson.IsFinish)
+            {
+                throw new Exception();
+            }
+            lesson.IsFinish = true;
+            var orders = await OrderRepository.GetAll().Where(m => m.ClassId == lesson.ClassId).ToListAsync();
+            var list = orders.Select(m => new LessonAttendance
+            {
+                OrderId = m.Id,
+                LessonId = lesson.Id,
+                Attended = input.OrderIds.Contains(m.Id),
+                CreationTime = DateTime.Now,
+                CreatorUserId = AbpSession.UserId,
+                TenantId = AbpSession.TenantId.Value
+            });
+            await ((IInsertMutiRepository<LessonAttendance, long>)Repository).InsertListAsync(list);
+        }
     }
 }

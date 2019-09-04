@@ -33,7 +33,7 @@ namespace EducationAdmin.EntityFrameworkCore
                     else
                     {
                         EducationAdminDbContextConfigurer.Configure(options.DbContextOptions, options.ConnectionString);
-                    }
+                    }                 
                 });
             }
         }

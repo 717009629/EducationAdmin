@@ -12,8 +12,8 @@ namespace EducationAdmin.Migrations
                 name: "LessonAttendances",
                 columns: table => new
                 {
-                    Id = table.Column<long>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    OrderId = table.Column<long>(nullable: false),
+                    LessonId = table.Column<long>(nullable: false),
                     CreationTime = table.Column<DateTime>(nullable: false),
                     CreatorUserId = table.Column<long>(nullable: true),
                     LastModificationTime = table.Column<DateTime>(nullable: true),
@@ -21,13 +21,14 @@ namespace EducationAdmin.Migrations
                     IsDeleted = table.Column<bool>(nullable: false),
                     DeleterUserId = table.Column<long>(nullable: true),
                     DeletionTime = table.Column<DateTime>(nullable: true),
-                    StudentId = table.Column<long>(nullable: false),
-                    LessonId = table.Column<long>(nullable: false),
-                    Attended = table.Column<bool>(nullable: false)
+                    Attended = table.Column<bool>(nullable: false),
+                    TenantId = table.Column<int>(nullable: false),
+                    Id = table.Column<long>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_LessonAttendances", x => x.Id);
+                    table.PrimaryKey("PK_LessonAttendances", x => new { x.LessonId, x.OrderId });
                     table.ForeignKey(
                         name: "FK_LessonAttendances_Lessons_LessonId",
                         column: x => x.LessonId,
@@ -35,22 +36,17 @@ namespace EducationAdmin.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_LessonAttendances_Students_StudentId",
-                        column: x => x.StudentId,
-                        principalTable: "Students",
+                        name: "FK_LessonAttendances_Orders_OrderId",
+                        column: x => x.OrderId,
+                        principalTable: "Orders",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_LessonAttendances_LessonId",
+                name: "IX_LessonAttendances_OrderId",
                 table: "LessonAttendances",
-                column: "LessonId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_LessonAttendances_StudentId",
-                table: "LessonAttendances",
-                column: "StudentId");
+                column: "OrderId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

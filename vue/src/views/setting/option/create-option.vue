@@ -31,7 +31,7 @@ import Categories from "../../../store/entities/optionCategory";
 @Component
 export default class CreateOption extends AbpBase {
   @Prop({ type: Boolean, default: false }) value: boolean;
-  @Prop({ type: String }) category: string;
+
   option: Option = new Option();
   categories = Categories;
   save() {
@@ -47,10 +47,7 @@ export default class CreateOption extends AbpBase {
       }
     });
   }
-  @Watch("category")
-  cateoryChange(n, o) {
-    this.option.category = n;
-  }
+
   cancel() {
     (this.$refs.optionForm as any).resetFields();
     this.$emit("input", false);
@@ -59,11 +56,10 @@ export default class CreateOption extends AbpBase {
     if (!value) {
       this.$emit("input", value);
     } else {
-      //  this.option.category = this.category;
+      this.option = new Option();
+      this.option.category = this.$store.state.option.currentCategory;
+      console.log(this.option);
     }
-  }
-  created() {
-    this.option.category = this.category;
   }
   OptionRule = {
     name: [

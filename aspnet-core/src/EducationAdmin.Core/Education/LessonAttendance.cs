@@ -1,4 +1,5 @@
-﻿using Abp.Domain.Entities.Auditing;
+﻿using Abp.Domain.Entities;
+using Abp.Domain.Entities.Auditing;
 using EducationAdmin.Sales;
 using EducationAdmin.Students;
 using System;
@@ -7,7 +8,7 @@ using System.Text;
 
 namespace EducationAdmin.Education
 {
-    public class LessonAttendance : FullAuditedEntity<long>
+    public class LessonAttendance : FullAuditedEntity<long>, IMustHaveTenant
     {
         public long OrderId { get; set; }
 
@@ -18,5 +19,9 @@ namespace EducationAdmin.Education
         public Lesson Lesson { get; set; }
 
         public bool Attended { get; set; }
+
+        public int TenantId { get; set; }
+
+        public override long Id { get => base.Id; set => base.Id = value; }
     }
 }

@@ -9,6 +9,7 @@ import ListMutations from './list-mutations'
 
 interface OptionState extends ListState<Option>{
     editOption:Option
+    currentCategory:string
 }
 class OptionMutations extends ListMutations<Option>{
 
@@ -20,7 +21,8 @@ class OptionModule extends ListModule<OptionState,any,Option>{
         pageSize:10,
         list: new Array<Option>(),
         loading:false,
-        editOption:new Option()
+        editOption:new Option(),
+        currentCategory:''
     }
     actions={
         async getAll(context:ActionContext<OptionState,any>,payload:any){
@@ -54,6 +56,9 @@ class OptionModule extends ListModule<OptionState,any,Option>{
         },
         edit(state:OptionState,option:Option){
             state.editOption=option;
+        },
+        setCurrentCategory(state:OptionState,category:string){
+            state.currentCategory=category;
         }
     }
 }

@@ -151,7 +151,7 @@ export default class LessonAttendances extends AbpBase {
       title: this.L("Teacher"),
       key: "teacher",
       render: (h: any, params: any) => {
-        return h("span", params.row.teacher.name);
+        return h("span", params.row.lesson.teacher.name);
       }
     },
     {

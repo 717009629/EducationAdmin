@@ -68,7 +68,7 @@ export const appRouters: Array<Router> = [{
     component: main,
     children: [
         { path: 'student', permission: 'Pages.Students', meta: { title: 'Students' }, name: 'student', component: () => import('../views/students/student/student.vue') },
-        { path: 'lessonAttendance', permission: 'Pages.LessonAttendances', meta: { title: 'LessonAttendances' }, name: 'lessonAttendance', component: () => import('../views/students/lessonAttendance/lessonAttendance.vue') }
+        { path: 'lessonAttendance', permission: 'Pages.LessonAttendances', meta: { title: 'LessonAttendances' }, name: 'lessonAttendance', component: () => import('../views/students/lessonAttendance/lesson-attendance.vue') }
 
 
     ]
