@@ -153,6 +153,13 @@ export default class LessonAttendances extends AbpBase {
       render: (h: any, params: any) => {
         return h("span", params.row.teacher.name);
       }
+    },
+    {
+      title: this.L("Attended"),
+      key: "attended",
+      render: (h: any, params: any) => {
+         return h("span", params.row.attended ? this.L("Yes") : this.L("No"));
+      }
     }
 
     // {

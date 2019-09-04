@@ -14,7 +14,7 @@ namespace EducationAdmin.EntityFrameworkCore.Repositories
     /// </summary>
     /// <typeparam name="TEntity">Entity type</typeparam>
     /// <typeparam name="TPrimaryKey">Primary key type of the entity</typeparam>
-    public abstract class EducationAdminRepositoryBase<TEntity, TPrimaryKey> : EfCoreRepositoryBase<EducationAdminDbContext, TEntity, TPrimaryKey>, IInsertMutiRepository<TEntity, TPrimaryKey>
+    public abstract class EducationAdminRepositoryBase<TEntity, TPrimaryKey> : EfCoreRepositoryBase<EducationAdminDbContext, TEntity, TPrimaryKey>
         where TEntity : class, IEntity<TPrimaryKey>
     {
         protected EducationAdminRepositoryBase(IDbContextProvider<EducationAdminDbContext> dbContextProvider)

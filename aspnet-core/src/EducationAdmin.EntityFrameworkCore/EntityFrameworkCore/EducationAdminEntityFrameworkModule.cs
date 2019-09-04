@@ -1,13 +1,17 @@
-﻿using Abp.EntityFrameworkCore.Configuration;
+﻿using Abp.Dependency;
+using Abp.EntityFrameworkCore.Configuration;
 using Abp.Modules;
 using Abp.Reflection.Extensions;
 using Abp.Zero.EntityFrameworkCore;
+using EducationAdmin.Education;
+using EducationAdmin.EntityFrameworkCore.Repositories;
 using EducationAdmin.EntityFrameworkCore.Seed;
+using EducationAdmin.Repository;
 
 namespace EducationAdmin.EntityFrameworkCore
 {
     [DependsOn(
-        typeof(EducationAdminCoreModule), 
+        typeof(EducationAdminCoreModule),
         typeof(AbpZeroCoreEntityFrameworkCoreModule))]
     public class EducationAdminEntityFrameworkModule : AbpModule
     {
@@ -37,6 +41,8 @@ namespace EducationAdmin.EntityFrameworkCore
         public override void Initialize()
         {
             IocManager.RegisterAssemblyByConvention(typeof(EducationAdminEntityFrameworkModule).GetAssembly());
+
+            IocManager.Register<IInsertMutiRepository<LessonAttendance, long>, InsertMutiRepository<LessonAttendance, long>>(DependencyLifeStyle.Transient);
         }
 
         public override void PostInitialize()
@@ -46,5 +52,6 @@ namespace EducationAdmin.EntityFrameworkCore
                 SeedHelper.SeedHostDb(IocManager);
             }
         }
+
     }
 }
