@@ -2,6 +2,7 @@
 using Abp.AutoMapper;
 using EducationAdmin.Education;
 using EducationAdmin.Lessons.Dto;
+using EducationAdmin.Orders.Dto;
 using EducationAdmin.Sales.Dto;
 using EducationAdmin.Settings;
 using System;
@@ -14,9 +15,9 @@ namespace EducationAdmin.LessonAttendances.Dto
     [AutoMapTo(typeof(LessonAttendance))]
     public class LessonAttendanceDto : FullAuditedEntityDto <long>
     {
-        public long StudentId { get; set; }
+        public long OrderId { get; set; }
 
-        public StudentDto Student { get; set; }
+        public OrderDto Order { get; set; }
 
         public long LessonId { get; set; }
 

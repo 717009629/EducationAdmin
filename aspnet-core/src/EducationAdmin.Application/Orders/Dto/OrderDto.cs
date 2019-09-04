@@ -33,7 +33,7 @@ namespace EducationAdmin.Orders.Dto
         public long CourseId { get; set; }
         public CourseDto Course { get; set; }
 
-        public OrderContractDto Contract { get; set; }
+        //public OrderContractDto Contract { get; set; }
 
         public long SalesmanId { get; set; }
 

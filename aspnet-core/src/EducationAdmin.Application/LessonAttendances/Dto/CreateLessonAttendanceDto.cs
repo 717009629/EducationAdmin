@@ -11,7 +11,7 @@ namespace EducationAdmin.LessonAttendances.Dto
     [AutoMapTo(typeof(LessonAttendance))]
     public class CreateLessonAttendanceDto 
     {
-        public long StudentId { get; set; }
+        public long OrderId { get; set; }
 
 
         public long LessonId { get; set; }

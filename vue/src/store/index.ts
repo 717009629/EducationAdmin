@@ -15,6 +15,7 @@ import courseItem from './modules/courseItem'
 import contract from './modules/contract'
 import customer from './modules/customer'
 import lesson from './modules/lesson'
+import lessonAttendance from './modules/lessonAttendance'
 import teacher from './modules/teacher'
 import clas from './modules/class'
 import timePeriod from './modules/timePeriod'
@@ -45,6 +46,7 @@ const store = new Vuex.Store({
         contract,
         customer,
         lesson,
+        lessonAttendance,
         teacher,
         class: clas,
         timePeriod,
