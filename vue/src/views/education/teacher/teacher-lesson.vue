@@ -72,15 +72,17 @@ export default class ClassBusiness extends AbpBase {
   async events(arg, callback) {
     await this.getpage(500, arg.start, arg.end);
     var list = this.$store.state.lesson.list.map(m => {
+      let state = "未考勤";
       let color = new Date(m.endTime) < new Date() ? "#aaa" : "#0f0";
       if (m.isFinish) {
         color = "#57a3f3";
+        state = "已考勤";
       }
       return {
         id: m.id,
         start: m.startTime,
         end: m.endTime,
-        title: `${m.subject}--${m.class.name}`,
+        title: `${m.class.name}\n${m.subject}--${state}`,
         color: color,
         lesson: m
       };
@@ -89,11 +91,13 @@ export default class ClassBusiness extends AbpBase {
   }
   eventClick(arg) {
     let lesson = arg.event.extendedProps.lesson;
-    this.$store.commit("lesson/edit", lesson);
-    if (lesson.isFinish) {
-      this.editLessonAttendaceModalShow = true;
-    } else {
-      this.createLessonAttendaceModalShow = true;
+    if (new Date(lesson.startTime) <= new Date()) {
+      this.$store.commit("lesson/edit", lesson);
+      if (lesson.isFinish) {
+        this.editLessonAttendaceModalShow = true;
+      } else {
+        this.createLessonAttendaceModalShow = true;
+      }
     }
   }
 

@@ -9,7 +9,7 @@
           </Row>
         </Form>
         <div class="margin-top-10">
-          <Table :loading="loading" :columns="columns" :no-data-text="L('NoDatas')" border :data="list">
+          <Table :loading="loading" :columns="columns" :no-data-text="L('NoDatas')" border :data="list"  :row-class-name="rowClassName">
             <template slot-scope="{ row }" slot="action" v-if="hasPermission('Pages.Subjects.Edit')">
               <Button v-if="hasPermission('Pages.Subjects.Edit')" type="primary" size="small" @click="edit(row)" style="margin-right:5px">{{L('Edit')}}</Button>
             </template>
@@ -80,7 +80,12 @@ export default class Subjects extends AbpBase {
   get currentPage() {
     return this.$store.state.subject.currentPage;
   }
-
+  rowClassName(row, index) {
+    if (!row.isActive) {
+      return "disabled";
+    }
+    return "";
+  }
   columns = [
     {
       title: this.L("Index"),

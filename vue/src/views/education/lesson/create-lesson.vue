@@ -124,6 +124,7 @@ export default class CreateLesson extends AbpBase {
   async visibleChange(value: boolean) {
     if (!value) {
       this.$emit("input", value);
+      this.lesson.teacherId = undefined;
     } else {
       this.clas = Util.extend(true, {}, this.$store.state.class.editClass);
       this.lesson.classId = this.clas.id;

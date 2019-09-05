@@ -31,6 +31,12 @@ class LessonModule extends ListModule<LessonState,any,Lesson>{
             context.state.totalCount=page.totalCount;
             context.state.list=page.items;
         },
+        async getByStudentId(context:ActionContext<LessonState,any>,payload:any){
+            context.state.loading=true;
+            let reponse=await Ajax.get('/api/services/app/Lesson/GetByStudentId',{params:payload.data});
+            context.state.loading=false;
+            context.state.list=reponse.data.result;
+        },
         async create(context:ActionContext<LessonState,any>,payload:any){
             await Ajax.post('/api/services/app/Lesson/Create',payload.data);
         },

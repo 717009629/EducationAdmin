@@ -9,7 +9,7 @@
       <div>
         <FullCalendar ref="calendar" v-if="calenderShow&&value" defaultView="timeGridWeek" :plugins="calendarPlugins" :locale="locale" :events='events' :eventLimit='5'
                       :header="{left:'title',center:'',right:'timeGridWeek, dayGridMonth today prev,next'}" :showNonCurrentDates='true' :displayEventTime='true' :allDaySlot='false' minTime='07:00:00'
-                      maxTime='21:00:00' slotDuration='00:15:00' slotLabelInterval='01:00' :buttonText="{today:L('Today'),month:L('Month'),week:L('Week')}"></FullCalendar>
+                      maxTime='21:00:00' slotDuration='00:12:00' slotLabelInterval='01:00' :buttonText="{today:L('Today'),month:L('Month'),week:L('Week')}"></FullCalendar>
 
         <!-- <Card dis-hover> -->
         <div v-if="!calenderShow">
@@ -82,15 +82,35 @@ export default class StudentBusiness extends AbpBase {
   async events(arg, callback) {
     this.start = arg.start;
     this.end = arg.end;
-    await this.getpage(500, arg.start, arg.end);
+    await this.getlesson(arg.start, arg.end);
 
     var list = this.$store.state.lesson.list.map(m => {
+      let state = "未考勤";
+      let textColor = "#fff";
+      let color = new Date(m.endTime) < new Date() ? "#aaa" : "#0f0";
+      if (m.isFinish) {
+        if (m.attended === null) {
+          color = "rgba(45, 140, 240, 0.2)";
+          textColor = "#000";
+          state = "未报名";
+        }
+        if (m.attended === false) {
+          color = "#ed4014";
+          state = "缺勤";
+        }
+        if (m.attended === true) {
+          color = "#57a3f3";
+          state = "已出勤";
+        }
+      }
+
       return {
         id: m.id,
         start: m.startTime,
         end: m.endTime,
-        title: `${m.class.name}-${m.subject}-${m.teacher.name}`,
-        color: new Date(m.endTime) < new Date() ? "#aaa" : "#0f0",
+        title: `${m.class.name}\n${m.subject}-${m.teacher.name}\n${state}`,
+        color: color,
+        textColor: textColor,
         lesson: m
       };
     });
@@ -129,6 +149,16 @@ export default class StudentBusiness extends AbpBase {
   //   this.$store.commit("lesson/edit", arg.event.extendedProps.lesson);
   //   this.editModalShow = true;
   // }
+  async getlesson(start, end) {
+    this.pagerequest.studentId = this.student.id;
+    this.pagerequest.start = start;
+    this.pagerequest.end = end;
+
+    await this.$store.dispatch({
+      type: "lesson/getByStudentId",
+      data: { studentId: this.student.id, start, end }
+    });
+  }
 
   async getpage(count = null, start = null, end = null) {
     this.pagerequest.studentId = this.student.id;
@@ -176,7 +206,6 @@ export default class StudentBusiness extends AbpBase {
     }
   }
   columns = [
-
     {
       title: this.L("Subject"),
       key: "subject"

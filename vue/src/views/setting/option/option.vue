@@ -12,7 +12,7 @@
           <Tabs v-model="category">
             <TabPane v-for="category in categories" :label="L(category.name)" :name="category.value" :key="category.value">
               <!-- <option-tab :category="category.value"></option-tab> -->
-              <Table :loading="loading" :columns="columns" :no-data-text="L('NoDatas')" border :data="list.filter(m=>m.category===category.value)">
+              <Table :loading="loading" :columns="columns" :no-data-text="L('NoDatas')" border :data="list.filter(m=>m.category===category.value)"  :row-class-name="rowClassName">
                 <template slot-scope="{ row }" slot="action" v-if="hasPermission('Pages.Options.Edit')">
                   <Button v-if="hasPermission('Pages.Options.Edit')" type="primary" size="small" @click="edit(row)" style="margin-right:5px">{{L('Edit')}}</Button>
                   <Button v-if="hasPermission('Pages.Options.Delete')" type="primary" size="small" @click="remove(row)" style="margin-right:5px">{{L('Delete')}}</Button>
@@ -99,7 +99,12 @@ export default class Options extends AbpBase {
   // get currentPage() {
   //   return this.$store.state.option.currentPage;
   // }
-
+  rowClassName(row, index) {
+    if (!row.isActive) {
+      return "disabled";
+    }
+    return "";
+  }
   columns = [
     {
       title: this.L("Index"),
