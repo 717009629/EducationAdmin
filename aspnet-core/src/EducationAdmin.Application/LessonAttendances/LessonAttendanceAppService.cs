@@ -74,6 +74,10 @@ namespace EducationAdmin.LessonAttendances
         public async Task CreateMult(CreateMultLessonAttendanceDto input)
         {
             var lesson = await LessonRepository.FirstOrDefaultAsync(input.LessonId);
+            if(lesson.LessonDate+lesson.Start>DateTime.Now)
+            {
+                throw new Exception();
+            }
             if (lesson.IsFinish)
             {
                 throw new Exception();
