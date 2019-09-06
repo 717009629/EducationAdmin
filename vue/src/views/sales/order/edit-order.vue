@@ -5,10 +5,13 @@
 
         <FormItem :label="L('Course')" prop="courseId">
           <Select v-model="order.courseId" filterable @on-change='selectChange'>
-            <Option v-for="item in courseList" :value="item.id" :key="item.id" :label="item.category+'：'+item.name+'：'+item.price+'元'">
+            <Option v-for="item in courseList" :value="item.id" :key="item.id" :label="item.category+'：'+item.name+'：'+item.count+'节课：'+item.price+'元'">
               <span>{{item.category}}</span>
               <span>：</span>
               <span>{{item.name}}</span>
+              <span>：</span>
+              <span>{{item.count}}</span>
+              <span>节课</span>
               <span style="float:right;">{{item.price}}元</span>
             </Option>
           </Select>
@@ -21,12 +24,14 @@
             </FormItem>
           </i-col>
           <i-col span="12">
-            <FormItem :label="L('OrderDate')" prop="orderDate">
-              <DatePicker type="date" placeholder="Select date" v-model="order.orderDate"></DatePicker>
+            <FormItem :label="L('LessonCount')" prop="count">
+              <InputNumber v-model="order.count" style="width:100%" />
             </FormItem>
           </i-col>
         </Row>
-
+        <FormItem :label="L('OrderDate')" prop="orderDate">
+          <DatePicker type="date" placeholder="Select date" v-model="order.orderDate"></DatePicker>
+        </FormItem>
         <FormItem :label="L('Note')" prop="note">
           <Input v-model="order.note" type="textarea" :rows="3" />
         </FormItem>
@@ -90,7 +95,7 @@ export default class EditOrdere extends AbpBase {
       this.getAllCourse();
     }
   }
-OrderRule = {
+  OrderRule = {
     courseId: [
       {
         type: "number",

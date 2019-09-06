@@ -93,7 +93,10 @@ export default class Courses extends AbpBase {
       title: this.L("ClassType"),
       key: "classType",
       render: (h, params) => {
-        return h("span", this.L(window.abp.custom.ClassType[params.row.classType]));
+        return h(
+          "span",
+          this.L(window.abp.custom.ClassType[params.row.classType])
+        );
       }
     },
     {
@@ -103,6 +106,10 @@ export default class Courses extends AbpBase {
     {
       title: this.L("CourseName"),
       key: "name"
+    },
+    {
+      title: this.L("Count"),
+      key: "count"
     },
     {
       title: this.L("Price"),

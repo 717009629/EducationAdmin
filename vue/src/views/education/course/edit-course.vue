@@ -4,7 +4,7 @@
       <Form ref="courseForm" label-position="top" :rules="CourseRule" :model="course">
         <FormItem :label="L('ClassType')" prop="classType">
           <Select v-model="course.classType" :transfor='false' disabled>
-            <Option v-for="item in classType" :key="item.key" :value="item.key" :label=" L(item.value)" ></Option>
+            <Option v-for="item in classType" :key="item.key" :value="item.key" :label=" L(item.value)"></Option>
           </Select>
         </FormItem>
 
@@ -15,7 +15,10 @@
           <Input v-model="course.name" style="width:100%" />
         </FormItem>
         <FormItem :label="L('Price')" prop="price">
-          <InputNumber v-model="course.price"  style="width:100%" />
+          <InputNumber v-model="course.price" style="width:100%" />
+        </FormItem>
+        <FormItem :label="L('Count')" prop="count">
+          <InputNumber v-model="course.count" style="width:100%" />
         </FormItem>
         <FormItem :label="L('Note')" prop="note">
           <Input v-model="course.note" type="textarea" :rows="3" />
@@ -37,7 +40,7 @@ import Course from "../../../store/entities/course";
 export default class EditCoursee extends AbpBase {
   @Prop({ type: Boolean, default: false }) value: boolean;
   course: Course = new Course();
-  classType=window.abp.custom.classType;
+  classType = window.abp.custom.classType;
   save() {
     (this.$refs.courseForm as any).validate(async (valid: boolean) => {
       if (valid) {
@@ -90,6 +93,14 @@ export default class EditCoursee extends AbpBase {
         type: "number",
         required: true,
         message: this.L("FieldIsRequired", undefined, this.L("Price")),
+        trigger: "blur"
+      }
+    ],
+    count: [
+      {
+        type: "number",
+        required: true,
+        message: this.L("FieldIsRequired", undefined, this.L("Count")),
         trigger: "blur"
       }
     ]

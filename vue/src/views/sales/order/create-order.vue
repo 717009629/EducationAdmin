@@ -5,10 +5,13 @@
 
         <FormItem :label="L('Course')" prop="courseId">
           <Select v-model="order.courseId" filterable @on-change='selectChange'>
-            <Option v-for="item in courseList" :value="item.id" :key="item.id" :label="item.category+'：'+item.name+'：'+item.price+'元'">
+            <Option v-for="item in courseList" :value="item.id" :key="item.id" :label="item.category+'：'+item.name+'：'+item.count+'节课：'+item.price+'元'">
               <span>{{item.category}}</span>
               <span>：</span>
               <span>{{item.name}}</span>
+              <span>：</span>
+              <span>{{item.count}}</span>
+              <span>节课</span>
               <span style="float:right;">{{item.price}}元</span>
             </Option>
           </Select>
@@ -21,12 +24,14 @@
             </FormItem>
           </i-col>
           <i-col span="12">
-            <FormItem :label="L('OrderDate')" prop="orderDate">
-              <DatePicker type="date" placeholder="Select date" v-model="order.orderDate"></DatePicker>
+            <FormItem :label="L('LessonCount')" prop="count">
+              <InputNumber v-model="order.count" style="width:100%" />
             </FormItem>
           </i-col>
         </Row>
-
+        <FormItem :label="L('OrderDate')" prop="orderDate">
+          <DatePicker type="date" placeholder="Select date" v-model="order.orderDate"></DatePicker>
+        </FormItem>
         <FormItem :label="L('Note')" prop="note">
           <Input v-model="order.note" type="textarea" :rows="3" />
         </FormItem>
@@ -54,12 +59,13 @@ export default class CreateOrder extends AbpBase {
   }
 
   selectChange(option) {
-    let courses= this.courseList.filter(m=>m.id===option);
-    if(courses.length===0){
-      this.order.fullMoney=0;
+    let courses = this.courseList.filter(m => m.id === option);
+    if (courses.length === 0) {
+      this.order.fullMoney = 0;
       return;
     }
-    this.order.fullMoney=courses[0].price;
+    this.order.fullMoney = courses[0].price;
+    this.order.count = courses[0].count;
   }
   save() {
     (this.$refs.orderForm as any).validate(async (valid: boolean) => {
@@ -113,6 +119,14 @@ export default class CreateOrder extends AbpBase {
         type: "number",
         required: true,
         message: this.L("FieldIsRequired", undefined, this.L("FullMoney")),
+        trigger: "blur"
+      }
+    ],
+    count: [
+      {
+        type: "number",
+        required: true,
+        message: this.L("FieldIsRequired", undefined, this.L("LessonCount")),
         trigger: "blur"
       }
     ],

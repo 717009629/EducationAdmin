@@ -10,8 +10,9 @@
     <div class="margin-top-10">
       <Table :loading="loading" :columns="columns" :no-data-text="L('NoDatas')" border :data="list">
         <template slot-scope="{ row }" slot="action" v-if="hasPermission('Pages.Orders.Edit')">
-          <Button v-if="hasPermission('Pages.Orders.Edit')&&row.state!==1" type="primary" size="small" @click="edit(row)" style="margin-right:5px">{{L('Edit')}}</Button>
-          <Button v-if="hasPermission('Pages.Orders.Audite')&&row.state!==1" type="primary" size="small" @click="audite(row)" style="margin-right:5px">{{L('Audite')}}</Button>
+          <Button v-if="hasPermission('Pages.Orders.Edit')&&row.state===0" type="primary" size="small" @click="edit(row)" style="margin-right:5px">{{L('Edit')}}</Button>
+          <Button v-if="hasPermission('Pages.Orders.Audite')&&row.state===0" type="primary" size="small" @click="audite(row)" style="margin-right:5px">{{L('Audite')}}</Button>
+          <Button v-if="row.state!==0" type="primary" size="small" @click="lesson(row)" style="margin-right:5px">{{L('LessonAttendance')}}</Button>
           <!-- <Button v-if="hasPermission('Pages.Orders.Edit')" type="primary" size="small" @click="showContract(row)" style="margin-right:5px">{{L('ConvertContract')}}</Button> -->
         </template>
       </Table>
@@ -19,6 +20,8 @@
     <!-- </Card> -->
     <create-order v-model="createModalShow" @save-success="getpage"></create-order>
     <edit-order v-model="editModalShow" @save-success="getpage"></edit-order>
+    <lesson-attendance v-model="lessonAttendanceModalShow" @save-success="getpage"></lesson-attendance>
+
     <!-- <create-contract v-model="contractModalShow" @save-success="refreshOrderAndContract"></create-contract> -->
   </Modal>
 </template>
@@ -30,9 +33,11 @@ import Student from "../../../store/entities/student";
 import Order from "../../../store/entities/order";
 import CreateOrder from "../../sales/order/create-order.vue";
 import EditOrder from "../../sales/order/edit-order.vue";
+import LessonAttendance from "../../sales/order/lesson-attendance.vue";
+
 //import CreateContract from "../../sales/contract/create-contract.vue";
 @Component({
-  components: { CreateOrder, EditOrder }
+  components: { CreateOrder, EditOrder, LessonAttendance }
 })
 export default class StudentOrder extends AbpBase {
   @Prop({ type: Boolean, default: false }) value: boolean;
@@ -40,6 +45,7 @@ export default class StudentOrder extends AbpBase {
   student: Student = new Student();
   createModalShow: boolean = false;
   editModalShow: boolean = false;
+  lessonAttendanceModalShow: boolean = false;
   //contractModalShow: boolean = false;
   get list() {
     return this.$store.state.order.list;
@@ -53,6 +59,10 @@ export default class StudentOrder extends AbpBase {
   edit(row) {
     this.$store.commit("order/edit", row);
     this.editModalShow = true;
+  }
+  lesson(row) {
+    this.$store.commit("order/edit", row);
+    this.lessonAttendanceModalShow = true;
   }
   audite(row) {
     this.$Modal.confirm({
@@ -160,6 +170,10 @@ export default class StudentOrder extends AbpBase {
         return h("span", params.row.course.price);
       }
     },
+    {
+      title: this.L("LessonCount"),
+      key: "count"
+    },
     // {
     //   title: this.L("State"),
     //   key: "state"
@@ -188,7 +202,7 @@ export default class StudentOrder extends AbpBase {
       title: this.L("Class"),
       key: "class",
       render: (h, params) => {
-        return h("span", params.row.class? params.row.class.name:'');
+        return h("span", params.row.class ? params.row.class.name : "");
       }
     },
 

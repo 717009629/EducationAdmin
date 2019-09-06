@@ -46,7 +46,9 @@ namespace EducationAdmin.LessonAttendances
         protected override IQueryable<LessonAttendance> CreateFilteredQuery(PagedLessonAttendanceResultRequestDto input)
         {
             // return Repository.GetAll().OrderBy(m=>m.Start)
-            return base.CreateFilteredQuery(input).Include(m=>m.Order.Student).Include(m=>m.Lesson.Class).Include(m=>m.Lesson.Teacher).WhereIf(input.LessonId!=null, m=>m.LessonId==input.LessonId);
+            return base.CreateFilteredQuery(input).Include(m => m.Order.Student).Include(m => m.Lesson.Class).Include(m => m.Lesson.Teacher)
+                .WhereIf(input.LessonId != null, m => m.LessonId == input.LessonId)
+                .WhereIf(input.OrderId != null, m => m.OrderId == input.OrderId);
 
         }
         protected override IQueryable<LessonAttendance> ApplyPaging(IQueryable<LessonAttendance> query, PagedLessonAttendanceResultRequestDto input)
@@ -74,7 +76,7 @@ namespace EducationAdmin.LessonAttendances
         public async Task CreateMult(CreateMultLessonAttendanceDto input)
         {
             var lesson = await LessonRepository.FirstOrDefaultAsync(input.LessonId);
-            if(lesson.LessonDate+lesson.Start>DateTime.Now)
+            if (lesson.LessonDate + lesson.Start > DateTime.Now)
             {
                 throw new Exception();
             }

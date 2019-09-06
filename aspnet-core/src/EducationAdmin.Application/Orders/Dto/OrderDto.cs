@@ -4,6 +4,7 @@ using Abp.Domain.Entities.Auditing;
 using EducationAdmin.Classes.Dto;
 using EducationAdmin.Contracts.Dto;
 using EducationAdmin.Courses.Dto;
+using EducationAdmin.LessonAttendances.Dto;
 using EducationAdmin.Sales;
 using EducationAdmin.Sales.Dto;
 using Newtonsoft.Json;
@@ -23,6 +24,7 @@ namespace EducationAdmin.Orders.Dto
         public DateTime? SchoolBegin { get; set; }
 
         public decimal FullMoney { get; set; }
+        public int Count { get; set; }
 
         public OrderState State { get; set; }
 
@@ -44,5 +46,7 @@ namespace EducationAdmin.Orders.Dto
         public long? ClassId { get; set; }
 
         public ClassDto Class { get; set; }
+
+        public List<PlainLessonAttendanceDto> LessonAttendances { get; set; }
     }
 }

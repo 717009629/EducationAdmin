@@ -3,11 +3,11 @@
     <Modal :value="value" @on-visible-change="visibleChange" :mask-closable="false" :transfer="false" :width='1000'>
       <div slot="header">
         <span style="line-height:20px; font-size:14px;color:#17233d;font-weight:bold;margin-right:20px">{{L('LessionAttendance')}}</span>
-        <span style="line-height:20px; font-size:14px;color:#17233d;font-weight:bold;margin-right:20px">{{lesson.class?lesson.class.name:''}}</span>
+        <span style="line-height:20px; font-size:14px;color:#17233d;font-weight:bold;margin-right:20px">{{order.student?order.student.name:''}}</span>
       </div>
       <!-- <Card dis-hover> -->
       <div class="margin-top-10">
-        <Table :loading="loading" :columns="columns" :no-data-text="L('NoDatas')" border :data="list" :row-class-name="rowClassName">
+        <Table :loading="loading" :columns="columns" :no-data-text="L('NoDatas')" border :data="list" @on-selection-change='selectChange' :row-class-name="rowClassName">
           <template slot-scope="{ row }" slot="action" v-if="hasPermission('Pages.Orders.Edit')">
             <!-- <Button v-if="hasPermission('Pages.Orders.Edit')" type="primary" size="small" @click="edit(row)" style="margin-right:5px">{{L('Edit')}}</Button> -->
           </template>
@@ -36,7 +36,7 @@ import Order from "../../../store/entities/order";
 })
 export default class EditLessonAttendance extends AbpBase {
   @Prop({ type: Boolean, default: false }) value: boolean;
-  lesson: Lesson = new Lesson();
+  order: Order = new Order();
 
   selectItems = [];
   get list() {
@@ -49,17 +49,17 @@ export default class EditLessonAttendance extends AbpBase {
   //   this.$store.commit("order/edit", row);
   //   this.editModalShow = true;
   // }
-  // selectChange(selection) {
-  //   this.selectItems = selection;
-  // }
+  selectChange(selection) {
+    this.selectItems = selection;
+  }
 
   async getpage() {
     await this.$store.dispatch({
       type: "lessonAttendance/getAll",
-      data: { lessonId: this.lesson.id }
+      data: { orderId: this.order.id,maxResultCount:1000 }
     });
   }
-    rowClassName(row, index) {
+  rowClassName(row, index) {
     if (!row.attended) {
       return "error";
     }
@@ -70,37 +70,60 @@ export default class EditLessonAttendance extends AbpBase {
     if (!value) {
       this.$emit("input", value);
     } else {
-      this.lesson = Util.extend(true, {}, this.$store.state.lesson.editLesson);
+      this.order = Util.extend(true, {}, this.$store.state.order.editOrder);
       this.getpage();
     }
   }
   columns = [
     {
-      title: this.L("OrderIndex"),
-      key: "name",
+      title: this.L("Index"),
+      key: "id",
       render: (h: any, params: any) => {
         return h("span", ("000000" + params.row.id).slice(-6));
       }
     },
     {
-      title: this.L("StudentIndex"),
-      key: "name",
+      title: this.L("LessonIndex"),
+      key: "LessonId",
       render: (h: any, params: any) => {
-        return h("span", ("000000" + params.row.order.studentId).slice(-6));
+        return h("span", ("000000" + params.row.lesson.id).slice(-6));
       }
     },
     {
-      title: this.L("StudentName"),
-      key: "name",
+      title: this.L("ClassName"),
+      key: "className",
       render: (h: any, params: any) => {
-        return h("span", params.row.order.student.name);
+        return h("span", params.row.lesson.class.name);
       }
     },
     {
-      title: this.L("Phone"),
-      key: "name",
+      title: this.L("LessonDate"),
+      key: "lessonDate",
       render: (h: any, params: any) => {
-        return h("span", params.row.order.student.phone);
+        return h(
+          "span",
+          new Date(params.row.lesson.lessonDate).toLocaleDateString()
+        );
+      }
+    },
+    {
+      title: this.L("TimePeriod"),
+      key: "timePeriod",
+      render: (h, params) => {
+        return h(
+          "span",
+          params.row.lesson.start.slice(0, 5) +
+            " - " +
+            params.row.lesson.end.slice(0, 5)
+        );
+      }
+    },
+
+    {
+      title: this.L("Teacher"),
+      key: "teacher",
+      render: (h: any, params: any) => {
+        return h("span", params.row.lesson.teacher.name);
       }
     },
     {
@@ -109,11 +132,6 @@ export default class EditLessonAttendance extends AbpBase {
       render: (h: any, params: any) => {
         return h("span", params.row.attended ? this.L("Yes") : this.L("No"));
       }
-    },
-    {
-      title: this.L("Actions"),
-      key: "Actions",
-      slot: "action"
     }
   ];
 }

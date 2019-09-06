@@ -8,6 +8,7 @@ export default class Order extends Entity<number>{
     orderDate? :  string  
     schoolBegin? :  string  
     fullMoney? :  number  
+    count? :  number  
     state? :  number  
     class? :  Class  
     studentId :  number  

@@ -18,5 +18,7 @@ namespace EducationAdmin.Courses.Dto
         public ClassType ClassType { get; set; }
 
         public string Note { get; set; }
+
+        public int Count { get; set; }
     }
 }

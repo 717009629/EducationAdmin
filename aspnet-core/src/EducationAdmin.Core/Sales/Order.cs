@@ -44,14 +44,17 @@ namespace EducationAdmin.Sales
 
         public Class Class { get; set; }
 
+        public int Count { get; set; }
 
 
-   //     public List<CourseItem> CourseItems { get; set; }
+
+        public List<LessonAttendance> LessonAttendances { get; set; }
     }
 
     public enum OrderState
     {
         Created=0,
-        Audited=1
+        Audited=1,
+        LessonFinished=2
     }
 }

@@ -5,6 +5,7 @@ export default class Course extends Entity<number>{
     category?: string
     name?: string
     price?: number = 1
+    count?: number = 1
     lastModificationTime?: string
     lastModifierUserId?: number
     creationTime?: string

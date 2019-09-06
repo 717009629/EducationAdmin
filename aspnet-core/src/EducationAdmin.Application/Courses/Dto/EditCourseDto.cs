@@ -19,5 +19,7 @@ namespace EducationAdmin.Courses.Dto
 
 
         public string Note { get; set; }
+
+        public int Count { get; set; }
     }
 }

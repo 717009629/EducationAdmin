@@ -21,5 +21,7 @@ namespace EducationAdmin.Education
         public int TenantId { get; set; }
 
         public string Note { get; set; }
+
+        public int Count { get; set; }
     }
 }

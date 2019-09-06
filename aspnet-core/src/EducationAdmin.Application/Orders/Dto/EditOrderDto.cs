@@ -22,8 +22,8 @@ namespace EducationAdmin.Orders.Dto
 
         public decimal FullMoney { get; set; }
 
-   
 
+        public int Count { get; set; }
 
         public long StudentId { get; set; }
 
