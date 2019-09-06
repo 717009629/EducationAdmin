@@ -63,6 +63,7 @@ export default class EditOrdere extends AbpBase {
       return;
     }
     this.order.fullMoney = courses[0].price;
+    this.order.count = courses[0].count;
   }
   save() {
     (this.$refs.orderForm as any).validate(async (valid: boolean) => {
@@ -109,6 +110,14 @@ export default class EditOrdere extends AbpBase {
         type: "number",
         required: true,
         message: this.L("FieldIsRequired", undefined, this.L("FullMoney")),
+        trigger: "blur"
+      }
+    ],
+    count: [
+      {
+        type: "number",
+        required: true,
+        message: this.L("FieldIsRequired", undefined, this.L("LessonCount")),
         trigger: "blur"
       }
     ],

@@ -8,7 +8,7 @@ using System.Text;
 
 namespace EducationAdmin.LessonAttendances.Dto
 {
-    [AutoMapTo(typeof(LessonAttendance))]
+    [AutoMapFrom(typeof(LessonAttendance))]
     public class PlainLessonAttendanceDto : FullAuditedEntityDto<long>
     {
         public long OrderId { get; set; }

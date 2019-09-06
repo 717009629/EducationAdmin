@@ -17,7 +17,7 @@
         <FormItem :label="L('Price')" prop="price">
           <InputNumber v-model="course.price" style="width:100%" />
         </FormItem>
-        <FormItem :label="L('Count')" prop="count">
+        <FormItem :label="L('LessonCount')" prop="count">
           <InputNumber v-model="course.count" style="width:100%" />
         </FormItem>
         <FormItem :label="L('Note')" prop="note">
@@ -100,7 +100,7 @@ export default class EditCoursee extends AbpBase {
       {
         type: "number",
         required: true,
-        message: this.L("FieldIsRequired", undefined, this.L("Count")),
+        message: this.L("FieldIsRequired", undefined, this.L("LessonCount")),
         trigger: "blur"
       }
     ]

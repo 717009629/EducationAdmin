@@ -15,7 +15,7 @@
           </Row>
         </Form>
         <div class="margin-top-10">
-          <Table :loading="loading" :columns="columns" :no-data-text="L('NoDatas')" border :data="list">
+          <Table :loading="loading" :columns="columns" :no-data-text="L('NoDatas')" border :data="list" :row-class-name="rowClassName">
             <template slot-scope="{ row }" slot="action" v-if="hasPermission('Pages.Orders.Edit')">
               <Button v-if="hasPermission('Pages.Orders.Edit')&&row.state===0" type="primary" size="small" @click="edit(row)" style="margin-right:5px">{{L('Edit')}}</Button>
               <Button v-if="hasPermission('Pages.Orders.Audite')&&row.state===0" type="primary" size="small" @click="audite(row)" style="margin-right:5px">{{L('Audite')}}</Button>
@@ -115,7 +115,18 @@ export default class Orders extends AbpBase {
   get currentPage() {
     return this.$store.state.order.currentPage;
   }
-
+  rowClassName(row, index) {
+    if (row.lessonAttendances.state === 2) {
+      return "success";
+    }
+    if (row.lessonAttendances.filter(m => m.attended).length >= row.count) {
+      return "error";
+    }
+    if (row.lessonAttendances.length >= row.count) {
+      return "warning";
+    }
+    return "";
+  }
   columns = [
     {
       title: this.L("Index"),
@@ -203,10 +214,31 @@ export default class Orders extends AbpBase {
       }
     },
     {
+      title: this.L("AttendedLesson"),
+      key: "attendedLesson",
+      render: (h, params) => {
+        return h(
+          "span",
+          params.row.lessonAttendances.filter(m => m.attended).length
+        );
+      }
+    },
+    {
+      title: this.L("AbsentLesson"),
+      key: "absentLesson",
+      render: (h, params) => {
+        return h(
+          "span",
+          params.row.lessonAttendances.filter(m => !m.attended).length
+        );
+      }
+    },
+    {
       title: this.L("Note"),
       key: "note",
       tooltip: true
     },
+
     {
       title: this.L("SalesmanName"),
       key: "salesmanName"

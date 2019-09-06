@@ -289,6 +289,13 @@
     <text name="Success">成功</text>
     <text name="Total">总计</text>
     <text name="Are you sure to save">确定保存</text>
+
+    <text name="LessonCount">课时数量</text>
+    <text name="AttendedLesson">出席课时</text>
+    <text name="AbsentLesson">缺席课时</text>
+    <text name="LessonFinished">结课</text>
+    <text name="There is a order with the same course and it's not finished!">存在相同的订单，并且没有结课！</text>
+    
   </texts>
 </localizationDictionary>
 

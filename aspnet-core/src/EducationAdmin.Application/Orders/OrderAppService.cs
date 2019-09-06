@@ -3,6 +3,7 @@ using Abp.Authorization;
 using Abp.Domain.Repositories;
 using Abp.Extensions;
 using Abp.Linq.Extensions;
+using Abp.UI;
 using EducationAdmin.Authorization;
 using EducationAdmin.Education;
 using EducationAdmin.Orders.Dto;
@@ -29,7 +30,7 @@ namespace EducationAdmin.Orders
 
         protected override IQueryable<Order> CreateFilteredQuery(PagedOrderResultRequestDto input)
         {
-            return base.CreateFilteredQuery(input).Include(m => m.Salesman).Include(m => m.Student).Include(m => m.Course).Include(m => m.Class).Include(m=>m.LessonAttendances)
+            return base.CreateFilteredQuery(input).Include(m => m.Salesman).Include(m => m.Student).Include(m => m.Course).Include(m => m.Class).Include(m => m.LessonAttendances)
                     .WhereIf(input.StudentId != null, m => m.StudentId == input.StudentId)
                     .WhereIf(input.ClassId != null, m => m.ClassId == input.ClassId)
                     .WhereIf(input.CourseId != null, m => m.CourseId == input.CourseId && m.ClassId == null)
@@ -37,16 +38,24 @@ namespace EducationAdmin.Orders
                     .WhereIf(!input.StudentName.IsNullOrWhiteSpace(), x => x.Student.Name.Contains(input.StudentName));
         }
 
-        public override Task<OrderDto> Create(CreateOrderDto input)
+        public override async Task<OrderDto> Create(CreateOrderDto input)
         {
             input.SalesmanId = this.AbpSession.UserId.Value;
-            return base.Create(input);
+            var order = await Repository.FirstOrDefaultAsync(m => m.CourseId == input.CourseId && m.StudentId == input.StudentId && m.State != OrderState.LessonFinished);
+            if (order != null)
+                throw new UserFriendlyException("There is a order with the same course and it's not finished!");
+            return await base.Create(input);
         }
 
         public override async Task<OrderDto> Update(EditOrderDto input)
         {
-            var order = await Repository.FirstOrDefaultAsync(m => m.Id == input.Id);
-            if (order.State == OrderState.Audited)
+            var orders = await Repository.GetAll().Where(m => m.Id == input.Id || (m.CourseId == input.CourseId && m.StudentId == input.StudentId && m.State != OrderState.LessonFinished)).ToListAsync();
+            if (orders.Count >= 2)
+            {
+                throw new UserFriendlyException("There is a order with the same course and it's not finished!");
+            }
+            var order = orders.FirstOrDefault(m => m.Id == input.Id);
+            if (order.State != OrderState.Created)
                 throw new Exception();
             return await base.Update(input);
         }
