@@ -85,7 +85,7 @@ namespace EducationAdmin.LessonAttendances
                 throw new Exception();
             }
             lesson.IsFinish = true;
-            var orders = await OrderRepository.GetAll().Where(m => m.ClassId == lesson.ClassId).ToListAsync();
+            var orders = await OrderRepository.GetAll().Where(m => m.ClassId == lesson.ClassId&&m.State== OrderState.Audited).ToListAsync();
             var list = orders.Select(m => new LessonAttendance
             {
                 OrderId = m.Id,

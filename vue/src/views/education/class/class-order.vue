@@ -9,11 +9,23 @@
       </Form>
       <!-- <Card dis-hover> -->
       <div class="margin-top-10">
-        <Table :loading="loading" :columns="columns" :no-data-text="L('NoDatas')" border :data="list">
-          <template slot-scope="{ row }" slot="action" v-if="hasPermission('Pages.Orders.Edit')">
-            <!-- <Button v-if="hasPermission('Pages.Orders.Edit')" type="primary" size="small" @click="edit(row)" style="margin-right:5px">{{L('Edit')}}</Button> -->
-          </template>
-        </Table>
+        <Tabs>
+          <TabPane :label="L('CurrentStudent')" name="currentStudent">
+            <Table :loading="loading" :columns="columns" :no-data-text="L('NoDatas')" border :data="curentList" :row-class-name="rowClassName">
+              <template slot-scope="{ row }" slot="action" v-if="hasPermission('Pages.Orders.Edit')">
+                <!-- <Button v-if="hasPermission('Pages.Orders.Edit')" type="primary" size="small" @click="edit(row)" style="margin-right:5px">{{L('Edit')}}</Button> -->
+              </template>
+            </Table>
+          </TabPane>
+          <TabPane :label="L('HistoryStudent')" name="historyStudent">
+            <Table :loading="loading" :columns="columns" :no-data-text="L('NoDatas')" border :data="historyList" :row-class-name="rowClassName">
+              <template slot-scope="{ row }" slot="action" v-if="hasPermission('Pages.Orders.Edit')">
+                <!-- <Button v-if="hasPermission('Pages.Orders.Edit')" type="primary" size="small" @click="edit(row)" style="margin-right:5px">{{L('Edit')}}</Button> -->
+              </template>
+            </Table>
+          </TabPane>
+        </Tabs>
+
       </div>
       <div slot="footer"></div>
       <class-add-order v-model="addOrderModalShow" @save-success="getpage"></class-add-order>
@@ -41,8 +53,11 @@ export default class ClassOrder extends AbpBase {
   addOrderModalShow: boolean = false;
   editModalShow: boolean = false;
   contractModalShow: boolean = false;
-  get list() {
-    return this.$store.state.order.list;
+  get curentList() {
+    return this.$store.state.order.list.filter(m => m.state !== 2);
+  }
+  get historyList() {
+    return this.$store.state.order.list.filter(m => m.state === 2);
   }
   get loading() {
     return this.$store.state.order.loading;
@@ -70,7 +85,15 @@ export default class ClassOrder extends AbpBase {
       this.getpage();
     }
   }
-
+  rowClassName(row, index) {
+    if (row.lessonAttendances.filter(m => m.attended).length > row.count) {
+      return "error";
+    }
+    if (row.lessonAttendances.filter(m => m.attended).length === row.count) {
+      return "warning";
+    }
+    return "";
+  }
   columns = [
     {
       title: this.L("OrderIndex"),
@@ -98,6 +121,30 @@ export default class ClassOrder extends AbpBase {
       key: "name",
       render: (h: any, params: any) => {
         return h("span", params.row.student.phone);
+      }
+    },
+    {
+      title: this.L("LessonCount"),
+      key: "count"
+    },
+    {
+      title: this.L("AttendedLesson"),
+      key: "attendedLesson",
+      render: (h, params) => {
+        return h(
+          "span",
+          params.row.lessonAttendances.filter(m => m.attended).length
+        );
+      }
+    },
+    {
+      title: this.L("AbsentLesson"),
+      key: "absentLesson",
+      render: (h, params) => {
+        return h(
+          "span",
+          params.row.lessonAttendances.filter(m => !m.attended).length
+        );
       }
     },
     {

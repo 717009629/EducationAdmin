@@ -80,6 +80,21 @@ namespace EducationAdmin.Orders
                     TeacherId = order.Student.TeacherId
                 };
             }
+            order.AuditeTime = DateTime.Now;
+            var r = await Repository.UpdateAsync(order);
+            return ObjectMapper.Map<OrderDto>(r);
+        }
+
+        public async Task<OrderDto> Finish(AuditeOrderDto input)
+        {
+            CheckPermission(PermissionNames.Pages_Orders + ".Finish");
+
+            var order = await Repository.GetAllIncluding(m => m.Course, m => m.Student).FirstOrDefaultAsync(m => m.Id == input.OrderId);
+            if (order.State != OrderState.Audited)
+                throw new Exception();
+
+            order.State = OrderState.LessonFinished;
+            order.FinishTime = DateTime.Now;
             var r = await Repository.UpdateAsync(order);
             return ObjectMapper.Map<OrderDto>(r);
         }

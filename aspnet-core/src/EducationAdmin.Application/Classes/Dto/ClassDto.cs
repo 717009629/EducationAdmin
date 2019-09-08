@@ -32,5 +32,7 @@ namespace EducationAdmin.Classes.Dto
         public long TeacherId { get; set; }
 
         public string Note { get; set; }
+
+        public DateTime? FinishTime { get; set; }
     }
 }

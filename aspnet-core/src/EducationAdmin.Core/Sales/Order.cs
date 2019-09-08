@@ -46,7 +46,9 @@ namespace EducationAdmin.Sales
 
         public int Count { get; set; }
 
+        public DateTime? AuditeTime { get; set; }
 
+        public DateTime? FinishTime { get; set; }
 
         public List<LessonAttendance> LessonAttendances { get; set; }
     }

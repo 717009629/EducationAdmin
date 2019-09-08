@@ -1,5 +1,5 @@
 <template>
-  <Modal :title="L('Order')" :value="value" @on-visible-change="visibleChange" :mask-closable="false" width="1200px">
+  <Modal :title="L('Order')" :value="value" @on-visible-change="visibleChange" :mask-closable="false" width="1300px">
     <Form ref="queryForm" :label-width="100" label-position="left" inline>
       <!-- <hr style="border-width:1px 0 0 0; border-style:solid; border-top-color:#ccc; margin:10px 0" /> -->
       <Row>
@@ -121,13 +121,13 @@ export default class StudentOrder extends AbpBase {
   //   await this.getpage();
   // }
   rowClassName(row, index) {
-    if (row.lessonAttendances.state === 2) {
+    if (row.state === 2) {
       return "success";
     }
-    if (row.lessonAttendances.filter(m => m.attended).length >= row.count) {
+    if (row.lessonAttendances.filter(m => m.attended).length > row.count) {
       return "error";
     }
-    if (row.lessonAttendances.length >= row.count) {
+    if (row.lessonAttendances.filter(m => m.attended).length === row.count) {
       return "warning";
     }
     return "";
@@ -162,7 +162,8 @@ export default class StudentOrder extends AbpBase {
       key: "course",
       render: (h, params) => {
         return h("span", params.row.course.name);
-      }
+      },
+      width: 120
     },
     {
       title: this.L("ClassType"),
@@ -181,10 +182,7 @@ export default class StudentOrder extends AbpBase {
         return h("span", params.row.course.price);
       }
     },
-    {
-      title: this.L("LessonCount"),
-      key: "count"
-    },
+
     // {
     //   title: this.L("State"),
     //   key: "state"
@@ -214,7 +212,13 @@ export default class StudentOrder extends AbpBase {
       key: "class",
       render: (h, params) => {
         return h("span", params.row.class ? params.row.class.name : "");
-      }
+      },
+      width: 150
+    },
+    {
+      title: this.L("LessonCount"),
+      key: "count",
+      width: 65
     },
     {
       title: this.L("AttendedLesson"),
@@ -224,7 +228,8 @@ export default class StudentOrder extends AbpBase {
           "span",
           params.row.lessonAttendances.filter(m => m.attended).length
         );
-      }
+      },
+      width: 65
     },
     {
       title: this.L("AbsentLesson"),
@@ -234,13 +239,14 @@ export default class StudentOrder extends AbpBase {
           "span",
           params.row.lessonAttendances.filter(m => !m.attended).length
         );
-      }
+      },
+      width: 65
     },
-    {
-      title: this.L("SalesmanName"),
-      key: "salesmanName",
-      width: 80
-    },
+    // {
+    //   title: this.L("SalesmanName"),
+    //   key: "salesmanName",
+    //   width: 80
+    // },
 
     {
       title: this.L("Actions"),

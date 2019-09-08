@@ -108,7 +108,7 @@ export default class Courses extends AbpBase {
       key: "name"
     },
     {
-      title: this.L("Count"),
+      title: this.L("LessonCount"),
       key: "count"
     },
     {

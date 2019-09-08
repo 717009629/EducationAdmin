@@ -43,6 +43,10 @@ namespace EducationAdmin.Orders.Dto
 
         public string Note { get; set; }
 
+        public DateTime? AuditeTime { get; set; }
+
+        public DateTime? FinishTime { get; set; }
+
         public long? ClassId { get; set; }
 
         public ClassDto Class { get; set; }

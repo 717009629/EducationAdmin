@@ -17,4 +17,5 @@ export default class Class extends Entity<number>{
     creationTime?: string
     creatorUserId?: number
     note?:string
+    state:number
 }

@@ -55,7 +55,7 @@ export default class CreateLessonAttendance extends AbpBase {
   async getpage() {
     await this.$store.dispatch({
       type: "order/getAll",
-      data: { classId: this.lesson.classId }
+      data: { classId: this.lesson.classId, state:1 }
     });
   }
 

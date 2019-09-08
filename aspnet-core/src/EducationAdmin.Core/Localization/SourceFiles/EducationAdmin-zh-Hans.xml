@@ -69,10 +69,10 @@
     <text name="All">全部</text>
     <text name="Actived">启用</text>
     <text name="NoActive">未启用</text>
-    
+
     <text name="Yes">是</text>
     <text name="No">否</text>
-    
+
     <text name="Cancel">取消</text>
     <text name="OK">确定</text>
     <text name="CreateNewRole">创建新角色</text>
@@ -99,7 +99,7 @@
 
     <text name="Male">男</text>
     <text name="Female">女</text>
-    
+
     <text name="StudentsManage">学生管理</text>
     <text name="Student" >学生</text>
     <text name="Students" >学生</text>
@@ -177,14 +177,14 @@
     <text name="CourseCategory">课程类型</text>
     <text name="Count">数量</text>
     <text name="OrderState">订单状态</text>
-    
-    
+
+
     <text name="EditCourseItem">编辑课程订单</text>
     <text name="CreateNewCourseItem">创建新课程订单</text>
     <text name="CourseList">课程订单</text>
     <text name="Father">父亲</text>
     <text name="Mother">母亲</text>
-    
+
     <text name="Reason For Action">操作原因</text>
     <text name="Audite">审核</text>
     <text name="Reject">拒绝</text>
@@ -238,7 +238,7 @@
     <text name="District">区/县</text>
     <text name="AuditedReason">审核/拒绝原因</text>
     <text name="CustomerIndex">客户编号</text>
-    <text name="CoursePrice">课程套餐价格</text>
+    <text name="CoursePrice">套餐价格</text>
     <text name="NotAudited">未审核</text>
     <text name="Audited">已审核</text>
     <text name="LessonNumber">节次</text>
@@ -293,9 +293,15 @@
     <text name="LessonCount">课时数量</text>
     <text name="AttendedLesson">出席课时</text>
     <text name="AbsentLesson">缺席课时</text>
-    <text name="LessonFinished">结课</text>
+    <text name="LessonFinished">已结课</text>
     <text name="There is a order with the same course and it's not finished!">存在相同的订单，并且没有结课！</text>
-    
+    <text name="OrderFinisLessonConfirm">订单共有{0}节课，已完成{1}节课，订单结课以后不能再通过此订单上课，确定要结课吗？</text>
+    <text name="FinishLesson">结课</text>
+    <text name="Confirm">确认</text>
+    <text name="AuditeDate">审核日期</text>
+    <text name="FinishLessonDate">结课日期</text>
+
+
   </texts>
 </localizationDictionary>
 

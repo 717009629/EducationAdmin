@@ -20,6 +20,7 @@
               <Button v-if="hasPermission('Pages.Orders.Edit')&&row.state===0" type="primary" size="small" @click="edit(row)" style="margin-right:5px">{{L('Edit')}}</Button>
               <Button v-if="hasPermission('Pages.Orders.Audite')&&row.state===0" type="primary" size="small" @click="audite(row)" style="margin-right:5px">{{L('Audite')}}</Button>
               <Button v-if="row.state!==0" type="primary" size="small" @click="lesson(row)" style="margin-right:5px">{{L('LessonAttendance')}}</Button>
+              <Button v-if="hasPermission('Pages.Orders.Finish')&&row.state===1" type="primary" size="small" @click="finish(row)" style="margin-right:5px">{{L('FinishLesson')}}</Button>
               <!-- <Button v-if="hasPermission('Pages.Orders.Edit')&&!row.contract" type="primary" size="small" @click="showContract(row)" style="margin-right:5px">{{L('ConvertContract')}}</Button> -->
             </template>
           </Table>
@@ -95,17 +96,42 @@ export default class Orders extends AbpBase {
     this.$Modal.confirm({
       title: this.L("Confirm"),
       content: this.L(
-        "After the audit can not be edited, determine the audit?"
+        "After audited the order can not be edited, determine the audit?"
       ),
-      onOk: async () => {
-        await this.$store.dispatch({
-          type: "order/audite",
-          data: { orderId: row.id }
-        });
-        await this.getpage();
+      onOk: () => {
+        setTimeout(async () => {
+          await this.$store.dispatch({
+            type: "order/audite",
+            data: { orderId: row.id }
+          });
+          await this.getpage();
+        }, 100);
       }
     });
   }
+  finish(row) {
+    let msg = "";
+    var finished = row.lessonAttendances.filter(m => m.attended).length;
+    this.$Modal.confirm({
+      title: this.L("Confirm"),
+      content: this.L(
+        "OrderFinisLessonConfirm",
+        undefined,
+        row.count,
+        finished
+      ),
+      onOk: () => {
+        setTimeout(async () => {
+          await this.$store.dispatch({
+            type: "order/finish",
+            data: { orderId: row.id }
+          });
+          await this.getpage();
+        }, 200);
+      }
+    });
+  }
+
   get pageSize() {
     return this.$store.state.order.pageSize;
   }
@@ -116,13 +142,13 @@ export default class Orders extends AbpBase {
     return this.$store.state.order.currentPage;
   }
   rowClassName(row, index) {
-    if (row.lessonAttendances.state === 2) {
+    if (row.state === 2) {
       return "success";
     }
-    if (row.lessonAttendances.filter(m => m.attended).length >= row.count) {
+    if (row.lessonAttendances.filter(m => m.attended).length > row.count) {
       return "error";
     }
-    if (row.lessonAttendances.length >= row.count) {
+    if (row.lessonAttendances.filter(m => m.attended).length === row.count) {
       return "warning";
     }
     return "";
@@ -193,10 +219,6 @@ export default class Orders extends AbpBase {
       key: "fullMoney"
     },
     {
-      title: this.L("LessonCount"),
-      key: "count"
-    },
-    {
       title: this.L("State"),
       key: "state",
       render: (h, params) => {
@@ -212,6 +234,10 @@ export default class Orders extends AbpBase {
       render: (h, params) => {
         return h("span", params.row.class ? params.row.class.name : "");
       }
+    },
+    {
+      title: this.L("LessonCount"),
+      key: "count"
     },
     {
       title: this.L("AttendedLesson"),
@@ -238,16 +264,40 @@ export default class Orders extends AbpBase {
       key: "note",
       tooltip: true
     },
-
     {
-      title: this.L("SalesmanName"),
-      key: "salesmanName"
+      title: this.L("AuditeDate"),
+      key: "auditeDate",
+      render: (h: any, params: any) => {
+        return h(
+          "span",
+          params.row.auditeDate
+            ? new Date(params.row.auditeDate).toLocaleDateString()
+            : ""
+        );
+      }
     },
+    {
+      title: this.L("FinishLessonDate"),
+      key: "finishDate",
+      render: (h: any, params: any) => {
+        return h(
+          "span",
+          params.row.finishDate
+            ? new Date(params.row.finishDate).toLocaleDateString()
+            : ""
+        );
+      }
+    },
+
+    // {
+    //   title: this.L("SalesmanName"),
+    //   key: "salesmanName"
+    // },
 
     {
       title: this.L("Actions"),
       key: "Actions",
-      width: 150,
+      width: 190,
       slot: "action"
     }
   ];

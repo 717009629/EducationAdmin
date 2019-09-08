@@ -50,7 +50,7 @@ namespace EducationAdmin.Classes
                 throw new Exception();
 
             var order = await OrderRepository.FirstOrDefaultAsync(m => input.OrderId == m.Id);
-            if (order.State == OrderState.Created)
+            if (order.State != OrderState.Audited)
                 throw new Exception();
 
             if (order.ClassId != null)

@@ -10,6 +10,7 @@ using EducationAdmin.Lessons.Dto;
 using EducationAdmin.Settings;
 using EducationAdmin.Students;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query.ResultOperators;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,13 +25,15 @@ namespace EducationAdmin.Lessons
 
         private readonly IRepository<TimePeriod, long> TimePeriodRepository;
         private readonly IRepository<LessonAttendance, long> LessonAttendanceRepository;
-        public LessonAppService(IRepository<Lesson, long> repository, IRepository<TimePeriod, long> timePeriodRepository, IRepository<LessonAttendance, long> lessonAttendanceRepository) : base(repository)
+        private readonly IRepository<Class, long> ClassRepository;
+        public LessonAppService(IRepository<Lesson, long> repository, IRepository<TimePeriod, long> timePeriodRepository, IRepository<LessonAttendance, long> lessonAttendanceRepository, IRepository<Class, long> classRepository) : base(repository)
         {
             this.CreatePermissionName = PermissionNames.Pages_Lessons + ".Create";
             this.UpdatePermissionName = PermissionNames.Pages_Lessons + ".Edit";
             this.DeletePermissionName = PermissionNames.Pages_Lessons + ".Delete";
             TimePeriodRepository = timePeriodRepository;
             LessonAttendanceRepository = lessonAttendanceRepository;
+            ClassRepository = classRepository;
         }
 
 
@@ -69,6 +72,11 @@ namespace EducationAdmin.Lessons
         public override async Task<LessonDto> Create(CreateLessionDto input)
         {
             input.LessonDate = input.LessonDate.Date;
+            var clas =await ClassRepository.FirstOrDefaultAsync(m => m.Id == input.ClassId);
+            if(clas.State== ClassState.Closed)
+            {
+                throw new Exception();
+            } 
             var count = await Repository.CountAsync(m => m.ClassId == input.ClassId && m.LessonDate.Date == input.LessonDate && m.End > input.Start && m.Start < input.End);
             if (count > 0)
             {

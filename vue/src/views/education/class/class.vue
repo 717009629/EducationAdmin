@@ -9,7 +9,7 @@
           </Row>
         </Form>
         <div class="margin-top-10">
-          <Table :loading="loading" :columns="columns" :no-data-text="L('NoDatas')" border :data="list">
+          <Table :loading="loading" :columns="columns" :no-data-text="L('NoDatas')" border :data="list" :row-class-name="rowClassName">
             <template slot-scope="{ row }" slot="action" v-if="hasPermission('Pages.Classes.Edit')">
               <Button v-if="hasPermission('Pages.Classes.Edit')" type="primary" size="small" @click="edit(row)" style="margin-right:5px">{{L('Edit')}}</Button>
               <Button type="primary" size="small" @click="lesson(row)" style="margin-right:5px">{{L('Lesson')}}</Button>
@@ -96,7 +96,17 @@ export default class Classs extends AbpBase {
   get currentPage() {
     return this.$store.state.class.currentPage;
   }
+  rowClassName(row, index) {
+    let c = [];
+    if (row.state === 1) {
+      c.push("success");
+    }
 
+    if (row.course.classType === 1) {
+      c.push("font-error");
+    }
+    return c;
+  }
   columns = [
     {
       title: this.L("Index"),
@@ -133,6 +143,16 @@ export default class Classs extends AbpBase {
       key: "teacher",
       render: (h: any, params: any) => {
         return h("span", params.row.teacher.name);
+      }
+    },
+    {
+      title: this.L("State"),
+      key: "state",
+      render: (h: any, params: any) => {
+        return h(
+          "span",
+          this.L(window.abp.custom.ClassState[params.row.state])
+        );
       }
     },
     {

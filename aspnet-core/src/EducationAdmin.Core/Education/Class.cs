@@ -27,6 +27,9 @@ namespace EducationAdmin.Education
 
         public ClassState State { get; set; }
 
+
+        public DateTime? FinishTime { get; set; }
+
         public string Note { get; set; }
 
         

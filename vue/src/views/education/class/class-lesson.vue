@@ -92,14 +92,14 @@ export default class ClassBusiness extends AbpBase {
       let color = new Date(m.endTime) < new Date() ? "#aaa" : "#0f0";
       if (m.isFinish) {
         color = "#57a3f3";
-        state="已考勤";
+        state = "已考勤";
       }
       return {
         id: m.id,
         start: m.startTime,
         end: m.endTime,
         title: `${m.subject}--${m.teacher.name}\n${state}`,
-        color:color,
+        color: color,
         lesson: m
       };
     });
@@ -131,15 +131,17 @@ export default class ClassBusiness extends AbpBase {
     this.getpage();
   }
   dateClick(arg) {
-    this.currentDate = arg.date;
-    this.createModalShow = true;
+    if (this.clas.state === 0) {
+      this.currentDate = arg.date;
+      this.createModalShow = true;
+    }
   }
   eventClick(arg) {
-    let lesson=arg.event.extendedProps.lesson;
-    if(lesson.isFinish){
+    let lesson = arg.event.extendedProps.lesson;
+    if (lesson.isFinish) {
       return;
     }
-    this.$store.commit("lesson/edit",lesson );
+    this.$store.commit("lesson/edit", lesson);
     this.editModalShow = true;
   }
 
