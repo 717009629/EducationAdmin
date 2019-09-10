@@ -300,6 +300,8 @@
     <text name="Confirm">确认</text>
     <text name="AuditeDate">审核日期</text>
     <text name="FinishLessonDate">结课日期</text>
+    <text name="StudentHasSamePhone">此手机号已被使用！</text>
+    <text name="LengthWrong">长度必须为{0}位！</text>
 
 
   </texts>

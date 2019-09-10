@@ -13,6 +13,7 @@ using System.Text;
 using System.Threading.Tasks;
 using EducationAdmin.Students;
 using Microsoft.EntityFrameworkCore;
+using Abp.UI;
 
 namespace EducationAdmin.Sales
 {
@@ -24,14 +25,30 @@ namespace EducationAdmin.Sales
             DeletePermissionName = PermissionNames.Pages_Students + ".Delete";
             CreatePermissionName = PermissionNames.Pages_Students + ".Create";
             UpdatePermissionName = PermissionNames.Pages_Students + ".Edit";
+            LocalizationSourceName = EducationAdminConsts.LocalizationSourceName;
         }
 
-        public override  Task<StudentDto> Create(CreateStudentDto input)
+        public override async  Task<StudentDto> Create(CreateStudentDto input)
         {
-            return base.Create(input);
+            var student = await Repository.FirstOrDefaultAsync(m => m.Phone == input.Phone);
+            if (student != null)
+            {
+                throw new UserFriendlyException(L("StudentHasSamePhone"));
+            }
+            return await base.Create(input);
         }
 
-        
+        public override async Task<StudentDto> Update(EditStudentDto input)
+        {
+            var student = await Repository.FirstOrDefaultAsync(m => m.Phone == input.Phone&&m.Id!=input.Id);
+            if (student != null)
+            {
+                throw new UserFriendlyException(L("StudentHasSamePhone"));
+            }
+            return await base.Update(input);
+        }
+
+
 
         protected override IQueryable<Student> CreateFilteredQuery(PagedStudentResultRequestDto input)
         {

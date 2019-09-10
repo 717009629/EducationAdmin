@@ -12,7 +12,7 @@
               </i-col>
               <i-col span=12>
                 <FormItem :label="L('Phone')" prop="phone">
-                  <Input v-model="student.phone" />
+                  <Input v-model="student.phone" :maxlength="11" :minlength="11"  />
                 </FormItem>
               </i-col>
 
@@ -65,13 +65,13 @@
             <Row :gutter='16'>
               <i-col span=10>
                 <FormItem :label="L('School')" prop="school">
-                  <AutoComplete :data='schools' v-model="student.school" :transfer="true"/>
+                  <AutoComplete :data='schools' v-model="student.school" :transfer="true" />
                 </FormItem>
               </i-col>
               <i-col span=6>
                 <FormItem :label="L('Grade')" prop="grade">
                   <Select v-model="student.grade" style="z-index:10000" :transfer="true">
-                    <Option v-for="item in grades" :label="item.name" :value="item.name" :key="item.name"></Option>                 
+                    <Option v-for="item in grades" :label="item.name" :value="item.name" :key="item.name"></Option>
                   </Select>
                 </FormItem>
               </i-col>
@@ -245,7 +245,6 @@ export default class CreateStudent extends AbpBase {
     this.student.district = val.length > 2 ? val[2] : "";
   }
 
-
   get sex() {
     return this.student.sex
       ? "male"
@@ -265,7 +264,9 @@ export default class CreateStudent extends AbpBase {
     return this.$store.state.option.list.filter(m => m.category === "grade");
   }
   get schools() {
-    return this.$store.state.option.list.filter(m => m.category === "school").map(m=>m.name);
+    return this.$store.state.option.list
+      .filter(m => m.category === "school")
+      .map(m => m.name);
   }
   save() {
     (this.$refs.studentForm as any).validate(async (valid: boolean) => {
@@ -321,6 +322,18 @@ export default class CreateStudent extends AbpBase {
       {
         required: true,
         message: this.L("FieldIsRequired", undefined, this.L("StudentName")),
+        trigger: "blur"
+      }
+    ],
+    phone: [
+      {
+        required: true,
+        message: this.L("FieldIsRequired", undefined, this.L("Phone")),
+        trigger: "blur"
+      },
+      {
+        len: 11,
+        message: this.L("LengthWrong", undefined, '11'),
         trigger: "blur"
       }
     ],

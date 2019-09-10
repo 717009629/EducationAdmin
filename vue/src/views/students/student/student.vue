@@ -173,7 +173,7 @@ export default class Students extends AbpBase {
       title: this.L("Birthday"),
       key: "birthday",
       render: (h: any, params: any) => {
-        return h("span", new Date(params.row.birthday).toLocaleDateString());
+        return h("span", params.row.birthday?new Date(params.row.birthday).toLocaleDateString():'');
       }
     },
     {

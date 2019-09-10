@@ -12,7 +12,7 @@
               </i-col>
               <i-col span=12>
                 <FormItem :label="L('Phone')" prop="phone">
-                  <Input v-model="student.phone" />
+                  <Input v-model="student.phone" :maxlength="11" :minlength="11" />
                 </FormItem>
               </i-col>
 
@@ -295,8 +295,8 @@ export default class EditStudent extends AbpBase {
         {},
         this.$store.state.student.editStudent
       );
-      if(this.student.school==null){
-        this.student.school=undefined;
+      if (this.student.school == null) {
+        this.student.school = undefined;
       }
       await this.$store.dispatch({
         type: "teacher/getAll"
@@ -331,6 +331,18 @@ export default class EditStudent extends AbpBase {
       {
         required: true,
         message: this.L("FieldIsRequired", undefined, this.L("StudentName")),
+        trigger: "blur"
+      }
+    ],
+    phone: [
+      {
+        required: true,
+        message: this.L("FieldIsRequired", undefined, this.L("Phone")),
+        trigger: "blur"
+      },
+      {
+        len: 11,
+        message: this.L("LengthWrong", undefined, "11"),
         trigger: "blur"
       }
     ],

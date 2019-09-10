@@ -1,8 +1,10 @@
 ﻿using Abp.Domain.Entities;
 using Abp.Domain.Entities.Auditing;
 using EducationAdmin.Authorization.Users;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
@@ -28,6 +30,7 @@ namespace EducationAdmin.Students
 
         public string Relation { get; set; }
 
+        [Required]
         public string Phone { get; set; }
 
         public string Mother { get; set; }
