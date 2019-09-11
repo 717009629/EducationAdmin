@@ -21,6 +21,7 @@ import clas from './modules/class'
 import timePeriod from './modules/timePeriod'
 import subject from './modules/subject'
 import option from './modules/option'
+import privateClass from './modules/privateClass'
 const store = new Vuex.Store({
     state: {
         //
@@ -49,6 +50,7 @@ const store = new Vuex.Store({
         lessonAttendance,
         teacher,
         class: clas,
+        privateClass,
         timePeriod,
         subject,
         option

@@ -70,6 +70,7 @@ namespace EducationAdmin.Classes
         {
 
             return base.CreateFilteredQuery(input).Include(m => m.Course).Include(m => m.Teacher)
+                .Where(m => m.Course.ClassType == ClassType.OneToMany)
                 .WhereIf(input.ClassType != null, m => m.Course.ClassType == input.ClassType);
         }
     }

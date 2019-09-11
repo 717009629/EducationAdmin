@@ -9,6 +9,7 @@ using EducationAdmin.Education;
 using EducationAdmin.Orders.Dto;
 using EducationAdmin.Sales;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query.ExpressionTranslators.Internal;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -89,12 +90,16 @@ namespace EducationAdmin.Orders
         {
             CheckPermission(PermissionNames.Pages_Orders + ".Finish");
 
-            var order = await Repository.GetAllIncluding(m => m.Course, m => m.Student).FirstOrDefaultAsync(m => m.Id == input.OrderId);
+            var order = await Repository.GetAllIncluding(m => m.Course, m => m.Class).FirstOrDefaultAsync(m => m.Id == input.OrderId);
             if (order.State != OrderState.Audited)
                 throw new Exception();
-
             order.State = OrderState.LessonFinished;
             order.FinishTime = DateTime.Now;
+            if(order.Course.ClassType== ClassType.OneToOne)
+            {
+                order.Class.State = ClassState.Closed;
+                order.Class.FinishTime = DateTime.Now;
+            }
             var r = await Repository.UpdateAsync(order);
             return ObjectMapper.Map<OrderDto>(r);
         }

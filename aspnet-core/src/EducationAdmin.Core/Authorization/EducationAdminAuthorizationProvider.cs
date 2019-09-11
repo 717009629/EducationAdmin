@@ -31,6 +31,7 @@ namespace EducationAdmin.Authorization
             
 
             context.CreatePermission(PermissionNames.Pages_Teachers, L("Teachers"), multiTenancySides: MultiTenancySides.Tenant);
+            context.CreatePermission(PermissionNames.Pages_PrivateClasses, L("PrivateClasses"), multiTenancySides: MultiTenancySides.Tenant);
         }
 
 

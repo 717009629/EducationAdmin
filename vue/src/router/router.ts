@@ -99,6 +99,7 @@ export const appRouters: Array<Router> = [{
         { path: 'teacher', permission: 'Pages.Teachers', meta: { title: 'Teachers' }, name: 'teacher', component: () => import('../views/education/teacher/teacher.vue') },
         { path: 'lesson', permission: 'Pages.Lessons', meta: { title: 'Lessons' }, name: 'lesson', component: () => import('../views/education/lesson/lesson.vue') },
         { path: 'class', permission: 'Pages.Classes', meta: { title: 'Classes' }, name: 'class', component: () => import('../views/education/class/class.vue') },
+        { path: 'privateClass', permission: 'Pages.PrivateClasses', meta: { title: 'PrivateClasses' }, name: 'privateClass', component: () => import('../views/education/privateClass/private-class.vue') },
     ]
 }]
 export const routers = [

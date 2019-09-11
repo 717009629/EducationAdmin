@@ -28,7 +28,7 @@
                   style="margin:10px 0;border-top:1px solid #ddd;border-left:0px"
                   :key="permission.name+1"
                 />
-                <Checkbox :label="permission.name" :key="permission.name" style="width:120px">
+                <Checkbox :label="permission.name" :key="permission.name" style="width:100px">
                   <span>{{permission.displayName}}</span>
                 </Checkbox>
               </template>

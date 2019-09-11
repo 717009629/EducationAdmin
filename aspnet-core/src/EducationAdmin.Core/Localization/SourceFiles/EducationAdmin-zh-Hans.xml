@@ -302,6 +302,9 @@
     <text name="FinishLessonDate">结课日期</text>
     <text name="StudentHasSamePhone">此手机号已被使用！</text>
     <text name="LengthWrong">长度必须为{0}位！</text>
+    <text name="PrivateClasses">1v1班级</text>
+    <text name="PrivateClass">1v1班级</text>
+    <text name="FinishClass">结课</text>
 
 
   </texts>

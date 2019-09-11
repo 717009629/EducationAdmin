@@ -10,7 +10,7 @@
         </Form>
         <div class="margin-top-10">
           <Table :loading="loading" :columns="columns" :no-data-text="L('NoDatas')" border :data="list" :row-class-name="rowClassName">
-            <template slot-scope="{ row }" slot="action" v-if="hasPermission('Pages.Classes.Edit')">
+            <template slot-scope="{ row }" slot="action">
               <Button v-if="hasPermission('Pages.Classes.Edit')" type="primary" size="small" @click="edit(row)" style="margin-right:5px">{{L('Edit')}}</Button>
               <Button type="primary" size="small" @click="lesson(row)" style="margin-right:5px">{{L('Lesson')}}</Button>
               <Button type="primary" size="small" @click="order(row)" style="margin-right:5px">{{L('Student')}}</Button>
@@ -101,10 +101,6 @@ export default class Classs extends AbpBase {
     if (row.state === 1) {
       c.push("success");
     }
-
-    if (row.course.classType === 1) {
-      c.push("font-error");
-    }
     return c;
   }
   columns = [
@@ -128,16 +124,6 @@ export default class Classs extends AbpBase {
       }
     },
 
-    {
-      title: this.L("ClassType"),
-      key: "classType",
-      render: (h: any, params: any) => {
-        return h(
-          "span",
-          this.L(window.abp.custom.ClassType[params.row.course.classType])
-        );
-      }
-    },
     {
       title: this.L("Teacher"),
       key: "teacher",
