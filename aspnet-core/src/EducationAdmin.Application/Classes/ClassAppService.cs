@@ -31,6 +31,7 @@ namespace EducationAdmin.Classes
             UpdatePermissionName = PermissionNames.Pages_Classes + ".Edit";
             OrderRepository = orderRepository;
             CourseRepository = courseRepository;
+            LocalizationSourceName = EducationAdminConsts.LocalizationSourceName;
         }
 
         public override async Task<ClassDto> Create(CreateClassDto input)
@@ -72,6 +73,27 @@ namespace EducationAdmin.Classes
             return base.CreateFilteredQuery(input).Include(m => m.Course).Include(m => m.Teacher)
                 .Where(m => m.Course.ClassType == ClassType.OneToMany)
                 .WhereIf(input.ClassType != null, m => m.Course.ClassType == input.ClassType);
+        }
+
+
+        public async Task<ClassDto> Finish(FinishClassDto input)
+        {
+            CheckPermission(PermissionNames.Pages_Orders + ".Finish");
+
+            var @class = await Repository.GetAllIncluding( m => m.Orders).FirstOrDefaultAsync(m => m.Id == input.ClassId);
+            if (@class.State !=  ClassState.Created)
+                throw new Exception();
+
+            if(@class.Orders.Any(m=>m.State!= OrderState.LessonFinished))
+            {
+                throw new UserFriendlyException(L("NotAllOrderFinished"));
+            }
+            @class.State = ClassState.Closed;
+            @class.FinishTime = DateTime.Now;
+
+            
+            var r = await Repository.UpdateAsync(@class);
+            return ObjectMapper.Map<ClassDto>(r);
         }
     }
 }

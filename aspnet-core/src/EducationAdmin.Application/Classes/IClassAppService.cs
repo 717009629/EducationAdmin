@@ -7,8 +7,9 @@ using System.Threading.Tasks;
 
 namespace EducationAdmin.Classes
 {
-    public interface IClassAppService:IAsyncCrudAppService<ClassDto, long,PagedClassResultRequestDto, CreateClassDto,EditClassDto>
+    public interface IClassAppService : IAsyncCrudAppService<ClassDto, long, PagedClassResultRequestDto, CreateClassDto, EditClassDto>
     {
-         Task AddOrders(AddOrderDto input);
+        Task AddOrders(AddOrderDto input);
+        Task<ClassDto> Finish(FinishClassDto input);
     }
 }
