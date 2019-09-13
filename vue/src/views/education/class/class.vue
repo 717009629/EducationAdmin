@@ -11,10 +11,10 @@
         <div class="margin-top-10">
           <Table :loading="loading" :columns="columns" :no-data-text="L('NoDatas')" border :data="list" :row-class-name="rowClassName">
             <template slot-scope="{ row }" slot="action">
-              <Button v-if="hasPermission('Pages.Classes.Edit')&&row.state===1" type="primary" size="small" @click="edit(row)" style="margin-right:5px">{{L('Edit')}}</Button>
+              <Button v-if="hasPermission('Pages.Classes.Edit')&&row.state===0" type="primary" size="small" @click="edit(row)" style="margin-right:5px">{{L('Edit')}}</Button>
               <Button type="primary" size="small" @click="lesson(row)" style="margin-right:5px">{{L('Lesson')}}</Button>
               <Button type="primary" size="small" @click="order(row)" style="margin-right:5px">{{L('Student')}}</Button>
-              <Button v-if="hasPermission('Pages.Class.Finish')&&row.state===1" type="primary" size="small" @click="finish(row)" style="margin-right:5px">{{L('FinishLesson')}}</Button>
+              <Button v-if="hasPermission('Pages.Classes.Finish')&&row.state===0" type="primary" size="small" @click="finish(row)" style="margin-right:5px">{{L('FinishLesson')}}</Button>
             </template>
           </Table>
           <Page show-sizer class-name="fengpage" :total="totalCount" class="margin-top-10" @on-change="pageChange" @on-page-size-change="pagesizeChange" :page-size="pageSize" :current="currentPage">
@@ -167,7 +167,7 @@ export default class Classs extends AbpBase {
     {
       title: this.L("Actions"),
       key: "Actions",
-      width: 300,
+      width: 270,
       slot: "action"
     }
   ];
