@@ -4,7 +4,7 @@
       <Form ref="queryForm" :label-width="100" label-position="left" v-if="clas.course&&clas.course.classType===0" inline>
         <!-- <hr style="border-width:1px 0 0 0; border-style:solid; border-top-color:#ccc; margin:10px 0" /> -->
         <Row>
-          <Button @click="addOrder" icon="android-add" type="primary" v-if="hasPermission('Pages.Orders.Create')">{{L('Add')}}</Button>
+          <Button @click="addOrder" icon="android-add" type="primary" v-if="clas.state===1">{{L('Add')}}</Button>
         </Row>
       </Form>
       <!-- <Card dis-hover> -->

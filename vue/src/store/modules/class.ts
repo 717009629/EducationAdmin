@@ -46,7 +46,10 @@ class ClassModule extends ListModule<ClassState,any,Class>{
         },
         async addOrder(context:ActionContext<ClassState,any>,payload:any){
             await Ajax.post('/api/services/app/Class/AddOrders',payload.data);
-        }
+        },
+        async finish(context: ActionContext<ClassState, any>, payload: any) {
+            await Ajax.post('/api/services/app/Class/Finish', payload.data);
+        },
     };
     mutations={
         setCurrentPage(state:ClassState,page:number){

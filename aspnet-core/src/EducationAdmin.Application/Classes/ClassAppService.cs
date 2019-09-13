@@ -67,6 +67,13 @@ namespace EducationAdmin.Classes
 
         }
 
+        public override async Task<ClassDto> Update(EditClassDto input)
+        {
+            var clas = await Repository.GetAllIncluding(m => m.Course).FirstOrDefaultAsync(m => m.Id == input.ClassId);
+            if (clas.State == ClassState.Closed)
+                throw new Exception();
+            return await base.Update(input);
+        }
         protected override IQueryable<Class> CreateFilteredQuery(PagedClassResultRequestDto input)
         {
 

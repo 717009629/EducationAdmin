@@ -99,5 +99,7 @@
     <text name="OrderFinisLessonConfirm">The order has {0} lessons,and has finished {1} lesson. After Finished lesson, the student can't go to class throw this order. Are you sure finish it?</text>
     <text name="StudentHasSamePhone">There is a student has the same phone!</text>
     <text name="LengthWrong">The length must be {0}！</text>
+    <text name="NotAllOrderFinished">There are orders that are not finished.Please finish the orders first,and then finish the class!</text>
+    <text name="ClassFinisLessonConfirm">After finish lesson,the class is over and can't be operated</text>
   </texts>
 </localizationDictionary>
