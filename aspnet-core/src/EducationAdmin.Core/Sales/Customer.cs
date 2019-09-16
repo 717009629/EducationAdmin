@@ -27,18 +27,18 @@ namespace EducationAdmin.Sales
 
         public string Note { get; set; }
 
-        public CustomerState State { get; set; }
+        public string State { get; set; }
         public int TenantId { get; set; }
     }
 
-    public enum CustomerState
-    {
-        Created=0,
+    //public enum CustomerState
+    //{
+    //    Created=0,
 
-        FollowUp=1,
+    //    FollowUp=1,
 
-        Droped=2,
+    //    Droped=2,
 
-        Success=3
-    }
+    //    Success=3
+    //}
 }

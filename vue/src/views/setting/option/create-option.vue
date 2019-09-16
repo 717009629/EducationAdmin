@@ -10,6 +10,9 @@
         <FormItem :label="L('OptionName')" prop="name">
           <Input v-model="option.name" />
         </FormItem>
+        <FormItem :label="L('SortOrder')" prop="order">
+          <Input v-model="option.order" type="number" />
+        </FormItem>
         <FormItem>
           <Checkbox v-model="option.isActive">{{L('IsActive')}}</Checkbox>
         </FormItem>
@@ -67,6 +70,20 @@ export default class CreateOption extends AbpBase {
         required: true,
         message: this.L("FieldIsRequired", undefined, this.L("OptionName")),
         trigger: "blur"
+      }
+    ],
+    order: [
+      {
+        type: "number",
+        required: false,
+        message: this.L("FieldMustBeANumber", undefined, this.L("SordOrder")),
+        trigger: "blur",
+        transform(value) {
+          if(!value){
+            return 0;
+          }
+          return Number(value);
+        }
       }
     ],
     category: [

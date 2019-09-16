@@ -10,7 +10,7 @@ namespace EducationAdmin.Records.Dto
     public class CreateRecordDto
     {
 
-        public CustomerState State { get; set; }
+        public string State { get; set; }
 
         public DateTime? Date { get; set; }
 

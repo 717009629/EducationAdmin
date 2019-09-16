@@ -8,7 +8,7 @@
         </FormItem>
         <FormItem :label="L('Progress')" prop="state">
           <Select v-model="record.state">
-            <Option v-for="item  in customerState"  :key="item.key" :value="item.key" :label=" L(item.value)" ></Option>
+            <Option v-for="item  in recordStates" :key="item.id" :value="item.name" :label="item.name"></Option>
           </Select>
         </FormItem>
         <FormItem :label="L('RecordDate')" prop="date">
@@ -27,16 +27,18 @@ import { Component, Vue, Inject, Prop, Watch } from "vue-property-decorator";
 import Util from "../../../lib/util";
 import AbpBase from "../../../lib/abpbase";
 import Customer from "../../../store/entities/customer";
-import CustomerState from "../../../store/entities/customerState";
 import Record from "../../../store/entities/record";
 @Component
 export default class CreateRecord extends AbpBase {
   @Prop({ type: Boolean, default: false }) value: boolean;
-  customerState=window.abp.custom.customerState;
   record: Record = new Record();
   customer: Customer = new Customer();
-  CustomerState=CustomerState;
- 
+
+  get recordStates() {
+    return this.$store.state.option.list.filter(
+      m => m.category === "recordState"
+    );
+  }
   save() {
     (this.$refs.recordForm as any).validate(async (valid: boolean) => {
       if (valid) {
@@ -66,8 +68,13 @@ export default class CreateRecord extends AbpBase {
       );
     }
   }
+  created() {
+    this.$store.dispatch({
+      type: "option/getAll",
+      data: { maxResultCount: 10000, isActive: true }
+    });
+  }
   RecordRule = {
-
     content: [
       {
         required: true,
@@ -78,7 +85,6 @@ export default class CreateRecord extends AbpBase {
     state: [
       {
         required: true,
-        type:'number',
         message: this.L("FieldIsRequired", undefined, this.L("RecordProgress")),
         trigger: "blur"
       }

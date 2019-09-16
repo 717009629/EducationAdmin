@@ -27,6 +27,6 @@ namespace EducationAdmin.Customers.Dto
 
         public string Note { get; set; }
 
-        public CustomerState State { get; set; }
+        public string State { get; set; }
     }
 }

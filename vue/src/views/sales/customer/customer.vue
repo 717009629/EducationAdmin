@@ -41,7 +41,6 @@ import PageRequest from "../../../store/entities/page-request";
 import CreateCustomer from "./create-customer.vue";
 import EditCustomer from "./edit-customer.vue";
 import CustomerRecord from "./customer-record.vue";
-import CustomerState from '../../../store/entities/customerState'
 
 class PageCustomerRequest extends PageRequest {
   keyword: string = "";
@@ -143,10 +142,7 @@ export default class Customers extends AbpBase {
     },
     {
       title: this.L("State"),
-      key: "state",
-      render:(h,params)=>{
-        return h('span',this.L(CustomerState[params.row.state]))
-      }
+      key: "state"
     },
     {
       title: this.L("Actions"),

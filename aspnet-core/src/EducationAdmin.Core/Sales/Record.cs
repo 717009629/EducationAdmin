@@ -12,7 +12,7 @@ namespace EducationAdmin.Sales
     public class Record : FullAuditedEntity<long>, IMustHaveTenant
     {
 
-        public CustomerState State { get; set; }
+        public string State { get; set; }
 
         public DateTime? Date { get; set; }
 

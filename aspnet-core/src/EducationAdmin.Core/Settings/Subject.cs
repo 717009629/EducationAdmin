@@ -12,5 +12,8 @@ namespace EducationAdmin.Settings
         public bool IsActive { get; set; }
 
 
+        public double? order { get; set; }
+
+
     }
 }

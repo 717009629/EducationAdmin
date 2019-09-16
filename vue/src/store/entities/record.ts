@@ -1,10 +1,9 @@
 import Entity from './entity'
 import Customer from './customer'
-import CustomerState from './customerState';
 
 
 export default class Record extends Entity<number>{
-    state?:CustomerState
+    state?:string
     date?: string
     content?: string
     customerId: number

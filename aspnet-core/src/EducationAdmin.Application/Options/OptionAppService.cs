@@ -50,6 +50,11 @@ namespace EducationAdmin.Options
                 .WhereIf(input.IsActive != null, m => m.IsActive == input.IsActive);
 
         }
+
+        protected override IQueryable<Option> ApplySorting(IQueryable<Option> query, PagedOptionResultRequestDto input)
+        {
+            return base.ApplySorting(query, input).OrderBy(m=>m.order);
+        }
         protected override IQueryable<Option> ApplyPaging(IQueryable<Option> query, PagedOptionResultRequestDto input)
         {
             if (input.MaxResultCount == 0)

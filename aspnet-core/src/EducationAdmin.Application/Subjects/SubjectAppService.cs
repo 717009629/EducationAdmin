@@ -15,6 +15,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -57,6 +58,11 @@ namespace EducationAdmin.Subjects
                 input.MaxResultCount = int.MaxValue;
             }
             return base.ApplyPaging(query, input);
+        }
+
+        protected override IQueryable<Subject> ApplySorting(IQueryable<Subject> query, PagedSubjectResultRequestDto input)
+        {
+            return base.ApplySorting(query, input).OrderBy(m=>m.order);
         }
 
         public override async Task<SubjectDto> Create(CreateSubjectDto input)

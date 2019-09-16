@@ -104,10 +104,7 @@ export default class CustomerBusiness extends AbpBase {
     },
     {
       title: this.L("State"),
-      key: "state",
-      render:(h,params)=>{
-          return h("span", this.L(window.abp.custom.CustomerState[params.row.state]));
-      }
+      key: "state"
     },
     {
       title: this.L("RecordDate"),

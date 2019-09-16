@@ -1,5 +1,4 @@
 import Entity from './entity'
-import CustomerState from './customerState';
 
 export default class Customer extends Entity<number>{
     studentName?: string
@@ -10,7 +9,7 @@ export default class Customer extends Entity<number>{
     otherGuardian?: string
     otherGuadianPhone?: string
     note?: string
-    state:CustomerState
+    state:string
     lastModificationTime?: string
     lastModifierUserId?: number
     creationTime?: string

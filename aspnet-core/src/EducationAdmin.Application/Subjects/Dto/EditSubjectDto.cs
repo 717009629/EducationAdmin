@@ -13,5 +13,6 @@ namespace EducationAdmin.Subjects.Dto
         public string Name { get; set; }
 
         public bool IsActive { get; set; }
+        public double? order { get; set; }
     }
 }
