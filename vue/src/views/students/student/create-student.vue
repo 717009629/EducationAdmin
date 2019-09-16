@@ -12,7 +12,7 @@
               </i-col>
               <i-col span=12>
                 <FormItem :label="L('Phone')" prop="phone">
-                  <Input v-model="student.phone" :maxlength="11" :minlength="11"  />
+                  <Input v-model="student.phone" :maxlength="11" :minlength="11" />
                 </FormItem>
               </i-col>
 
@@ -252,7 +252,9 @@ export default class CreateStudent extends AbpBase {
       ? "female"
       : "";
   }
-
+  get currentUser() {
+    return this.$store.state.session.user;
+  }
   set sex(val) {
     this.student.sex = val === "male" ? true : val === "female" ? false : null;
   }
@@ -292,8 +294,12 @@ export default class CreateStudent extends AbpBase {
       await this.$store.dispatch({
         type: "teacher/getAll"
       });
+      if (this.currentUser.type === 1&&!this.student.teacherId) {
+        this.student.teacherId == this.currentUser.id;
+      }
     }
   }
+
   created() {
     this.$store.dispatch({
       type: "option/getAll",
@@ -333,7 +339,7 @@ export default class CreateStudent extends AbpBase {
       },
       {
         len: 11,
-        message: this.L("LengthWrong", undefined, '11'),
+        message: this.L("LengthWrong", undefined, "11"),
         trigger: "blur"
       }
     ],

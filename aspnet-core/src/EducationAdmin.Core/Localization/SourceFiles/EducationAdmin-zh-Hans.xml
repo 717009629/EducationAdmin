@@ -309,7 +309,8 @@
     <text name="FinishClass">结课</text>  
      <text name="NotAllOrderFinished">有尚未结课的订单，请先把所有的订单结课后，对班级结课！</text>
      <text name="ClassFinisLessonConfirm">结课后班级就结束了，并且不能再操作！</text>
-
+    <text name="SortOrder">顺序号</text>
+    <text name="RecordState">跟单状态</text>
 
   </texts>
 </localizationDictionary>

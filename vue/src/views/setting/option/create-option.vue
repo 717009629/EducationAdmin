@@ -79,8 +79,11 @@ export default class CreateOption extends AbpBase {
         message: this.L("FieldMustBeANumber", undefined, this.L("SordOrder")),
         trigger: "blur",
         transform(value) {
-          if(!value){
+          if (!value) {
             return 0;
+          }
+          if (isNaN(value)) {
+            return value;
           }
           return Number(value);
         }
