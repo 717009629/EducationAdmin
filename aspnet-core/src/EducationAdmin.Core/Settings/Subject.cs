@@ -1,11 +1,12 @@
-﻿using Abp.Domain.Entities.Auditing;
+﻿using Abp.Domain.Entities;
+using Abp.Domain.Entities.Auditing;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace EducationAdmin.Settings
 {
-    public class Subject:FullAuditedEntity<long>
+    public class Subject:FullAuditedEntity<long>,IMustHaveTenant
     {
         public string Name { get; set; }
 
@@ -13,7 +14,6 @@ namespace EducationAdmin.Settings
 
 
         public double? order { get; set; }
-
-
+        public int TenantId { get ; set ; }
     }
 }
