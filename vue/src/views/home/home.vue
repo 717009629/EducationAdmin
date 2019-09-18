@@ -1,7 +1,7 @@
 <template>
   <div>
     <Card dis-hover>
-      <FullCalendar ref='calendar' defaultView="timeGridWeek" :plugins="calendarPlugins" :locale="locale" :events='events' :displayEventTime='true' :eventLimit='true' @eventClick='eventClick'
+      <FullCalendar v-if="isTenant" ref='calendar' defaultView="timeGridWeek" :plugins="calendarPlugins" :locale="locale" :events='events' :displayEventTime='true' :eventLimit='true' @eventClick='eventClick'
                     :allDaySlot='false' minTime='07:00:00' maxTime='21:00:00' slotDuration='00:15:00' slotLabelInterval='01:00'
                     :header="{left:'title',center:'',right:'timeGridWeek, dayGridMonth today prev,next'}" :buttonText="{today:L('Today'),month:L('Month'),week:L('Week'),}">
       </FullCalendar>
@@ -33,11 +33,14 @@ export default class Home extends AbpBase {
   get currentUser() {
     return this.$store.state.session.user;
   }
+  get isTenant() {
+    return !!abp.session.tenantId;
+  }
+
   get locale() {
     return abp.localization.currentLanguage.name;
   }
   refetchEvents() {
-    console.log(1);
     (this.$refs.calendar as any).getApi().refetchEvents();
   }
   async events(arg, callback) {
@@ -75,7 +78,6 @@ export default class Home extends AbpBase {
   async getLesson(count, start = null, end = null) {
     while (!this.currentUser) {
       await new Promise(resolve => setTimeout(resolve, 100));
-      console.log(this.currentUser);
     }
     if (this.currentUser.type === 1) {
       await this.$store.dispatch({

@@ -11,7 +11,11 @@ class Util{
     title(title:string){
         let appname=this.abp.localization.localize('AppName',appconst.localization.defaultLocalizationSourceName);
         let page=this.abp.localization.localize(title,appconst.localization.defaultLocalizationSourceName);
-        window.document.title = appname+'--'+page;
+        window.document.title=appname+'--'+page;
+         let tenant= this.abp.session.tenant;
+         if((tenant)){
+            window.document.title=tenant+'--'+window.document.title
+         }
     }
     inOf(arr:Array<any>, targetArr:any) {
         let res = true;

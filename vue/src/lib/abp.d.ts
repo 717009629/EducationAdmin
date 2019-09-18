@@ -37,6 +37,7 @@
         readonly impersonatorTenantId?: number;
 
         readonly multiTenancySide: multiTenancy.sides;
+        tenant?:any
 
     }
 

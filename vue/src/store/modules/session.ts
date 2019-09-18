@@ -23,6 +23,11 @@ class SessionStore implements Module<SessionState,any>{
             content.state.application=rep.data.result.application;
             content.state.user=rep.data.result.user;
             content.state.tenant=rep.data.result.tenant;
+            if(rep.data.result.tenant){
+                abp.session.tenant=rep.data.result.tenant.name;
+                window.document.title=abp.session.tenant+'--'+window.document.title
+            }
+            
         }
     }
 }
