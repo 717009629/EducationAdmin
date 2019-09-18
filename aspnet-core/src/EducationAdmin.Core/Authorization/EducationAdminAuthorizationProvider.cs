@@ -10,7 +10,8 @@ namespace EducationAdmin.Authorization
     {
         public override void SetPermissions(IPermissionDefinitionContext context)
         {
-            SetPermission(context, PermissionNames.Pages_Users, "Users");
+            var user = SetPermission(context, PermissionNames.Pages_Users, "Users");
+            user.CreateChildPermission(PermissionNames.Pages_Users + ".ChangePassword", L("ChangePassword"), multiTenancySides: MultiTenancySides.Tenant);
             SetPermission(context, PermissionNames.Pages_Roles, "Roles");
             SetPermission(context, PermissionNames.Pages_Tenants, "Tenants", multiTenancySides: MultiTenancySides.Host);
             SetPermission(context, PermissionNames.Pages_Students, "Students", multiTenancySides: MultiTenancySides.Tenant);

@@ -35,6 +35,7 @@
             <template slot-scope="{ row }" slot="action" v-if="hasPermission('Pages.Users.Edit')||hasPermission('Pages.Users.Delete')">
               <Button v-if="hasPermission('Pages.Users.Edit')" type="primary" size="small" @click="edit(row)" style="margin-right:5px">{{L('Edit')}}</Button>
               <Button v-if="hasPermission('Pages.Users.Delete')" type="primary" size="small" @click="remove(row)" style="margin-right:5px">{{L('Delete')}}</Button>
+               <Button v-if="hasPermission('Pages.Users.ChangePassword')" type="primary" size="small" @click="changePassword(row)" style="margin-right:5px">{{L('ChangePassword')}}</Button>
             </template>
 
           </Table>
@@ -45,6 +46,7 @@
     </Card>
     <create-user v-model="createModalShow" @save-success="getpage"></create-user>
     <edit-user v-model="editModalShow" @save-success="getpage"></edit-user>
+     <change-password v-model="changePasswordModalShow"></change-password>
   </div>
 </template>
 <script lang="ts">
@@ -54,6 +56,7 @@ import AbpBase from "@/lib/abpbase";
 import PageRequest from "@/store/entities/page-request";
 import CreateUser from "./create-user.vue";
 import EditUser from "./edit-user.vue";
+import ChangePassword from "./change-password.vue";
 class PageUserRequest extends PageRequest {
   keyword: string;
   isActive: boolean = null; //nullable
@@ -62,9 +65,13 @@ class PageUserRequest extends PageRequest {
 }
 
 @Component({
-  components: { CreateUser, EditUser }
+  components: { CreateUser, EditUser, ChangePassword }
 })
 export default class Users extends AbpBase {
+  changePassword(row) {
+    this.$store.commit("user/edit", row);
+    this.changePasswordModalShow = true;
+  }
   edit(row) {
     this.$store.commit("user/edit", row);
     this.editModalShow = true;
@@ -90,6 +97,7 @@ export default class Users extends AbpBase {
 
   createModalShow: boolean = false;
   editModalShow: boolean = false;
+  changePasswordModalShow: boolean = false;
   get list() {
     return this.$store.state.user.list;
   }
@@ -207,7 +215,7 @@ export default class Users extends AbpBase {
     {
       title: this.L("Actions"),
       key: "Actions",
-      width: 150,
+      width: 200,
       slot: "action"
     }
   ];

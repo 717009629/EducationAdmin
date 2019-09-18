@@ -11,5 +11,7 @@ namespace EducationAdmin.Users
         Task<ListResultDto<RoleDto>> GetRoles();
 
         Task ChangeLanguage(ChangeUserLanguageDto input);
+
+        Task<bool> ChangePasswordByAdmin(ChangePasswordByAdminDto input);
     }
 }

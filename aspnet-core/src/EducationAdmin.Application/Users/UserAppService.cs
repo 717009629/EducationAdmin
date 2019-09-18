@@ -51,8 +51,8 @@ namespace EducationAdmin.Users
             _abpSession = abpSession;
             _logInManager = logInManager;
             DeletePermissionName = PermissionNames.Pages_Users + ".Delete";
-            CreatePermissionName= PermissionNames.Pages_Users + ".Create";
-            UpdatePermissionName= PermissionNames.Pages_Users + ".Edit";
+            CreatePermissionName = PermissionNames.Pages_Users + ".Create";
+            UpdatePermissionName = PermissionNames.Pages_Users + ".Edit";
         }
 
         public override async Task<UserDto> Create(CreateUserDto input)
@@ -189,6 +189,30 @@ namespace EducationAdmin.Users
             return true;
         }
 
+
+        public async Task<bool> ChangePasswordByAdmin(ChangePasswordByAdminDto input)
+        {
+            CheckPermission(PermissionNames.Pages_Users + ".ChangePassword");
+            //if (_abpSession.UserId == null)
+            //{
+            //    throw new UserFriendlyException("Please log in before attemping to change password.");
+            //}
+            ////long userId = _abpSession.UserId.Value;
+            var user = await _userManager.GetUserByIdAsync(input.Id);
+            // var loginAsync = await _logInManager.LoginAsync(user.UserName, input.CurrentPassword, shouldLockout: false);
+            //if (loginAsync.Result != AbpLoginResultType.Success)
+            //{
+            //    throw new UserFriendlyException("Your 'Existing Password' did not match the one on record.  Please try again or contact an administrator for assistance in resetting your password.");
+            //}
+            if (!new Regex(AccountAppService.PasswordRegex).IsMatch(input.Password))
+            {
+                throw new UserFriendlyException("Passwords must be at least 8 characters, contain a lowercase, uppercase, and number.");
+            }
+            user.Password = _passwordHasher.HashPassword(user, input.Password);
+            CurrentUnitOfWork.SaveChanges();
+            return true;
+        }
+
         public async Task<bool> ResetPassword(ResetPasswordDto input)
         {
             if (_abpSession.UserId == null)
@@ -221,6 +245,40 @@ namespace EducationAdmin.Users
 
             return true;
         }
+
+
+        //public async Task<bool> ResetPassword(ResetPasswordDto input)
+        //{
+        //    if (_abpSession.UserId == null)
+        //    {
+        //        throw new UserFriendlyException("Please log in before attemping to reset password.");
+        //    }
+        //    long currentUserId = _abpSession.UserId.Value;
+        //    var currentUser = await _userManager.GetUserByIdAsync(currentUserId);
+        //    var loginAsync = await _logInManager.LoginAsync(currentUser.UserName, input.AdminPassword, shouldLockout: false);
+        //    if (loginAsync.Result != AbpLoginResultType.Success)
+        //    {
+        //        throw new UserFriendlyException("Your 'Admin Password' did not match the one on record.  Please try again.");
+        //    }
+        //    if (currentUser.IsDeleted || !currentUser.IsActive)
+        //    {
+        //        return false;
+        //    }
+        //    var roles = await _userManager.GetRolesAsync(currentUser);
+        //    if (!roles.Contains(StaticRoleNames.Tenants.Admin))
+        //    {
+        //        throw new UserFriendlyException("Only administrators may reset passwords.");
+        //    }
+
+        //    var user = await _userManager.GetUserByIdAsync(input.UserId);
+        //    if (user != null)
+        //    {
+        //        user.Password = _passwordHasher.HashPassword(user, input.NewPassword);
+        //        CurrentUnitOfWork.SaveChanges();
+        //    }
+
+        //    return true;
+        //}
 
     }
 }

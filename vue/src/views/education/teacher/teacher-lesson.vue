@@ -27,8 +27,8 @@
         </div>
       </div>
       <div slot="footer"></div>
-      <create-lesson-attendance v-model="createLessonAttendaceModalShow"></create-lesson-attendance>
-      <edit-lesson-attendance v-model="editLessonAttendaceModalShow"></edit-lesson-attendance>
+      <create-lesson-attendance v-model="createLessonAttendaceModalShow" @save-success="refetchEvents"></create-lesson-attendance>
+      <edit-lesson-attendance v-model="editLessonAttendaceModalShow" ></edit-lesson-attendance>
     </Modal>
   </div>
 </template>
@@ -66,7 +66,7 @@ export default class ClassBusiness extends AbpBase {
   get locale() {
     return abp.localization.currentLanguage.name;
   }
-  getCalendarPage() {
+  refetchEvents() {
     (this.$refs.calendar as any).getApi().refetchEvents();
   }
   async events(arg, callback) {

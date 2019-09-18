@@ -229,6 +229,7 @@ import Util from "../../../lib/util";
 import AbpBase from "../../../lib/abpbase";
 import Student from "@/store/entities/student";
 import Places from "../../../assets/json/city.json";
+import util from "../../../lib/util";
 @Component
 export default class CreateStudent extends AbpBase {
   @Prop({ type: Boolean, default: false }) value: boolean;
@@ -270,7 +271,7 @@ export default class CreateStudent extends AbpBase {
       .filter(m => m.category === "school")
       .map(m => m.name);
   }
-  save() {
+  async save() {
     (this.$refs.studentForm as any).validate(async (valid: boolean) => {
       if (valid) {
         await this.$store.dispatch({
@@ -294,8 +295,10 @@ export default class CreateStudent extends AbpBase {
       await this.$store.dispatch({
         type: "teacher/getAll"
       });
-      if (this.currentUser.type === 1&&!this.student.teacherId) {
-        this.student.teacherId == this.currentUser.id;
+
+      if (this.currentUser.type === 1 && !this.student.teacherId) {
+        this.student.teacherId = this.currentUser.id;
+        this.student = Util.extend(true, {}, this.student);
       }
     }
   }

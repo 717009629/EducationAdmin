@@ -7,7 +7,7 @@
       </div>
       <!-- <Card dis-hover> -->
       <div class="margin-top-10">
-        <Table :loading="loading" :columns="columns" :no-data-text="L('NoDatas')" border :data="list" @on-selection-change='selectChange'>
+        <Table ref="table" :loading="loading" :columns="columns" :no-data-text="L('NoDatas')" border :data="list" @on-selection-change='selectChange'>
           <!-- <template slot-scope="{ row }" slot="action" v-if="hasPermission('Pages.Orders.Edit')">
             <Button v-if="hasPermission('Pages.Orders.Edit')" type="primary" size="small" @click="edit(row)" style="margin-right:5px">{{L('Edit')}}</Button>
           </template> -->
@@ -41,12 +41,14 @@ export default class CreateLessonAttendance extends AbpBase {
   lesson: Lesson = new Lesson();
   selectItems = [];
   get list() {
+    setTimeout(() => {
+      (this.$refs.table as any).selectAll(true);
+    }, 100);
     return this.$store.state.order.list;
   }
   get loading() {
     return this.$store.state.order.loading;
   }
-
 
   selectChange(selection) {
     this.selectItems = selection;
@@ -55,7 +57,7 @@ export default class CreateLessonAttendance extends AbpBase {
   async getpage() {
     await this.$store.dispatch({
       type: "order/getAll",
-      data: { classId: this.lesson.classId, state:1 }
+      data: { classId: this.lesson.classId, state: 1 }
     });
   }
 
@@ -70,7 +72,7 @@ export default class CreateLessonAttendance extends AbpBase {
   cancel() {
     this.$emit("input", false);
   }
-  save() {
+  async save() {
     let content = `${this.L("Total")} : ${this.list.length} ; ${this.L(
       "Attended"
     )} : ${this.selectItems.length} . ${this.L("Are you sure to save")} ?`;
@@ -83,11 +85,12 @@ export default class CreateLessonAttendance extends AbpBase {
       cancelText: this.L("No"),
       onOk: () => {
         //this.$Modal.remove();
-        setTimeout(() => {
-          this.$store.dispatch({
+        setTimeout(async () => {
+          await this.$store.dispatch({
             type: "lessonAttendance/createMult",
             data: { lessonId: this.lesson.id, orderIds: orderIds }
           });
+          this.$emit("save-success");
           this.$emit("input", false);
         }, 300);
       }
