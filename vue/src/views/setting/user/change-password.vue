@@ -3,10 +3,10 @@
     <Modal :title="L('ChangePassword')" :value="value" @on-ok="save" @on-visible-change="visibleChange" :width='400'>
       <Form ref="changPasswordForm" label-position="top" :rules="changePasswordRule" :model="changePasswordByAdmin">
         <FormItem :label="L('Password')" prop="password">
-          <Input v-model="changePasswordByAdmin.password" :maxlength="32" />
+          <Input v-model="changePasswordByAdmin.password" type='password' :maxlength="32" />
         </FormItem>
         <FormItem :label="L('ConfirmPassword')" prop="confirmPassword">
-          <Input v-model="changePasswordByAdmin.confirmPassword" :maxlength="32" />
+          <Input v-model="changePasswordByAdmin.confirmPassword" type='password' :maxlength="32" />
         </FormItem>
       </Form>
       <div slot="footer">
