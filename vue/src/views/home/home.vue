@@ -2,7 +2,7 @@
   <div>
     <Card dis-hover>
       <FullCalendar v-if="isTenant" ref='calendar' defaultView="timeGridWeek" :plugins="calendarPlugins" :locale="locale" :events='events' :displayEventTime='true' :eventLimit='true' @eventClick='eventClick'
-                    :allDaySlot='false' minTime='07:00:00' maxTime='21:00:00' slotDuration='00:15:00' slotLabelInterval='01:00'
+                    :allDaySlot='false' minTime='07:00:00' maxTime='21:00:00' slotDuration='00:15:00' slotLabelInterval='01:00' height='auto'
                     :header="{left:'title',center:'',right:'timeGridWeek, dayGridMonth today prev,next'}" :buttonText="{today:L('Today'),month:L('Month'),week:L('Week'),}">
       </FullCalendar>
     </Card>
