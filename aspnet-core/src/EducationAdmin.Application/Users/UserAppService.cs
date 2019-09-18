@@ -77,6 +77,7 @@ namespace EducationAdmin.Users
 
             return MapToEntityDto(user);
         }
+      
 
         public override async Task<UserDto> Update(UserDto input)
         {
@@ -140,7 +141,7 @@ namespace EducationAdmin.Users
 
         protected override IQueryable<User> CreateFilteredQuery(PagedUserResultRequestDto input)
         {
-            return Repository.GetAllIncluding(x => x.Roles)
+            return Repository.GetAllIncluding(x => x.Roles,x=>x.Logins)
                 .WhereIf(!input.Keyword.IsNullOrWhiteSpace(), x => x.UserName.Contains(input.Keyword) || x.Name.Contains(input.Keyword) || x.EmailAddress.Contains(input.Keyword))
                 .WhereIf(input.IsActive.HasValue, x => x.IsActive == input.IsActive);
         }

@@ -42,9 +42,7 @@ namespace EducationAdmin.Authorization.Users
         public string MaritalStatus { get; set; }
 
         public int? WorkingYears { get; set; }
-
-
-
+        public DateTime? LastLoginTime { get; set; }
 
 
 

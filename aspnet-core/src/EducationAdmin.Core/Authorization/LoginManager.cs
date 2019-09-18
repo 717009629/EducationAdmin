@@ -10,36 +10,48 @@ using Abp.Zero.Configuration;
 using EducationAdmin.Authorization.Roles;
 using EducationAdmin.Authorization.Users;
 using EducationAdmin.MultiTenancy;
+using JetBrains.Annotations;
+using System.Threading.Tasks;
+using System;
 
 namespace EducationAdmin.Authorization
 {
     public class LogInManager : AbpLogInManager<Tenant, Role, User>
     {
         public LogInManager(
-            UserManager userManager, 
+            UserManager userManager,
             IMultiTenancyConfig multiTenancyConfig,
             IRepository<Tenant> tenantRepository,
             IUnitOfWorkManager unitOfWorkManager,
-            ISettingManager settingManager, 
-            IRepository<UserLoginAttempt, long> userLoginAttemptRepository, 
+            ISettingManager settingManager,
+            IRepository<UserLoginAttempt, long> userLoginAttemptRepository,
             IUserManagementConfig userManagementConfig,
             IIocResolver iocResolver,
-            IPasswordHasher<User> passwordHasher, 
+            IPasswordHasher<User> passwordHasher,
             RoleManager roleManager,
-            UserClaimsPrincipalFactory claimsPrincipalFactory) 
+            UserClaimsPrincipalFactory claimsPrincipalFactory)
             : base(
-                  userManager, 
+                  userManager,
                   multiTenancyConfig,
-                  tenantRepository, 
-                  unitOfWorkManager, 
-                  settingManager, 
-                  userLoginAttemptRepository, 
-                  userManagementConfig, 
-                  iocResolver, 
-                  passwordHasher, 
-                  roleManager, 
+                  tenantRepository,
+                  unitOfWorkManager,
+                  settingManager,
+                  userLoginAttemptRepository,
+                  userManagementConfig,
+                  iocResolver,
+                  passwordHasher,
+                  roleManager,
                   claimsPrincipalFactory)
         {
+
+        }
+        public override async Task<AbpLoginResult<Tenant, User>> LoginAsync(string userNameOrEmailAddress, string plainPassword, string tenancyName = null, bool shouldLockout = true)
+        {
+
+            var r = await base.LoginAsync(userNameOrEmailAddress, plainPassword, tenancyName, shouldLockout);
+            r.User.LastLoginTime = DateTime.Now;
+            await this.UnitOfWorkManager.Current.SaveChangesAsync();
+            return r;
         }
     }
 }
