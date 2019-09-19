@@ -4,9 +4,17 @@
       <div class="page-body">
         <Form ref="queryForm" :label-width="100" label-position="left" inline>
           <Row :gutter="16">
-            <i-col span="8">
+            <i-col span="6">
               <FormItem :label="L('Keyword')+':'" style="width:100%">
-                <Input v-model="pagerequest.keyword" :placeholder="L('CustomerName')" />
+                <Input v-model="pagerequest.keyword" :placeholder="L('StudentName')+'/'+L('Phone')" />
+              </FormItem>
+            </i-col>
+            <i-col span="6">
+              <FormItem :label="L('State')+':'" style="width:100%">
+                <Select v-model="pagerequest.state">
+                  <Option value=""></Option>
+                  <Option v-for="item  in recordStates" :key="item.id" :value="item.name" :label="item.name"></Option>
+                </Select>
               </FormItem>
             </i-col>
           </Row>
@@ -19,8 +27,7 @@
           <Table :loading="loading" :columns="columns" :no-data-text="L('NoDatas')" border :data="list">
             <template slot-scope="{ row }" slot="action" v-if="hasPermission('Pages.Customers.Edit')||hasPermission('Pages.Records')">
               <Button v-if="hasPermission('Pages.Customers.Edit')" type="primary" size="small" @click="edit(row)" style="margin-right:5px">{{L('Edit')}}</Button>
-              <Button v-if="hasPermission('Pages.Records')" type="primary" size="small" @click="record(row)"
-                      style="margin-right:5px">{{L('Record')}}</Button>
+              <Button v-if="hasPermission('Pages.Records')" type="primary" size="small" @click="record(row)" style="margin-right:5px">{{L('Record')}}</Button>
             </template>
           </Table>
           <Page show-sizer class-name="fengpage" :total="totalCount" class="margin-top-10" @on-change="pageChange" @on-page-size-change="pagesizeChange" :page-size="pageSize" :current="currentPage">
@@ -60,6 +67,12 @@ export default class Customers extends AbpBase {
   }
   get loading() {
     return this.$store.state.customer.loading;
+  }
+
+  get recordStates() {
+    return this.$store.state.option.list.filter(
+      m => m.category === "recordState"
+    );
   }
   create() {
     this.createModalShow = true;
@@ -153,6 +166,10 @@ export default class Customers extends AbpBase {
   ];
   async created() {
     this.getpage();
+    this.$store.dispatch({
+      type: "option/getAll",
+      data: { maxResultCount: 10000, isActive: true }
+    });
   }
 }
 </script>

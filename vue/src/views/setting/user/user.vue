@@ -209,7 +209,7 @@ export default class Users extends AbpBase {
     {
       title: this.L("LastLoginTime"),
       render: (h: any, params: any) => {
-        return h("span", new Date(params.row.lastLoginTime).toLocaleString());
+        return h("span",params.row.lastLoginTime?new Date(params.row.lastLoginTime).toLocaleString():'');
       }
     },
     {

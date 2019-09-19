@@ -10,45 +10,18 @@
               </FormItem>
             </i-col>
             <i-col span="8">
-              <Button
-              v-if="hasPermission('Pages.Records.Create')"
-                icon="ios-search"
-                type="primary"
-                size="large"
-                @click="getpage"
-                class="toolbar-btn"
-              >{{L('Find')}}</Button>
+              <Button v-if="hasPermission('Pages.Records.Create')" icon="ios-search" type="primary" size="large" @click="getpage" class="toolbar-btn">{{L('Find')}}</Button>
             </i-col>
           </Row>
         </Form>
         <div class="margin-top-10">
-          <Table
-            :loading="loading"
-            :columns="columns"
-            :no-data-text="L('NoDatas')"
-            border
-            :data="list"
-          >
+          <Table :loading="loading" :columns="columns" :no-data-text="L('NoDatas')" border :data="list">
             <template slot-scope="{ row }" slot="action" v-if="hasPermission('Pages.Records.Edit')">
-              <Button
-                v-if="hasPermission('Pages.Records.Edit')"
-                type="primary"
-                size="small"
-                @click="edit(row)"
-                style="margin-right:5px"
-              >{{L('Edit')}}</Button>
+              <Button v-if="hasPermission('Pages.Records.Edit')" type="primary" size="small" @click="edit(row)" style="margin-right:5px">{{L('Edit')}}</Button>
             </template>
           </Table>
-          <Page
-            show-sizer
-            class-name="fengpage"
-            :total="totalCount"
-            class="margin-top-10"
-            @on-change="pageChange"
-            @on-page-size-change="pagesizeChange"
-            :page-size="pageSize"
-            :current="currentPage"
-          ></Page>
+          <Page show-sizer class-name="fengpage" :total="totalCount" class="margin-top-10" @on-change="pageChange" @on-page-size-change="pagesizeChange" :page-size="pageSize" :current="currentPage">
+          </Page>
         </div>
       </div>
     </Card>
@@ -136,7 +109,7 @@ export default class Records extends AbpBase {
       key: "studentName",
       render: (h, params) => h("span", params.row.customer.studentName)
     },
-     {
+    {
       title: this.L("RecordContent"),
       key: "content"
     },
@@ -163,6 +136,10 @@ export default class Records extends AbpBase {
     }
   ];
   async created() {
+    this.$store.dispatch({
+      type: "option/getAll",
+      data: { maxResultCount: 10000, isActive: true }
+    });
     this.getpage();
   }
 }

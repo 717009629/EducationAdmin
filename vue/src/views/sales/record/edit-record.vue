@@ -61,10 +61,6 @@ export default class EditRecorde extends AbpBase {
     }
   }
   created() {
-    this.$store.dispatch({
-      type: "option/getAll",
-      data: { maxResultCount: 10000, isActive: true }
-    });
   }
   RecordRule = {
     content: [
