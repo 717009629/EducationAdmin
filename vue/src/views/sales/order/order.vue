@@ -266,24 +266,24 @@ export default class Orders extends AbpBase {
     },
     {
       title: this.L("AuditeDate"),
-      key: "auditeDate",
+      key: "auditeTime",
       render: (h: any, params: any) => {
         return h(
           "span",
-          params.row.auditeDate
-            ? new Date(params.row.auditeDate).toLocaleDateString()
+          params.row.auditeTime
+            ? new Date(params.row.auditeTime).toLocaleDateString()
             : ""
         );
       }
     },
     {
       title: this.L("FinishLessonDate"),
-      key: "finishDate",
+      key: "finishTime",
       render: (h: any, params: any) => {
         return h(
           "span",
-          params.row.finishDate
-            ? new Date(params.row.finishDate).toLocaleDateString()
+          params.row.finishTime
+            ? new Date(params.row.finishTime).toLocaleDateString()
             : ""
         );
       }
