@@ -51,9 +51,6 @@ namespace EducationAdmin.Orders.Dto
 
         public ClassDto Class { get; set; }
 
-        public DateTime? AuditeTime { get; set; }
-
-        public DateTime? FinishTime { get; set; }
         public List<PlainLessonAttendanceDto> LessonAttendances { get; set; }
     }
 }
