@@ -5,7 +5,7 @@
         <Form ref="queryForm" :label-width="100" label-position="left" inline>
           <Row>
             <!-- <Button v-if="hasPermission('Pages.LessonAttendances.Create')" @click="create" icon="android-add" type="primary" size="large">{{L('Add')}}</Button> -->
-            <Button icon="ios-search" type="primary" size="large" @click="getpage" class="toolbar-btn">{{L('Refresh')}}</Button>
+            <Button icon="ios-search" type="primary" size="large" @click="pageChange(1)" class="toolbar-btn">{{L('Refresh')}}</Button>
           </Row>
         </Form>
         <div class="margin-top-10">

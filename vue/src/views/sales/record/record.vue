@@ -10,7 +10,7 @@
               </FormItem>
             </i-col>
             <i-col span="8">
-              <Button v-if="hasPermission('Pages.Records.Create')" icon="ios-search" type="primary" size="large" @click="getpage" class="toolbar-btn">{{L('Find')}}</Button>
+              <Button v-if="hasPermission('Pages.Records.Create')" icon="ios-search" type="primary" size="large" @click="pageChange(1)" class="toolbar-btn">{{L('Find')}}</Button>
             </i-col>
           </Row>
         </Form>
@@ -70,6 +70,7 @@ export default class Records extends AbpBase {
     this.getpage();
   }
   async getpage() {
+    
     this.pagerequest.maxResultCount = this.pageSize;
     this.pagerequest.skipCount = (this.currentPage - 1) * this.pageSize;
 

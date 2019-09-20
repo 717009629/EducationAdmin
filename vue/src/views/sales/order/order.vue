@@ -10,7 +10,7 @@
               </FormItem>
             </i-col>
             <i-col span="8">
-              <Button icon="ios-search" type="primary" size="large" @click="getpage" class="toolbar-btn" v-if="hasPermission('Pages.Orders.Create')">{{L('Find')}}</Button>
+              <Button icon="ios-search" type="primary" size="large" @click="pageChange(1)" class="toolbar-btn" v-if="hasPermission('Pages.Orders.Create')">{{L('Find')}}</Button>
             </i-col>
           </Row>
         </Form>

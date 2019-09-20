@@ -49,8 +49,12 @@ namespace EducationAdmin.Authorization
         {
 
             var r = await base.LoginAsync(userNameOrEmailAddress, plainPassword, tenancyName, shouldLockout);
-            r.User.LastLoginTime = DateTime.Now;
-            await this.UnitOfWorkManager.Current.SaveChangesAsync();
+            if(r.Result== AbpLoginResultType.Success)
+            {
+                r.User.LastLoginTime = DateTime.Now;
+                await this.UnitOfWorkManager.Current.SaveChangesAsync();
+            }
+            
             return r;
         }
     }

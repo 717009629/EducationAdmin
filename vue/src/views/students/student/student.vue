@@ -12,7 +12,7 @@
           </Row>
           <Row>
             <Button @click="create" icon="android-add" type="primary" size="large">{{L('Add')}}</Button>
-            <Button icon="ios-search" type="primary" size="large" @click="getpage" class="toolbar-btn">{{L('Find')}}</Button>
+            <Button icon="ios-search" type="primary" size="large" @click="pageChange(1)" class="toolbar-btn">{{L('Find')}}</Button>
           </Row>
         </Form>
         <div class="margin-top-10">

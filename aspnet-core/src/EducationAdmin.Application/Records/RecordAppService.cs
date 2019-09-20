@@ -18,7 +18,7 @@ using Abp.Extensions;
 namespace EducationAdmin.Records
 {
     [AbpAuthorize(PermissionNames.Pages_Records)]
-    public class RecordAppService : AsyncCrudAppService<Record, RecordDto, long, PagedRecordResultRequestDto, CreateRecordDto, RecordDto>, IRecordAppService
+    public class RecordAppService : AsyncCrudAppService<Record, RecordDto, long, PagedRecordResultRequestDto, CreateRecordDto, EditRecordDto>, IRecordAppService
     {
         private readonly IRepository<Customer, long> CustomerRepository;
         public RecordAppService(IRepository<Record, long> repository, IRepository<Customer, long> customerRepository) : base(repository)
@@ -45,11 +45,6 @@ namespace EducationAdmin.Records
             customer.State = input.State;
 
             return await base.Create(input);
-        }
-
-        public override Task<RecordDto> Update(RecordDto input)
-        {
-            return base.Update(input);
         }
     }
 }

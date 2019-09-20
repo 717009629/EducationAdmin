@@ -1,6 +1,7 @@
 ﻿using Abp.Application.Services;
 using Abp.Authorization;
 using Abp.Domain.Repositories;
+using Abp.Extensions;
 using Abp.Linq.Extensions;
 using EducationAdmin.Authorization;
 using EducationAdmin.Customers.Dto;
@@ -26,8 +27,8 @@ namespace EducationAdmin.Customers
         protected override IQueryable<Customer> CreateFilteredQuery(PagedCustomerResultRequestDto input)
         {
             return base.CreateFilteredQuery(input)
-                .WhereIf(!string.IsNullOrEmpty(input.Keyword), m => m.StudentName.Contains(input.Keyword) || m.FatherPhone.Contains(input.Keyword) || m.MotherPhone.Contains(input.Keyword) || m.OtherGuadianPhone.Contains(input.Keyword))
-                .WhereIf(!string.IsNullOrEmpty(input.State), m => m.State == input.State);
+                .WhereIf(!input.Keyword.IsNullOrWhiteSpace(), m => m.StudentName.Contains(input.Keyword) || m.FatherPhone.Contains(input.Keyword) || m.MotherPhone.Contains(input.Keyword) || m.OtherGuadianPhone.Contains(input.Keyword))
+                .WhereIf(!input.State.IsNullOrWhiteSpace(), m => m.State == input.State);
         }
     }
 }

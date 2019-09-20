@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace EducationAdmin.Records
 {
-    public interface IRecordAppService : IAsyncCrudAppService<RecordDto, long, PagedRecordResultRequestDto, CreateRecordDto, RecordDto>
+    public interface IRecordAppService : IAsyncCrudAppService<RecordDto, long, PagedRecordResultRequestDto, CreateRecordDto, EditRecordDto>
     {
     }
 }

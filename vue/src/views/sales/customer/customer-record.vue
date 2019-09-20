@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Modal :title="L('Recorde')" :value="value" @on-visible-change="visibleChange" :mask-closable="false" width="1200px">
+    <Modal :title="L('Record')" :value="value" @on-visible-change="visibleChange" :mask-closable="false" width="1200px">
       <div>
         <!-- <Card dis-hover> -->
 
