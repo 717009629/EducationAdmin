@@ -6,7 +6,7 @@
           <Input v-model="subject.name" />
         </FormItem>
         <FormItem :label="L('SortOrder')" prop="order">
-          <Input v-model="option.order" type="number" />
+          <Input v-model="subject.order" type="number" />
         </FormItem>
         <FormItem>
           <Checkbox v-model="subject.isActive">{{L('IsActive')}}</Checkbox>
