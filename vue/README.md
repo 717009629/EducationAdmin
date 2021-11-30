@@ -2,8 +2,6 @@
 
 The Vue.js integration for ABP Boilerplate framework. This template is built on Vue+iview+Typescript.
 
-![](_screenshots/roles.png)
-
 ## Getting Started
 
 ### Installing
